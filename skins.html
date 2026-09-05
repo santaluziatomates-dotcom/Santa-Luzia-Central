@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skins - Santa Luzia Central</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    header {
+      background: white;
+      text-align: center;
+      padding: 30px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      color: #666;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .voltar {
+      display: inline-block;
+      margin-bottom: 25px;
+      text-decoration: none;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .skin {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .skin img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+
+    .skin h2 {
+      margin-bottom: 10px;
+    }
+
+    .codigo {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      word-break: break-all;
+      font-family: monospace;
+    }
+
+    .copiar {
+      border: none;
+      background: #222;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .mensagem {
+      margin-top: 12px;
+      color: #228B22;
+      font-weight: bold;
+      min-height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img class="logo" src="IMG_6552.PNG" alt="Santa Luzia">
+    <h1>SKINS</h1>
+    <p class="subtitulo">Skins de teste da Santa Luzia Central</p>
+  </header>
+
+  <main>
+
+    <a class="voltar" href="index.html">← Voltar para o início</a>
+
+    <section class="skin">
+
+      <h2>Skin de Teste 01</h2>
+
+      <p>Confira a skin abaixo:</p>
+
+      <img src="IMG_6552.PNG" alt="Skin de teste">
+
+      <h3>Código da Skin</h3>
+
+      <div class="codigo" id="codigo">
+        COLOQUE-SEU-CODIGO-AQUI
+      </div>
+
+      <button class="copiar" onclick="copiarCodigo()">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="mensagem"></div>
+
+    </section>
+
+  </main>
+
+  <script>
+    function copiarCodigo() {
+      const codigo = document.getElementById("codigo").innerText;
+
+      navigator.clipboard.writeText(codigo).then(function() {
+        document.getElementById("mensagem").innerText =
+          "✅ Código copiado!";
+      });
+    }
+  </script>
+
+</body>
+</html>
