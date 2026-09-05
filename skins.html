@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skins - Santa Luzia Central</title>
+  <title>Bob Azul - Santa Luzia Central</title>
 
   <style>
     * {
@@ -63,41 +63,50 @@
       text-align: center;
     }
 
-    .skin img {
-      width: 100%;
-      max-width: 500px;
-      border-radius: 12px;
-      margin-bottom: 18px;
+    .skin h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
     }
 
-    .skin h2 {
-      margin-bottom: 10px;
+    .foto {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .codigo-titulo {
+      margin-top: 10px;
+      margin-bottom: 8px;
     }
 
     .codigo {
       background: #f0f0f0;
       padding: 15px;
       border-radius: 10px;
-      margin: 15px 0;
+      margin-bottom: 10px;
       word-break: break-all;
       font-family: monospace;
+      font-size: 16px;
     }
 
     .copiar {
       border: none;
       background: #222;
       color: white;
-      padding: 14px 22px;
+      padding: 13px 20px;
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       cursor: pointer;
+      margin-bottom: 25px;
     }
 
     .mensagem {
-      margin-top: 12px;
       color: #228B22;
       font-weight: bold;
+      margin-top: -18px;
+      margin-bottom: 20px;
       min-height: 20px;
     }
   </style>
@@ -117,34 +126,46 @@
 
     <section class="skin">
 
-      <h2>Skin de Teste 01</h2>
+      <h2>BOB AZUL 💙</h2>
 
-      <p>Confira a skin abaixo:</p>
+      <img class="foto" src="bob.azul.sta.jpeg" alt="Bob Azul - Cabine">
 
-      <img src="IMG_6552.PNG" alt="Skin de teste">
+      <h3 class="codigo-titulo">🚛 CÓDIGO DA CABINE</h3>
 
-      <h3>Código da Skin</h3>
-
-      <div class="codigo" id="codigo">
-        COLOQUE-SEU-CODIGO-AQUI
+      <div class="codigo" id="codigoCabine">
+        BUZpNIw.jpeg
       </div>
 
-      <button class="copiar" onclick="copiarCodigo()">
-        📋 COPIAR CÓDIGO
+      <button class="copiar" onclick="copiarCodigo('codigoCabine', 'mensagemCabine')">
+        📋 COPIAR CÓDIGO DA CABINE
       </button>
 
-      <div class="mensagem" id="mensagem"></div>
+      <div class="mensagem" id="mensagemCabine"></div>
+
+      <img class="foto" src="carroceria.bob.jpeg" alt="Bob Azul - Carroceria">
+
+      <h3 class="codigo-titulo">📦 CÓDIGO DA CARROCERIA</h3>
+
+      <div class="codigo" id="codigoCarroceria">
+        NdKtdY2.jpeg
+      </div>
+
+      <button class="copiar" onclick="copiarCodigo('codigoCarroceria', 'mensagemCarroceria')">
+        📋 COPIAR CÓDIGO DA CARROCERIA
+      </button>
+
+      <div class="mensagem" id="mensagemCarroceria"></div>
 
     </section>
 
   </main>
 
   <script>
-    function copiarCodigo() {
-      const codigo = document.getElementById("codigo").innerText;
+    function copiarCodigo(idCodigo, idMensagem) {
+      const codigo = document.getElementById(idCodigo).innerText.trim();
 
       navigator.clipboard.writeText(codigo).then(function() {
-        document.getElementById("mensagem").innerText =
+        document.getElementById(idMensagem).innerText =
           "✅ Código copiado!";
       });
     }
