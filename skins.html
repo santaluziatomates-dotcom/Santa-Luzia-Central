@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bob Azul - Santa Luzia Central</title>
+
+  <title>Skins - Santa Luzia Central</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -42,7 +44,7 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
       padding: 30px 20px;
     }
@@ -55,121 +57,699 @@
       font-weight: bold;
     }
 
-    .skin {
-      background: white;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    .titulo-secao {
       text-align: center;
+      margin: 10px 0 25px;
+      font-size: 24px;
     }
 
-    .skin h2 {
-      font-size: 26px;
-      margin-bottom: 20px;
+    .grade {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 21px;
     }
 
     .foto {
       width: 100%;
-      max-width: 600px;
+      height: 220px;
+      object-fit: contain;
       border-radius: 12px;
-      margin-bottom: 25px;
+      background: #f5f5f5;
+      margin-bottom: 12px;
     }
 
-    .codigo-titulo {
+    .tipo {
+      font-size: 14px;
+      font-weight: bold;
       margin-top: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .codigo {
-      background: #f0f0f0;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      word-break: break-all;
+      background: #eeeeee;
+      padding: 12px;
+      border-radius: 9px;
       font-family: monospace;
-      font-size: 16px;
+      word-break: break-all;
+      margin-bottom: 8px;
     }
 
     .copiar {
+      width: 100%;
       border: none;
       background: #222;
       color: white;
-      padding: 13px 20px;
-      border-radius: 10px;
-      font-size: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      font-size: 14px;
       font-weight: bold;
       cursor: pointer;
-      margin-bottom: 25px;
+      margin-bottom: 10px;
+    }
+
+    .copiar:hover {
+      opacity: 0.85;
     }
 
     .mensagem {
-      color: #228B22;
+      text-align: center;
+      color: green;
       font-weight: bold;
-      margin-top: -18px;
-      margin-bottom: 20px;
-      min-height: 20px;
+      min-height: 18px;
+      margin-bottom: 8px;
     }
+
+    .separador {
+      margin: 45px 0 30px;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+
+    .acessorio {
+      text-align: center;
+    }
+
+    .acessorio .foto {
+      height: 200px;
+    }
+
+    @media (max-width: 700px) {
+
+      .grade {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+    }
+
   </style>
+
 </head>
 
 <body>
 
-  <header>
-    <img class="logo" src="IMG_6552.PNG" alt="Santa Luzia">
-    <h1>SKINS</h1>
-    <p class="subtitulo">Skins de teste da Santa Luzia Central</p>
-  </header>
+<header>
 
-  <main>
+  <img class="logo" src="IMG_6552.PNG" alt="Santa Luzia">
 
-    <a class="voltar" href="index.html">← Voltar para o início</a>
+  <h1>SKINS</h1>
 
-    <section class="skin">
+  <p class="subtitulo">
+    Skins de teste da Santa Luzia Central
+  </p>
 
-      <h2>BOB AZUL 💙</h2>
+</header>
 
-      <img class="foto" src="bob.azul.sta.jpeg" alt="Bob Azul - Cabine">
+<main>
 
-      <h3 class="codigo-titulo">🚛 CÓDIGO DA CABINE</h3>
+  <a class="voltar" href="index.html">
+    ← Voltar para o início
+  </a>
 
-      <div class="codigo" id="codigoCabine">
+
+  <!-- CAMINHÕES -->
+
+  <h2 class="titulo-secao">
+    🚛 CAMINHÕES
+  </h2>
+
+  <div class="grade">
+
+
+    <!-- BOB AZUL -->
+
+    <div class="card">
+
+      <h2>💙 BOB AZUL</h2>
+
+      <img class="foto"
+           src="bob.azul.sta.jpeg"
+           alt="Bob Azul">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo1">
         BUZpNIw.jpeg
       </div>
 
-      <button class="copiar" onclick="copiarCodigo('codigoCabine', 'mensagemCabine')">
-        📋 COPIAR CÓDIGO DA CABINE
+      <button class="copiar"
+              onclick="copiar('codigo1','msg1')">
+        📋 COPIAR CÓDIGO
       </button>
 
-      <div class="mensagem" id="mensagemCabine"></div>
+      <div class="mensagem" id="msg1"></div>
 
-      <img class="foto" src="carroceria.bob.jpeg" alt="Bob Azul - Carroceria">
 
-      <h3 class="codigo-titulo">📦 CÓDIGO DA CARROCERIA</h3>
+      <img class="foto"
+           src="carroceria.bob.jpeg"
+           alt="Bob Azul Carroceria">
 
-      <div class="codigo" id="codigoCarroceria">
+      <div class="tipo">
+        📦 CÓDIGO DA CARROCERIA
+      </div>
+
+      <div class="codigo" id="codigo2">
         NdKtdY2.jpeg
       </div>
 
-      <button class="copiar" onclick="copiarCodigo('codigoCarroceria', 'mensagemCarroceria')">
-        📋 COPIAR CÓDIGO DA CARROCERIA
+      <button class="copiar"
+              onclick="copiar('codigo2','msg2')">
+        📋 COPIAR CÓDIGO
       </button>
 
-      <div class="mensagem" id="mensagemCarroceria"></div>
+      <div class="mensagem" id="msg2"></div>
 
-    </section>
+    </div>
 
-  </main>
 
-  <script>
-    function copiarCodigo(idCodigo, idMensagem) {
-      const codigo = document.getElementById(idCodigo).innerText.trim();
+    <!-- BOB VERDE -->
 
-      navigator.clipboard.writeText(codigo).then(function() {
-        document.getElementById(idMensagem).innerText =
-          "✅ Código copiado!";
-      });
-    }
-  </script>
+    <div class="card">
+
+      <h2>💚 BOB VERDE</h2>
+
+      <img class="foto"
+           src="bob.verde.jpeg"
+           alt="Bob Verde">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo3">
+        ZRyQwTk.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo3','msg3')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg3"></div>
+
+
+      <img class="foto"
+           src="bau.b.verde.jpeg"
+           alt="Bob Verde Baú">
+
+      <div class="tipo">
+        📦 CÓDIGO DO BAÚ
+      </div>
+
+      <div class="codigo" id="codigo4">
+        Hr3D6gE.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo4','msg4')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg4"></div>
+
+    </div>
+
+
+    <!-- BOB VERMELHO -->
+
+    <div class="card">
+
+      <h2>❤️ BOB VERMELHO</h2>
+
+      <img class="foto"
+           src="bob.vermelho.jpeg"
+           alt="Bob Vermelho">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo5">
+        T3CSDcf.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo5','msg5')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg5"></div>
+
+
+      <img class="foto"
+           src="bau.b.vermelho.jpeg"
+           alt="Bob Vermelho Baú">
+
+      <div class="tipo">
+        📦 CÓDIGO DO BAÚ
+      </div>
+
+      <div class="codigo" id="codigo6">
+        Hr3D6gE.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo6','msg6')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg6"></div>
+
+    </div>
+
+
+    <!-- BOB CINZA -->
+
+    <div class="card">
+
+      <h2>🩶 BOB CINZA</h2>
+
+      <img class="foto"
+           src="bob.cinza.jpeg"
+           alt="Bob Cinza">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo7">
+        PRfTqcL.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo7','msg7')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg7"></div>
+
+
+      <img class="foto"
+           src="bau.b.cinza.jpeg"
+           alt="Bob Cinza Baú">
+
+      <div class="tipo">
+        📦 CÓDIGO DO BAÚ
+      </div>
+
+      <div class="codigo" id="codigo8">
+        Hr3D6gE.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo8','msg8')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg8"></div>
+
+    </div>
+
+
+    <!-- 1620 CARROCERIA -->
+
+    <div class="card">
+
+      <h2>🔵 1620 CARROCERIA</h2>
+
+      <img class="foto"
+           src="1620.a.jpeg"
+           alt="1620">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo9">
+        Vaxni9B.png
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo9','msg9')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg9"></div>
+
+
+      <img class="foto"
+           src="1620.carroceria.jpeg"
+           alt="1620 Carroceria">
+
+      <div class="tipo">
+        📦 CÓDIGO DA CARROCERIA
+      </div>
+
+      <div class="codigo" id="codigo10">
+        8HK5oOO.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo10','msg10')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg10"></div>
+
+    </div>
+
+
+    <!-- 1620 BAÚ -->
+
+    <div class="card">
+
+      <h2>🔵 1620 BAÚ</h2>
+
+      <img class="foto"
+           src="1620.aa.jpeg"
+           alt="1620 Baú">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo11">
+        Vaxni9B.png
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo11','msg11')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg11"></div>
+
+
+      <img class="foto"
+           src="1620.bau.jpeg"
+           alt="1620 Baú">
+
+      <div class="tipo">
+        📦 CÓDIGO DO BAÚ
+      </div>
+
+      <div class="codigo" id="codigo12">
+        Hr3D6gE.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo12','msg12')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg12"></div>
+
+    </div>
+
+
+    <!-- PZINHA CINZA -->
+
+    <div class="card">
+
+      <h2>🩶 PZINHA CINZA</h2>
+
+      <img class="foto"
+           src="pzinha.cinza.jpeg"
+           alt="Pzinha Cinza">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo13">
+        WqKTxt0.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo13','msg13')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg13"></div>
+
+
+      <img class="foto"
+           src="bau.pz.jpeg"
+           alt="Pzinha Cinza Baú">
+
+      <div class="tipo">
+        📦 CÓDIGO DO BAÚ
+      </div>
+
+      <div class="codigo" id="codigo14">
+        Hr3D6gE.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo14','msg14')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg14"></div>
+
+    </div>
+
+
+    <!-- PZINHA VERMELHA -->
+
+    <div class="card">
+
+      <h2>❤️ PZINHA VERMELHA</h2>
+
+      <img class="foto"
+           src="pz.vermelha.jpeg"
+           alt="Pzinha Vermelha">
+
+      <div class="tipo">
+        🚛 CÓDIGO DA CABINE
+      </div>
+
+      <div class="codigo" id="codigo15">
+        MFDtQNB.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo15','msg15')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg15"></div>
+
+
+      <img class="foto"
+           src="carroceria.pz.jpeg"
+           alt="Pzinha Vermelha Carroceria">
+
+      <div class="tipo">
+        📦 CÓDIGO DA CARROCERIA
+      </div>
+
+      <div class="codigo" id="codigo16">
+        XhDEq93.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo16','msg16')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg16"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACESSÓRIOS -->
+
+  <hr class="separador">
+
+  <h2 class="titulo-secao">
+    🎁 ACESSÓRIOS
+  </h2>
+
+  <div class="grade">
+
+
+    <!-- BANDEIRA -->
+
+    <div class="card acessorio">
+
+      <h2>🚩 BANDEIRA</h2>
+
+      <img class="foto"
+           src="bandeira.jpeg"
+           alt="Bandeira">
+
+      <div class="tipo">
+        📋 CÓDIGO DA BANDEIRA
+      </div>
+
+      <div class="codigo" id="codigo17">
+        rCj9v38.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo17','msg17')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg17"></div>
+
+    </div>
+
+
+    <!-- LETREIRO -->
+
+    <div class="card acessorio">
+
+      <h2>💡 LETREIRO</h2>
+
+      <img class="foto"
+           src="letreiro.jpeg"
+           alt="Letreiro">
+
+      <div class="tipo">
+        📋 CÓDIGO DO LETREIRO
+      </div>
+
+      <div class="codigo" id="codigo18">
+        xvrsVp9.png
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo18','msg18')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg18"></div>
+
+    </div>
+
+
+    <!-- AVATAR -->
+
+    <div class="card acessorio">
+
+      <h2>👤 AVATAR</h2>
+
+      <img class="foto"
+           src="avatar.PNG"
+           alt="Avatar">
+
+      <div class="tipo">
+        📋 CÓDIGO DO AVATAR
+      </div>
+
+      <div class="codigo" id="codigo19">
+        1O4ehBZ.jpeg
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo19','msg19')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg19"></div>
+
+    </div>
+
+
+    <!-- VIDRO BOB VERMELHO -->
+
+    <div class="card acessorio">
+
+      <h2>🪟 VIDRO BOB VERMELHO</h2>
+
+      <img class="foto"
+           src="vidro.jpeg"
+           alt="Vidro Bob Vermelho">
+
+      <div class="tipo">
+        📋 CÓDIGO DO VIDRO
+      </div>
+
+      <div class="codigo" id="codigo20">
+        wBjsf0C.png
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo20','msg20')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg20"></div>
+
+    </div>
+
+
+    <!-- VIDRO BOB CINZA -->
+
+    <div class="card acessorio">
+
+      <h2>🪟 VIDRO BOB CINZA</h2>
+
+      <img class="foto"
+           src="vidro.b.jpeg"
+           alt="Vidro Bob Cinza">
+
+      <div class="tipo">
+        📋 CÓDIGO DO VIDRO
+      </div>
+
+      <div class="codigo" id="codigo21">
+        DnY6XoW.png
+      </div>
+
+      <button class="copiar"
+              onclick="copiar('codigo21','msg21')">
+        📋 COPIAR CÓDIGO
+      </button>
+
+      <div class="mensagem" id="msg21"></div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<script>
+
+  function copiar(idCodigo, idMensagem) {
+
+    const codigo =
+      document.getElementById(idCodigo).innerText.trim();
+
+    navigator.clipboard.writeText(codigo).then(function() {
+
+      document.getElementById(idMensagem).innerText =
+        "✅ Código copiado!";
+
+    });
+
+  }
+
+</script>
 
 </body>
 </html>
