@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santa Luzia Central</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    .cabecalho {
+      background: #ffffff;
+      text-align: center;
+      padding: 35px 20px 30px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .conteudo {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .grade {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .botao {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      padding: 22px;
+      text-decoration: none;
+      color: #222;
+      font-size: 17px;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      transition: 0.2s;
+    }
+
+    .botao:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.10);
+    }
+
+    .rodape {
+      text-align: center;
+      padding: 30px 20px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .grade {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="cabecalho">
+
+    <!-- Depois vamos colocar a logo oficial aqui -->
+    <div class="logo">🍅</div>
+
+    <h1>SANTA LUZIA CENTRAL</h1>
+
+    <p class="subtitulo">
+      Tudo da Santa Luzia em um só lugar.
+    </p>
+
+  </header>
+
+  <main class="conteudo">
+
+    <div class="grade">
+
+      <a class="botao" href="#">
+        🎨<br>SKINS
+      </a>
+
+      <a class="botao" href="#">
+        🚛<br>GLOBAL TRUCK
+      </a>
+
+      <a class="botao" href="#">
+        🚚<br>TRUCKERS
+      </a>
+
+      <a class="botao" href="#">
+        📖<br>COMO ENTRAR
+      </a>
+
+      <a class="botao" href="#">
+        🔗<br>LINKS
+      </a>
+
+      <a class="botao" href="#">
+        📰<br>NOTÍCIAS
+      </a>
+
+      <a class="botao" href="#">
+        🏆<br>EVENTOS
+      </a>
+
+      <a class="botao" href="#">
+        🏢<br>SOBRE NÓS
+      </a>
+
+    </div>
+
+  </main>
+
+  <footer class="rodape">
+    Santa Luzia Central • 2026
+  </footer>
+
+</body>
+</html>
