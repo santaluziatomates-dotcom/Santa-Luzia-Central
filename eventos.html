@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Eventos - Santa Luzia Central</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    header {
+      background: white;
+      text-align: center;
+      padding: 30px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      color: #666;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px 50px;
+    }
+
+    .voltar {
+      display: inline-block;
+      margin-bottom: 25px;
+      text-decoration: none;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .evento {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.09);
+    }
+
+    .imagem {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .conteudo {
+      padding: 28px;
+    }
+
+    .status {
+      display: inline-block;
+      background: #222;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .conteudo h2 {
+      font-size: 27px;
+      margin-bottom: 15px;
+    }
+
+    .conteudo p {
+      color: #555;
+      line-height: 1.7;
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .item {
+      background: #f3f3f3;
+      border-radius: 13px;
+      padding: 16px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .item span {
+      display: block;
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 5px;
+      font-weight: normal;
+    }
+
+    .como {
+      margin-top: 25px;
+    }
+
+    .como h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .etapas {
+      margin-top: 15px;
+    }
+
+    .etapa {
+      background: #f3f3f3;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .premio {
+      margin-top: 25px;
+      background: #222;
+      color: white;
+      padding: 22px;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    .premio h3 {
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .premio p {
+      color: white;
+      margin: 0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 700px) {
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .imagem {
+        height: 260px;
+      }
+
+      .conteudo {
+        padding: 20px;
+      }
+
+      .conteudo h2 {
+        font-size: 23px;
+      }
+
+      .info {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+<header>
+
+  <img class="logo"
+       src="IMG_6552.PNG"
+       alt="Santa Luzia">
+
+  <h1>EVENTOS</h1>
+
+  <p class="subtitulo">
+    Participe dos eventos da Santa Luzia
+  </p>
+
+</header>
+
+
+<main>
+
+
+  <a class="voltar" href="index.html">
+    ← Voltar para o início
+  </a>
+
+
+  <article class="evento">
+
+
+    <img class="imagem"
+         src="ev.pd.jpeg"
+         alt="Evento Santa Luzia">
+
+
+    <div class="conteudo">
+
+
+      <div class="status">
+        🔜 EM BREVE
+      </div>
+
+
+      <h2>
+        🏆 EVENTO SANTA LUZIA
+      </h2>
+
+
+      <p>
+        Prepare seu caminhão! Em breve teremos mais um evento
+        exclusivo da Santa Luzia.
+      </p>
+
+
+      <p>
+        Este evento é exclusivo para os membros do
+        <strong>grupo oficial da Santa Luzia</strong>.
+      </p>
+
+
+      <div class="info">
+
+
+        <div class="item">
+
+          <span>🎁 PREMIAÇÃO</span>
+
+          R$ 10,00
+
+        </div>
+
+
+        <div class="item">
+
+          <span>👥 PARTICIPAÇÃO</span>
+
+          Grupo oficial
+
+        </div>
+
+
+      </div>
+
+
+      <div class="como">
+
+
+        <h3>
+          📋 COMO PARTICIPAR
+        </h3>
+
+
+        <div class="etapas">
+
+          <div class="etapa">
+            📸 <strong>1.</strong> Envie uma foto do seu caminhão
+            dentro do período definido para o evento.
+          </div>
+
+          <div class="etapa">
+            👨‍⚖️ <strong>2.</strong> Os ADMs irão avaliar as fotos
+            enviadas.
+          </div>
+
+          <div class="etapa">
+            🏁 <strong>3.</strong> Os participantes classificados
+            avançam para as próximas fases.
+          </div>
+
+          <div class="etapa">
+            🏆 <strong>4.</strong> As fases continuam até chegar
+            à grande final.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="premio">
+
+        <h3>
+          🏆 PREMIAÇÃO
+        </h3>
+
+        <p>
+          R$ 10,00
+        </p>
+
+      </div>
+
+
+    </div>
+
+
+  </article>
+
+
+  <div class="rodape">
+
+    Santa Luzia Central<br>
+    Tudo da Santa Luzia em um só lugar.
+
+  </div>
+
+
+</main>
+
+
+</body>
+
+</html>
