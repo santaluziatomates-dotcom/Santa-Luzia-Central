@@ -1,0 +1,17 @@
+{
+  "name": "Santa Luzia Central",
+  "short_name": "Santa Luzia",
+  "description": "Central oficial da Santa Luzia. Skins, jogos, notícias, eventos, links e muito mais.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0b0b",
+  "theme_color": "#0b0b0b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./IMG_6552.PNG",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
