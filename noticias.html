@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Notícias - Santa Luzia Central</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    header {
+      background: white;
+      text-align: center;
+      padding: 30px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .subtitulo {
+      color: #666;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px 50px;
+    }
+
+    .voltar {
+      display: inline-block;
+      margin-bottom: 25px;
+      text-decoration: none;
+      color: #222;
+      font-weight: bold;
+    }
+
+    .noticia {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    .imagem {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .conteudo {
+      padding: 25px;
+    }
+
+    .categoria {
+      font-size: 13px;
+      font-weight: bold;
+      color: #777;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .conteudo h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .conteudo p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .destaque {
+      margin-top: 18px;
+      padding: 15px;
+      background: #f3f3f3;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      margin-top: 35px;
+    }
+
+    @media (max-width: 700px) {
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .imagem {
+        height: 250px;
+      }
+
+      .conteudo {
+        padding: 20px;
+      }
+
+      .conteudo h2 {
+        font-size: 21px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+<header>
+
+  <img class="logo"
+       src="IMG_6552.PNG"
+       alt="Santa Luzia">
+
+  <h1>NOTÍCIAS</h1>
+
+  <p class="subtitulo">
+    Fique por dentro das novidades da Santa Luzia
+  </p>
+
+</header>
+
+
+<main>
+
+
+  <a class="voltar" href="index.html">
+    ← Voltar para o início
+  </a>
+
+
+  <!-- NOTÍCIA 1 -->
+
+  <article class="noticia">
+
+    <img class="imagem"
+         src="rec.jpeg"
+         alt="Recrutamento Truckers Brasil Online">
+
+    <div class="conteudo">
+
+      <div class="categoria">
+        🚚 RECRUTAMENTO
+      </div>
+
+      <h2>
+        Santa Luzia está recrutando no Truckers Brasil Online!
+      </h2>
+
+      <p>
+        Quer fazer parte da nossa equipe no Truckers Brasil Online?
+        A Santa Luzia está de portas abertas para novos membros!
+      </p>
+
+      <div class="destaque">
+        🚚 Venha fazer parte da nossa equipe e rodar com a gente!
+      </div>
+
+    </div>
+
+  </article>
+
+
+  <!-- NOTÍCIA 2 -->
+
+  <article class="noticia">
+
+    <img class="imagem"
+         src="adm.jpeg"
+         alt="ADM do Mês - Fumaça">
+
+    <div class="conteudo">
+
+      <div class="categoria">
+        🏆 DESTAQUE DO MÊS
+      </div>
+
+      <h2>
+        Parabéns, ADM Fumaça!
+      </h2>
+
+      <p>
+        O mês de agosto chegou ao fim e temos um novo destaque!
+        Parabéns ao ADM Fumaça, que conquistou o título de
+        <strong>ADM do Mês</strong>.
+      </p>
+
+      <div class="destaque">
+        🏆 Primeiro título do Fumaça como ADM do Mês!
+        Parabéns pela conquista!
+      </div>
+
+    </div>
+
+  </article>
+
+
+  <div class="rodape">
+
+    Santa Luzia Central<br>
+    Tudo da Santa Luzia em um só lugar.
+
+  </div>
+
+
+</main>
+
+
+</body>
+
+</html>
