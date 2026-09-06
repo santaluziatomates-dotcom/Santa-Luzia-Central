@@ -10,15 +10,15 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "./logo.sta.PNG",
+      "src": "./logo.x.jpeg",
       "sizes": "192x192",
-      "type": "imagem/PNG",
+      "type": "imagem/jpeg",
       "purpose": "any"
     },
     {
-      "src": "./logo.512.PNG",
+      "src": "./logo.512.png",
       "sizes": "512x512",
-      "type": "imagem/PNG",
+      "type": "imagem/png",
       "purpose": "any"
     }
   ]
