@@ -12,13 +12,13 @@
     {
       "src": "./logo.sta.PNG",
       "sizes": "192x192",
-      "type": "imagem/png",
+      "type": "imagem/PNG",
       "purpose": "any"
     },
     {
-      "src": "./logo.512.png",
+      "src": "./logo.512.PNG",
       "sizes": "512x512",
-      "type": "imagem/png",
+      "type": "imagem/PNG",
       "purpose": "any"
     }
   ]
