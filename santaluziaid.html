@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Santa Luzia ID</title>
 
   <style>
@@ -43,12 +44,34 @@
       box-shadow: 0 3px 12px rgba(0,0,0,0.08);
     }
 
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #16803c;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .codigo {
       text-align: center;
       font-size: 32px;
       font-weight: bold;
       color: #16803c;
-      margin-bottom: 20px;
+      margin: 25px 0 20px;
     }
 
     .info {
@@ -71,6 +94,13 @@
       margin-top: 3px;
     }
 
+    .mensagem {
+      text-align: center;
+      margin-top: 15px;
+      color: #c62828;
+      font-weight: bold;
+    }
+
     .voltar {
       display: block;
       text-align: center;
@@ -84,59 +114,143 @@
 
 <body>
 
-  <header>
-    <h1>🍅 Santa Luzia ID</h1>
-    <p>Identificação oficial do motorista</p>
-  </header>
+<header>
+  <h1>🍅 Santa Luzia ID</h1>
+  <p>Identificação oficial dos motoristas</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div class="card">
+  <div class="card">
+
+    <input
+      type="text"
+      id="codigo"
+      placeholder="Digite o ID. Ex: SL-0004"
+      value="SL-0004"
+    >
+
+    <button onclick="buscarMotorista()">
+      CONSULTAR MOTORISTA
+    </button>
+
+    <div id="resultado"></div>
+
+  </div>
+
+  <a class="voltar" href="index.html">
+    ← Voltar para Santa Luzia Central
+  </a>
+
+</div>
+
+<script>
+
+const SUPABASE_URL = "https://cckypvqophyviphqhich.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+
+async function buscarMotorista() {
+
+  const codigo = document
+    .getElementById("codigo")
+    .value
+    .trim()
+    .toUpperCase();
+
+  const resultado = document.getElementById("resultado");
+
+  if (!codigo) {
+    resultado.innerHTML =
+      '<div class="mensagem">Digite um ID.</div>';
+    return;
+  }
+
+  resultado.innerHTML =
+    '<div style="text-align:center;margin-top:20px;">Consultando...</div>';
+
+  try {
+
+    const resposta = await fetch(
+      `${SUPABASE_URL}/rest/v1/motoristas?codigo=eq.${encodeURIComponent(codigo)}&select=*`,
+      {
+        method: "GET",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    if (!resposta.ok) {
+      throw new Error("Erro ao consultar o banco.");
+    }
+
+    const motoristas = await resposta.json();
+
+    if (motoristas.length === 0) {
+      resultado.innerHTML =
+        '<div class="mensagem">Motorista não encontrado.</div>';
+      return;
+    }
+
+    const motorista = motoristas[0];
+
+    resultado.innerHTML = `
 
       <div class="codigo">
-        SL-0004
+        ${motorista.codigo}
       </div>
 
       <div class="info">
         <div class="label">Nome</div>
-        <div class="valor">Motorista Teste</div>
+        <div class="valor">${motorista.nome || "-"}</div>
       </div>
 
       <div class="info">
         <div class="label">Apelido</div>
-        <div class="valor">Teste</div>
+        <div class="valor">${motorista.apelido || "-"}</div>
       </div>
 
       <div class="info">
         <div class="label">Cargo</div>
-        <div class="valor">Motorista</div>
+        <div class="valor">${motorista.cargo || "-"}</div>
       </div>
 
       <div class="info">
         <div class="label">Categoria CNH</div>
-        <div class="valor">D</div>
+        <div class="valor">${motorista.categoria || "-"}</div>
       </div>
 
       <div class="info">
         <div class="label">Nível</div>
-        <div class="valor">1</div>
+        <div class="valor">${motorista.nivel || 1}</div>
       </div>
 
       <div class="info">
         <div class="label">XP</div>
-        <div class="valor">0 XP</div>
+        <div class="valor">${motorista.xp || 0} XP</div>
       </div>
 
       <div class="info">
         <div class="label">Status</div>
-        <div class="valor">🟢 Ativo</div>
+        <div class="valor">
+          ${motorista.status === "ativo" ? "🟢 Ativo" : "🔴 " + motorista.status}
+        </div>
       </div>
 
-    </div>
+    `;
 
-    <a class="voltar" href="index.html">← Voltar para Santa Luzia Central</a>
+  } catch (erro) {
 
-  </div>
+    console.error(erro);
+
+    resultado.innerHTML =
+      '<div class="mensagem">Não foi possível consultar o motorista.</div>';
+  }
+}
+
+</script>
 
 </body>
 </html>
