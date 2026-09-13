@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Santa Luzia • Painel ADM</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6f4;
+      color: #222;
+    }
+
+    header {
+      background: white;
+      padding: 24px 15px;
+      text-align: center;
+      border-bottom: 4px solid #c62828;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #c62828;
+      font-size: 27px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      margin-bottom: 18px;
+    }
+
+    .titulo {
+      margin: 0 0 6px;
+      text-align: center;
+      color: #16803c;
+      font-size: 20px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin: 0 0 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 7px;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d8d8d8;
+      border-radius: 10px;
+      font-size: 15px;
+      background: white;
+      outline: none;
+      margin-bottom: 16px;
+    }
+
+    select:focus {
+      border-color: #16803c;
+    }
+
+    .motorista-info {
+      display: none;
+      background: #f5f7f6;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+      border-left: 4px solid #16803c;
+    }
+
+    .motorista-nome {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .motorista-detalhes {
+      margin-top: 5px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .missao-info {
+      display: none;
+      background: #f5f7f6;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+      border-left: 4px solid #16803c;
+    }
+
+    .missao-nome {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .missao-descricao {
+      color: #777;
+      font-size: 12px;
+      margin: 7px 0;
+      line-height: 1.4;
+    }
+
+    .missao-xp {
+      color: #16803c;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .botao {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #16803c;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .botao:active {
+      transform: scale(0.98);
+    }
+
+    .botao:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    .mensagem {
+      text-align: center;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .sucesso {
+      display: block;
+      background: #e8f5e9;
+      color: #16803c;
+    }
+
+    .erro {
+      display: block;
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .carregando {
+      text-align: center;
+      color: #16803c;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 10px;
+    }
+
+    .voltar {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #c62828;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .voltar:hover {
+      text-decoration: underline;
+    }
+
+    .aviso {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 12px;
+      color: #795548;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>👑 Santa Luzia ADM</h1>
+    <p>Painel de gerenciamento de missões</p>
+  </header>
+
+  <div class="container">
+
+    <div class="aviso">
+      ⚠️ <strong>Painel administrativo.</strong>
+      Use somente para conceder missões oficialmente realizadas pelos motoristas.
+    </div>
+
+    <div class="card">
+
+      <h2 class="titulo">
+        🎯 Concluir missão
+      </h2>
+
+      <p class="subtitulo">
+        Selecione o motorista e a missão.
+      </p>
+
+      <label for="motorista">
+        👤 Motorista
+      </label>
+
+      <select id="motorista" onchange="selecionarMotorista()">
+        <option value="">
+          Carregando motoristas...
+        </option>
+      </select>
+
+      <div id="motoristaInfo" class="motorista-info">
+        <div id="motoristaNome" class="motorista-nome"></div>
+        <div id="motoristaDetalhes" class="motorista-detalhes"></div>
+      </div>
+
+      <label for="missao">
+        🎯 Missão
+      </label>
+
+      <select id="missao" onchange="selecionarMissao()">
+        <option value="">
+          Carregando missões...
+        </option>
+      </select>
+
+      <div id="missaoInfo" class="missao-info">
+
+        <div id="missaoNome" class="missao-nome"></div>
+
+        <div id="missaoDescricao" class="missao-descricao"></div>
+
+        <div id="missaoXP" class="missao-xp"></div>
+
+      </div>
+
+      <button
+        id="botaoConcluir"
+        class="botao"
+        onclick="concluirMissao()"
+        disabled
+      >
+        ✅ CONCLUIR MISSÃO
+      </button>
+
+      <div id="mensagem" class="mensagem"></div>
+
+    </div>
+
+    <div class="card">
+
+      <h2 class="titulo">
+        📊 Como funciona
+      </h2>
+
+      <p style="
+        color:#666;
+        font-size:13px;
+        line-height:1.6;
+        margin:15px 0 0;
+      ">
+        1️⃣ Escolha o motorista.<br>
+        2️⃣ Escolha a missão realizada.<br>
+        3️⃣ Confira o XP da missão.<br>
+        4️⃣ Clique em concluir.<br>
+        5️⃣ O sistema registra a missão e adiciona o XP automaticamente.
+      </p>
+
+    </div>
+
+    <a class="voltar" href="index.html">
+      ← Voltar para Santa Luzia Central
+    </a>
+
+  </div>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://cckypvqophyviphqhich.supabase.co";
+
+    /*
+      MANTENHA A MESMA SUPABASE_KEY
+      QUE JÁ FUNCIONA NO SEU SANTA LUZIA ID.
+      
+      NÃO use service_role aqui.
+    */
+
+    const SUPABASE_KEY =
+      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+
+
+    let motoristas = [];
+    let missoes = [];
+
+
+    /* =========================
+       CARREGAR MOTORISTAS
+    ========================= */
+
+    async function carregarMotoristas() {
+
+      const select =
+        document.getElementById("motorista");
+
+      try {
+
+        const resposta = await fetch(
+          `${SUPABASE_URL}/rest/v1/motoristas?select=id,codigo,nome,apelido,cargo,xp,%22nível%22&order=id.asc`,
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+
+        if (!resposta.ok) {
+          throw new Error("Erro ao buscar motoristas.");
+        }
+
+        motoristas =
+          await resposta.json();
+
+        select.innerHTML =
+          '<option value="">Selecione um motorista</option>';
+
+        motoristas.forEach(motorista => {
+
+          const option =
+            document.createElement("option");
+
+          option.value =
+            motorista.id;
+
+          option.textContent =
+            `${motorista.codigo} • ${motorista.nome}`;
+
+          select.appendChild(option);
+
+        });
+
+      } catch (erro) {
+
+        console.error(erro);
+
+        select.innerHTML =
+          '<option value="">Erro ao carregar motoristas</option>';
+
+      }
+    }
+
+
+    /* =========================
+       CARREGAR MISSÕES
+    ========================= */
+
+    async function carregarMissoes() {
+
+      const select =
+        document.getElementById("missao");
+
+      try {
+
+        const resposta = await fetch(
+          `${SUPABASE_URL}/rest/v1/missoes?ativa=eq.true&select=id,nome,descricao,xp&order=id.asc`,
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+
+        if (!resposta.ok) {
+          throw new Error("Erro ao buscar missões.");
+        }
+
+        missoes =
+          await resposta.json();
+
+        select.innerHTML =
+          '<option value="">Selecione uma missão</option>';
+
+        missoes.forEach(missao => {
+
+          const option =
+            document.createElement("option");
+
+          option.value =
+            missao.id;
+
+          option.textContent =
+            `${missao.nome} • +${missao.xp} XP`;
+
+          select.appendChild(option);
+
+        });
+
+      } catch (erro) {
+
+        console.error(erro);
+
+        select.innerHTML =
+          '<option value="">Erro ao carregar missões</option>';
+
+      }
+    }
+
+
+    /* =========================
+       SELECIONAR MOTORISTA
+    ========================= */
+
+    function selecionarMotorista() {
+
+      const id =
+        Number(
+          document.getElementById("motorista").value
+        );
+
+      const info =
+        document.getElementById("motoristaInfo");
+
+      const motorista =
+        motoristas.find(
+          item => Number(item.id) === id
+        );
+
+      if (!motorista) {
+
+        info.style.display = "none";
+
+        atualizarBotao();
+
+        return;
+      }
+
+      document.getElementById("motoristaNome").textContent =
+        `${motorista.codigo} • ${motorista.nome}`;
+
+      document.getElementById("motoristaDetalhes").textContent =
+        `${motorista.cargo || "Motorista"} • ${motorista.xp || 0} XP • Nível ${motorista["nível"] || 1}`;
+
+      info.style.display = "block";
+
+      atualizarBotao();
+    }
+
+
+    /* =========================
+       SELECIONAR MISSÃO
+    ========================= */
+
+    function selecionarMissao() {
+
+      const id =
+        Number(
+          document.getElementById("missao").value
+        );
+
+      const info =
+        document.getElementById("missaoInfo");
+
+      const missao =
+        missoes.find(
+          item => Number(item.id) === id
+        );
+
+      if (!missao) {
+
+        info.style.display = "none";
+
+        atualizarBotao();
+
+        return;
+      }
+
+      document.getElementById("missaoNome").textContent =
+        `🎯 ${missao.nome}`;
+
+      document.getElementById("missaoDescricao").textContent =
+        missao.descricao || "Missão oficial da Santa Luzia.";
+
+      document.getElementById("missaoXP").textContent =
+        `⚡ +${missao.xp} XP`;
+
+      info.style.display = "block";
+
+      atualizarBotao();
+    }
+
+
+    /* =========================
+       HABILITAR BOTÃO
+    ========================= */
+
+    function atualizarBotao() {
+
+      const motorista =
+        document.getElementById("motorista").value;
+
+      const missao =
+        document.getElementById("missao").value;
+
+      const botao =
+        document.getElementById("botaoConcluir");
+
+      botao.disabled =
+        !(motorista && missao);
+    }
+
+
+    /* =========================
+       CONCLUIR MISSÃO
+    ========================= */
+
+    async function concluirMissao() {
+
+      const motoristaId =
+        document.getElementById("motorista").value;
+
+      const missaoId =
+        document.getElementById("missao").value;
+
+      const botao =
+        document.getElementById("botaoConcluir");
+
+      const mensagem =
+        document.getElementById("mensagem");
+
+      if (!motoristaId || !missaoId) {
+        return;
+      }
+
+      botao.disabled = true;
+
+      botao.textContent =
+        "PROCESSANDO...";
+
+      mensagem.className =
+        "mensagem";
+
+      mensagem.style.display =
+        "none";
+
+      try {
+
+        const resposta = await fetch(
+          `${SUPABASE_URL}/rest/v1/rpc/concluir_missao`,
+          {
+            method: "POST",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              p_motorista_id:
+                Number(motoristaId),
+
+              p_missao_id:
+                Number(missaoId)
+            })
+          }
+        );
+
+        const resultado =
+          await resposta.json();
+
+        if (!resposta.ok) {
+
+          throw new Error(
+            resultado.message ||
+            resultado.hint ||
+            "Não foi possível concluir a missão."
+          );
+        }
+
+        mensagem.className =
+          "mensagem sucesso";
+
+        mensagem.textContent =
+          `✅ Missão concluída! +${resultado.xp_ganho} XP. Total: ${resultado.xp_total} XP • Nível ${resultado.nivel}`;
+
+        mensagem.style.display =
+          "block";
+
+        /*
+          Atualiza os dados locais do motorista
+        */
+
+        const motorista =
+          motoristas.find(
+            item =>
+              Number(item.id) ===
+              Number(motoristaId)
+          );
+
+        if (motorista) {
+
+          motorista.xp =
+            resultado.xp_total;
+
+          motorista["nível"] =
+            resultado.nivel;
+
+          document.getElementById("motoristaDetalhes").textContent =
+            `${motorista.cargo || "Motorista"} • ${motorista.xp} XP • Nível ${motorista["nível"]}`;
+        }
+
+      } catch (erro) {
+
+        console.error(erro);
+
+        mensagem.className =
+          "mensagem erro";
+
+        mensagem.textContent =
+          "❌ " + erro.message;
+
+        mensagem.style.display =
+          "block";
+
+      } finally {
+
+        botao.disabled = false;
+
+        botao.textContent =
+          "✅ CONCLUIR MISSÃO";
+
+        atualizarBotao();
+      }
+    }
+
+
+    /* =========================
+       INICIAR
+    ========================= */
+
+    carregarMotoristas();
+
+    carregarMissoes();
+
+  </script>
+
+</body>
+</html>
