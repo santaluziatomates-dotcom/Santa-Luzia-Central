@@ -416,48 +416,11 @@ function gerarCNH() {
 
 
     /* =========================
-       COBRIR CAMPOS ANTIGOS
+       NÃO COBRIR OS CAMPOS
+       
+       Os campos da imagem-base
+       permanecem visíveis.
     ========================= */
-
-    ctx.fillStyle = "#e9f0f3";
-
-
-    /* Nome */
-    ctx.fillRect(
-      620,
-      285,
-      800,
-      60
-    );
-
-
-    /* Categoria */
-    ctx.fillRect(
-      620,
-      450,
-      390,
-      55
-    );
-
-
-    /* Validade */
-    ctx.fillRect(
-      1090,
-      445,
-      320,
-      60
-    );
-
-
-    /* Tipo de veículo
-       campo inteiro
-    */
-    ctx.fillRect(
-      620,
-      850,
-      800,
-      55
-    );
 
 
     /* =========================
@@ -466,7 +429,7 @@ function gerarCNH() {
 
     ctx.fillStyle = "#111";
 
-    ctx.font = "bold 34px Arial";
+    ctx.font = "bold 30px Arial";
 
     ctx.fillText(
       nome.toUpperCase(),
@@ -526,14 +489,6 @@ function gerarCNH() {
     }
 
 
-    /*
-      AQUI ESTÁ A CORREÇÃO:
-
-      Antes o texto estava muito alto.
-      Agora ele fica mais abaixo,
-      dentro do campo.
-    */
-
     ctx.font = "bold 30px Arial";
 
     ctx.fillText(
@@ -543,7 +498,9 @@ function gerarCNH() {
     );
 
 
-    /* MOSTRAR RESULTADO */
+    /* =========================
+       MOSTRAR RESULTADO
+    ========================= */
 
     document
       .getElementById("formulario")
