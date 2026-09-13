@@ -133,8 +133,7 @@
       margin-top: 15px;
     }
 
-    .botoes button,
-    .voltar {
+    .botoes button {
       flex: 1;
       padding: 14px;
       border-radius: 10px;
@@ -142,8 +141,6 @@
       font-size: 15px;
       font-weight: bold;
       cursor: pointer;
-      text-decoration: none;
-      text-align: center;
     }
 
     .baixar {
@@ -162,6 +159,11 @@
       color: #222;
       border: 1px solid #ddd;
       margin-top: 15px;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: bold;
     }
 
     .aviso {
@@ -182,82 +184,82 @@
 
 <body>
 
-  <header class="topo">
-    <h1>🪪 CRIAR MINHA CNH</h1>
-    <p>Habilitação interna da Santa Luzia Tomates</p>
-  </header>
+<header class="topo">
+  <h1>🪪 CRIAR MINHA CNH</h1>
+  <p>Habilitação interna da Santa Luzia Tomates</p>
+</header>
 
-  <main class="container">
+<main class="container">
 
-    <section class="card" id="formulario">
+  <section class="card" id="formulario">
 
-      <label for="foto">📷 Sua foto</label>
+    <label for="foto">📷 Sua foto</label>
 
-      <div class="foto-area">
-        <img id="fotoPreview" class="foto-preview">
-
-        <input
-          type="file"
-          id="foto"
-          accept="image/*"
-        >
-      </div>
-
-      <label for="nome">👤 Nome completo</label>
+    <div class="foto-area">
+      <img id="fotoPreview" class="foto-preview">
 
       <input
-        type="text"
-        id="nome"
-        placeholder="Digite seu nome"
-        maxlength="35"
+        type="file"
+        id="foto"
+        accept="image/*"
       >
+    </div>
 
-      <label for="categoria">🚛 Categoria</label>
+    <label for="nome">👤 Nome completo</label>
 
-      <select id="categoria">
-        <option value="">Selecione uma categoria</option>
-        <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="D/E">D/E</option>
-      </select>
+    <input
+      type="text"
+      id="nome"
+      placeholder="Digite seu nome"
+      maxlength="35"
+    >
 
-      <button class="botao-gerar" onclick="gerarCNH()">
-        GERAR MINHA CNH
+    <label for="categoria">🚛 Categoria</label>
+
+    <select id="categoria">
+      <option value="">Selecione uma categoria</option>
+      <option value="D">D</option>
+      <option value="E">E</option>
+      <option value="D/E">D/E</option>
+    </select>
+
+    <button class="botao-gerar" onclick="gerarCNH()">
+      GERAR MINHA CNH
+    </button>
+
+    <p class="aviso">
+      Documento interno de habilitação da Santa Luzia Tomates.
+      Não substitui documento oficial de trânsito.
+    </p>
+
+  </section>
+
+
+  <section class="card resultado" id="resultado">
+
+    <div class="cnh-preview">
+      <canvas id="canvasCNH" width="1536" height="999"></canvas>
+    </div>
+
+    <div class="botoes">
+
+      <button class="baixar" onclick="baixarCNH()">
+        📥 BAIXAR CNH
       </button>
 
-      <p class="aviso">
-        Documento interno de habilitação da Santa Luzia Tomates.
-        Não substitui documento oficial de trânsito.
-      </p>
+      <button class="nova" onclick="novaCNH()">
+        🔄 CRIAR OUTRA
+      </button>
 
-    </section>
+    </div>
 
+  </section>
 
-    <section class="card resultado" id="resultado">
+  <a href="index.html" class="voltar">
+    ← Voltar para Santa Luzia Central
+  </a>
 
-      <div class="cnh-preview">
-        <canvas id="canvasCNH" width="1536" height="999"></canvas>
-      </div>
-
-      <div class="botoes">
-
-        <button class="baixar" onclick="baixarCNH()">
-          📥 BAIXAR CNH
-        </button>
-
-        <button class="nova" onclick="novaCNH()">
-          🔄 CRIAR OUTRA
-        </button>
-
-      </div>
-
-    </section>
-
-    <a href="index.html" class="voltar">
-      ← Voltar para Santa Luzia Central
-    </a>
-
-  </main>
+</main>
 
 
 <script>
@@ -266,6 +268,11 @@ const fotoInput = document.getElementById("foto");
 const fotoPreview = document.getElementById("fotoPreview");
 
 let imagemUsuario = null;
+
+
+/* =========================
+   CARREGAR FOTO
+========================= */
 
 fotoInput.addEventListener("change", function() {
 
@@ -294,6 +301,10 @@ fotoInput.addEventListener("change", function() {
 });
 
 
+/* =========================
+   DATA
+========================= */
+
 function formatarData(data) {
 
   const dia = String(data.getDate()).padStart(2, "0");
@@ -304,6 +315,10 @@ function formatarData(data) {
 
 }
 
+
+/* =========================
+   GERAR CNH
+========================= */
 
 function gerarCNH() {
 
@@ -338,35 +353,56 @@ function gerarCNH() {
 
   const base = new Image();
 
+
   base.onload = function() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Base original da CNH
-    ctx.drawImage(base, 0, 0, 1536, 999);
+    /* BASE ORIGINAL */
+    ctx.drawImage(
+      base,
+      0,
+      0,
+      1536,
+      999
+    );
 
 
-    /*
-      FOTO
-      Área aproximada da foto da CNH.
-    */
+    /* =========================
+       FOTO
+    ========================= */
 
     ctx.save();
 
     ctx.beginPath();
-    ctx.rect(148, 220, 412, 510);
+
+    ctx.rect(
+      148,
+      220,
+      412,
+      510
+    );
+
     ctx.clip();
+
 
     const proporcao = Math.max(
       412 / imagemUsuario.width,
       510 / imagemUsuario.height
     );
 
-    const largura = imagemUsuario.width * proporcao;
-    const altura = imagemUsuario.height * proporcao;
+    const largura =
+      imagemUsuario.width * proporcao;
 
-    const x = 148 + (412 - largura) / 2;
-    const y = 220 + (510 - altura) / 2;
+    const altura =
+      imagemUsuario.height * proporcao;
+
+    const x =
+      148 + (412 - largura) / 2;
+
+    const y =
+      220 + (510 - altura) / 2;
+
 
     ctx.drawImage(
       imagemUsuario,
@@ -379,31 +415,57 @@ function gerarCNH() {
     ctx.restore();
 
 
-    /*
-      APAGA OS CAMPOS ANTIGOS
-      para colocar os dados da nova CNH.
-    */
+    /* =========================
+       COBRIR CAMPOS ANTIGOS
+    ========================= */
 
     ctx.fillStyle = "#e9f0f3";
 
-    // Nome
-    ctx.fillRect(620, 285, 800, 60);
 
-    // Categoria
-    ctx.fillRect(620, 450, 390, 55);
-
-    // Validade
-    ctx.fillRect(1090, 445, 320, 60);
-
-    // Tipo de veículo
-    ctx.fillRect(620, 810, 800, 80);
+    /* Nome */
+    ctx.fillRect(
+      620,
+      285,
+      800,
+      60
+    );
 
 
-    /*
-      NOME
+    /* Categoria */
+    ctx.fillRect(
+      620,
+      450,
+      390,
+      55
+    );
+
+
+    /* Validade */
+    ctx.fillRect(
+      1090,
+      445,
+      320,
+      60
+    );
+
+
+    /* Tipo de veículo
+       campo inteiro
     */
+    ctx.fillRect(
+      620,
+      810,
+      800,
+      80
+    );
+
+
+    /* =========================
+       NOME
+    ========================= */
 
     ctx.fillStyle = "#111";
+
     ctx.font = "bold 34px Arial";
 
     ctx.fillText(
@@ -413,9 +475,9 @@ function gerarCNH() {
     );
 
 
-    /*
-      CATEGORIA
-    */
+    /* =========================
+       CATEGORIA
+    ========================= */
 
     ctx.font = "bold 42px Arial";
 
@@ -426,10 +488,9 @@ function gerarCNH() {
     );
 
 
-    /*
-      VALIDADE
-      1 ano a partir da criação.
-    */
+    /* =========================
+       VALIDADE
+    ========================= */
 
     const validade = new Date();
 
@@ -446,9 +507,9 @@ function gerarCNH() {
     );
 
 
-    /*
-      TIPO DE VEÍCULO
-    */
+    /* =========================
+       TIPO DE VEÍCULO
+    ========================= */
 
     let tipoVeiculo = "";
 
@@ -464,14 +525,25 @@ function gerarCNH() {
       tipoVeiculo = "BITRUCK + CARRETA";
     }
 
-    ctx.font = "bold 34px Arial";
+
+    /*
+      AQUI ESTÁ A CORREÇÃO:
+
+      Antes o texto estava muito alto.
+      Agora ele fica mais abaixo,
+      dentro do campo.
+    */
+
+    ctx.font = "bold 30px Arial";
 
     ctx.fillText(
       tipoVeiculo,
       625,
-      860
+      875
     );
 
+
+    /* MOSTRAR RESULTADO */
 
     document
       .getElementById("formulario")
@@ -481,6 +553,7 @@ function gerarCNH() {
       .getElementById("resultado")
       .style.display = "block";
 
+
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -489,47 +562,250 @@ function gerarCNH() {
   };
 
 
-  /*
-    IMPORTANTE:
-    o arquivo da base precisa estar
-    no mesmo local do cnh.html.
-  */
+  base.onerror = function() {
+
+    alert(
+      "Não foi possível carregar a base da CNH. " +
+      "Verifique se o arquivo cnh-base.png está no mesmo local do cnh.html."
+    );
+
+  };
+
 
   base.src = "cnh-base.png";
 
 }
 
 
-function baixarCNH() {
+/* =========================
+   BAIXAR / COMPARTILHAR CNH
+========================= */
 
-  const canvas = document.getElementById("canvasCNH");
+async function baixarCNH() {
 
-  const link = document.createElement("a");
+  const canvas =
+    document.getElementById("canvasCNH");
 
-  link.download = "CNH-Santa-Luzia.png";
 
-  link.href = canvas.toDataURL("image/png");
+  try {
 
-  link.click();
+    /* Transformar Canvas em arquivo */
+    const blob = await new Promise(
+      function(resolve) {
+        canvas.toBlob(
+          resolve,
+          "image/png",
+          1
+        );
+      }
+    );
+
+
+    if (!blob) {
+      throw new Error("Não foi possível criar o arquivo.");
+    }
+
+
+    const arquivo = new File(
+      [blob],
+      "CNH-Santa-Luzia.png",
+      {
+        type: "image/png"
+      }
+    );
+
+
+    /*
+      iPhone / Android modernos:
+      abre o menu nativo de compartilhamento.
+    */
+
+    if (
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({
+        files: [arquivo]
+      })
+    ) {
+
+      await navigator.share({
+        title: "Minha CNH Santa Luzia",
+        text: "CNH interna da Santa Luzia Tomates",
+        files: [arquivo]
+      });
+
+      return;
+    }
+
+
+    /*
+      Caso o compartilhamento não esteja disponível,
+      tenta fazer o download normal.
+    */
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+    link.download = "CNH-Santa-Luzia.png";
+
+    link.style.display = "none";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+      function() {
+        URL.revokeObjectURL(url);
+      },
+      3000
+    );
+
+
+    /*
+      Alguns navegadores bloqueiam downloads.
+      Nesse caso abrimos a CNH para o usuário
+      salvar manualmente.
+    */
+
+    setTimeout(
+      function() {
+
+        if (
+          document.visibilityState === "visible"
+        ) {
+
+          const janela =
+            window.open(url, "_blank");
+
+          if (!janela) {
+
+            alert(
+              "O navegador bloqueou o download. " +
+              "Toque e segure na imagem da CNH para salvá-la."
+            );
+
+          }
+
+        }
+
+      },
+      800
+    );
+
+
+  } catch (erro) {
+
+    console.log(
+      "Erro ao baixar CNH:",
+      erro
+    );
+
+
+    /*
+      Último recurso:
+      abrir a imagem diretamente.
+    */
+
+    const imagem =
+      canvas.toDataURL("image/png");
+
+    const novaAba =
+      window.open("", "_blank");
+
+
+    if (novaAba) {
+
+      novaAba.document.write(`
+        <html>
+        <head>
+          <meta name="viewport"
+                content="width=device-width, initial-scale=1.0">
+          <title>Minha CNH Santa Luzia</title>
+        </head>
+
+        <body style="
+          margin:0;
+          background:#222;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          min-height:100vh;
+        ">
+
+          <img
+            src="${imagem}"
+            style="
+              max-width:100%;
+              height:auto;
+            "
+          >
+
+        </body>
+        </html>
+      `);
+
+      novaAba.document.close();
+
+    } else {
+
+      alert(
+        "Não foi possível abrir a CNH. " +
+        "Verifique se o navegador permite novas abas."
+      );
+
+    }
+
+  }
 
 }
 
 
+/* =========================
+   CRIAR OUTRA
+========================= */
+
 function novaCNH() {
 
-  document.getElementById("resultado").style.display = "none";
+  document
+    .getElementById("resultado")
+    .style.display = "none";
 
-  document.getElementById("formulario").style.display = "block";
 
-  document.getElementById("nome").value = "";
+  document
+    .getElementById("formulario")
+    .style.display = "block";
 
-  document.getElementById("categoria").value = "";
 
-  document.getElementById("foto").value = "";
+  document
+    .getElementById("nome")
+    .value = "";
 
-  document.getElementById("fotoPreview").style.display = "none";
+
+  document
+    .getElementById("categoria")
+    .value = "";
+
+
+  document
+    .getElementById("foto")
+    .value = "";
+
+
+  document
+    .getElementById("fotoPreview")
+    .style.display = "none";
+
 
   imagemUsuario = null;
+
 
   window.scrollTo({
     top: 0,
