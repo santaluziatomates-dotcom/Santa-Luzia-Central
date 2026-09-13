@@ -224,6 +224,91 @@
       font-size: 14px;
     }
 
+    /* =========================
+       MISSÕES
+    ========================= */
+
+    .missoes-area {
+      margin-top: 25px;
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .missoes-titulo {
+      margin: 0;
+      text-align: center;
+      color: #16803c;
+      font-size: 20px;
+    }
+
+    .missoes-subtitulo {
+      margin: 7px 0 18px;
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .missao {
+      background: #f5f7f6;
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid #16803c;
+    }
+
+    .missao:last-child {
+      margin-bottom: 0;
+    }
+
+    .missao-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .missao-nome {
+      font-size: 15px;
+      font-weight: bold;
+      color: #222;
+      line-height: 1.3;
+    }
+
+    .missao-xp {
+      flex-shrink: 0;
+      background: #16803c;
+      color: white;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .missao-descricao {
+      margin: 8px 0 0;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .carregando-missoes {
+      text-align: center;
+      color: #16803c;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 15px 0;
+    }
+
+    .erro-missoes {
+      text-align: center;
+      color: #c62828;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 10px 0;
+    }
+
     .rodape-perfil {
       margin-top: 18px;
       text-align: center;
@@ -261,6 +346,7 @@
     }
 
     @media (max-width: 380px) {
+
       .dados {
         grid-template-columns: 1fr;
       }
@@ -271,6 +357,14 @@
 
       .nome {
         font-size: 21px;
+      }
+
+      .missao-topo {
+        flex-direction: column;
+      }
+
+      .missao-xp {
+        align-self: flex-start;
       }
     }
   </style>
@@ -287,7 +381,9 @@
 
     <div class="card">
 
-      <h2 class="titulo-consulta">Consultar motorista</h2>
+      <h2 class="titulo-consulta">
+        Consultar motorista
+      </h2>
 
       <input
         type="text"
@@ -304,6 +400,25 @@
 
     </div>
 
+    <!-- MISSÕES -->
+    <div class="missoes-area">
+
+      <h2 class="missoes-titulo">
+        🎯 Missões Santa Luzia
+      </h2>
+
+      <p class="missoes-subtitulo">
+        Complete missões e conquiste XP para evoluir seu nível.
+      </p>
+
+      <div id="listaMissoes">
+        <div class="carregando-missoes">
+          Carregando missões...
+        </div>
+      </div>
+
+    </div>
+
     <a class="voltar" href="index.html">
       ← Voltar para Santa Luzia Central
     </a>
@@ -315,6 +430,10 @@
     const SUPABASE_URL =
       "https://cckypvqophyviphqhich.supabase.co";
 
+    /*
+      MANTENHA A SUA SUPABASE_KEY ATUAL AQUI.
+      Não coloque uma service_role key.
+    */
     const SUPABASE_KEY =
       "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
@@ -340,11 +459,14 @@
         .trim()
         .toUpperCase();
 
-      const resultado = document.getElementById("resultado");
+      const resultado =
+        document.getElementById("resultado");
 
       if (!codigo) {
+
         resultado.innerHTML =
           '<div class="mensagem">Digite um ID.</div>';
+
         return;
       }
 
@@ -357,6 +479,7 @@
           `${SUPABASE_URL}/rest/v1/motoristas?codigo=eq.${encodeURIComponent(codigo)}&select=*`,
           {
             method: "GET",
+
             headers: {
               "apikey": SUPABASE_KEY,
               "Authorization": `Bearer ${SUPABASE_KEY}`
@@ -368,27 +491,36 @@
           throw new Error("Erro ao consultar o banco.");
         }
 
-        const motoristas = await resposta.json();
+        const motoristas =
+          await resposta.json();
 
         if (motoristas.length === 0) {
+
           resultado.innerHTML =
             '<div class="mensagem">Motorista não encontrado.</div>';
+
           return;
         }
 
-        const motorista = motoristas[0];
+        const motorista =
+          motoristas[0];
 
-        const nivel = Number(motorista["nível"] || 1);
-        const xp = Number(motorista.xp || 0);
+        const nivel =
+          Number(motorista["nível"] || 1);
+
+        const xp =
+          Number(motorista.xp || 0);
 
         const xpNecessario = 100;
 
-        const progresso = Math.min(
-          (xp / xpNecessario) * 100,
-          100
-        );
+        const progresso =
+          Math.min(
+            (xp / xpNecessario) * 100,
+            100
+          );
 
-        const tituloNivel = nomeDoNivel(nivel);
+        const tituloNivel =
+          nomeDoNivel(nivel);
 
         const statusAtivo =
           String(motorista.status).toLowerCase() === "ativo";
@@ -399,7 +531,9 @@
 
             <div class="perfil-topo">
 
-              <small>IDENTIFICAÇÃO OFICIAL</small>
+              <small>
+                IDENTIFICAÇÃO OFICIAL
+              </small>
 
               <div class="codigo">
                 ${motorista.codigo}
@@ -424,35 +558,51 @@
               <div class="dados">
 
                 <div class="info">
-                  <span class="label">Cargo</span>
+
+                  <span class="label">
+                    Cargo
+                  </span>
 
                   <span class="valor">
                     ${motorista.cargo || "-"}
                   </span>
+
                 </div>
 
                 <div class="info">
-                  <span class="label">Categoria CNH</span>
+
+                  <span class="label">
+                    Categoria CNH
+                  </span>
 
                   <span class="valor">
                     ${motorista.categoria || "-"}
                   </span>
+
                 </div>
 
                 <div class="info">
-                  <span class="label">Nível</span>
+
+                  <span class="label">
+                    Nível
+                  </span>
 
                   <span class="valor">
                     ⭐ Nível ${nivel}
                   </span>
+
                 </div>
 
                 <div class="info">
-                  <span class="label">Experiência</span>
+
+                  <span class="label">
+                    Experiência
+                  </span>
 
                   <span class="valor">
                     ⚡ ${xp} XP
                   </span>
+
                 </div>
 
               </div>
@@ -487,7 +637,9 @@
                 ${
                   statusAtivo
                     ? "🟢 Motorista ativo"
-                    : "🔴 " + (motorista.status || "Status não informado")
+                    : "🔴 " +
+                      (motorista.status ||
+                      "Status não informado")
                 }
 
               </div>
@@ -512,17 +664,106 @@
       }
     }
 
-    document
-      .getElementById("codigo")
-      .addEventListener("keydown", function(event) {
 
-        if (event.key === "Enter") {
-          buscarMotorista();
+    /* =========================
+       BUSCAR MISSÕES
+    ========================= */
+
+    async function carregarMissoes() {
+
+      const lista =
+        document.getElementById("listaMissoes");
+
+      try {
+
+        const resposta = await fetch(
+          `${SUPABASE_URL}/rest/v1/missoes?ativa=eq.true&select=id,nome,descricao,xp&order=id.asc`,
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+
+        if (!resposta.ok) {
+          throw new Error("Erro ao buscar missões.");
         }
 
-      });
+        const missoes =
+          await resposta.json();
+
+        if (missoes.length === 0) {
+
+          lista.innerHTML =
+            '<div class="erro-missoes">Nenhuma missão disponível no momento.</div>';
+
+          return;
+        }
+
+        lista.innerHTML =
+          missoes.map(missao => `
+
+            <div class="missao">
+
+              <div class="missao-topo">
+
+                <div class="missao-nome">
+                  🎯 ${missao.nome}
+                </div>
+
+                <div class="missao-xp">
+                  +${missao.xp} XP
+                </div>
+
+              </div>
+
+              <p class="missao-descricao">
+                ${missao.descricao || "Missão oficial da Santa Luzia."}
+              </p>
+
+            </div>
+
+          `).join("");
+
+      } catch (erro) {
+
+        console.error(erro);
+
+        lista.innerHTML =
+          '<div class="erro-missoes">Não foi possível carregar as missões.</div>';
+
+      }
+    }
+
+
+    /* =========================
+       ENTER NO CAMPO
+    ========================= */
+
+    document
+      .getElementById("codigo")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (event.key === "Enter") {
+            buscarMotorista();
+          }
+
+        }
+      );
+
+
+    /* =========================
+       INICIAR
+    ========================= */
 
     buscarMotorista();
+
+    carregarMissoes();
 
   </script>
 
