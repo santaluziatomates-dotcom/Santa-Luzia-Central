@@ -132,8 +132,16 @@
       text-align: center;
       color: #777;
       margin-top: 6px;
-      margin-bottom: 22px;
+      margin-bottom: 12px;
       font-size: 15px;
+    }
+
+    .titulo-nivel {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #16803c;
+      margin-bottom: 22px;
     }
 
     .dados {
@@ -310,6 +318,20 @@
     const SUPABASE_KEY =
       "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
+    function nomeDoNivel(nivel) {
+
+      const niveis = {
+        1: "🟢 Recruta",
+        2: "🚛 Motorista",
+        3: "⭐ Motorista Oficial",
+        4: "🏅 Sênior",
+        5: "🔥 Elite",
+        6: "👑 Lenda"
+      };
+
+      return niveis[nivel] || "🚛 Motorista";
+    }
+
     async function buscarMotorista() {
 
       const codigo = document
@@ -356,17 +378,17 @@
 
         const motorista = motoristas[0];
 
-        const nivel = motorista["nível"] || 1;
-        const xp = motorista.xp || 0;
-
-        const xpAtual = Number(xp);
-        const nivelAtual = Number(nivel);
+        const nivel = Number(motorista["nível"] || 1);
+        const xp = Number(motorista.xp || 0);
 
         const xpNecessario = 100;
+
         const progresso = Math.min(
-          (xpAtual / xpNecessario) * 100,
+          (xp / xpNecessario) * 100,
           100
         );
+
+        const tituloNivel = nomeDoNivel(nivel);
 
         const statusAtivo =
           String(motorista.status).toLowerCase() === "ativo";
@@ -376,11 +398,13 @@
           <div class="perfil">
 
             <div class="perfil-topo">
+
               <small>IDENTIFICAÇÃO OFICIAL</small>
 
               <div class="codigo">
                 ${motorista.codigo}
               </div>
+
             </div>
 
             <div class="perfil-corpo">
@@ -393,10 +417,15 @@
                 ${motorista.apelido || "-"}
               </div>
 
+              <div class="titulo-nivel">
+                ${tituloNivel} • Nível ${nivel}
+              </div>
+
               <div class="dados">
 
                 <div class="info">
                   <span class="label">Cargo</span>
+
                   <span class="valor">
                     ${motorista.cargo || "-"}
                   </span>
@@ -404,6 +433,7 @@
 
                 <div class="info">
                   <span class="label">Categoria CNH</span>
+
                   <span class="valor">
                     ${motorista.categoria || "-"}
                   </span>
@@ -411,15 +441,17 @@
 
                 <div class="info">
                   <span class="label">Nível</span>
+
                   <span class="valor">
-                    ⭐ Nível ${nivelAtual}
+                    ⭐ Nível ${nivel}
                   </span>
                 </div>
 
                 <div class="info">
                   <span class="label">Experiência</span>
+
                   <span class="valor">
-                    ⚡ ${xpAtual} XP
+                    ⚡ ${xp} XP
                   </span>
                 </div>
 
@@ -428,28 +460,36 @@
               <div class="progresso-area">
 
                 <div class="progresso-topo">
+
                   <span class="progresso-titulo">
                     Progresso do nível
                   </span>
 
                   <span class="progresso-xp">
-                    ${xpAtual} / ${xpNecessario} XP
+                    ${xp} / ${xpNecessario} XP
                   </span>
+
                 </div>
 
                 <div class="barra">
+
                   <div
                     class="barra-preenchida"
                     style="width: ${progresso}%"
                   ></div>
+
                 </div>
 
               </div>
 
               <div class="status">
-                ${statusAtivo
-                  ? "🟢 Motorista ativo"
-                  : "🔴 " + (motorista.status || "Status não informado")}
+
+                ${
+                  statusAtivo
+                    ? "🟢 Motorista ativo"
+                    : "🔴 " + (motorista.status || "Status não informado")
+                }
+
               </div>
 
               <div class="rodape-perfil">
@@ -468,15 +508,18 @@
 
         resultado.innerHTML =
           '<div class="mensagem">Não foi possível consultar o motorista.</div>';
+
       }
     }
 
     document
       .getElementById("codigo")
       .addEventListener("keydown", function(event) {
+
         if (event.key === "Enter") {
           buscarMotorista();
         }
+
       });
 
     buscarMotorista();
