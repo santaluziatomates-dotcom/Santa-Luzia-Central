@@ -47,7 +47,7 @@
       background: white;
       border-radius: 18px;
       padding: 22px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
       margin-bottom: 18px;
     }
 
@@ -73,6 +73,7 @@
       margin-bottom: 7px;
     }
 
+    input,
     select {
       width: 100%;
       padding: 14px;
@@ -84,55 +85,9 @@
       margin-bottom: 16px;
     }
 
+    input:focus,
     select:focus {
       border-color: #16803c;
-    }
-
-    .motorista-info {
-      display: none;
-      background: #f5f7f6;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-      border-left: 4px solid #16803c;
-    }
-
-    .motorista-nome {
-      font-size: 17px;
-      font-weight: bold;
-    }
-
-    .motorista-detalhes {
-      margin-top: 5px;
-      color: #777;
-      font-size: 12px;
-    }
-
-    .missao-info {
-      display: none;
-      background: #f5f7f6;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-      border-left: 4px solid #16803c;
-    }
-
-    .missao-nome {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .missao-descricao {
-      color: #777;
-      font-size: 12px;
-      margin: 7px 0;
-      line-height: 1.4;
-    }
-
-    .missao-xp {
-      color: #16803c;
-      font-size: 15px;
-      font-weight: bold;
     }
 
     .botao {
@@ -154,6 +109,45 @@
     .botao:disabled {
       background: #aaa;
       cursor: not-allowed;
+    }
+
+    .botao-sair {
+      margin-top: 10px;
+      background: #c62828;
+    }
+
+    .motorista-info,
+    .missao-info {
+      display: none;
+      background: #f5f7f6;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+      border-left: 4px solid #16803c;
+    }
+
+    .motorista-nome,
+    .missao-nome {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .motorista-detalhes,
+    .missao-descricao {
+      margin-top: 5px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .missao-descricao {
+      margin: 7px 0;
+      line-height: 1.4;
+    }
+
+    .missao-xp {
+      color: #16803c;
+      font-size: 15px;
+      font-weight: bold;
     }
 
     .mensagem {
@@ -196,10 +190,6 @@
       font-size: 14px;
     }
 
-    .voltar:hover {
-      text-decoration: underline;
-    }
-
     .aviso {
       background: #fff8e1;
       border-left: 4px solid #f9a825;
@@ -210,17 +200,95 @@
       color: #795548;
       line-height: 1.4;
     }
+
+    #painelADM {
+      display: none;
+    }
+
+    #loginADM {
+      display: block;
+    }
+
+    .usuario-logado {
+      background: #e8f5e9;
+      color: #16803c;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>👑 Santa Luzia ADM</h1>
-    <p>Painel de gerenciamento de missões</p>
-  </header>
+<header>
+  <h1>👑 Santa Luzia ADM</h1>
+  <p>Painel administrativo</p>
+</header>
 
-  <div class="container">
+<div class="container">
+
+  <!-- =========================
+       LOGIN
+  ========================== -->
+
+  <div id="loginADM" class="card">
+
+    <h2 class="titulo">
+      🔐 Acesso ADM
+    </h2>
+
+    <p class="subtitulo">
+      Entre com sua conta administrativa.
+    </p>
+
+    <label for="email">
+      📧 E-mail
+    </label>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Digite seu e-mail"
+      autocomplete="email"
+    >
+
+    <label for="senha">
+      🔑 Senha
+    </label>
+
+    <input
+      type="password"
+      id="senha"
+      placeholder="Digite sua senha"
+      autocomplete="current-password"
+    >
+
+    <button
+      class="botao"
+      id="botaoLogin"
+      onclick="entrarADM()"
+    >
+      🔐 ENTRAR NO ADM
+    </button>
+
+    <div id="mensagemLogin" class="mensagem"></div>
+
+  </div>
+
+
+  <!-- =========================
+       PAINEL ADM
+  ========================== -->
+
+  <div id="painelADM">
+
+    <div class="usuario-logado">
+      👑 Acesso autorizado • Santa Luzia ADM
+    </div>
 
     <div class="aviso">
       ⚠️ <strong>Painel administrativo.</strong>
@@ -283,6 +351,13 @@
 
       <div id="mensagem" class="mensagem"></div>
 
+      <button
+        class="botao botao-sair"
+        onclick="sairADM()"
+      >
+        🚪 SAIR DO ADM
+      </button>
+
     </div>
 
     <div class="card">
@@ -306,387 +381,719 @@
 
     </div>
 
-    <a class="voltar" href="index.html">
-      ← Voltar para Santa Luzia Central
-    </a>
-
   </div>
 
-  <script>
+  <a class="voltar" href="index.html">
+    ← Voltar para Santa Luzia Central
+  </a>
 
-    const SUPABASE_URL =
-      "https://cckypvqophyviphqhich.supabase.co";
-
-    /*
-      MANTENHA A MESMA SUPABASE_KEY
-      QUE JÁ FUNCIONA NO SEU SANTA LUZIA ID.
-      
-      NÃO use service_role aqui.
-    */
-
-    const SUPABASE_KEY =
-      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+</div>
 
 
-    let motoristas = [];
-    let missoes = [];
+<script>
+
+  const SUPABASE_URL =
+    "https://cckypvqophyviphqhich.supabase.co";
+
+  /*
+    MANTENHA A MESMA CHAVE QUE JÁ FUNCIONA
+    NO SEU ARQUIVO ATUAL.
+
+    NÃO use service_role.
+  */
+
+  const SUPABASE_KEY =
+    "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
 
-    /* =========================
-       CARREGAR MOTORISTAS
-    ========================= */
+  let motoristas = [];
+  let missoes = [];
 
-    async function carregarMotoristas() {
 
-      const select =
-        document.getElementById("motorista");
+  /* =========================
+     MOSTRAR MENSAGEM
+  ========================== */
 
-      try {
+  function mostrarMensagem(elemento, texto, tipo) {
 
-        const resposta = await fetch(
+    elemento.className =
+      "mensagem " + tipo;
+
+    elemento.textContent =
+      texto;
+
+    elemento.style.display =
+      "block";
+  }
+
+
+  /* =========================
+     LOGIN ADM
+  ========================== */
+
+  async function entrarADM() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const senha =
+      document.getElementById("senha").value;
+
+    const botao =
+      document.getElementById("botaoLogin");
+
+    const mensagem =
+      document.getElementById("mensagemLogin");
+
+    if (!email || !senha) {
+
+      mostrarMensagem(
+        mensagem,
+        "❌ Digite seu e-mail e sua senha.",
+        "erro"
+      );
+
+      return;
+    }
+
+    botao.disabled = true;
+    botao.textContent = "ENTRANDO...";
+
+    try {
+
+      const resposta =
+        await fetch(
+          `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
+          {
+            method: "POST",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              email: email,
+              password: senha
+            })
+          }
+        );
+
+      const resultado =
+        await resposta.json();
+
+      if (!resposta.ok) {
+
+        throw new Error(
+          resultado.error_description ||
+          resultado.msg ||
+          "E-mail ou senha incorretos."
+        );
+      }
+
+      const accessToken =
+        resultado.access_token;
+
+      const refreshToken =
+        resultado.refresh_token;
+
+      /*
+        Verifica se o usuário realmente é ADM
+      */
+
+      const respostaADM =
+        await fetch(
+          `${SUPABASE_URL}/rest/v1/administradores?user_id=eq.${resultado.user.id}&ativo=eq.true&select=id,nome`,
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                `Bearer ${accessToken}`
+            }
+          }
+        );
+
+      if (!respostaADM.ok) {
+
+        throw new Error(
+          "Não foi possível verificar o acesso ADM."
+        );
+      }
+
+      const admins =
+        await respostaADM.json();
+
+      if (!admins.length) {
+
+        throw new Error(
+          "❌ Este usuário não possui autorização de ADM."
+        );
+      }
+
+      /*
+        Guarda a sessão no navegador
+      */
+
+      localStorage.setItem(
+        "sta_access_token",
+        accessToken
+      );
+
+      localStorage.setItem(
+        "sta_refresh_token",
+        refreshToken
+      );
+
+      mostrarPainelADM();
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mostrarMensagem(
+        mensagem,
+        erro.message,
+        "erro"
+      );
+
+    } finally {
+
+      botao.disabled = false;
+      botao.textContent =
+        "🔐 ENTRAR NO ADM";
+    }
+  }
+
+
+  /* =========================
+     MOSTRAR PAINEL
+  ========================== */
+
+  function mostrarPainelADM() {
+
+    document.getElementById("loginADM")
+      .style.display = "none";
+
+    document.getElementById("painelADM")
+      .style.display = "block";
+
+    carregarMotoristas();
+    carregarMissoes();
+  }
+
+
+  /* =========================
+     VERIFICAR LOGIN SALVO
+  ========================== */
+
+  async function verificarSessao() {
+
+    const token =
+      localStorage.getItem("sta_access_token");
+
+    if (!token) {
+      return;
+    }
+
+    try {
+
+      const resposta =
+        await fetch(
+          `${SUPABASE_URL}/auth/v1/user`,
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                `Bearer ${token}`
+            }
+          }
+        );
+
+      if (!resposta.ok) {
+
+        localStorage.removeItem(
+          "sta_access_token"
+        );
+
+        localStorage.removeItem(
+          "sta_refresh_token"
+        );
+
+        return;
+      }
+
+      const usuario =
+        await resposta.json();
+
+      const respostaADM =
+        await fetch(
+          `${SUPABASE_URL}/rest/v1/administradores?user_id=eq.${usuario.id}&ativo=eq.true&select=id,nome`,
+          {
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                `Bearer ${token}`
+            }
+          }
+        );
+
+      if (!respostaADM.ok) {
+        return;
+      }
+
+      const admins =
+        await respostaADM.json();
+
+      if (admins.length) {
+        mostrarPainelADM();
+      }
+
+    } catch (erro) {
+
+      console.error(
+        "Erro ao verificar sessão:",
+        erro
+      );
+    }
+  }
+
+
+  /* =========================
+     SAIR
+  ========================== */
+
+  async function sairADM() {
+
+    const token =
+      localStorage.getItem("sta_access_token");
+
+    try {
+
+      if (token) {
+
+        await fetch(
+          `${SUPABASE_URL}/auth/v1/logout`,
+          {
+            method: "POST",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                `Bearer ${token}`
+            }
+          }
+        );
+      }
+
+    } catch (erro) {
+
+      console.error(erro);
+
+    } finally {
+
+      localStorage.removeItem(
+        "sta_access_token"
+      );
+
+      localStorage.removeItem(
+        "sta_refresh_token"
+      );
+
+      location.reload();
+    }
+  }
+
+
+  /* =========================
+     CARREGAR MOTORISTAS
+  ========================== */
+
+  async function carregarMotoristas() {
+
+    const select =
+      document.getElementById("motorista");
+
+    try {
+
+      const token =
+        localStorage.getItem("sta_access_token");
+
+      const resposta =
+        await fetch(
           `${SUPABASE_URL}/rest/v1/motoristas?select=id,codigo,nome,apelido,cargo,xp,%22nível%22&order=id.asc`,
           {
             method: "GET",
 
             headers: {
               "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
+              "Authorization":
+                `Bearer ${token}`
             }
           }
         );
 
-        if (!resposta.ok) {
-          throw new Error("Erro ao buscar motoristas.");
-        }
-
-        motoristas =
-          await resposta.json();
-
-        select.innerHTML =
-          '<option value="">Selecione um motorista</option>';
-
-        motoristas.forEach(motorista => {
-
-          const option =
-            document.createElement("option");
-
-          option.value =
-            motorista.id;
-
-          option.textContent =
-            `${motorista.codigo} • ${motorista.nome}`;
-
-          select.appendChild(option);
-
-        });
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        select.innerHTML =
-          '<option value="">Erro ao carregar motoristas</option>';
-
+      if (!resposta.ok) {
+        throw new Error(
+          "Erro ao buscar motoristas."
+        );
       }
+
+      motoristas =
+        await resposta.json();
+
+      select.innerHTML =
+        '<option value="">Selecione um motorista</option>';
+
+      motoristas.forEach(motorista => {
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          motorista.id;
+
+        option.textContent =
+          `${motorista.codigo} • ${motorista.nome}`;
+
+        select.appendChild(option);
+
+      });
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      select.innerHTML =
+        '<option value="">Erro ao carregar motoristas</option>';
     }
+  }
 
 
-    /* =========================
-       CARREGAR MISSÕES
-    ========================= */
+  /* =========================
+     CARREGAR MISSÕES
+  ========================== */
 
-    async function carregarMissoes() {
+  async function carregarMissoes() {
 
-      const select =
-        document.getElementById("missao");
+    const select =
+      document.getElementById("missao");
 
-      try {
+    try {
 
-        const resposta = await fetch(
+      const token =
+        localStorage.getItem("sta_access_token");
+
+      const resposta =
+        await fetch(
           `${SUPABASE_URL}/rest/v1/missoes?ativa=eq.true&select=id,nome,descricao,xp&order=id.asc`,
           {
             method: "GET",
 
             headers: {
               "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`
+              "Authorization":
+                `Bearer ${token}`
             }
           }
         );
 
-        if (!resposta.ok) {
-          throw new Error("Erro ao buscar missões.");
-        }
-
-        missoes =
-          await resposta.json();
-
-        select.innerHTML =
-          '<option value="">Selecione uma missão</option>';
-
-        missoes.forEach(missao => {
-
-          const option =
-            document.createElement("option");
-
-          option.value =
-            missao.id;
-
-          option.textContent =
-            `${missao.nome} • +${missao.xp} XP`;
-
-          select.appendChild(option);
-
-        });
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        select.innerHTML =
-          '<option value="">Erro ao carregar missões</option>';
-
+      if (!resposta.ok) {
+        throw new Error(
+          "Erro ao buscar missões."
+        );
       }
+
+      missoes =
+        await resposta.json();
+
+      select.innerHTML =
+        '<option value="">Selecione uma missão</option>';
+
+      missoes.forEach(missao => {
+
+        const option =
+          document.createElement("option");
+
+        option.value =
+          missao.id;
+
+        option.textContent =
+          `${missao.nome} • +${missao.xp} XP`;
+
+        select.appendChild(option);
+
+      });
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      select.innerHTML =
+        '<option value="">Erro ao carregar missões</option>';
     }
+  }
 
 
-    /* =========================
-       SELECIONAR MOTORISTA
-    ========================= */
+  /* =========================
+     SELECIONAR MOTORISTA
+  ========================== */
 
-    function selecionarMotorista() {
+  function selecionarMotorista() {
 
-      const id =
-        Number(
-          document.getElementById("motorista").value
-        );
+    const id =
+      Number(
+        document.getElementById("motorista").value
+      );
 
-      const info =
-        document.getElementById("motoristaInfo");
+    const info =
+      document.getElementById("motoristaInfo");
 
-      const motorista =
-        motoristas.find(
-          item => Number(item.id) === id
-        );
+    const motorista =
+      motoristas.find(
+        item => Number(item.id) === id
+      );
 
-      if (!motorista) {
+    if (!motorista) {
 
-        info.style.display = "none";
-
-        atualizarBotao();
-
-        return;
-      }
-
-      document.getElementById("motoristaNome").textContent =
-        `${motorista.codigo} • ${motorista.nome}`;
-
-      document.getElementById("motoristaDetalhes").textContent =
-        `${motorista.cargo || "Motorista"} • ${motorista.xp || 0} XP • Nível ${motorista["nível"] || 1}`;
-
-      info.style.display = "block";
+      info.style.display = "none";
 
       atualizarBotao();
+
+      return;
     }
 
+    document.getElementById("motoristaNome")
+      .textContent =
+      `${motorista.codigo} • ${motorista.nome}`;
 
-    /* =========================
-       SELECIONAR MISSÃO
-    ========================= */
+    document.getElementById("motoristaDetalhes")
+      .textContent =
+      `${motorista.cargo || "Motorista"} • ${motorista.xp || 0} XP • Nível ${motorista["nível"] || 1}`;
 
-    function selecionarMissao() {
+    info.style.display = "block";
 
-      const id =
-        Number(
-          document.getElementById("missao").value
-        );
+    atualizarBotao();
+  }
 
-      const info =
-        document.getElementById("missaoInfo");
 
-      const missao =
-        missoes.find(
-          item => Number(item.id) === id
-        );
+  /* =========================
+     SELECIONAR MISSÃO
+  ========================== */
 
-      if (!missao) {
+  function selecionarMissao() {
 
-        info.style.display = "none";
+    const id =
+      Number(
+        document.getElementById("missao").value
+      );
 
-        atualizarBotao();
+    const info =
+      document.getElementById("missaoInfo");
 
-        return;
-      }
+    const missao =
+      missoes.find(
+        item => Number(item.id) === id
+      );
 
-      document.getElementById("missaoNome").textContent =
-        `🎯 ${missao.nome}`;
+    if (!missao) {
 
-      document.getElementById("missaoDescricao").textContent =
-        missao.descricao || "Missão oficial da Santa Luzia.";
-
-      document.getElementById("missaoXP").textContent =
-        `⚡ +${missao.xp} XP`;
-
-      info.style.display = "block";
+      info.style.display = "none";
 
       atualizarBotao();
+
+      return;
     }
 
+    document.getElementById("missaoNome")
+      .textContent =
+      `🎯 ${missao.nome}`;
 
-    /* =========================
-       HABILITAR BOTÃO
-    ========================= */
+    document.getElementById("missaoDescricao")
+      .textContent =
+      missao.descricao ||
+      "Missão oficial da Santa Luzia.";
 
-    function atualizarBotao() {
+    document.getElementById("missaoXP")
+      .textContent =
+      `⚡ +${missao.xp} XP`;
 
-      const motorista =
-        document.getElementById("motorista").value;
+    info.style.display = "block";
 
-      const missao =
-        document.getElementById("missao").value;
+    atualizarBotao();
+  }
 
-      const botao =
-        document.getElementById("botaoConcluir");
 
-      botao.disabled =
-        !(motorista && missao);
+  /* =========================
+     HABILITAR BOTÃO
+  ========================== */
+
+  function atualizarBotao() {
+
+    const motorista =
+      document.getElementById("motorista").value;
+
+    const missao =
+      document.getElementById("missao").value;
+
+    const botao =
+      document.getElementById("botaoConcluir");
+
+    botao.disabled =
+      !(motorista && missao);
+  }
+
+
+  /* =========================
+     CONCLUIR MISSÃO
+  ========================== */
+
+  async function concluirMissao() {
+
+    const motoristaId =
+      document.getElementById("motorista").value;
+
+    const missaoId =
+      document.getElementById("missao").value;
+
+    const botao =
+      document.getElementById("botaoConcluir");
+
+    const mensagem =
+      document.getElementById("mensagem");
+
+    const token =
+      localStorage.getItem("sta_access_token");
+
+    if (!motoristaId || !missaoId || !token) {
+      return;
     }
 
+    botao.disabled = true;
+    botao.textContent = "PROCESSANDO...";
 
-    /* =========================
-       CONCLUIR MISSÃO
-    ========================= */
+    mensagem.className = "mensagem";
+    mensagem.style.display = "none";
 
-    async function concluirMissao() {
+    try {
 
-      const motoristaId =
-        document.getElementById("motorista").value;
-
-      const missaoId =
-        document.getElementById("missao").value;
-
-      const botao =
-        document.getElementById("botaoConcluir");
-
-      const mensagem =
-        document.getElementById("mensagem");
-
-      if (!motoristaId || !missaoId) {
-        return;
-      }
-
-      botao.disabled = true;
-
-      botao.textContent =
-        "PROCESSANDO...";
-
-      mensagem.className =
-        "mensagem";
-
-      mensagem.style.display =
-        "none";
-
-      try {
-
-        const resposta = await fetch(
+      const resposta =
+        await fetch(
           `${SUPABASE_URL}/rest/v1/rpc/concluir_missao`,
           {
             method: "POST",
 
             headers: {
               "apikey": SUPABASE_KEY,
-              "Authorization": `Bearer ${SUPABASE_KEY}`,
-              "Content-Type": "application/json"
+              "Authorization":
+                `Bearer ${token}`,
+              "Content-Type":
+                "application/json"
             },
 
             body: JSON.stringify({
+
               p_motorista_id:
                 Number(motoristaId),
 
               p_missao_id:
                 Number(missaoId)
+
             })
           }
         );
 
-        const resultado =
-          await resposta.json();
+      const resultado =
+        await resposta.json();
 
-        if (!resposta.ok) {
+      if (!resposta.ok) {
 
-          throw new Error(
-            resultado.message ||
-            resultado.hint ||
-            "Não foi possível concluir a missão."
-          );
-        }
-
-        mensagem.className =
-          "mensagem sucesso";
-
-        mensagem.textContent =
-          `✅ Missão concluída! +${resultado.xp_ganho} XP. Total: ${resultado.xp_total} XP • Nível ${resultado.nivel}`;
-
-        mensagem.style.display =
-          "block";
-
-        /*
-          Atualiza os dados locais do motorista
-        */
-
-        const motorista =
-          motoristas.find(
-            item =>
-              Number(item.id) ===
-              Number(motoristaId)
-          );
-
-        if (motorista) {
-
-          motorista.xp =
-            resultado.xp_total;
-
-          motorista["nível"] =
-            resultado.nivel;
-
-          document.getElementById("motoristaDetalhes").textContent =
-            `${motorista.cargo || "Motorista"} • ${motorista.xp} XP • Nível ${motorista["nível"]}`;
-        }
-
-      } catch (erro) {
-
-        console.error(erro);
-
-        mensagem.className =
-          "mensagem erro";
-
-        mensagem.textContent =
-          "❌ " + erro.message;
-
-        mensagem.style.display =
-          "block";
-
-      } finally {
-
-        botao.disabled = false;
-
-        botao.textContent =
-          "✅ CONCLUIR MISSÃO";
-
-        atualizarBotao();
+        throw new Error(
+          resultado.message ||
+          resultado.hint ||
+          "Não foi possível concluir a missão."
+        );
       }
+
+      mensagem.className =
+        "mensagem sucesso";
+
+      mensagem.textContent =
+        `✅ Missão concluída! +${resultado.xp_ganho} XP. Total: ${resultado.xp_total} XP • Nível ${resultado.nivel}`;
+
+      mensagem.style.display =
+        "block";
+
+      const motorista =
+        motoristas.find(
+          item =>
+            Number(item.id) ===
+            Number(motoristaId)
+        );
+
+      if (motorista) {
+
+        motorista.xp =
+          resultado.xp_total;
+
+        motorista["nível"] =
+          resultado.nivel;
+
+        document.getElementById(
+          "motoristaDetalhes"
+        ).textContent =
+          `${motorista.cargo || "Motorista"} • ${motorista.xp} XP • Nível ${motorista["nível"]}`;
+      }
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mensagem.className =
+        "mensagem erro";
+
+      mensagem.textContent =
+        "❌ " + erro.message;
+
+      mensagem.style.display =
+        "block";
+
+    } finally {
+
+      botao.disabled = false;
+
+      botao.textContent =
+        "✅ CONCLUIR MISSÃO";
+
+      atualizarBotao();
     }
+  }
 
 
-    /* =========================
-       INICIAR
-    ========================= */
+  /* =========================
+     ENTER NO LOGIN
+  ========================== */
 
-    carregarMotoristas();
+  document.getElementById("senha")
+    .addEventListener("keydown", function(event) {
 
-    carregarMissoes();
+      if (event.key === "Enter") {
+        entrarADM();
+      }
 
-  </script>
+    });
+
+
+  /* =========================
+     INICIAR
+  ========================== */
+
+  verificarSessao();
+
+</script>
 
 </body>
 </html>
