@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Criar CNH • Santa Luzia</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    .topo {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .topo h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .topo p {
+      color: #666;
+      margin: 6px 0 0;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 25px 15px 40px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+      margin-top: 15px;
+    }
+
+    label:first-child {
+      margin-top: 0;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #555;
+    }
+
+    .foto-area {
+      border: 2px dashed #bbb;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .foto-preview {
+      width: 120px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: none;
+      margin: 0 auto 15px;
+    }
+
+    .botao-gerar {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #176b3a;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .botao-gerar:hover {
+      opacity: 0.9;
+    }
+
+    .resultado {
+      display: none;
+    }
+
+    .cnh-preview {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #ddd;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .botoes {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .botoes button,
+    .voltar {
+      flex: 1;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .baixar {
+      background: #176b3a;
+      color: white;
+    }
+
+    .nova {
+      background: #eee;
+      color: #222;
+    }
+
+    .voltar {
+      display: block;
+      background: white;
+      color: #222;
+      border: 1px solid #ddd;
+      margin-top: 15px;
+    }
+
+    .aviso {
+      font-size: 12px;
+      color: #777;
+      text-align: center;
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .botoes {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topo">
+    <h1>🪪 CRIAR MINHA CNH</h1>
+    <p>Habilitação interna da Santa Luzia Tomates</p>
+  </header>
+
+  <main class="container">
+
+    <section class="card" id="formulario">
+
+      <label for="foto">📷 Sua foto</label>
+
+      <div class="foto-area">
+        <img id="fotoPreview" class="foto-preview">
+
+        <input
+          type="file"
+          id="foto"
+          accept="image/*"
+        >
+      </div>
+
+      <label for="nome">👤 Nome completo</label>
+
+      <input
+        type="text"
+        id="nome"
+        placeholder="Digite seu nome"
+        maxlength="35"
+      >
+
+      <label for="categoria">🚛 Categoria</label>
+
+      <select id="categoria">
+        <option value="">Selecione uma categoria</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="D/E">D/E</option>
+      </select>
+
+      <button class="botao-gerar" onclick="gerarCNH()">
+        GERAR MINHA CNH
+      </button>
+
+      <p class="aviso">
+        Documento interno de habilitação da Santa Luzia Tomates.
+        Não substitui documento oficial de trânsito.
+      </p>
+
+    </section>
+
+
+    <section class="card resultado" id="resultado">
+
+      <div class="cnh-preview">
+        <canvas id="canvasCNH" width="1536" height="999"></canvas>
+      </div>
+
+      <div class="botoes">
+
+        <button class="baixar" onclick="baixarCNH()">
+          📥 BAIXAR CNH
+        </button>
+
+        <button class="nova" onclick="novaCNH()">
+          🔄 CRIAR OUTRA
+        </button>
+
+      </div>
+
+    </section>
+
+    <a href="index.html" class="voltar">
+      ← Voltar para Santa Luzia Central
+    </a>
+
+  </main>
+
+
+<script>
+
+const fotoInput = document.getElementById("foto");
+const fotoPreview = document.getElementById("fotoPreview");
+
+let imagemUsuario = null;
+
+fotoInput.addEventListener("change", function() {
+
+  const arquivo = this.files[0];
+
+  if (!arquivo) return;
+
+  const leitor = new FileReader();
+
+  leitor.onload = function(e) {
+
+    fotoPreview.src = e.target.result;
+    fotoPreview.style.display = "block";
+
+    imagemUsuario = new Image();
+
+    imagemUsuario.onload = function() {
+      console.log("Foto carregada.");
+    };
+
+    imagemUsuario.src = e.target.result;
+  };
+
+  leitor.readAsDataURL(arquivo);
+
+});
+
+
+function formatarData(data) {
+
+  const dia = String(data.getDate()).padStart(2, "0");
+  const mes = String(data.getMonth() + 1).padStart(2, "0");
+  const ano = data.getFullYear();
+
+  return `${dia}/${mes}/${ano}`;
+
+}
+
+
+function gerarCNH() {
+
+  const nome = document
+    .getElementById("nome")
+    .value
+    .trim();
+
+  const categoria = document
+    .getElementById("categoria")
+    .value;
+
+
+  if (!imagemUsuario) {
+    alert("Adicione sua foto.");
+    return;
+  }
+
+  if (!nome) {
+    alert("Digite seu nome.");
+    return;
+  }
+
+  if (!categoria) {
+    alert("Selecione uma categoria.");
+    return;
+  }
+
+
+  const canvas = document.getElementById("canvasCNH");
+  const ctx = canvas.getContext("2d");
+
+  const base = new Image();
+
+  base.onload = function() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Base original da CNH
+    ctx.drawImage(base, 0, 0, 1536, 999);
+
+
+    /*
+      FOTO
+      Área aproximada da foto da CNH.
+    */
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.rect(148, 220, 412, 510);
+    ctx.clip();
+
+    const proporcao = Math.max(
+      412 / imagemUsuario.width,
+      510 / imagemUsuario.height
+    );
+
+    const largura = imagemUsuario.width * proporcao;
+    const altura = imagemUsuario.height * proporcao;
+
+    const x = 148 + (412 - largura) / 2;
+    const y = 220 + (510 - altura) / 2;
+
+    ctx.drawImage(
+      imagemUsuario,
+      x,
+      y,
+      largura,
+      altura
+    );
+
+    ctx.restore();
+
+
+    /*
+      APAGA OS CAMPOS ANTIGOS
+      para colocar os dados da nova CNH.
+    */
+
+    ctx.fillStyle = "#e9f0f3";
+
+    // Nome
+    ctx.fillRect(620, 285, 800, 60);
+
+    // Categoria
+    ctx.fillRect(620, 450, 390, 55);
+
+    // Validade
+    ctx.fillRect(1090, 445, 320, 60);
+
+    // Tipo de veículo
+    ctx.fillRect(620, 810, 800, 80);
+
+
+    /*
+      NOME
+    */
+
+    ctx.fillStyle = "#111";
+    ctx.font = "bold 34px Arial";
+
+    ctx.fillText(
+      nome.toUpperCase(),
+      625,
+      330
+    );
+
+
+    /*
+      CATEGORIA
+    */
+
+    ctx.font = "bold 42px Arial";
+
+    ctx.fillText(
+      categoria,
+      625,
+      492
+    );
+
+
+    /*
+      VALIDADE
+      1 ano a partir da criação.
+    */
+
+    const validade = new Date();
+
+    validade.setFullYear(
+      validade.getFullYear() + 1
+    );
+
+    ctx.font = "bold 34px Arial";
+
+    ctx.fillText(
+      formatarData(validade),
+      1090,
+      492
+    );
+
+
+    /*
+      TIPO DE VEÍCULO
+    */
+
+    let tipoVeiculo = "";
+
+    if (categoria === "D") {
+      tipoVeiculo = "BITRUCK";
+    }
+
+    if (categoria === "E") {
+      tipoVeiculo = "CARRETA";
+    }
+
+    if (categoria === "D/E") {
+      tipoVeiculo = "BITRUCK + CARRETA";
+    }
+
+    ctx.font = "bold 34px Arial";
+
+    ctx.fillText(
+      tipoVeiculo,
+      625,
+      860
+    );
+
+
+    document
+      .getElementById("formulario")
+      .style.display = "none";
+
+    document
+      .getElementById("resultado")
+      .style.display = "block";
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  };
+
+
+  /*
+    IMPORTANTE:
+    o arquivo da base precisa estar
+    no mesmo local do cnh.html.
+  */
+
+  base.src = "cnh-base.png";
+
+}
+
+
+function baixarCNH() {
+
+  const canvas = document.getElementById("canvasCNH");
+
+  const link = document.createElement("a");
+
+  link.download = "CNH-Santa-Luzia.png";
+
+  link.href = canvas.toDataURL("image/png");
+
+  link.click();
+
+}
+
+
+function novaCNH() {
+
+  document.getElementById("resultado").style.display = "none";
+
+  document.getElementById("formulario").style.display = "block";
+
+  document.getElementById("nome").value = "";
+
+  document.getElementById("categoria").value = "";
+
+  document.getElementById("foto").value = "";
+
+  document.getElementById("fotoPreview").style.display = "none";
+
+  imagemUsuario = null;
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+</script>
+
+</body>
+</html>
