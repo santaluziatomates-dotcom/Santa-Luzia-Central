@@ -9,6 +9,7 @@
   <title>Santa Luzia Central</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -17,100 +18,309 @@
     }
 
     body {
-      background: #f3f3f3;
+      background: #f3f4f3;
       color: #222;
     }
+
+    /* =========================
+       CABEÇALHO
+    ========================= */
 
     .cabecalho {
       background: #ffffff;
       text-align: center;
-      padding: 35px 20px 30px;
+      padding: 30px 20px 28px;
       border-bottom: 1px solid #ddd;
     }
 
     .logo {
-      width: 110px;
-      height: 110px;
+      width: 95px;
+      height: 95px;
       object-fit: contain;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
-    h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
+    .cabecalho h1 {
+      font-size: 29px;
+      margin-bottom: 7px;
+      letter-spacing: -0.5px;
     }
 
     .subtitulo {
       color: #666;
-      font-size: 16px;
+      font-size: 15px;
     }
 
-    .conteudo {
-      max-width: 900px;
-      margin: auto;
-      padding: 30px 20px;
+    .selo {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #e9f3ec;
+      color: #176b3a;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
     }
+
+
+    /* =========================
+       CONTEÚDO
+    ========================= */
+
+    .conteudo {
+      max-width: 850px;
+      margin: auto;
+      padding: 25px 18px 40px;
+    }
+
+
+    /* =========================
+       CARD DE BOAS-VINDAS
+    ========================= */
+
+    .boas-vindas {
+      background: #176b3a;
+      color: white;
+      border-radius: 20px;
+      padding: 24px 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.10);
+    }
+
+    .boas-vindas h2 {
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
+
+    .boas-vindas p {
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.92;
+    }
+
+
+    /* =========================
+       TÍTULOS DAS CATEGORIAS
+    ========================= */
+
+    .titulo-secao {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 25px 3px 12px;
+    }
+
+    .titulo-secao h2 {
+      font-size: 17px;
+    }
+
+    .linha {
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+    }
+
+
+    /* =========================
+       GRADE
+    ========================= */
 
     .grade {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      gap: 13px;
     }
+
+
+    /* =========================
+       BOTÕES
+    ========================= */
 
     .botao {
       background: white;
       border: 1px solid #ddd;
-      border-radius: 15px;
-      padding: 22px;
+      border-radius: 17px;
+      padding: 19px 15px;
       text-decoration: none;
       color: #222;
-      font-size: 17px;
-      font-weight: bold;
       text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
       transition: 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 105px;
     }
 
     .botao:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.10);
+      box-shadow: 0 7px 16px rgba(0,0,0,0.09);
     }
 
-    .botao h2 {
-      font-size: 18px;
+    .icone {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .botao h3 {
+      font-size: 17px;
       margin-bottom: 5px;
     }
 
     .botao p {
-      font-size: 13px;
-      color: #666;
+      font-size: 12px;
+      color: #777;
       font-weight: normal;
+      line-height: 1.3;
     }
+
+
+    /* =========================
+       SANTA LUZIA ID EM DESTAQUE
+    ========================= */
+
+    .id-destaque {
+      background: #ffffff;
+      border: 2px solid #176b3a;
+      border-radius: 19px;
+      padding: 21px 18px;
+      text-decoration: none;
+      color: #222;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 13px;
+      box-shadow: 0 4px 13px rgba(0,0,0,0.06);
+    }
+
+    .id-icone {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      background: #e9f3ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      flex-shrink: 0;
+    }
+
+    .id-texto {
+      flex: 1;
+    }
+
+    .id-texto h2 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .id-texto p {
+      color: #666;
+      font-size: 13px;
+    }
+
+    .seta {
+      font-size: 23px;
+      color: #176b3a;
+      font-weight: bold;
+    }
+
+
+    /* =========================
+       RODAPÉ
+    ========================= */
 
     .rodape {
       text-align: center;
-      padding: 30px 20px;
-      color: #777;
-      font-size: 13px;
+      padding: 25px 20px 35px;
+      color: #888;
+      font-size: 12px;
     }
+
+    .rodape strong {
+      color: #176b3a;
+    }
+
+
+    /* =========================
+       CELULAR
+    ========================= */
 
     @media (max-width: 600px) {
-      .grade {
-        grid-template-columns: 1fr;
+
+      .cabecalho {
+        padding: 27px 15px 25px;
       }
 
-      h1 {
+      .logo {
+        width: 85px;
+        height: 85px;
+      }
+
+      .cabecalho h1 {
         font-size: 25px;
       }
+
+      .subtitulo {
+        font-size: 14px;
+      }
+
+      .conteudo {
+        padding: 20px 15px 35px;
+      }
+
+      .boas-vindas {
+        padding: 21px 19px;
+        border-radius: 18px;
+      }
+
+      .boas-vindas h2 {
+        font-size: 19px;
+      }
+
+      .grade {
+        grid-template-columns: 1fr 1fr;
+        gap: 11px;
+      }
+
+      .botao {
+        min-height: 105px;
+        padding: 16px 10px;
+      }
+
+      .botao h3 {
+        font-size: 15px;
+      }
+
+      .botao p {
+        font-size: 11px;
+      }
+
+      .icone {
+        font-size: 25px;
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
+
+
+  <!-- =========================
+       CABEÇALHO
+  ========================= -->
 
   <header class="cabecalho">
 
-    <img class="logo" src="IMG_6552.PNG" alt="Santa Luzia">
+    <img
+      class="logo"
+      src="IMG_6552.PNG"
+      alt="Santa Luzia Tomates"
+    >
 
     <h1>SANTA LUZIA CENTRAL</h1>
 
@@ -118,60 +328,267 @@
       Tudo da Santa Luzia em um só lugar.
     </p>
 
+    <div class="selo">
+      ✓ CENTRAL OFICIAL
+    </div>
+
   </header>
+
+
+  <!-- =========================
+       CONTEÚDO
+  ========================= -->
 
   <main class="conteudo">
 
+
+    <!-- BOAS-VINDAS -->
+
+    <section class="boas-vindas">
+
+      <h2>🍅 Bem-vindo à Santa Luzia</h2>
+
+      <p>
+        Acesse documentos, skins, jogos, eventos,
+        notícias e tudo relacionado à nossa empresa.
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         MOTORISTA
+    ========================= -->
+
+    <div class="titulo-secao">
+      <h2>👤 MOTORISTA</h2>
+      <div class="linha"></div>
+    </div>
+
+
+    <!-- SANTA LUZIA ID -->
+
+    <a
+      href="santaluziaid.html"
+      class="id-destaque"
+    >
+
+      <div class="id-icone">
+        👤
+      </div>
+
+      <div class="id-texto">
+
+        <h2>SANTA LUZIA ID</h2>
+
+        <p>
+          Seu perfil e identificação de motorista
+        </p>
+
+      </div>
+
+      <div class="seta">
+        →
+      </div>
+
+    </a>
+
+
+    <!-- CNH -->
+
     <div class="grade">
 
-      <a class="botao" href="skins.html">
-        🎨<br>SKINS
+      <a
+        href="cnh.html"
+        class="botao"
+      >
+
+        <div class="icone">🪪</div>
+
+        <h3>CRIAR MINHA CNH</h3>
+
+        <p>
+          Crie sua habilitação interna
+        </p>
+
       </a>
 
-      <a href="santaluziaid.html" class="botao">
-        <h2>👤 SANTA LUZIA ID</h2>
-        <p>Identificação oficial dos motoristas</p>
-      </a>
 
-      <a href="cnh.html" class="botao">
-        🪪<br>CRIAR MINHA CNH
-      </a>
+      <!-- SKINS -->
 
-      <a class="botao" href="globaltruck.html">
-        🚛<br>GLOBAL TRUCK
-      </a>
+      <a
+        href="skins.html"
+        class="botao"
+      >
 
-      <a class="botao" href="truckers.html">
-        🚚<br>TRUCKERS
-      </a>
+        <div class="icone">🎨</div>
 
-      <a class="botao" href="comoentrar.html">
-        📖<br>COMO ENTRAR
-      </a>
+        <h3>SKINS</h3>
 
-      <a class="botao" href="links.html">
-        🔗<br>LINKS
-      </a>
+        <p>
+          Skins oficiais da empresa
+        </p>
 
-      <a class="botao" href="noticias.html">
-        📰<br>NOTÍCIAS
-      </a>
-
-      <a class="botao" href="eventos.html">
-        🏆<br>EVENTOS
-      </a>
-
-      <a class="botao" href="sobrenos.html">
-        🏢<br>SOBRE NÓS
       </a>
 
     </div>
 
+
+    <!-- =========================
+         JOGOS
+    ========================= -->
+
+    <div class="titulo-secao">
+      <h2>🚛 JOGOS</h2>
+      <div class="linha"></div>
+    </div>
+
+
+    <div class="grade">
+
+      <a
+        href="globaltruck.html"
+        class="botao"
+      >
+
+        <div class="icone">🚛</div>
+
+        <h3>GLOBAL TRUCK</h3>
+
+        <p>
+          Informações e conteúdos
+        </p>
+
+      </a>
+
+
+      <a
+        href="truckers.html"
+        class="botao"
+      >
+
+        <div class="icone">🚚</div>
+
+        <h3>TRUCKERS</h3>
+
+        <p>
+          Informações e conteúdos
+        </p>
+
+      </a>
+
+    </div>
+
+
+    <!-- =========================
+         EMPRESA
+    ========================= -->
+
+    <div class="titulo-secao">
+      <h2>🏢 EMPRESA</h2>
+      <div class="linha"></div>
+    </div>
+
+
+    <div class="grade">
+
+      <a
+        href="comoentrar.html"
+        class="botao"
+      >
+
+        <div class="icone">📖</div>
+
+        <h3>COMO ENTRAR</h3>
+
+        <p>
+          Veja como fazer parte
+        </p>
+
+      </a>
+
+
+      <a
+        href="noticias.html"
+        class="botao"
+      >
+
+        <div class="icone">📰</div>
+
+        <h3>NOTÍCIAS</h3>
+
+        <p>
+          Novidades da Santa Luzia
+        </p>
+
+      </a>
+
+
+      <a
+        href="eventos.html"
+        class="botao"
+      >
+
+        <div class="icone">🏆</div>
+
+        <h3>EVENTOS</h3>
+
+        <p>
+          Competições e premiações
+        </p>
+
+      </a>
+
+
+      <a
+        href="links.html"
+        class="botao"
+      >
+
+        <div class="icone">🔗</div>
+
+        <h3>LINKS</h3>
+
+        <p>
+          Nossas redes e canais
+        </p>
+
+      </a>
+
+
+      <a
+        href="sobrenos.html"
+        class="botao"
+      >
+
+        <div class="icone">🏢</div>
+
+        <h3>SOBRE NÓS</h3>
+
+        <p>
+          Conheça a Santa Luzia
+        </p>
+
+      </a>
+
+    </div>
+
+
   </main>
 
+
+  <!-- =========================
+       RODAPÉ
+  ========================= -->
+
   <footer class="rodape">
+
+    <strong>Santa Luzia Tomates</strong><br>
+
     Santa Luzia Central • 2026
+
   </footer>
+
 
 </body>
 </html>
