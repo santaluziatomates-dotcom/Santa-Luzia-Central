@@ -511,13 +511,21 @@
         const xp =
           Number(motorista.xp || 0);
 
-        const xpNecessario = 100;
+       const xpNecessario = 100;
 
-        const progresso =
-          Math.min(
-            (xp / xpNecessario) * 100,
-            100
-          );
+// XP conquistado dentro do nível atual
+const xpInicialNivel = (nivel - 1) * xpNecessario;
+
+const xpNoNivel = Math.max(
+  0,
+  Math.min(
+    xp - xpInicialNivel,
+    xpNecessario
+  )
+);
+
+const progresso =
+  (xpNoNivel / xpNecessario) * 100;
 
         const tituloNivel =
           nomeDoNivel(nivel);
@@ -615,9 +623,9 @@
                     Progresso do nível
                   </span>
 
-                  <span class="progresso-xp">
-                    ${xp} / ${xpNecessario} XP
-                  </span>
+                <span class="progresso-xp">
+  ${xpNoNivel} / ${xpNecessario} XP
+</span>
 
                 </div>
 
