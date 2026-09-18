@@ -533,35 +533,18 @@ function gerarNota(){
 
 
   if(!tipoSelecionado){
-
-    alert(
-      "Selecione primeiro o tipo de nota."
-    );
-
+    alert("Selecione primeiro o tipo de nota.");
     return;
-
   }
-
 
   if(!nomeMotorista){
-
-    alert(
-      "Digite o nome do motorista."
-    );
-
+    alert("Digite o nome do motorista.");
     return;
-
   }
 
-
   if(!dataSelecionada){
-
-    alert(
-      "Selecione a data."
-    );
-
+    alert("Selecione a data.");
     return;
-
   }
 
 
@@ -570,7 +553,6 @@ function gerarNota(){
 
   const ctx =
     canvas.getContext("2d");
-
 
   const base =
     new Image();
@@ -598,6 +580,194 @@ function gerarNota(){
     const dataFormatada =
       formatarData(dataSelecionada);
 
+
+    ctx.fillStyle = "#111";
+
+
+    /* =================================================
+       REMANEIO
+    ================================================= */
+
+    if(tipoSelecionado === "remaneio"){
+
+      /*
+        DATA DO CARREGAMENTO
+        Mantida na posição que já estava boa.
+      */
+
+      ctx.font = "bold 15px Arial";
+
+      ctx.fillText(
+        dataFormatada,
+        278,
+        362
+      );
+
+
+      /*
+        CONFERENTE — ORIGEM
+        Nome do motorista.
+        Movido um pouco para a esquerda.
+      */
+
+      ctx.font = "bold 14px Arial";
+
+      ctx.fillText(
+        nomeMotorista.toUpperCase(),
+        265,
+        615
+      );
+
+
+      /*
+        CONFERENTE — DESTINO
+        Gestão Santa Luzia.
+      */
+
+      ctx.font = "bold 13px Arial";
+
+      ctx.fillText(
+        "GESTÃO SANTA LUZIA",
+        265,
+        637
+      );
+
+    }
+
+
+    /* =================================================
+       NOTA DE ENTREGA
+    ================================================= */
+
+    if(tipoSelecionado === "entrega"){
+
+      /*
+        DATA DA ENTREGA
+        Corrigida para ficar dentro da linha.
+      */
+
+      ctx.font = "bold 15px Arial";
+
+      ctx.fillText(
+        dataFormatada,
+        245,
+        450
+      );
+
+
+      /*
+        RESPONSÁVEL PELA ENTREGA — ORIGEM
+        Nome do motorista.
+        Mantido praticamente na posição anterior.
+      */
+
+      ctx.font = "bold 14px Arial";
+
+      ctx.fillText(
+        nomeMotorista.toUpperCase(),
+        295,
+        895
+      );
+
+
+      /*
+        RECEBIDO POR — DESTINO
+        Gestão Santa Luzia.
+      */
+
+      ctx.font = "bold 13px Arial";
+
+      ctx.fillText(
+        "GESTÃO SANTA LUZIA",
+        295,
+        927
+      );
+
+
+      /*
+        DATA DO RECEBIMENTO
+        Mesma data informada pelo motorista.
+      */
+
+      ctx.font = "bold 14px Arial";
+
+      ctx.fillText(
+        dataFormatada,
+        300,
+        955
+      );
+
+    }
+
+
+    /* =================================================
+       CARIMBO
+    ================================================= */
+
+    criarCarimbo(
+      ctx,
+      tipoSelecionado
+    );
+
+
+    /* =================================================
+       MENSAGEM
+    ================================================= */
+
+    criarMensagem(
+      ctx,
+      tipoSelecionado
+    );
+
+
+    /* =================================================
+       MOSTRAR RESULTADO
+    ================================================= */
+
+    document
+      .getElementById("formulario")
+      .style.display = "none";
+
+
+    document
+      .getElementById("resultado")
+      .style.display = "block";
+
+
+    document
+      .getElementById("status")
+      .style.display = "block";
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  };
+
+
+  base.onerror = function(){
+
+    alert(
+      "Não foi possível carregar a imagem da nota.\n\n" +
+      "Verifique se o arquivo da nota está na mesma pasta do notas.html."
+    );
+
+  };
+
+
+  if(tipoSelecionado === "remaneio"){
+
+    base.src = BASE_REMANEIO;
+
+  }else{
+
+    base.src = BASE_ENTREGA;
+
+  }
+
+}
 
     /* ============================================
        DADOS DO MOTORISTA
