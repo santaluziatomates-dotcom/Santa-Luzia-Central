@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Meu Caminhão • Santa Luzia</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f5f4;
+      color: #222;
+    }
+
+    .topo {
+      background: #176b3a;
+      color: white;
+      text-align: center;
+      padding: 25px 20px 28px;
+      border-radius: 0 0 25px 25px;
+    }
+
+    .topo img {
+      width: 75px;
+      height: 75px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .topo h1 {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .topo p {
+      margin: 7px 0 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: auto;
+      padding: 20px 15px 35px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+    }
+
+    .titulo-card {
+      font-size: 18px;
+      font-weight: 800;
+      color: #176b3a;
+      margin-bottom: 5px;
+    }
+
+    .subtitulo {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    /* FOTO */
+
+    .foto-area {
+      width: 100%;
+      height: 260px;
+      border: 2px dashed #bfc8c2;
+      border-radius: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #f8faf9;
+      position: relative;
+    }
+
+    .foto-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .sem-foto {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    .sem-foto .icone {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .sem-foto strong {
+      display: block;
+      color: #444;
+      font-size: 16px;
+    }
+
+    .sem-foto span {
+      display: block;
+      margin-top: 5px;
+      font-size: 13px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .botao-foto {
+      display: block;
+      text-align: center;
+      background: #176b3a;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .botao-foto:active {
+      transform: scale(0.98);
+    }
+
+    /* NOME */
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: #555;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      border: 1px solid #d7ddd9;
+      border-radius: 11px;
+      padding: 13px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: #176b3a;
+    }
+
+    /* JOGOS */
+
+    .jogos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .jogo {
+      border: 2px solid #e0e5e2;
+      border-radius: 14px;
+      padding: 15px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      background: white;
+    }
+
+    .jogo:hover {
+      border-color: #176b3a;
+    }
+
+    .jogo.ativo {
+      border-color: #176b3a;
+      background: #eef7f1;
+    }
+
+    .jogo .icone {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    .jogo strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .jogo small {
+      display: block;
+      margin-top: 4px;
+      color: #777;
+      font-size: 11px;
+    }
+
+    /* CARTÃO DO CAMINHÃO */
+
+    .preview {
+      display: none;
+      background: #176b3a;
+      color: white;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    .preview-topo {
+      padding: 16px;
+    }
+
+    .preview-topo span {
+      font-size: 11px;
+      opacity: 0.8;
+      text-transform: uppercase;
+    }
+
+    .preview-topo h2 {
+      margin: 3px 0 0;
+      font-size: 20px;
+    }
+
+    .preview-foto {
+      width: 100%;
+      height: 230px;
+      background: #ddd;
+    }
+
+    .preview-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-info {
+      padding: 14px 16px 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .preview-info div:first-child {
+      flex: 1;
+    }
+
+    .jogo-escolhido {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .nome-preview {
+      font-size: 17px;
+      font-weight: bold;
+      margin-top: 2px;
+    }
+
+    /* BOTÃO JOGAR */
+
+    .entrar {
+      width: 100%;
+      border: none;
+      background: white;
+      color: #176b3a;
+      padding: 14px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .entrar:active {
+      transform: scale(0.98);
+    }
+
+    .aviso {
+      background: #f5f7f6;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .limpar {
+      width: 100%;
+      border: 1px solid #ddd;
+      background: white;
+      color: #777;
+      padding: 12px;
+      border-radius: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #999;
+      font-size: 11px;
+      padding: 5px 0 15px;
+    }
+
+    @media (max-width: 400px) {
+      .foto-area {
+        height: 220px;
+      }
+
+      .preview-foto {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topo">
+
+    <img src="IMG_6552.PNG" alt="Santa Luzia Tomates">
+
+    <h1>MEU CAMINHÃO</h1>
+
+    <p>Sua máquina. Sua estrada. Sua Santa Luzia. 🚛</p>
+
+  </div>
+
+
+  <div class="container">
+
+    <!-- FOTO -->
+    <div class="card">
+
+      <div class="titulo-card">
+        📸 Seu caminhão
+      </div>
+
+      <div class="subtitulo">
+        Coloque uma foto do seu caminhão para criar sua garagem virtual.
+      </div>
+
+      <div class="foto-area">
+
+        <div class="sem-foto" id="semFoto">
+
+          <div class="icone">🚛</div>
+
+          <strong>Nenhum caminhão cadastrado</strong>
+
+          <span>Escolha uma foto da sua galeria</span>
+
+        </div>
+
+        <img id="fotoCaminhao" alt="Meu caminhão">
+
+      </div>
+
+      <input
+        type="file"
+        id="arquivoFoto"
+        accept="image/*"
+      >
+
+      <label class="botao-foto" for="arquivoFoto">
+        📷 ADICIONAR FOTO DO CAMINHÃO
+      </label>
+
+    </div>
+
+
+    <!-- NOME -->
+    <div class="card">
+
+      <div class="titulo-card">
+        👤 Identificação
+      </div>
+
+      <div class="subtitulo">
+        Como você quer que seu caminhão apareça?
+      </div>
+
+      <label for="nomeMotorista">
+        Nome / Apelido
+      </label>
+
+      <input
+        type="text"
+        id="nomeMotorista"
+        placeholder="Ex.: STA WELINGTON"
+        maxlength="30"
+      >
+
+    </div>
+
+
+    <!-- JOGO -->
+    <div class="card">
+
+      <div class="titulo-card">
+        🎮 Escolha seu jogo
+      </div>
+
+      <div class="subtitulo">
+        Selecione onde você vai dirigir seu caminhão.
+      </div>
+
+      <div class="jogos">
+
+        <div
+          class="jogo"
+          id="globalTruck"
+          onclick="selecionarJogo('global')"
+        >
+
+          <div class="icone">🚛</div>
+
+          <strong>Global Truck</strong>
+
+          <small>Global Truck Online</small>
+
+        </div>
+
+
+        <div
+          class="jogo"
+          id="truckers"
+          onclick="selecionarJogo('truckers')"
+        >
+
+          <div class="icone">🚚</div>
+
+          <strong>Truckers Brasil</strong>
+
+          <small>Truckers Brasil Online</small>
+
+        </div>
+
+      </div>
+
+
+      <!-- PREVIEW -->
+      <div class="preview" id="preview">
+
+        <div class="preview-topo">
+
+          <span>MINHA GARAGEM</span>
+
+          <h2>🚛 Meu caminhão</h2>
+
+        </div>
+
+
+        <div class="preview-foto">
+
+          <img
+            id="fotoPreview"
+            alt="Foto do caminhão"
+          >
+
+        </div>
+
+
+        <div class="preview-info">
+
+          <div>
+
+            <div
+              class="jogo-escolhido"
+              id="jogoEscolhido"
+            >
+              Escolha um jogo
+            </div>
+
+            <div
+              class="nome-preview"
+              id="nomePreview"
+            >
+              Meu caminhão
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="entrar"
+          onclick="entrarNoJogo()"
+        >
+          🚛 ENTRAR NO CAMINHÃO
+        </button>
+
+      </div>
+
+
+      <div class="aviso">
+
+        💡 Ao tocar em <b>ENTRAR NO CAMINHÃO</b>,
+        a Central tentará abrir o jogo escolhido no seu aparelho.
+
+      </div>
+
+      <button
+        class="limpar"
+        onclick="limparTudo()"
+      >
+        🗑️ Limpar caminhão salvo
+      </button>
+
+    </div>
+
+
+    <div class="rodape">
+      Santa Luzia Tomates • Central Oficial 🍅
+    </div>
+
+  </div>
+
+
+  <script>
+
+    let jogoSelecionado = "";
+
+    let imagemAtual = "";
+
+
+    /* =========================
+       CARREGAR DADOS SALVOS
+    ========================= */
+
+    window.onload = function() {
+
+      const fotoSalva = localStorage.getItem("staCaminhaoFoto");
+
+      const nomeSalvo = localStorage.getItem("staCaminhaoNome");
+
+      const jogoSalvo = localStorage.getItem("staCaminhaoJogo");
+
+
+      if (fotoSalva) {
+
+        imagemAtual = fotoSalva;
+
+        mostrarFoto(fotoSalva);
+
+      }
+
+
+      if (nomeSalvo) {
+
+        document.getElementById("nomeMotorista").value = nomeSalvo;
+
+      }
+
+
+      if (jogoSalvo) {
+
+        selecionarJogo(jogoSalvo);
+
+      }
+
+
+      atualizarPreview();
+
+    };
+
+
+    /* =========================
+       SELECIONAR FOTO
+    ========================= */
+
+    document
+      .getElementById("arquivoFoto")
+      .addEventListener("change", function(event) {
+
+        const arquivo = event.target.files[0];
+
+        if (!arquivo) return;
+
+
+        const leitor = new FileReader();
+
+
+        leitor.onload = function(e) {
+
+          imagemAtual = e.target.result;
+
+          localStorage.setItem(
+            "staCaminhaoFoto",
+            imagemAtual
+          );
+
+          mostrarFoto(imagemAtual);
+
+          atualizarPreview();
+
+        };
+
+
+        leitor.readAsDataURL(arquivo);
+
+      });
+
+
+    function mostrarFoto(src) {
+
+      const foto =
+        document.getElementById("fotoCaminhao");
+
+      const semFoto =
+        document.getElementById("semFoto");
+
+
+      foto.src = src;
+
+      foto.style.display = "block";
+
+      semFoto.style.display = "none";
+
+    }
+
+
+    /* =========================
+       ESCOLHER JOGO
+    ========================= */
+
+    function selecionarJogo(jogo) {
+
+      jogoSelecionado = jogo;
+
+
+      document
+        .getElementById("globalTruck")
+        .classList.remove("ativo");
+
+      document
+        .getElementById("truckers")
+        .classList.remove("ativo");
+
+
+      if (jogo === "global") {
+
+        document
+          .getElementById("globalTruck")
+          .classList.add("ativo");
+
+      }
+
+
+      if (jogo === "truckers") {
+
+        document
+          .getElementById("truckers")
+          .classList.add("ativo");
+
+      }
+
+
+      localStorage.setItem(
+        "staCaminhaoJogo",
+        jogo
+      );
+
+
+      atualizarPreview();
+
+    }
+
+
+    /* =========================
+       ATUALIZAR PREVIEW
+    ========================= */
+
+    function atualizarPreview() {
+
+      const preview =
+        document.getElementById("preview");
+
+      const fotoPreview =
+        document.getElementById("fotoPreview");
+
+      const nomePreview =
+        document.getElementById("nomePreview");
+
+      const jogoEscolhido =
+        document.getElementById("jogoEscolhido");
+
+      const nomeInput =
+        document.getElementById("nomeMotorista").value.trim();
+
+
+      if (imagemAtual) {
+
+        fotoPreview.src = imagemAtual;
+
+        preview.style.display = "block";
+
+      } else {
+
+        preview.style.display = "none";
+
+      }
+
+
+      nomePreview.textContent =
+        nomeInput || "Meu caminhão";
+
+
+      if (jogoSelecionado === "global") {
+
+        jogoEscolhido.textContent =
+          "🎮 Global Truck Online";
+
+      }
+
+      else if (jogoSelecionado === "truckers") {
+
+        jogoEscolhido.textContent =
+          "🎮 Truckers Brasil Online";
+
+      }
+
+      else {
+
+        jogoEscolhido.textContent =
+          "Escolha um jogo";
+
+      }
+
+    }
+
+
+    /* =========================
+       SALVAR NOME
+    ========================= */
+
+    document
+      .getElementById("nomeMotorista")
+      .addEventListener("input", function() {
+
+        localStorage.setItem(
+          "staCaminhaoNome",
+          this.value
+        );
+
+        atualizarPreview();
+
+      });
+
+
+    /* =========================
+       ABRIR JOGO
+    ========================= */
+
+    function entrarNoJogo() {
+
+      if (!imagemAtual) {
+
+        alert(
+          "📸 Primeiro coloque uma foto do seu caminhão."
+        );
+
+        return;
+
+      }
+
+
+      if (!jogoSelecionado) {
+
+        alert(
+          "🎮 Primeiro escolha qual jogo você vai jogar."
+        );
+
+        return;
+
+      }
+
+
+      let app = "";
+
+
+      if (jogoSelecionado === "global") {
+
+        app = "com.stargamesapps.gto";
+
+      }
+
+
+      if (jogoSelecionado === "truckers") {
+
+        app = "com.amk.truckersbr";
+
+      }
+
+
+      /*
+        Tenta abrir o aplicativo instalado.
+        Caso não consiga, envia para a página
+        do jogo na Play Store.
+      */
+
+      const inicio = Date.now();
+
+
+      window.location.href =
+        "intent://#Intent;package=" +
+        app +
+        ";scheme=app;end";
+
+
+      setTimeout(function() {
+
+        if (Date.now() - inicio < 2500) {
+
+          if (jogoSelecionado === "global") {
+
+            window.location.href =
+              "https://play.google.com/store/apps/details?id=com.stargamesapps.gto";
+
+          }
+
+          else {
+
+            window.location.href =
+              "https://play.google.com/store/apps/details?id=com.amk.truckersbr";
+
+          }
+
+        }
+
+      }, 1800);
+
+    }
+
+
+    /* =========================
+       LIMPAR
+    ========================= */
+
+    function limparTudo() {
+
+      const confirmar =
+        confirm(
+          "Tem certeza que deseja apagar seu caminhão salvo?"
+        );
+
+
+      if (!confirmar) return;
+
+
+      localStorage.removeItem(
+        "staCaminhaoFoto"
+      );
+
+      localStorage.removeItem(
+        "staCaminhaoNome"
+      );
+
+      localStorage.removeItem(
+        "staCaminhaoJogo"
+      );
+
+
+      imagemAtual = "";
+
+      jogoSelecionado = "";
+
+
+      document.getElementById(
+        "fotoCaminhao"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "semFoto"
+      ).style.display = "block";
+
+
+      document.getElementById(
+        "nomeMotorista"
+      ).value = "";
+
+
+      document
+        .getElementById("globalTruck")
+        .classList.remove("ativo");
+
+
+      document
+        .getElementById("truckers")
+        .classList.remove("ativo");
+
+
+      document.getElementById(
+        "preview"
+      ).style.display = "none";
+
+    }
+
+  </script>
+
+</body>
+</html>
