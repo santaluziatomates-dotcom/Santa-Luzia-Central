@@ -72,8 +72,6 @@
       margin-bottom: 15px;
     }
 
-    /* FOTO */
-
     .foto-area {
       width: 100%;
       height: 260px;
@@ -84,7 +82,6 @@
       justify-content: center;
       overflow: hidden;
       background: #f8faf9;
-      position: relative;
     }
 
     .foto-area img {
@@ -133,12 +130,6 @@
       cursor: pointer;
     }
 
-    .botao-foto:active {
-      transform: scale(0.98);
-    }
-
-    /* NOME */
-
     label {
       display: block;
       font-size: 13px;
@@ -152,15 +143,13 @@
       border: 1px solid #d7ddd9;
       border-radius: 11px;
       padding: 13px;
-      font-size: 15px;
+      font-size: 16px;
       outline: none;
     }
 
     input[type="text"]:focus {
       border-color: #176b3a;
     }
-
-    /* JOGOS */
 
     .jogos {
       display: grid;
@@ -175,12 +164,8 @@
       padding: 15px 8px;
       text-align: center;
       cursor: pointer;
-      transition: 0.2s;
       background: white;
-    }
-
-    .jogo:hover {
-      border-color: #176b3a;
+      transition: 0.2s;
     }
 
     .jogo.ativo {
@@ -204,8 +189,6 @@
       color: #777;
       font-size: 11px;
     }
-
-    /* CARTÃO DO CAMINHÃO */
 
     .preview {
       display: none;
@@ -244,15 +227,7 @@
     }
 
     .preview-info {
-      padding: 14px 16px 17px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .preview-info div:first-child {
-      flex: 1;
+      padding: 14px 16px 10px;
     }
 
     .jogo-escolhido {
@@ -266,23 +241,17 @@
       margin-top: 2px;
     }
 
-    /* BOTÃO JOGAR */
-
     .entrar {
-      width: 100%;
+      width: calc(100% - 32px);
+      margin: 10px 16px 16px;
       border: none;
       background: white;
       color: #176b3a;
-      padding: 14px 12px;
+      padding: 15px 12px;
       border-radius: 12px;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 4px;
-    }
-
-    .entrar:active {
-      transform: scale(0.98);
     }
 
     .aviso {
@@ -342,7 +311,8 @@
 
   <div class="container">
 
-    <!-- FOTO -->
+    <!-- FOTO DO CAMINHÃO -->
+
     <div class="card">
 
       <div class="titulo-card">
@@ -383,6 +353,7 @@
 
 
     <!-- NOME -->
+
     <div class="card">
 
       <div class="titulo-card">
@@ -408,6 +379,7 @@
 
 
     <!-- JOGO -->
+
     <div class="card">
 
       <div class="titulo-card">
@@ -415,7 +387,7 @@
       </div>
 
       <div class="subtitulo">
-        Selecione onde você vai dirigir seu caminhão.
+        Selecione onde você vai dirigir.
       </div>
 
       <div class="jogos">
@@ -453,6 +425,7 @@
 
 
       <!-- PREVIEW -->
+
       <div class="preview" id="preview">
 
         <div class="preview-topo">
@@ -466,32 +439,25 @@
 
         <div class="preview-foto">
 
-          <img
-            id="fotoPreview"
-            alt="Foto do caminhão"
-          >
+          <img id="fotoPreview" alt="Foto do caminhão">
 
         </div>
 
 
         <div class="preview-info">
 
-          <div>
+          <div
+            class="jogo-escolhido"
+            id="jogoEscolhido"
+          >
+            Escolha um jogo
+          </div>
 
-            <div
-              class="jogo-escolhido"
-              id="jogoEscolhido"
-            >
-              Escolha um jogo
-            </div>
-
-            <div
-              class="nome-preview"
-              id="nomePreview"
-            >
-              Meu caminhão
-            </div>
-
+          <div
+            class="nome-preview"
+            id="nomePreview"
+          >
+            Meu caminhão
           </div>
 
         </div>
@@ -509,10 +475,12 @@
 
       <div class="aviso">
 
-        💡 Ao tocar em <b>ENTRAR NO CAMINHÃO</b>,
-        a Central tentará abrir o jogo escolhido no seu aparelho.
+        💡 O botão tenta abrir diretamente o jogo.
+        Se o aparelho não permitir a abertura direta,
+        será aberta a página oficial para baixar o jogo.
 
       </div>
+
 
       <button
         class="limpar"
@@ -531,387 +499,549 @@
   </div>
 
 
-  <script>
+<script>
 
-    let jogoSelecionado = "";
-
-    let imagemAtual = "";
-
-
-    /* =========================
-       CARREGAR DADOS SALVOS
-    ========================= */
-
-    window.onload = function() {
-
-      const fotoSalva = localStorage.getItem("staCaminhaoFoto");
-
-      const nomeSalvo = localStorage.getItem("staCaminhaoNome");
-
-      const jogoSalvo = localStorage.getItem("staCaminhaoJogo");
+let jogoSelecionado = "";
+let imagemAtual = "";
 
 
-      if (fotoSalva) {
+/* ==========================
+   CARREGAR DADOS
+========================== */
 
-        imagemAtual = fotoSalva;
+window.onload = function() {
 
-        mostrarFoto(fotoSalva);
+  const fotoSalva =
+    localStorage.getItem("staCaminhaoFoto");
 
-      }
+  const nomeSalvo =
+    localStorage.getItem("staCaminhaoNome");
 
-
-      if (nomeSalvo) {
-
-        document.getElementById("nomeMotorista").value = nomeSalvo;
-
-      }
+  const jogoSalvo =
+    localStorage.getItem("staCaminhaoJogo");
 
 
-      if (jogoSalvo) {
+  if (fotoSalva) {
 
-        selecionarJogo(jogoSalvo);
+    imagemAtual = fotoSalva;
 
-      }
+    mostrarFoto(fotoSalva);
 
+  }
+
+
+  if (nomeSalvo) {
+
+    document.getElementById(
+      "nomeMotorista"
+    ).value = nomeSalvo;
+
+  }
+
+
+  if (jogoSalvo) {
+
+    selecionarJogo(jogoSalvo);
+
+  }
+
+
+  atualizarPreview();
+
+};
+
+
+/* ==========================
+   FOTO
+========================== */
+
+document
+  .getElementById("arquivoFoto")
+  .addEventListener("change", function(event) {
+
+    const arquivo = event.target.files[0];
+
+    if (!arquivo) return;
+
+
+    const leitor = new FileReader();
+
+
+    leitor.onload = function(e) {
+
+      imagemAtual = e.target.result;
+
+      localStorage.setItem(
+        "staCaminhaoFoto",
+        imagemAtual
+      );
+
+      mostrarFoto(imagemAtual);
 
       atualizarPreview();
 
     };
 
 
-    /* =========================
-       SELECIONAR FOTO
-    ========================= */
+    leitor.readAsDataURL(arquivo);
+
+  });
+
+
+function mostrarFoto(src) {
+
+  const foto =
+    document.getElementById("fotoCaminhao");
+
+  const semFoto =
+    document.getElementById("semFoto");
+
+
+  foto.src = src;
+
+  foto.style.display = "block";
+
+  semFoto.style.display = "none";
+
+}
+
+
+/* ==========================
+   JOGO
+========================== */
+
+function selecionarJogo(jogo) {
+
+  jogoSelecionado = jogo;
+
+
+  document
+    .getElementById("globalTruck")
+    .classList.remove("ativo");
+
+  document
+    .getElementById("truckers")
+    .classList.remove("ativo");
+
+
+  if (jogo === "global") {
 
     document
-      .getElementById("arquivoFoto")
-      .addEventListener("change", function(event) {
+      .getElementById("globalTruck")
+      .classList.add("ativo");
 
-        const arquivo = event.target.files[0];
+  }
 
-        if (!arquivo) return;
 
+  if (jogo === "truckers") {
 
-        const leitor = new FileReader();
+    document
+      .getElementById("truckers")
+      .classList.add("ativo");
 
+  }
 
-        leitor.onload = function(e) {
 
-          imagemAtual = e.target.result;
+  localStorage.setItem(
+    "staCaminhaoJogo",
+    jogo
+  );
 
-          localStorage.setItem(
-            "staCaminhaoFoto",
-            imagemAtual
-          );
 
-          mostrarFoto(imagemAtual);
+  atualizarPreview();
 
-          atualizarPreview();
+}
 
-        };
 
+/* ==========================
+   PREVIEW
+========================== */
 
-        leitor.readAsDataURL(arquivo);
+function atualizarPreview() {
 
-      });
+  const preview =
+    document.getElementById("preview");
 
+  const fotoPreview =
+    document.getElementById("fotoPreview");
 
-    function mostrarFoto(src) {
+  const nomePreview =
+    document.getElementById("nomePreview");
 
-      const foto =
-        document.getElementById("fotoCaminhao");
+  const jogoEscolhido =
+    document.getElementById("jogoEscolhido");
 
-      const semFoto =
-        document.getElementById("semFoto");
-
-
-      foto.src = src;
-
-      foto.style.display = "block";
-
-      semFoto.style.display = "none";
-
-    }
-
-
-    /* =========================
-       ESCOLHER JOGO
-    ========================= */
-
-    function selecionarJogo(jogo) {
-
-      jogoSelecionado = jogo;
-
-
-      document
-        .getElementById("globalTruck")
-        .classList.remove("ativo");
-
-      document
-        .getElementById("truckers")
-        .classList.remove("ativo");
-
-
-      if (jogo === "global") {
-
-        document
-          .getElementById("globalTruck")
-          .classList.add("ativo");
-
-      }
-
-
-      if (jogo === "truckers") {
-
-        document
-          .getElementById("truckers")
-          .classList.add("ativo");
-
-      }
-
-
-      localStorage.setItem(
-        "staCaminhaoJogo",
-        jogo
-      );
-
-
-      atualizarPreview();
-
-    }
-
-
-    /* =========================
-       ATUALIZAR PREVIEW
-    ========================= */
-
-    function atualizarPreview() {
-
-      const preview =
-        document.getElementById("preview");
-
-      const fotoPreview =
-        document.getElementById("fotoPreview");
-
-      const nomePreview =
-        document.getElementById("nomePreview");
-
-      const jogoEscolhido =
-        document.getElementById("jogoEscolhido");
-
-      const nomeInput =
-        document.getElementById("nomeMotorista").value.trim();
-
-
-      if (imagemAtual) {
-
-        fotoPreview.src = imagemAtual;
-
-        preview.style.display = "block";
-
-      } else {
-
-        preview.style.display = "none";
-
-      }
-
-
-      nomePreview.textContent =
-        nomeInput || "Meu caminhão";
-
-
-      if (jogoSelecionado === "global") {
-
-        jogoEscolhido.textContent =
-          "🎮 Global Truck Online";
-
-      }
-
-      else if (jogoSelecionado === "truckers") {
-
-        jogoEscolhido.textContent =
-          "🎮 Truckers Brasil Online";
-
-      }
-
-      else {
-
-        jogoEscolhido.textContent =
-          "Escolha um jogo";
-
-      }
-
-    }
-
-
-    /* =========================
-       SALVAR NOME
-    ========================= */
-
+  const nome =
     document
       .getElementById("nomeMotorista")
-      .addEventListener("input", function() {
-
-        localStorage.setItem(
-          "staCaminhaoNome",
-          this.value
-        );
-
-        atualizarPreview();
-
-      });
+      .value
+      .trim();
 
 
-    /* =========================
-       ABRIR JOGO
-    ========================= */
+  if (imagemAtual) {
 
-    function entrarNoJogo() {
+    fotoPreview.src = imagemAtual;
 
-      if (!imagemAtual) {
+    preview.style.display = "block";
+
+  }
+  else {
+
+    preview.style.display = "none";
+
+  }
+
+
+  nomePreview.textContent =
+    nome || "Meu caminhão";
+
+
+  if (jogoSelecionado === "global") {
+
+    jogoEscolhido.textContent =
+      "🎮 Global Truck Online";
+
+  }
+  else if (jogoSelecionado === "truckers") {
+
+    jogoEscolhido.textContent =
+      "🎮 Truckers Brasil Online";
+
+  }
+  else {
+
+    jogoEscolhido.textContent =
+      "Escolha um jogo";
+
+  }
+
+}
+
+
+/* ==========================
+   NOME
+========================== */
+
+document
+  .getElementById("nomeMotorista")
+  .addEventListener("input", function() {
+
+    localStorage.setItem(
+      "staCaminhaoNome",
+      this.value
+    );
+
+    atualizarPreview();
+
+  });
+
+
+/* ==========================
+   DETECTAR SISTEMA
+========================== */
+
+function ehIOS() {
+
+  return /iPhone|iPad|iPod/i.test(
+    navigator.userAgent
+  );
+
+}
+
+
+function ehAndroid() {
+
+  return /Android/i.test(
+    navigator.userAgent
+  );
+
+}
+
+
+/* ==========================
+   ABRIR JOGO
+========================== */
+
+function entrarNoJogo() {
+
+  if (!imagemAtual) {
+
+    alert(
+      "📸 Primeiro coloque uma foto do seu caminhão."
+    );
+
+    return;
+
+  }
+
+
+  if (!jogoSelecionado) {
+
+    alert(
+      "🎮 Primeiro escolha qual jogo você vai jogar."
+    );
+
+    return;
+
+  }
+
+
+  if (jogoSelecionado === "global") {
+
+    abrirGlobalTruck();
+
+  }
+  else {
+
+    abrirTruckersBrasil();
+
+  }
+
+}
+
+
+/* ==========================
+   GLOBAL TRUCK
+========================== */
+
+function abrirGlobalTruck() {
+
+  /*
+    ANDROID
+    Tenta abrir o aplicativo pelo pacote.
+  */
+
+  if (ehAndroid()) {
+
+    const app =
+      "com.stargamesapps.gto";
+
+    const inicio =
+      Date.now();
+
+
+    window.location.href =
+      "intent://#Intent;" +
+      "package=" + app + ";" +
+      "scheme=globaltruck;" +
+      "end";
+
+
+    setTimeout(function() {
+
+      if (Date.now() - inicio < 2500) {
+
+        window.location.href =
+          "https://play.google.com/store/apps/details?id=" +
+          app;
+
+      }
+
+    }, 1800);
+
+    return;
+
+  }
+
+
+  /*
+    IPHONE / IPAD
+
+    Tentativas de URL Scheme.
+    Se o aplicativo não aceitar o esquema,
+    abre a App Store.
+  */
+
+  if (ehIOS()) {
+
+    const inicio =
+      Date.now();
+
+
+    window.location.href =
+      "globaltruck://";
+
+
+    setTimeout(function() {
+
+      if (Date.now() - inicio < 1800) {
+
+        window.location.href =
+          "https://apps.apple.com/br/app/global-truck-online/id6736657479";
+
+      }
+
+    }, 1200);
+
+    return;
+
+  }
+
+
+  /*
+    COMPUTADOR / OUTROS
+  */
+
+  window.location.href =
+    "https://apps.apple.com/br/app/global-truck-online/id6736657479";
+
+}
+
+
+/* ==========================
+   TRUCKERS BRASIL
+========================== */
+
+function abrirTruckersBrasil() {
+
+  /*
+    ANDROID
+  */
+
+  if (ehAndroid()) {
+
+    const app =
+      "com.amk.truckersbr";
+
+    const inicio =
+      Date.now();
+
+
+    window.location.href =
+      "intent://#Intent;" +
+      "package=" + app + ";" +
+      "scheme=truckersbrasil;" +
+      "end";
+
+
+    setTimeout(function() {
+
+      if (Date.now() - inicio < 2500) {
+
+        window.location.href =
+          "https://play.google.com/store/apps/details?id=" +
+          app;
+
+      }
+
+    }, 1800);
+
+    return;
+
+  }
+
+
+  /*
+    IPHONE / IPAD
+
+    Tentativa de abertura direta.
+  */
+
+  if (ehIOS()) {
+
+    const inicio =
+      Date.now();
+
+
+    window.location.href =
+      "truckersbrasil://";
+
+
+    setTimeout(function() {
+
+      if (Date.now() - inicio < 1800) {
+
+        /*
+          IMPORTANTE:
+          Se você já tiver o link oficial da App Store
+          do Truckers Brasil, coloque aqui.
+        */
 
         alert(
-          "📸 Primeiro coloque uma foto do seu caminhão."
+          "O Truckers Brasil não informou publicamente um link de abertura direta para iPhone. Se o jogo estiver instalado e aceitar esse esquema, ele será aberto."
         );
 
-        return;
-
       }
 
+    }, 1200);
 
-      if (!jogoSelecionado) {
+    return;
 
-        alert(
-          "🎮 Primeiro escolha qual jogo você vai jogar."
-        );
-
-        return;
-
-      }
+  }
 
 
-      let app = "";
+  alert(
+    "Abra o Truckers Brasil pelo seu dispositivo móvel."
+  );
+
+}
 
 
-      if (jogoSelecionado === "global") {
+/* ==========================
+   LIMPAR
+========================== */
 
-        app = "com.stargamesapps.gto";
+function limparTudo() {
 
-      }
-
-
-      if (jogoSelecionado === "truckers") {
-
-        app = "com.amk.truckersbr";
-
-      }
+  const confirmar =
+    confirm(
+      "Tem certeza que deseja apagar seu caminhão salvo?"
+    );
 
 
-      /*
-        Tenta abrir o aplicativo instalado.
-        Caso não consiga, envia para a página
-        do jogo na Play Store.
-      */
-
-      const inicio = Date.now();
+  if (!confirmar) return;
 
 
-      window.location.href =
-        "intent://#Intent;package=" +
-        app +
-        ";scheme=app;end";
+  localStorage.removeItem(
+    "staCaminhaoFoto"
+  );
+
+  localStorage.removeItem(
+    "staCaminhaoNome"
+  );
+
+  localStorage.removeItem(
+    "staCaminhaoJogo"
+  );
 
 
-      setTimeout(function() {
+  imagemAtual = "";
 
-        if (Date.now() - inicio < 2500) {
-
-          if (jogoSelecionado === "global") {
-
-            window.location.href =
-              "https://play.google.com/store/apps/details?id=com.stargamesapps.gto";
-
-          }
-
-          else {
-
-            window.location.href =
-              "https://play.google.com/store/apps/details?id=com.amk.truckersbr";
-
-          }
-
-        }
-
-      }, 1800);
-
-    }
+  jogoSelecionado = "";
 
 
-    /* =========================
-       LIMPAR
-    ========================= */
-
-    function limparTudo() {
-
-      const confirmar =
-        confirm(
-          "Tem certeza que deseja apagar seu caminhão salvo?"
-        );
+  document.getElementById(
+    "fotoCaminhao"
+  ).style.display = "none";
 
 
-      if (!confirmar) return;
+  document.getElementById(
+    "semFoto"
+  ).style.display = "block";
 
 
-      localStorage.removeItem(
-        "staCaminhaoFoto"
-      );
-
-      localStorage.removeItem(
-        "staCaminhaoNome"
-      );
-
-      localStorage.removeItem(
-        "staCaminhaoJogo"
-      );
+  document.getElementById(
+    "nomeMotorista"
+  ).value = "";
 
 
-      imagemAtual = "";
-
-      jogoSelecionado = "";
-
-
-      document.getElementById(
-        "fotoCaminhao"
-      ).style.display = "none";
+  document
+    .getElementById("globalTruck")
+    .classList.remove("ativo");
 
 
-      document.getElementById(
-        "semFoto"
-      ).style.display = "block";
+  document
+    .getElementById("truckers")
+    .classList.remove("ativo");
 
 
-      document.getElementById(
-        "nomeMotorista"
-      ).value = "";
+  document.getElementById(
+    "preview"
+  ).style.display = "none";
 
+}
 
-      document
-        .getElementById("globalTruck")
-        .classList.remove("ativo");
-
-
-      document
-        .getElementById("truckers")
-        .classList.remove("ativo");
-
-
-      document.getElementById(
-        "preview"
-      ).style.display = "none";
-
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
