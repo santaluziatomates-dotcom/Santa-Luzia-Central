@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notas • Santa Luzia Central</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f3f3f3;
+  color:#222;
+}
+
+/* TOPO */
+
+.topo{
+  background:#fff;
+  padding:20px 15px;
+  text-align:center;
+  border-bottom:1px solid #ddd;
+}
+
+.topo h1{
+  margin:0;
+  font-size:24px;
+}
+
+.topo p{
+  margin:6px 0 0;
+  color:#666;
+  font-size:14px;
+}
+
+/* CONTAINER */
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px 15px 40px;
+}
+
+/* CARDS */
+
+.card{
+  background:#fff;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,.07);
+  margin-bottom:18px;
+}
+
+/* TÍTULOS */
+
+.titulo{
+  margin:0 0 5px;
+  font-size:20px;
+}
+
+.subtitulo{
+  margin:0 0 20px;
+  color:#777;
+  font-size:14px;
+}
+
+/* ESCOLHA DA NOTA */
+
+.opcoes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.opcao{
+  border:2px solid #ddd;
+  border-radius:15px;
+  padding:18px 12px;
+  text-align:center;
+  cursor:pointer;
+  background:#fff;
+  transition:.2s;
+}
+
+.opcao:hover{
+  border-color:#176b3a;
+}
+
+.opcao.selecionada{
+  border-color:#176b3a;
+  background:#f1f8f4;
+}
+
+.opcao .icone{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.opcao strong{
+  display:block;
+  font-size:15px;
+}
+
+.opcao span{
+  display:block;
+  margin-top:5px;
+  color:#777;
+  font-size:12px;
+}
+
+/* FORMULÁRIO */
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:18px 0 7px;
+}
+
+label:first-child{
+  margin-top:0;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:11px;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#176b3a;
+}
+
+/* BOTÃO */
+
+.botao-gerar{
+  width:100%;
+  margin-top:22px;
+  padding:16px;
+  border:none;
+  border-radius:12px;
+  background:#176b3a;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.botao-gerar:active{
+  transform:scale(.99);
+}
+
+/* STATUS */
+
+.status{
+  display:none;
+  margin-top:15px;
+  padding:13px;
+  background:#eef8f1;
+  border:1px solid #cde6d5;
+  border-radius:12px;
+  color:#176b3a;
+  text-align:center;
+  font-size:14px;
+  font-weight:bold;
+}
+
+/* RESULTADO */
+
+.resultado{
+  display:none;
+}
+
+.preview{
+  width:100%;
+  overflow:hidden;
+  border-radius:12px;
+  background:#ddd;
+  border:1px solid #ddd;
+}
+
+canvas{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* BOTÕES */
+
+.botoes{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+.botoes button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:11px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.baixar{
+  background:#176b3a;
+  color:#fff;
+}
+
+.nova{
+  background:#eee;
+  color:#222;
+}
+
+/* VOLTAR */
+
+.voltar{
+  display:block;
+  background:#fff;
+  color:#222;
+  border:1px solid #ddd;
+  padding:14px;
+  border-radius:11px;
+  text-decoration:none;
+  text-align:center;
+  font-weight:bold;
+  margin-top:15px;
+}
+
+/* AVISO */
+
+.aviso{
+  margin:15px 0 0;
+  color:#777;
+  font-size:12px;
+  line-height:1.5;
+  text-align:center;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:600px){
+
+  .opcoes{
+    grid-template-columns:1fr;
+  }
+
+  .botoes{
+    flex-direction:column;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header class="topo">
+  <h1>🧾 LIBERAÇÃO DE NOTAS</h1>
+  <p>Santa Luzia Central • Gestão de documentos</p>
+</header>
+
+
+<main class="container">
+
+  <!-- ESCOLHA -->
+  <section class="card">
+
+    <h2 class="titulo">Escolha o tipo de nota</h2>
+
+    <p class="subtitulo">
+      Selecione o documento que será liberado pelo sistema.
+    </p>
+
+    <div class="opcoes">
+
+      <div
+        class="opcao"
+        id="opcaoRemaneio"
+        onclick="selecionarTipo('remaneio')"
+      >
+        <div class="icone">🚛</div>
+
+        <strong>REMANEIO</strong>
+
+        <span>
+          Nota de carregamento
+        </span>
+      </div>
+
+
+      <div
+        class="opcao"
+        id="opcaoEntrega"
+        onclick="selecionarTipo('entrega')"
+      >
+        <div class="icone">📦</div>
+
+        <strong>NOTA DE ENTREGA</strong>
+
+        <span>
+          Documento pós-entrega
+        </span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FORMULÁRIO -->
+
+  <section class="card" id="formulario">
+
+    <h2 class="titulo">Dados da nota</h2>
+
+    <p class="subtitulo">
+      Informe somente os dados que mudam em cada viagem.
+    </p>
+
+
+    <label for="nome">
+      👤 Nome do motorista
+    </label>
+
+    <input
+      type="text"
+      id="nome"
+      placeholder="Digite o nome completo"
+      maxlength="45"
+    >
+
+
+    <label for="data">
+      📅 Data
+    </label>
+
+    <input
+      type="date"
+      id="data"
+    >
+
+
+    <button
+      class="botao-gerar"
+      onclick="gerarNota()"
+    >
+      ✅ LIBERAR NOTA
+    </button>
+
+
+    <div
+      class="status"
+      id="status"
+    >
+      ✓ Nota liberada automaticamente pela Gestão Santa Luzia.
+    </div>
+
+
+    <p class="aviso">
+      A liberação é realizada automaticamente pelo sistema interno
+      da Santa Luzia Tomates.
+    </p>
+
+  </section>
+
+
+  <!-- RESULTADO -->
+
+  <section
+    class="card resultado"
+    id="resultado"
+  >
+
+    <h2 class="titulo">
+      Nota liberada
+    </h2>
+
+    <p class="subtitulo">
+      Documento pronto para ser enviado ao grupo.
+    </p>
+
+
+    <div class="preview">
+
+      <canvas
+        id="canvasNota"
+        width="800"
+        height="1200"
+      ></canvas>
+
+    </div>
+
+
+    <div class="botoes">
+
+      <button
+        class="baixar"
+        onclick="baixarNota()"
+      >
+        📥 BAIXAR NOTA
+      </button>
+
+      <button
+        class="nova"
+        onclick="novaNota()"
+      >
+        🔄 NOVA NOTA
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <a
+    href="index.html"
+    class="voltar"
+  >
+    ← Voltar para Santa Luzia Central
+  </a>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURAÇÃO
+===================================================== */
+
+const BASE_REMANEIO = "remaneio-base.jpg";
+const BASE_ENTREGA  = "entrega-base.jpg";
+
+let tipoSelecionado = "";
+let nomeMotorista = "";
+let dataSelecionada = "";
+
+
+/* =====================================================
+   DATA PADRÃO
+===================================================== */
+
+const campoData = document.getElementById("data");
+
+const hoje = new Date();
+
+const ano = hoje.getFullYear();
+const mes = String(hoje.getMonth() + 1).padStart(2,"0");
+const dia = String(hoje.getDate()).padStart(2,"0");
+
+campoData.value = `${ano}-${mes}-${dia}`;
+
+
+/* =====================================================
+   ESCOLHER TIPO
+===================================================== */
+
+function selecionarTipo(tipo){
+
+  tipoSelecionado = tipo;
+
+  document
+    .getElementById("opcaoRemaneio")
+    .classList.remove("selecionada");
+
+  document
+    .getElementById("opcaoEntrega")
+    .classList.remove("selecionada");
+
+
+  if(tipo === "remaneio"){
+
+    document
+      .getElementById("opcaoRemaneio")
+      .classList.add("selecionada");
+
+  }
+
+
+  if(tipo === "entrega"){
+
+    document
+      .getElementById("opcaoEntrega")
+      .classList.add("selecionada");
+
+  }
+
+}
+
+
+/* =====================================================
+   FORMATAR DATA
+===================================================== */
+
+function formatarData(data){
+
+  const partes = data.split("-");
+
+  if(partes.length !== 3){
+    return "";
+  }
+
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+}
+
+
+/* =====================================================
+   GERAR NOTA
+===================================================== */
+
+function gerarNota(){
+
+  nomeMotorista =
+    document
+      .getElementById("nome")
+      .value
+      .trim();
+
+  dataSelecionada =
+    document
+      .getElementById("data")
+      .value;
+
+
+  if(!tipoSelecionado){
+
+    alert(
+      "Selecione primeiro o tipo de nota."
+    );
+
+    return;
+
+  }
+
+
+  if(!nomeMotorista){
+
+    alert(
+      "Digite o nome do motorista."
+    );
+
+    return;
+
+  }
+
+
+  if(!dataSelecionada){
+
+    alert(
+      "Selecione a data."
+    );
+
+    return;
+
+  }
+
+
+  const canvas =
+    document.getElementById("canvasNota");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  const base =
+    new Image();
+
+
+  base.onload = function(){
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+
+    ctx.drawImage(
+      base,
+      0,
+      0,
+      800,
+      1200
+    );
+
+
+    const dataFormatada =
+      formatarData(dataSelecionada);
+
+
+    /* ============================================
+       DADOS DO MOTORISTA
+    ============================================ */
+
+    ctx.fillStyle = "#111";
+
+    ctx.font =
+      "bold 15px Arial";
+
+
+    /*
+      REMANEIO
+      Motorista entra na assinatura de origem.
+    */
+
+    if(tipoSelecionado === "remaneio"){
+
+      ctx.fillText(
+        nomeMotorista.toUpperCase(),
+        280,
+        615
+      );
+
+    }
+
+
+    /*
+      NOTA DE ENTREGA
+    */
+
+    if(tipoSelecionado === "entrega"){
+
+      ctx.fillText(
+        nomeMotorista.toUpperCase(),
+        295,
+        895
+      );
+
+    }
+
+
+    /* ============================================
+       DATA
+    ============================================ */
+
+    ctx.font =
+      "bold 15px Arial";
+
+
+    if(tipoSelecionado === "remaneio"){
+
+      ctx.fillText(
+        dataFormatada,
+        278,
+        362
+      );
+
+    }
+
+
+    if(tipoSelecionado === "entrega"){
+
+      ctx.fillText(
+        dataFormatada,
+        300,
+        450
+      );
+
+    }
+
+
+    /* ============================================
+       CARIMBO DA GESTÃO
+    ============================================ */
+
+    criarCarimbo(
+      ctx,
+      tipoSelecionado
+    );
+
+
+    /* ============================================
+       MENSAGEM
+    ============================================ */
+
+    criarMensagem(
+      ctx,
+      tipoSelecionado
+    );
+
+
+    /* ============================================
+       MOSTRAR RESULTADO
+    ============================================ */
+
+    document
+      .getElementById("formulario")
+      .style.display = "none";
+
+
+    document
+      .getElementById("resultado")
+      .style.display = "block";
+
+
+    document
+      .getElementById("status")
+      .style.display = "block";
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  };
+
+
+  base.onerror = function(){
+
+    alert(
+      "Não foi possível carregar a imagem da nota.\n\n" +
+      "Verifique se os arquivos:\n" +
+      "remaneio-base.jpg\n" +
+      "entrega-base.jpg\n\n" +
+      "estão na mesma pasta do notas.html."
+    );
+
+  };
+
+
+  if(tipoSelecionado === "remaneio"){
+
+    base.src = BASE_REMANEIO;
+
+  }else{
+
+    base.src = BASE_ENTREGA;
+
+  }
+
+}
+
+
+/* =====================================================
+   CARIMBO
+===================================================== */
+
+function criarCarimbo(ctx,tipo){
+
+  /*
+    O carimbo fica em uma área livre
+    na parte inferior da folha.
+  */
+
+  let x = 565;
+  let y = 1060;
+
+
+  if(tipo === "entrega"){
+
+    x = 555;
+    y = 1070;
+
+  }
+
+
+  ctx.save();
+
+
+  ctx.translate(x,y);
+
+  ctx.rotate(
+    -3 * Math.PI / 180
+  );
+
+
+  /* BORDA */
+
+  ctx.strokeStyle =
+    "#176b3a";
+
+  ctx.lineWidth = 3;
+
+  ctx.strokeRect(
+    -115,
+    -45,
+    230,
+    90
+  );
+
+
+  ctx.strokeStyle =
+    "#176b3a";
+
+  ctx.lineWidth = 1;
+
+  ctx.strokeRect(
+    -108,
+    -38,
+    216,
+    76
+  );
+
+
+  /* TEXTO */
+
+  ctx.fillStyle =
+    "#176b3a";
+
+  ctx.textAlign =
+    "center";
+
+
+  ctx.font =
+    "bold 17px Arial";
+
+  ctx.fillText(
+    "GESTÃO SANTA LUZIA",
+    0,
+    -10
+  );
+
+
+  ctx.font =
+    "bold 12px Arial";
+
+  ctx.fillText(
+    "LIBERAÇÃO AUTOMÁTICA",
+    0,
+    10
+  );
+
+
+  ctx.font =
+    "10px Arial";
+
+  ctx.fillText(
+    "SANTA LUZIA TOMATES",
+    0,
+    27
+  );
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
+function criarMensagem(ctx,tipo){
+
+  let x = 565;
+  let y = 1130;
+
+
+  if(tipo === "entrega"){
+
+    x = 555;
+    y = 1140;
+
+  }
+
+
+  ctx.save();
+
+  ctx.textAlign =
+    "center";
+
+
+  ctx.fillStyle =
+    "#176b3a";
+
+
+  ctx.font =
+    "bold 16px Arial";
+
+
+  ctx.fillText(
+    "✓ NOTA LIBERADA",
+    x,
+    y
+  );
+
+
+  ctx.font =
+    "bold 14px Arial";
+
+
+  ctx.fillText(
+    "Boa viagem! 🙏",
+    x,
+    y + 22
+  );
+
+
+  ctx.font =
+    "11px Arial";
+
+  ctx.fillStyle =
+    "#555";
+
+
+  ctx.fillText(
+    "Que Deus acompanhe sua viagem.",
+    x,
+    y + 40
+  );
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   BAIXAR / COMPARTILHAR
+===================================================== */
+
+async function baixarNota(){
+
+  const canvas =
+    document.getElementById("canvasNota");
+
+
+  try{
+
+    const blob =
+      await new Promise(
+        function(resolve){
+          canvas.toBlob(
+            resolve,
+            "image/png",
+            1
+          );
+        }
+      );
+
+
+    if(!blob){
+
+      throw new Error(
+        "Erro ao criar imagem."
+      );
+
+    }
+
+
+    const nomeArquivo =
+      tipoSelecionado === "remaneio"
+        ? "Remaneio-Santa-Luzia.png"
+        : "Nota-Entrega-Santa-Luzia.png";
+
+
+    const arquivo =
+      new File(
+        [blob],
+        nomeArquivo,
+        {
+          type:"image/png"
+        }
+      );
+
+
+    /* ==========================================
+       COMPARTILHAR NO CELULAR
+    ========================================== */
+
+    if(
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({
+        files:[arquivo]
+      })
+    ){
+
+      await navigator.share({
+
+        title:
+          "Nota Santa Luzia Tomates",
+
+        text:
+          "Documento liberado automaticamente pela Gestão Santa Luzia.",
+
+        files:[arquivo]
+
+      });
+
+      return;
+
+    }
+
+
+    /* ==========================================
+       DOWNLOAD NORMAL
+    ========================================== */
+
+    const url =
+      URL.createObjectURL(blob);
+
+
+    const link =
+      document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+      nomeArquivo;
+
+    link.style.display =
+      "none";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+
+    setTimeout(
+      function(){
+        URL.revokeObjectURL(url);
+      },
+      3000
+    );
+
+
+  }catch(erro){
+
+    console.log(
+      "Erro:",
+      erro
+    );
+
+
+    /*
+      FALLBACK PARA IPHONE
+    */
+
+    const imagem =
+      canvas.toDataURL(
+        "image/png"
+      );
+
+
+    const novaAba =
+      window.open(
+        "",
+        "_blank"
+      );
+
+
+    if(novaAba){
+
+      novaAba.document.write(`
+
+        <html>
+
+        <head>
+
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          >
+
+          <title>
+            Nota Santa Luzia
+          </title>
+
+        </head>
+
+
+        <body
+          style="
+            margin:0;
+            background:#222;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100vh;
+          "
+        >
+
+          <img
+            src="${imagem}"
+            style="
+              max-width:100%;
+              height:auto;
+            "
+          >
+
+        </body>
+
+        </html>
+
+      `);
+
+      novaAba.document.close();
+
+    }else{
+
+      alert(
+        "Não foi possível abrir a nota."
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   NOVA NOTA
+===================================================== */
+
+function novaNota(){
+
+  tipoSelecionado = "";
+
+  nomeMotorista = "";
+
+  dataSelecionada = "";
+
+
+  document
+    .getElementById("resultado")
+    .style.display = "none";
+
+
+  document
+    .getElementById("formulario")
+    .style.display = "block";
+
+
+  document
+    .getElementById("nome")
+    .value = "";
+
+
+  document
+    .getElementById("opcaoRemaneio")
+    .classList.remove("selecionada");
+
+
+  document
+    .getElementById("opcaoEntrega")
+    .classList.remove("selecionada");
+
+
+  document
+    .getElementById("status")
+    .style.display = "none";
+
+
+  /*
+    Volta para a data de hoje.
+  */
+
+  campoData.value =
+    `${ano}-${mes}-${dia}`;
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+</script>
+
+</body>
+</html>
