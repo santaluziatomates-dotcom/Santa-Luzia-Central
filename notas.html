@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<link
+  rel="manifest"
+  href="/Santa-Luzia-Central/manifest.json"
+>
 
 <title>Notas • Santa Luzia Central</title>
 
+
 <style>
+
 *{
   box-sizing:border-box;
   font-family:Arial,Helvetica,sans-serif;
 }
+
 
 body{
   margin:0;
@@ -18,7 +32,10 @@ body{
   color:#222;
 }
 
-/* TOPO */
+
+/* ==============================
+   TOPO
+============================== */
 
 .topo{
   background:#fff;
@@ -27,10 +44,13 @@ body{
   border-bottom:1px solid #ddd;
 }
 
+
 .topo h1{
   margin:0;
   font-size:24px;
+  color:#222;
 }
+
 
 .topo p{
   margin:6px 0 0;
@@ -38,7 +58,10 @@ body{
   font-size:14px;
 }
 
-/* CONTAINER */
+
+/* ==============================
+   CONTAINER
+============================== */
 
 .container{
   max-width:900px;
@@ -46,7 +69,10 @@ body{
   padding:20px 15px 40px;
 }
 
-/* CARDS */
+
+/* ==============================
+   CARDS
+============================== */
 
 .card{
   background:#fff;
@@ -56,12 +82,12 @@ body{
   margin-bottom:18px;
 }
 
-/* TÍTULOS */
 
 .titulo{
   margin:0 0 5px;
   font-size:20px;
 }
+
 
 .subtitulo{
   margin:0 0 20px;
@@ -69,13 +95,17 @@ body{
   font-size:14px;
 }
 
-/* ESCOLHA DA NOTA */
+
+/* ==============================
+   ESCOLHA
+============================== */
 
 .opcoes{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
+
 
 .opcao{
   border:2px solid #ddd;
@@ -87,24 +117,29 @@ body{
   transition:.2s;
 }
 
+
 .opcao:hover{
   border-color:#176b3a;
 }
+
 
 .opcao.selecionada{
   border-color:#176b3a;
   background:#f1f8f4;
 }
 
+
 .opcao .icone{
   font-size:32px;
   margin-bottom:8px;
 }
 
+
 .opcao strong{
   display:block;
   font-size:15px;
 }
+
 
 .opcao span{
   display:block;
@@ -113,7 +148,10 @@ body{
   font-size:12px;
 }
 
-/* FORMULÁRIO */
+
+/* ==============================
+   FORMULÁRIO
+============================== */
 
 label{
   display:block;
@@ -121,9 +159,11 @@ label{
   margin:18px 0 7px;
 }
 
+
 label:first-child{
   margin-top:0;
 }
+
 
 input{
   width:100%;
@@ -134,11 +174,15 @@ input{
   outline:none;
 }
 
+
 input:focus{
   border-color:#176b3a;
 }
 
-/* BOTÃO */
+
+/* ==============================
+   BOTÃO GERAR
+============================== */
 
 .botao-gerar{
   width:100%;
@@ -153,11 +197,15 @@ input:focus{
   cursor:pointer;
 }
 
+
 .botao-gerar:active{
   transform:scale(.99);
 }
 
-/* STATUS */
+
+/* ==============================
+   STATUS
+============================== */
 
 .status{
   display:none;
@@ -172,19 +220,24 @@ input:focus{
   font-weight:bold;
 }
 
-/* RESULTADO */
+
+/* ==============================
+   RESULTADO
+============================== */
 
 .resultado{
   display:none;
 }
 
+
 .preview{
   width:100%;
-  overflow:hidden;
+  overflow:auto;
   border-radius:12px;
   background:#ddd;
   border:1px solid #ddd;
 }
+
 
 canvas{
   width:100%;
@@ -192,13 +245,17 @@ canvas{
   display:block;
 }
 
-/* BOTÕES */
+
+/* ==============================
+   BOTÕES
+============================== */
 
 .botoes{
   display:flex;
   gap:10px;
   margin-top:15px;
 }
+
 
 .botoes button{
   flex:1;
@@ -210,17 +267,22 @@ canvas{
   cursor:pointer;
 }
 
+
 .baixar{
   background:#176b3a;
   color:#fff;
 }
+
 
 .nova{
   background:#eee;
   color:#222;
 }
 
-/* VOLTAR */
+
+/* ==============================
+   VOLTAR
+============================== */
 
 .voltar{
   display:block;
@@ -235,7 +297,10 @@ canvas{
   margin-top:15px;
 }
 
-/* AVISO */
+
+/* ==============================
+   AVISO
+============================== */
 
 .aviso{
   margin:15px 0 0;
@@ -245,7 +310,10 @@ canvas{
   text-align:center;
 }
 
-/* RESPONSIVO */
+
+/* ==============================
+   RESPONSIVO
+============================== */
 
 @media(max-width:600px){
 
@@ -258,219 +326,341 @@ canvas{
   }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header class="topo">
+
   <h1>🧾 LIBERAÇÃO DE NOTAS</h1>
-  <p>Santa Luzia Central • Gestão de documentos</p>
+
+  <p>
+    Santa Luzia Central • Gestão de documentos
+  </p>
+
 </header>
+
 
 
 <main class="container">
 
-  <!-- ESCOLHA -->
-  <section class="card">
 
-    <h2 class="titulo">Escolha o tipo de nota</h2>
+<!-- =========================================
+     ESCOLHER TIPO
+========================================= -->
 
-    <p class="subtitulo">
-      Selecione o documento que será liberado pelo sistema.
-    </p>
+<section class="card">
 
-    <div class="opcoes">
+  <h2 class="titulo">
+    Escolha o tipo de nota
+  </h2>
 
-      <div
-        class="opcao"
-        id="opcaoRemaneio"
-        onclick="selecionarTipo('remaneio')"
-      >
-        <div class="icone">🚛</div>
-
-        <strong>REMANEIO</strong>
-
-        <span>
-          Nota de carregamento
-        </span>
-      </div>
+  <p class="subtitulo">
+    Selecione o documento que será liberado pelo sistema.
+  </p>
 
 
-      <div
-        class="opcao"
-        id="opcaoEntrega"
-        onclick="selecionarTipo('entrega')"
-      >
-        <div class="icone">📦</div>
-
-        <strong>NOTA DE ENTREGA</strong>
-
-        <span>
-          Documento pós-entrega
-        </span>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- FORMULÁRIO -->
-
-  <section class="card" id="formulario">
-
-    <h2 class="titulo">Dados da nota</h2>
-
-    <p class="subtitulo">
-      Informe somente os dados que mudam em cada viagem.
-    </p>
-
-
-    <label for="nome">
-      👤 Nome do motorista
-    </label>
-
-    <input
-      type="text"
-      id="nome"
-      placeholder="Digite o nome completo"
-      maxlength="45"
-    >
-
-
-    <label for="data">
-      📅 Data
-    </label>
-
-    <input
-      type="date"
-      id="data"
-    >
-
-
-    <button
-      class="botao-gerar"
-      onclick="gerarNota()"
-    >
-      ✅ LIBERAR NOTA
-    </button>
+  <div class="opcoes">
 
 
     <div
-      class="status"
-      id="status"
+      class="opcao"
+      id="opcaoRemaneio"
+      onclick="selecionarTipo('remaneio')"
     >
-      ✓ Nota liberada automaticamente pela Gestão Santa Luzia.
+
+      <div class="icone">
+        🚛
+      </div>
+
+      <strong>
+        REMANEIO
+      </strong>
+
+      <span>
+        Nota de carregamento
+      </span>
+
     </div>
 
 
-    <p class="aviso">
-      A liberação é realizada automaticamente pelo sistema interno
-      da Santa Luzia Tomates.
-    </p>
 
-  </section>
+    <div
+      class="opcao"
+      id="opcaoEntrega"
+      onclick="selecionarTipo('entrega')"
+    >
+
+      <div class="icone">
+        📦
+      </div>
+
+      <strong>
+        NOTA DE ENTREGA
+      </strong>
+
+      <span>
+        Documento pós-entrega
+      </span>
+
+    </div>
 
 
-  <!-- RESULTADO -->
+  </div>
 
-  <section
-    class="card resultado"
-    id="resultado"
+</section>
+
+
+
+<!-- =========================================
+     FORMULÁRIO
+========================================= -->
+
+<section
+  class="card"
+  id="formulario"
+>
+
+  <h2 class="titulo">
+    Dados da nota
+  </h2>
+
+  <p class="subtitulo">
+    Informe somente os dados que mudam em cada viagem.
+  </p>
+
+
+
+  <label for="nome">
+    👤 Nome do motorista
+  </label>
+
+
+  <input
+    type="text"
+    id="nome"
+    placeholder="Digite o nome completo"
+    maxlength="45"
   >
 
-    <h2 class="titulo">
-      Nota liberada
-    </h2>
-
-    <p class="subtitulo">
-      Documento pronto para ser enviado ao grupo.
-    </p>
 
 
-    <div class="preview">
-
-      <canvas
-        id="canvasNota"
-        width="800"
-        height="1200"
-      ></canvas>
-
-    </div>
+  <label for="data">
+    📅 Data
+  </label>
 
 
-    <div class="botoes">
-
-      <button
-        class="baixar"
-        onclick="baixarNota()"
-      >
-        📥 BAIXAR NOTA
-      </button>
-
-      <button
-        class="nova"
-        onclick="novaNota()"
-      >
-        🔄 NOVA NOTA
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <a
-    href="index.html"
-    class="voltar"
+  <input
+    type="date"
+    id="data"
   >
-    ← Voltar para Santa Luzia Central
-  </a>
+
+
+
+  <button
+    class="botao-gerar"
+    onclick="gerarNota()"
+  >
+
+    ✅ LIBERAR NOTA
+
+  </button>
+
+
+
+  <div
+    class="status"
+    id="status"
+  >
+
+    ✓ Nota liberada automaticamente pela Gestão Santa Luzia.
+
+  </div>
+
+
+
+  <p class="aviso">
+
+    A liberação é realizada automaticamente pelo sistema interno
+    da Santa Luzia Tomates.
+
+  </p>
+
+</section>
+
+
+
+<!-- =========================================
+     RESULTADO
+========================================= -->
+
+<section
+  class="card resultado"
+  id="resultado"
+>
+
+  <h2 class="titulo">
+    Nota liberada
+  </h2>
+
+  <p class="subtitulo">
+    Documento pronto para ser enviado ao grupo.
+  </p>
+
+
+  <div class="preview">
+
+    <canvas
+      id="canvasNota"
+      width="800"
+      height="1200"
+    ></canvas>
+
+  </div>
+
+
+
+  <div class="botoes">
+
+
+    <button
+      class="baixar"
+      onclick="baixarNota()"
+    >
+
+      📥 BAIXAR NOTA
+
+    </button>
+
+
+
+    <button
+      class="nova"
+      onclick="novaNota()"
+    >
+
+      🔄 NOVA NOTA
+
+    </button>
+
+
+  </div>
+
+</section>
+
+
+
+<a
+  href="index.html"
+  class="voltar"
+>
+
+  ← Voltar para Santa Luzia Central
+
+</a>
+
 
 </main>
 
 
+
 <script>
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
 
-const BASE_REMANEIO = "remaneio-base.jpeg";
-const BASE_ENTREGA  = "entrega-base.jpeg";
+/* ==================================================
+   CONFIGURAÇÃO
+================================================== */
+
+
+/*
+   O sistema aceita várias possibilidades de nome.
+
+   Assim não importa se você colocou:
+
+   ramaneio-base.jpeg
+   remaneio-base.jpeg
+   ramaneio-base.jpg
+   remaneio-base.jpg
+*/
+
+
+const BASES_REMANEIO = [
+
+  "ramaneio-base.jpeg",
+  "remaneio-base.jpeg",
+  "ramaneio-base.jpg",
+  "remaneio-base.jpg"
+
+];
+
+
+const BASES_ENTREGA = [
+
+  "entrega-base.jpeg",
+  "entrega-base.jpg"
+
+];
+
 
 let tipoSelecionado = "";
+
 let nomeMotorista = "";
+
 let dataSelecionada = "";
 
 
-/* =====================================================
-   DATA PADRÃO
-===================================================== */
+/* ==================================================
+   DATA DE HOJE
+================================================== */
 
-const campoData = document.getElementById("data");
-
-const hoje = new Date();
-
-const ano = hoje.getFullYear();
-const mes = String(hoje.getMonth() + 1).padStart(2,"0");
-const dia = String(hoje.getDate()).padStart(2,"0");
-
-campoData.value = `${ano}-${mes}-${dia}`;
+const campoData =
+  document.getElementById("data");
 
 
-/* =====================================================
-   ESCOLHER TIPO
-===================================================== */
+const hoje =
+  new Date();
+
+
+const ano =
+  hoje.getFullYear();
+
+
+const mes =
+  String(
+    hoje.getMonth() + 1
+  ).padStart(2,"0");
+
+
+const dia =
+  String(
+    hoje.getDate()
+  ).padStart(2,"0");
+
+
+campoData.value =
+  `${ano}-${mes}-${dia}`;
+
+
+
+/* ==================================================
+   SELECIONAR TIPO
+================================================== */
 
 function selecionarTipo(tipo){
 
-  tipoSelecionado = tipo;
+  tipoSelecionado =
+    tipo;
+
 
   document
     .getElementById("opcaoRemaneio")
     .classList.remove("selecionada");
+
 
   document
     .getElementById("opcaoEntrega")
@@ -497,28 +687,90 @@ function selecionarTipo(tipo){
 }
 
 
-/* =====================================================
+
+/* ==================================================
    FORMATAR DATA
-===================================================== */
+================================================== */
 
 function formatarData(data){
 
-  const partes = data.split("-");
+  const partes =
+    data.split("-");
+
 
   if(partes.length !== 3){
+
     return "";
+
   }
+
 
   return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
 }
 
 
-/* =====================================================
+
+/* ==================================================
+   CARREGAR IMAGEM COM VÁRIOS NOMES
+================================================== */
+
+function carregarBase(lista, callback){
+
+  let indice = 0;
+
+
+  function tentar(){
+
+    if(indice >= lista.length){
+
+      callback(null);
+
+      return;
+
+    }
+
+
+    const imagem =
+      new Image();
+
+
+    imagem.onload =
+      function(){
+
+        callback(imagem);
+
+      };
+
+
+    imagem.onerror =
+      function(){
+
+        indice++;
+
+        tentar();
+
+      };
+
+
+    imagem.src =
+      lista[indice];
+
+  }
+
+
+  tentar();
+
+}
+
+
+
+/* ==================================================
    GERAR NOTA
-===================================================== */
+================================================== */
 
 function gerarNota(){
+
 
   nomeMotorista =
     document
@@ -526,432 +778,368 @@ function gerarNota(){
       .value
       .trim();
 
+
   dataSelecionada =
     document
       .getElementById("data")
       .value;
 
 
+
+  /* VALIDAÇÕES */
+
   if(!tipoSelecionado){
-    alert("Selecione primeiro o tipo de nota.");
+
+    alert(
+      "Selecione primeiro o tipo de nota."
+    );
+
     return;
+
   }
+
 
   if(!nomeMotorista){
-    alert("Digite o nome do motorista.");
+
+    alert(
+      "Digite o nome do motorista."
+    );
+
     return;
+
   }
+
 
   if(!dataSelecionada){
-    alert("Selecione a data.");
+
+    alert(
+      "Selecione a data."
+    );
+
     return;
+
   }
 
+
+
+  /* CANVAS */
 
   const canvas =
     document.getElementById("canvasNota");
 
+
   const ctx =
     canvas.getContext("2d");
 
-  const base =
-    new Image();
 
 
-  base.onload = function(){
+  /* QUAL BASE USAR */
 
-    ctx.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-
-    ctx.drawImage(
-      base,
-      0,
-      0,
-      800,
-      1200
-    );
-
-
-    const dataFormatada =
-      formatarData(dataSelecionada);
-
-
-    ctx.fillStyle = "#111";
-
-
-    /* =================================================
-       REMANEIO
-    ================================================= */
-
-    if(tipoSelecionado === "remaneio"){
-
-      /*
-        DATA DO CARREGAMENTO
-        Mantida na posição que já estava boa.
-      */
-
-      ctx.font = "bold 15px Arial";
-
-      ctx.fillText(
-        dataFormatada,
-        278,
-        362
-      );
-
-
-      /*
-        CONFERENTE — ORIGEM
-        Nome do motorista.
-        Movido um pouco para a esquerda.
-      */
-
-      ctx.font = "bold 14px Arial";
-
-      ctx.fillText(
-        nomeMotorista.toUpperCase(),
-        265,
-        615
-      );
-
-
-      /*
-        CONFERENTE — DESTINO
-        Gestão Santa Luzia.
-      */
-
-      ctx.font = "bold 13px Arial";
-
-      ctx.fillText(
-        "GESTÃO SANTA LUZIA",
-        265,
-        637
-      );
-
-    }
-
-
-    /* =================================================
-       NOTA DE ENTREGA
-    ================================================= */
-
-    if(tipoSelecionado === "entrega"){
-
-      /*
-        DATA DA ENTREGA
-        Corrigida para ficar dentro da linha.
-      */
-
-      ctx.font = "bold 15px Arial";
-
-      ctx.fillText(
-        dataFormatada,
-        245,
-        450
-      );
-
-
-      /*
-        RESPONSÁVEL PELA ENTREGA — ORIGEM
-        Nome do motorista.
-        Mantido praticamente na posição anterior.
-      */
-
-      ctx.font = "bold 14px Arial";
-
-      ctx.fillText(
-        nomeMotorista.toUpperCase(),
-        295,
-        895
-      );
-
-
-      /*
-        RECEBIDO POR — DESTINO
-        Gestão Santa Luzia.
-      */
-
-      ctx.font = "bold 13px Arial";
-
-      ctx.fillText(
-        "GESTÃO SANTA LUZIA",
-        295,
-        927
-      );
-
-
-      /*
-        DATA DO RECEBIMENTO
-        Mesma data informada pelo motorista.
-      */
-
-      ctx.font = "bold 14px Arial";
-
-      ctx.fillText(
-        dataFormatada,
-        300,
-        955
-      );
-
-    }
-
-
-    /* =================================================
-       CARIMBO
-    ================================================= */
-
-    criarCarimbo(
-      ctx,
-      tipoSelecionado
-    );
-
-
-    /* =================================================
-       MENSAGEM
-    ================================================= */
-
-    criarMensagem(
-      ctx,
-      tipoSelecionado
-    );
-
-
-    /* =================================================
-       MOSTRAR RESULTADO
-    ================================================= */
-
-    document
-      .getElementById("formulario")
-      .style.display = "none";
-
-
-    document
-      .getElementById("resultado")
-      .style.display = "block";
-
-
-    document
-      .getElementById("status")
-      .style.display = "block";
-
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-
-  };
-
-
-  base.onerror = function(){
-
-    alert(
-      "Não foi possível carregar a imagem da nota.\n\n" +
-      "Verifique se o arquivo da nota está na mesma pasta do notas.html."
-    );
-
-  };
+  let listaBases;
 
 
   if(tipoSelecionado === "remaneio"){
 
-    base.src = BASE_REMANEIO;
+    listaBases =
+      BASES_REMANEIO;
 
   }else{
 
-    base.src = BASE_ENTREGA;
+    listaBases =
+      BASES_ENTREGA;
 
   }
 
+
+
+  /* CARREGAR BASE */
+
+  carregarBase(
+    listaBases,
+    function(base){
+
+      if(!base){
+
+        alert(
+          "Não foi possível encontrar a imagem da nota.\n\n" +
+
+          "Verifique se ela está na mesma pasta do notas.html.\n\n" +
+
+          "Remaneio:\n" +
+          "ramaneio-base.jpeg\n\n" +
+
+          "Entrega:\n" +
+          "entrega-base.jpeg"
+        );
+
+        return;
+
+      }
+
+
+
+      /* LIMPAR */
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+
+      /* DESENHAR BASE */
+
+      ctx.drawImage(
+        base,
+        0,
+        0,
+        800,
+        1200
+      );
+
+
+
+      const dataFormatada =
+        formatarData(
+          dataSelecionada
+        );
+
+
+
+      ctx.fillStyle =
+        "#111";
+
+
+
+      /* ==================================================
+         REMANEIO
+      ================================================== */
+
+      if(tipoSelecionado === "remaneio"){
+
+
+        /* DATA DO CARREGAMENTO */
+
+        ctx.font =
+          "bold 15px Arial";
+
+
+        ctx.fillText(
+          dataFormatada,
+          278,
+          362
+        );
+
+
+
+        /* CONFERENTE ORIGEM */
+
+        ctx.font =
+          "bold 14px Arial";
+
+
+        ctx.fillText(
+          nomeMotorista.toUpperCase(),
+          265,
+          615
+        );
+
+
+
+        /* CONFERENTE DESTINO */
+
+        ctx.font =
+          "bold 13px Arial";
+
+
+        ctx.fillText(
+          "GESTÃO SANTA LUZIA",
+          265,
+          637
+        );
+
+      }
+
+
+
+      /* ==================================================
+         NOTA DE ENTREGA
+      ================================================== */
+
+      if(tipoSelecionado === "entrega"){
+
+
+        /* DATA DA ENTREGA */
+
+        ctx.font =
+          "bold 15px Arial";
+
+
+        ctx.fillText(
+          dataFormatada,
+          245,
+          450
+        );
+
+
+
+        /* RESPONSÁVEL PELA ENTREGA */
+
+        ctx.font =
+          "bold 14px Arial";
+
+
+        ctx.fillText(
+          nomeMotorista.toUpperCase(),
+          295,
+          895
+        );
+
+
+
+        /* RECEBIDO POR */
+
+        ctx.font =
+          "bold 13px Arial";
+
+
+        ctx.fillText(
+          "GESTÃO SANTA LUZIA",
+          295,
+          927
+        );
+
+
+
+        /* DATA DO RECEBIMENTO */
+
+        ctx.font =
+          "bold 14px Arial";
+
+
+        ctx.fillText(
+          dataFormatada,
+          300,
+          958
+        );
+
+      }
+
+
+
+      /* ==================================================
+         CARIMBO
+      ================================================== */
+
+      criarCarimbo(
+        ctx,
+        tipoSelecionado
+      );
+
+
+
+      /* ==================================================
+         MENSAGEM
+      ================================================== */
+
+      criarMensagem(
+        ctx,
+        tipoSelecionado
+      );
+
+
+
+      /* ==================================================
+         MOSTRAR RESULTADO
+      ================================================== */
+
+      document
+        .getElementById("formulario")
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById("resultado")
+        .style.display =
+        "block";
+
+
+      document
+        .getElementById("status")
+        .style.display =
+        "block";
+
+
+      window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+      });
+
+    }
+  );
+
 }
 
-    /* ============================================
-       DADOS DO MOTORISTA
-    ============================================ */
-
-    ctx.fillStyle = "#111";
-
-    ctx.font =
-      "bold 15px Arial";
 
 
-    /*
-      REMANEIO
-      Motorista entra na assinatura de origem.
-    */
-
-    if(tipoSelecionado === "remaneio"){
-
-      ctx.fillText(
-        nomeMotorista.toUpperCase(),
-        280,
-        615
-      );
-
-    }
-
-
-    /*
-      NOTA DE ENTREGA
-    */
-
-    if(tipoSelecionado === "entrega"){
-
-      ctx.fillText(
-        nomeMotorista.toUpperCase(),
-        295,
-        895
-      );
-
-    }
-
-
-    /* ============================================
-       DATA
-    ============================================ */
-
-    ctx.font =
-      "bold 15px Arial";
-
-
-    if(tipoSelecionado === "remaneio"){
-
-      ctx.fillText(
-        dataFormatada,
-        278,
-        362
-      );
-
-    }
-
-
-    if(tipoSelecionado === "entrega"){
-
-      ctx.fillText(
-        dataFormatada,
-        300,
-        450
-      );
-
-    }
-
-
-    /* ============================================
-       CARIMBO DA GESTÃO
-    ============================================ */
-
-    criarCarimbo(
-      ctx,
-      tipoSelecionado
-    );
-
-
-    /* ============================================
-       MENSAGEM
-    ============================================ */
-
-    criarMensagem(
-      ctx,
-      tipoSelecionado
-    );
-
-
-    /* ============================================
-       MOSTRAR RESULTADO
-    ============================================ */
-
-    document
-      .getElementById("formulario")
-      .style.display = "none";
-
-
-    document
-      .getElementById("resultado")
-      .style.display = "block";
-
-
-    document
-      .getElementById("status")
-      .style.display = "block";
-
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-
-  };
-  
-
-  base.onerror = function(){
-
-    alert(
-      "Não foi possível carregar a imagem da nota.\n\n" +
-      "Verifique se os arquivos:\n" +
-      "remaneio-base.jpg\n" +
-      "entrega-base.jpg\n\n" +
-      "estão na mesma pasta do notas.html."
-    );
-
-  };
-
-
-  if(tipoSelecionado === "remaneio"){
-
-    base.src = BASE_REMANEIO;
-
-  }else{
-
-    base.src = BASE_ENTREGA;
-
-  }
-
-}
-
-
-/* =====================================================
+/* ==================================================
    CARIMBO
-===================================================== */
+================================================== */
 
 function criarCarimbo(ctx,tipo){
 
-  /*
-    O carimbo fica em uma área livre
-    na parte inferior da folha.
-  */
 
-  let x = 565;
-  let y = 1060;
+  let x =
+    565;
+
+
+  let y =
+    1060;
+
 
 
   if(tipo === "entrega"){
 
-    x = 555;
-    y = 1070;
+    x =
+      555;
+
+    y =
+      1070;
 
   }
+
 
 
   ctx.save();
 
 
-  ctx.translate(x,y);
+  ctx.translate(
+    x,
+    y
+  );
+
 
   ctx.rotate(
     -3 * Math.PI / 180
   );
 
 
-  /* BORDA */
+
+  /* BORDA EXTERNA */
 
   ctx.strokeStyle =
     "#176b3a";
 
-  ctx.lineWidth = 3;
+
+  ctx.lineWidth =
+    3;
+
 
   ctx.strokeRect(
     -115,
@@ -961,10 +1149,16 @@ function criarCarimbo(ctx,tipo){
   );
 
 
+
+  /* BORDA INTERNA */
+
   ctx.strokeStyle =
     "#176b3a";
 
-  ctx.lineWidth = 1;
+
+  ctx.lineWidth =
+    1;
+
 
   ctx.strokeRect(
     -108,
@@ -974,17 +1168,21 @@ function criarCarimbo(ctx,tipo){
   );
 
 
+
   /* TEXTO */
 
   ctx.fillStyle =
     "#176b3a";
 
+
   ctx.textAlign =
     "center";
 
 
+
   ctx.font =
     "bold 17px Arial";
+
 
   ctx.fillText(
     "GESTÃO SANTA LUZIA",
@@ -993,8 +1191,10 @@ function criarCarimbo(ctx,tipo){
   );
 
 
+
   ctx.font =
     "bold 12px Arial";
+
 
   ctx.fillText(
     "LIBERAÇÃO AUTOMÁTICA",
@@ -1003,8 +1203,10 @@ function criarCarimbo(ctx,tipo){
   );
 
 
+
   ctx.font =
     "10px Arial";
+
 
   ctx.fillText(
     "SANTA LUZIA TOMATES",
@@ -1013,30 +1215,43 @@ function criarCarimbo(ctx,tipo){
   );
 
 
+
   ctx.restore();
 
 }
 
 
-/* =====================================================
+
+/* ==================================================
    MENSAGEM
-===================================================== */
+================================================== */
 
 function criarMensagem(ctx,tipo){
 
-  let x = 565;
-  let y = 1130;
+
+  let x =
+    565;
+
+
+  let y =
+    1130;
+
 
 
   if(tipo === "entrega"){
 
-    x = 555;
-    y = 1140;
+    x =
+      555;
+
+    y =
+      1140;
 
   }
 
 
+
   ctx.save();
+
 
   ctx.textAlign =
     "center";
@@ -1045,6 +1260,9 @@ function criarMensagem(ctx,tipo){
   ctx.fillStyle =
     "#176b3a";
 
+
+
+  /* NOTA LIBERADA */
 
   ctx.font =
     "bold 16px Arial";
@@ -1057,6 +1275,9 @@ function criarMensagem(ctx,tipo){
   );
 
 
+
+  /* BOA VIAGEM */
+
   ctx.font =
     "bold 14px Arial";
 
@@ -1068,8 +1289,12 @@ function criarMensagem(ctx,tipo){
   );
 
 
+
+  /* FRASE */
+
   ctx.font =
     "11px Arial";
+
 
   ctx.fillStyle =
     "#555";
@@ -1087,43 +1312,67 @@ function criarMensagem(ctx,tipo){
 }
 
 
-/* =====================================================
+
+/* ==================================================
    BAIXAR / COMPARTILHAR
-===================================================== */
+================================================== */
 
 async function baixarNota(){
 
+
   const canvas =
-    document.getElementById("canvasNota");
+    document.getElementById(
+      "canvasNota"
+    );
+
 
 
   try{
 
+
     const blob =
       await new Promise(
         function(resolve){
+
           canvas.toBlob(
             resolve,
             "image/png",
             1
           );
+
         }
       );
+
 
 
     if(!blob){
 
       throw new Error(
-        "Erro ao criar imagem."
+        "Não foi possível criar a imagem."
       );
 
     }
 
 
-    const nomeArquivo =
-      tipoSelecionado === "remaneio"
-        ? "Remaneio-Santa-Luzia.png"
-        : "Nota-Entrega-Santa-Luzia.png";
+
+    let nomeArquivo;
+
+
+    if(
+      tipoSelecionado ===
+      "remaneio"
+    ){
+
+      nomeArquivo =
+        "Remaneio-Santa-Luzia.png";
+
+    }else{
+
+      nomeArquivo =
+        "Nota-Entrega-Santa-Luzia.png";
+
+    }
+
 
 
     const arquivo =
@@ -1136,9 +1385,8 @@ async function baixarNota(){
       );
 
 
-    /* ==========================================
-       COMPARTILHAR NO CELULAR
-    ========================================== */
+
+    /* COMPARTILHAR */
 
     if(
       navigator.share &&
@@ -1156,46 +1404,64 @@ async function baixarNota(){
         text:
           "Documento liberado automaticamente pela Gestão Santa Luzia.",
 
-        files:[arquivo]
+        files:[
+          arquivo
+        ]
 
       });
+
 
       return;
 
     }
 
 
-    /* ==========================================
-       DOWNLOAD NORMAL
-    ========================================== */
+
+    /* DOWNLOAD */
 
     const url =
-      URL.createObjectURL(blob);
+      URL.createObjectURL(
+        blob
+      );
 
 
     const link =
-      document.createElement("a");
+      document.createElement(
+        "a"
+      );
 
 
-    link.href = url;
+    link.href =
+      url;
+
 
     link.download =
       nomeArquivo;
+
 
     link.style.display =
       "none";
 
 
-    document.body.appendChild(link);
+    document
+      .body
+      .appendChild(link);
+
 
     link.click();
+
 
     link.remove();
 
 
+
     setTimeout(
       function(){
-        URL.revokeObjectURL(url);
+
+        URL.revokeObjectURL(
+          url
+        );
+
       },
       3000
     );
@@ -1203,20 +1469,21 @@ async function baixarNota(){
 
   }catch(erro){
 
+
     console.log(
-      "Erro:",
+      "Erro ao baixar:",
       erro
     );
 
 
-    /*
-      FALLBACK PARA IPHONE
-    */
+
+    /* FALLBACK */
 
     const imagem =
       canvas.toDataURL(
         "image/png"
       );
+
 
 
     const novaAba =
@@ -1226,11 +1493,15 @@ async function baixarNota(){
       );
 
 
+
     if(novaAba){
+
 
       novaAba.document.write(`
 
-        <html>
+        <!DOCTYPE html>
+
+        <html lang="pt-BR">
 
         <head>
 
@@ -1262,6 +1533,7 @@ async function baixarNota(){
             style="
               max-width:100%;
               height:auto;
+              display:block;
             "
           >
 
@@ -1271,9 +1543,12 @@ async function baixarNota(){
 
       `);
 
+
       novaAba.document.close();
 
+
     }else{
+
 
       alert(
         "Não foi possível abrir a nota."
@@ -1286,60 +1561,82 @@ async function baixarNota(){
 }
 
 
-/* =====================================================
+
+/* ==================================================
    NOVA NOTA
-===================================================== */
+================================================== */
 
 function novaNota(){
 
-  tipoSelecionado = "";
 
-  nomeMotorista = "";
+  tipoSelecionado =
+    "";
 
-  dataSelecionada = "";
+
+  nomeMotorista =
+    "";
+
+
+  dataSelecionada =
+    "";
+
 
 
   document
     .getElementById("resultado")
-    .style.display = "none";
+    .style.display =
+    "none";
+
 
 
   document
     .getElementById("formulario")
-    .style.display = "block";
+    .style.display =
+    "block";
+
 
 
   document
     .getElementById("nome")
-    .value = "";
+    .value =
+    "";
+
 
 
   document
     .getElementById("opcaoRemaneio")
-    .classList.remove("selecionada");
+    .classList.remove(
+      "selecionada"
+    );
+
 
 
   document
     .getElementById("opcaoEntrega")
-    .classList.remove("selecionada");
+    .classList.remove(
+      "selecionada"
+    );
+
 
 
   document
     .getElementById("status")
-    .style.display = "none";
+    .style.display =
+    "none";
 
 
-  /*
-    Volta para a data de hoje.
-  */
 
   campoData.value =
     `${ano}-${mes}-${dia}`;
 
 
+
   window.scrollTo({
+
     top:0,
+
     behavior:"smooth"
+
   });
 
 }
@@ -1347,4 +1644,5 @@ function novaNota(){
 </script>
 
 </body>
+
 </html>
