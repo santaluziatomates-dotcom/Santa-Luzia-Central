@@ -729,16 +729,10 @@ function mostrarUsuario(user) {
     botaoGoogle.className =
       "botao-google";
 
-    botaoGoogle.disabled =
-      false;
+    botaoGoogle.disabled = false;
 
     botaoGoogle.dataset.logado =
       "false";
-
-    loginStatus.textContent = "";
-
-    loginStatus.className =
-      "login-status";
 
     return;
   }
@@ -767,8 +761,7 @@ function mostrarUsuario(user) {
   botaoGoogle.className =
     "botao-sair";
 
-  botaoGoogle.disabled =
-    false;
+  botaoGoogle.disabled = false;
 
   botaoGoogle.dataset.logado =
     "true";
@@ -782,82 +775,109 @@ function mostrarUsuario(user) {
 
 
 /* =========================
-   VERIFICAR SESSÃO
+   DIAGNÓSTICO
 ========================= */
 
-async function verificarSessao() {
+async function diagnostico() {
 
-  loginTitulo.textContent =
-    "Verificando conta...";
+  const status =
+    document.getElementById("loginStatus");
 
-  loginTexto.textContent =
-    "Aguarde um momento";
+  status.className =
+    "login-status";
 
-  botaoGoogle.disabled = true;
+  status.innerHTML =
+    "🔎 Verificando sessão...";
+
+
+  console.log("========== SANTA LUZIA AUTH ==========");
+
+  console.log(
+    "URL:",
+    window.location.href.split("#")[0]
+  );
+
+  console.log(
+    "Hash existe:",
+    window.location.hash.length > 0
+  );
 
 
   try {
 
-    const {
-      data,
-      error
-    } =
+    const resultado =
       await supabaseClient.auth.getSession();
 
 
-    if (error) {
+    console.log(
+      "getSession:",
+      resultado
+    );
 
-      console.error(
-        "Erro Supabase:",
-        error
-      );
 
-      loginStatus.textContent =
-        "Erro ao verificar a conta.";
+    if (resultado.error) {
 
-      loginStatus.className =
+      status.innerHTML =
+        "❌ Erro Supabase: " +
+        resultado.error.message;
+
+      status.className =
         "login-status login-erro";
 
-      mostrarUsuario(null);
+      return;
+    }
+
+
+    if (resultado.data?.session?.user) {
+
+      console.log(
+        "USUÁRIO ENCONTRADO:",
+        resultado.data.session.user.email
+      );
+
+      mostrarUsuario(
+        resultado.data.session.user
+      );
 
       return;
     }
 
 
     console.log(
-      "Sessão encontrada:",
-      data.session
+      "NENHUMA SESSÃO ENCONTRADA"
     );
 
 
-    if (data.session?.user) {
+    status.innerHTML =
+      "⚠️ Google retornou, mas nenhuma sessão foi encontrada.";
 
-      mostrarUsuario(
-        data.session.user
-      );
+    status.className =
+      "login-status login-erro";
 
-    } else {
+    mostrarUsuario(null);
 
-      mostrarUsuario(null);
-
-    }
 
   } catch (erro) {
 
     console.error(
-      "Erro inesperado:",
+      "ERRO GERAL:",
       erro
     );
 
-    mostrarUsuario(null);
+    status.innerHTML =
+      "❌ Erro: " + erro.message;
 
+    status.className =
+      "login-status login-erro";
+
+    mostrarUsuario(null);
   }
 
 }
 
 
 /* =========================
-   ENTRAR COM GOOGLE
+   LOGIN GOOGLE
 ========================= */
 
 async function entrarGoogle() {
@@ -868,60 +888,40 @@ async function entrarGoogle() {
     "Abrindo Google...";
 
   loginStatus.textContent =
-    "Abrindo login do Google...";
+    "Abrindo login...";
 
 
-  try {
+  const resultado =
+    await supabaseClient.auth.signInWithOAuth({
 
-    const {
-      error
-    } =
-      await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
 
-        provider: "google",
+      options: {
 
-        options: {
+        redirectTo:
+          "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
 
-          redirectTo:
-            "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
+      }
 
-        }
-
-      });
+    });
 
 
-    if (error) {
-
-      console.error(
-        "Erro Google:",
-        error
-      );
-
-      loginStatus.textContent =
-        "Erro ao abrir o Google.";
-
-      loginStatus.className =
-        "login-status login-erro";
-
-      mostrarUsuario(null);
-
-    }
-
-  } catch (erro) {
+  if (resultado.error) {
 
     console.error(
-      "Erro:",
-      erro
+      resultado.error
     );
 
     loginStatus.textContent =
-      "Erro ao iniciar o login.";
+      "❌ " + resultado.error.message;
 
     loginStatus.className =
       "login-status login-erro";
 
-    mostrarUsuario(null);
+    botaoGoogle.disabled = false;
 
+    botaoGoogle.textContent =
+      "Entrar com Google";
   }
 
 }
@@ -940,38 +940,12 @@ botaoGoogle.addEventListener(
       "true"
     ) {
 
-      botaoGoogle.disabled = true;
-
-      const {
-        error
-      } =
-        await supabaseClient.auth.signOut();
-
-
-      if (error) {
-
-        console.error(
-          "Erro ao sair:",
-          error
-        );
-
-        botaoGoogle.disabled = false;
-
-        loginStatus.textContent =
-          "Não foi possível sair.";
-
-        loginStatus.className =
-          "login-status login-erro";
-
-        return;
-      }
-
+      await supabaseClient.auth.signOut();
 
       mostrarUsuario(null);
 
       return;
     }
-
 
     await entrarGoogle();
 
@@ -980,15 +954,19 @@ botaoGoogle.addEventListener(
 
 
 /* =========================
-   ALTERAÇÕES DE AUTENTICAÇÃO
+   EVENTOS SUPABASE
 ========================= */
 
 supabaseClient.auth.onAuthStateChange(
   function(event, session) {
 
     console.log(
-      "Supabase Auth:",
-      event,
+      "AUTH EVENT:",
+      event
+    );
+
+    console.log(
+      "SESSION:",
       session
     );
 
@@ -1001,14 +979,6 @@ supabaseClient.auth.onAuthStateChange(
 
     }
 
-    else if (
-      event === "SIGNED_OUT"
-    ) {
-
-      mostrarUsuario(null);
-
-    }
-
   }
 );
 
@@ -1017,7 +987,7 @@ supabaseClient.auth.onAuthStateChange(
    INICIAR
 ========================= */
 
-verificarSessao();
+diagnostico();
 
 </script>
 
