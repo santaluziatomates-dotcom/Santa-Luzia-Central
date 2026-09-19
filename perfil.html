@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Meu Perfil • Santa Luzia Central</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f3;
+      color: #17351f;
+    }
+
+    .topo {
+      background: #17351f;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    .topo h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+    }
+
+    .topo p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+      border: 1px solid #e5e9e5;
+    }
+
+    .perfil-topo {
+      text-align: center;
+    }
+
+    .avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #17351f;
+      color: #d7a62a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 31px;
+      font-weight: bold;
+      border: 4px solid #d7a62a;
+    }
+
+    .nome {
+      font-size: 23px;
+      font-weight: bold;
+      margin: 0;
+      color: #17351f;
+    }
+
+    .apelido {
+      margin: 5px 0 12px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #e8f4eb;
+      color: #236b35;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .id {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .id strong {
+      color: #17351f;
+    }
+
+    .titulo {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #17351f;
+    }
+
+    .dados {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .dado {
+      background: #f5f7f5;
+      padding: 13px;
+      border-radius: 12px;
+    }
+
+    .dado small {
+      display: block;
+      color: #777;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .dado strong {
+      font-size: 14px;
+      color: #17351f;
+    }
+
+    /* STACOIN */
+
+    .stacoin-card {
+      background: linear-gradient(145deg, #17351f, #254d30);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stacoin-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -80px;
+      top: -80px;
+      border-radius: 50%;
+      border: 1px solid rgba(215,166,42,0.25);
+    }
+
+    .stacoin-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .moeda {
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .stacoin-label {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-bottom: 3px;
+    }
+
+    .saldo {
+      font-size: 30px;
+      font-weight: bold;
+      color: #d7a62a;
+    }
+
+    .saldo-texto {
+      margin-top: 15px;
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    /* XP */
+
+    .xp-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .xp-bar {
+      width: 100%;
+      height: 10px;
+      background: #e3e7e3;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .xp-progresso {
+      height: 100%;
+      width: 65%;
+      background: #d7a62a;
+      border-radius: 20px;
+    }
+
+    /* EXTRATO */
+
+    .movimento {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid #ecefec;
+      gap: 10px;
+    }
+
+    .movimento:last-child {
+      border-bottom: none;
+    }
+
+    .mov-info {
+      min-width: 0;
+    }
+
+    .mov-titulo {
+      font-weight: bold;
+      font-size: 14px;
+      color: #17351f;
+    }
+
+    .mov-data {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .mov-valor {
+      color: #23813a;
+      font-weight: bold;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .vazio {
+      text-align: center;
+      padding: 20px 0;
+      color: #888;
+      font-size: 13px;
+    }
+
+    .voltar {
+      display: block;
+      width: 100%;
+      border: none;
+      background: #17351f;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #999;
+      font-size: 11px;
+      padding: 10px 0 25px;
+    }
+
+    .erro {
+      background: #fff0f0;
+      color: #a33;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 13px;
+      display: none;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 380px) {
+      .dados {
+        grid-template-columns: 1fr;
+      }
+
+      .saldo {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topo">
+    <h1>Santa Luzia Central</h1>
+    <p>Perfil oficial do motorista</p>
+  </header>
+
+  <main class="container">
+
+    <div id="erro" class="erro"></div>
+
+    <!-- PERFIL -->
+    <section class="card perfil-topo">
+
+      <div class="avatar" id="avatar">
+        SL
+      </div>
+
+      <h2 class="nome" id="nome">
+        Carregando...
+      </h2>
+
+      <p class="apelido" id="apelido">
+        Aguarde...
+      </p>
+
+      <span class="status" id="status">
+        Carregando
+      </span>
+
+      <div class="id">
+        Santa Luzia ID:
+        <strong id="codigo">---</strong>
+      </div>
+
+    </section>
+
+
+    <!-- DADOS -->
+    <section class="card">
+
+      <div class="titulo">
+        Informações do motorista
+      </div>
+
+      <div class="dados">
+
+        <div class="dado">
+          <small>CARGO</small>
+          <strong id="cargo">---</strong>
+        </div>
+
+        <div class="dado">
+          <small>CATEGORIA</small>
+          <strong id="categoria">---</strong>
+        </div>
+
+        <div class="dado">
+          <small>NÍVEL</small>
+          <strong id="nivel">---</strong>
+        </div>
+
+        <div class="dado">
+          <small>XP</small>
+          <strong id="xp">0 XP</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- XP -->
+    <section class="card">
+
+      <div class="titulo">
+        Progresso
+      </div>
+
+      <div class="xp-info">
+        <span>Nível <strong id="nivelXp">---</strong></span>
+        <span id="xpNumero">0 XP</span>
+      </div>
+
+      <div class="xp-bar">
+        <div
+          class="xp-progresso"
+          id="xpBarra">
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- STACOIN -->
+    <section class="card stacoin-card">
+
+      <div class="stacoin-header">
+
+        <img
+          src="stacoin.png"
+          class="moeda"
+          alt="Moeda STACOIN"
+        >
+
+        <div>
+
+          <div class="stacoin-label">
+            SALDO DISPONÍVEL
+          </div>
+
+          <div class="saldo" id="saldo">
+            0 STACOIN
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="saldo-texto">
+        Moeda interna oficial da Santa Luzia Central
+      </div>
+
+    </section>
+
+
+    <!-- EXTRATO -->
+    <section class="card">
+
+      <div class="titulo">
+        Extrato STACOIN
+      </div>
+
+      <div id="extrato">
+
+        <div class="vazio">
+          Carregando movimentações...
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <a href="index.html" class="voltar">
+      ← Voltar para a Central
+    </a>
+
+    <div class="rodape">
+      Santa Luzia Tomates • Santa Luzia Central<br>
+      Sistema interno da empresa
+    </div>
+
+  </main>
+
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    /* =========================================
+       CONFIGURAÇÃO SUPABASE
+       ========================================= */
+
+    const SUPABASE_URL =
+      "https://cckypvqophyviphqhich.supabase.co";
+
+    /*
+      COLOQUE AQUI A MESMA PUBLISHABLE KEY
+      QUE JÁ ESTÁ FUNCIONANDO NO SEU index.html
+    */
+
+    const SUPABASE_KEY =
+      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: false,
+            flowType: "implicit"
+          }
+        }
+      );
+
+
+    /* =========================================
+       ELEMENTOS
+       ========================================= */
+
+    const erro = document.getElementById("erro");
+
+    const nome = document.getElementById("nome");
+    const apelido = document.getElementById("apelido");
+    const status = document.getElementById("status");
+    const codigo = document.getElementById("codigo");
+    const cargo = document.getElementById("cargo");
+    const categoria = document.getElementById("categoria");
+    const nivel = document.getElementById("nivel");
+    const xp = document.getElementById("xp");
+    const nivelXp = document.getElementById("nivelXp");
+    const xpNumero = document.getElementById("xpNumero");
+    const xpBarra = document.getElementById("xpBarra");
+    const saldo = document.getElementById("saldo");
+    const avatar = document.getElementById("avatar");
+    const extrato = document.getElementById("extrato");
+
+
+    /* =========================================
+       FUNÇÃO DE ERRO
+       ========================================= */
+
+    function mostrarErro(mensagem) {
+
+      erro.textContent = mensagem;
+      erro.style.display = "block";
+
+    }
+
+
+    /* =========================================
+       FORMATAR STACOIN
+       ========================================= */
+
+    function formatarStacoin(valor) {
+
+      return Number(valor || 0)
+        .toLocaleString("pt-BR");
+
+    }
+
+
+    /* =========================================
+       CARREGAR PERFIL
+       ========================================= */
+
+    async function carregarPerfil() {
+
+      try {
+
+        const {
+          data: {
+            session
+          },
+          error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+
+        if (sessionError) {
+
+          throw sessionError;
+
+        }
+
+
+        if (!session) {
+
+          mostrarErro(
+            "Você precisa entrar com sua conta Google para acessar seu perfil."
+          );
+
+          nome.textContent = "Não conectado";
+          apelido.textContent = "";
+          status.textContent = "Faça login";
+          return;
+
+        }
+
+
+        /*
+          Primeiro pegamos o e-mail da conta Google.
+        */
+
+        const email =
+          session.user.email;
+
+
+        /*
+          Procuramos o motorista pelo e-mail.
+
+          IMPORTANTE:
+          Esta parte pressupõe que a tabela
+          public.motoristas tenha uma coluna "email".
+
+          Se ainda não tiver, na próxima etapa
+          vamos fazer essa ligação corretamente.
+        */
+
+        const {
+          data: motorista,
+          error: motoristaError
+        } = await supabaseClient
+          .from("motoristas")
+          .select("*")
+          .eq("email", email)
+          .maybeSingle();
+
+
+        if (motoristaError) {
+
+          throw motoristaError;
+
+        }
+
+
+        /*
+          Caso ainda não exista motorista ligado
+          ao e-mail.
+        */
+
+        if (!motorista) {
+
+          nome.textContent =
+            session.user.user_metadata?.full_name ||
+            "Novo usuário";
+
+          apelido.textContent =
+            email;
+
+          status.textContent =
+            "Em processo de recrutamento";
+
+          codigo.textContent =
+            "Aguardando ID";
+
+          cargo.textContent =
+            "Candidato";
+
+          categoria.textContent =
+            "—";
+
+          nivel.textContent =
+            "Recrutamento";
+
+          xp.textContent =
+            "0 XP";
+
+          nivelXp.textContent =
+            "Recrutamento";
+
+          xpNumero.textContent =
+            "0 XP";
+
+          xpBarra.style.width =
+            "0%";
+
+          return;
+
+        }
+
+
+        /* =========================================
+           PREENCHER PERFIL
+           ========================================= */
+
+        nome.textContent =
+          motorista.nome ||
+          "Motorista";
+
+        apelido.textContent =
+          motorista.apelido ||
+          "";
+
+        status.textContent =
+          motorista.status ||
+          "Ativo";
+
+        codigo.textContent =
+          motorista.código ||
+          "—";
+
+        cargo.textContent =
+          motorista.cargo ||
+          "—";
+
+        categoria.textContent =
+          motorista.categoria ||
+          "—";
+
+        nivel.textContent =
+          motorista.nível ||
+          "Recruta";
+
+        xp.textContent =
+          (motorista.xp || 0) +
+          " XP";
+
+        nivelXp.textContent =
+          motorista.nível ||
+          "Recruta";
+
+        xpNumero.textContent =
+          (motorista.xp || 0) +
+          " XP";
+
+
+        /*
+          Inicialmente usamos uma barra simples
+          baseada no XP atual.
+        */
+
+        let porcentagem =
+          Number(motorista.xp || 0);
+
+        porcentagem =
+          Math.max(
+            0,
+            Math.min(100, porcentagem)
+          );
+
+        xpBarra.style.width =
+          porcentagem + "%";
+
+
+        /*
+          Iniciais do motorista
+        */
+
+        const nomeBase =
+          motorista.apelido ||
+          motorista.nome ||
+          "SL";
+
+        const partes =
+          nomeBase.trim().split(" ");
+
+        let iniciais =
+          partes[0].substring(0, 1);
+
+        if (partes.length > 1) {
+
+          iniciais +=
+            partes[partes.length - 1]
+              .substring(0, 1);
+
+        }
+
+        avatar.textContent =
+          iniciais.toUpperCase();
+
+
+        /*
+          Depois de carregar o motorista,
+          carregamos a carteira.
+        */
+
+        await carregarStacoin(
+          motorista.id
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        mostrarErro(
+          "Não foi possível carregar o perfil."
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       CARREGAR STACOIN
+       ========================================= */
+
+    async function carregarStacoin(
+      motoristaId
+    ) {
+
+      try {
+
+        /*
+          Busca a carteira do motorista.
+        */
+
+        const {
+          data: carteira,
+          error
+        } = await supabaseClient
+          .from("stacoin_carteiras")
+          .select("*")
+          .eq("motorista_id", motoristaId)
+          .maybeSingle();
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        if (!carteira) {
+
+          saldo.textContent =
+            "0 STACOIN";
+
+          extrato.innerHTML = `
+            <div class="vazio">
+              Nenhuma movimentação encontrada.
+            </div>
+          `;
+
+          return;
+
+        }
+
+
+        /*
+          Mostra o saldo.
+        */
+
+        saldo.textContent =
+          formatarStacoin(
+            carteira.saldo
+          ) + " STACOIN";
+
+
+        /*
+          Carrega o extrato.
+        */
+
+        await carregarExtrato(
+          motoristaId
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        saldo.textContent =
+          "0 STACOIN";
+
+        extrato.innerHTML = `
+          <div class="vazio">
+            Não foi possível carregar o extrato.
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    /* =========================================
+       CARREGAR EXTRATO
+       ========================================= */
+
+    async function carregarExtrato(
+      motoristaId
+    ) {
+
+      const {
+        data: movimentos,
+        error
+      } = await supabaseClient
+        .from("stacoin_movimentacoes")
+        .select("*")
+        .eq("motorista_id", motoristaId)
+        .order("created_at", {
+          ascending: false
+        })
+        .limit(20);
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      if (!movimentos ||
+          movimentos.length === 0) {
+
+        extrato.innerHTML = `
+          <div class="vazio">
+            Nenhuma movimentação encontrada.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      extrato.innerHTML = "";
+
+
+      movimentos.forEach(
+        movimento => {
+
+          const div =
+            document.createElement("div");
+
+          div.className =
+            "movimento";
+
+
+          const descricao =
+            movimento.descricao ||
+            movimento.tipo ||
+            "Movimentação STACOIN";
+
+
+          const valor =
+            Number(
+              movimento.valor || 0
+            );
+
+
+          const data =
+            movimento.created_at
+              ? new Date(
+                  movimento.created_at
+                ).toLocaleDateString(
+                  "pt-BR"
+                )
+              : "—";
+
+
+          const sinal =
+            valor >= 0
+              ? "+"
+              : "";
+
+
+          div.innerHTML = `
+
+            <div class="mov-info">
+
+              <div class="mov-titulo">
+                ${descricao}
+              </div>
+
+              <div class="mov-data">
+                ${data}
+              </div>
+
+            </div>
+
+            <div class="mov-valor">
+              ${sinal}${formatarStacoin(valor)}
+            </div>
+
+          `;
+
+
+          extrato.appendChild(div);
+
+        }
+      );
+
+    }
+
+
+    /* =========================================
+       INICIAR
+       ========================================= */
+
+    carregarPerfil();
+
+
+    /* =========================================
+       ATUALIZAR QUANDO O LOGIN MUDAR
+       ========================================= */
+
+    supabaseClient.auth.onAuthStateChange(
+      function () {
+
+        carregarPerfil();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
