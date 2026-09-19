@@ -981,16 +981,101 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 );
-console.log("=== DIAGNÓSTICO SANTA LUZIA ===");
-console.log("URL atual:", window.location.href);
-console.log("Hash:", window.location.hash);
-console.log("Query:", window.location.search);
+/* =========================
+   DIAGNÓSTICO VISÍVEL
+========================= */
 
-supabaseClient.auth.getSession().then(({ data, error }) => {
-  console.log("SESSION:", data?.session);
-  console.log("ERRO SESSION:", error);
-});
+const diagnostico =
+  document.createElement("div");
 
+diagnostico.style.cssText = `
+  margin: 12px 18px 0;
+  padding: 14px;
+  background: #fff8e1;
+  border: 1px solid #e0c76a;
+  border-radius: 14px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #333;
+  word-break: break-word;
+`;
+
+diagnostico.innerHTML = `
+  <strong>🔎 Diagnóstico do Login</strong>
+  <div id="diagConteudo">
+    Verificando...
+  </div>
+`;
+
+document
+  .querySelector(".area-login")
+  .appendChild(diagnostico);
+
+
+async function diagnosticarLogin() {
+
+  const diag =
+    document.getElementById("diagConteudo");
+
+  try {
+
+    const resultado =
+      await supabaseClient.auth.getSession();
+
+    const session =
+      resultado.data?.session;
+
+    const erro =
+      resultado.error;
+
+    diag.innerHTML = `
+      <strong>🔎 Diagnóstico do Login</strong><br><br>
+
+      <b>Supabase:</b>
+      ${window.supabase ? "✅ Carregado" : "❌ Não carregado"}<br>
+
+      <b>Sessão:</b>
+      ${session ? "✅ ENCONTRADA" : "❌ NÃO ENCONTRADA"}<br>
+
+      <b>Usuário:</b>
+      ${
+        session?.user?.email
+        ? "✅ " + session.user.email
+        : "❌ Nenhum"
+      }<br>
+
+      <b>Hash:</b>
+      ${
+        window.location.hash
+        ? "⚠️ Existe retorno no hash"
+        : "— vazio"
+      }<br>
+
+      <b>URL:</b><br>
+      ${window.location.href}<br>
+
+      <b>Erro:</b>
+      ${
+        erro
+        ? "❌ " + erro.message
+        : "✅ Nenhum"
+      }
+    `;
+
+  } catch (erro) {
+
+    diag.innerHTML = `
+      <strong>🔎 Diagnóstico do Login</strong><br><br>
+      ❌ Erro ao consultar o Supabase:<br>
+      ${erro.message}
+    `;
+
+  }
+
+}
+
+diagnosticarLogin();
 /* =========================
    INICIAR
 ========================= */
