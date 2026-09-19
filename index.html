@@ -25,10 +25,6 @@
       color: #222;
     }
 
-    /* =========================
-       CABEÇALHO
-    ========================= */
-
     .cabecalho {
       background: #ffffff;
       text-align: center;
@@ -66,10 +62,7 @@
       letter-spacing: 0.5px;
     }
 
-
-    /* =========================
-       LOGIN
-    ========================= */
+    /* LOGIN */
 
     .area-login {
       max-width: 850px;
@@ -160,21 +153,23 @@
       text-align: center;
     }
 
+    .login-ok {
+      color: #176b3a;
+      font-weight: bold;
+    }
 
-    /* =========================
-       CONTEÚDO
-    ========================= */
+    .login-erro {
+      color: #b3261e;
+      font-weight: bold;
+    }
+
+    /* CONTEÚDO */
 
     .conteudo {
       max-width: 850px;
       margin: auto;
       padding: 25px 18px 40px;
     }
-
-
-    /* =========================
-       CARD DE BOAS-VINDAS
-    ========================= */
 
     .boas-vindas {
       background: #176b3a;
@@ -196,11 +191,6 @@
       opacity: 0.92;
     }
 
-
-    /* =========================
-       TÍTULOS DAS CATEGORIAS
-    ========================= */
-
     .titulo-secao {
       display: flex;
       align-items: center;
@@ -218,21 +208,11 @@
       background: #ddd;
     }
 
-
-    /* =========================
-       GRADE
-    ========================= */
-
     .grade {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 13px;
     }
-
-
-    /* =========================
-       BOTÕES
-    ========================= */
 
     .botao {
       background: white;
@@ -271,11 +251,6 @@
       font-weight: normal;
       line-height: 1.3;
     }
-
-
-    /* =========================
-       SANTA LUZIA ID EM DESTAQUE
-    ========================= */
 
     .id-destaque {
       background: #ffffff;
@@ -323,11 +298,6 @@
       font-weight: bold;
     }
 
-
-    /* =========================
-       RODAPÉ
-    ========================= */
-
     .rodape {
       text-align: center;
       padding: 25px 20px 35px;
@@ -338,11 +308,6 @@
     .rodape strong {
       color: #176b3a;
     }
-
-
-    /* =========================
-       CELULAR
-    ========================= */
 
     @media (max-width: 600px) {
 
@@ -431,568 +396,593 @@
   </style>
 </head>
 
-
 <body>
 
+<header class="cabecalho">
 
-  <!-- =========================
-       CABEÇALHO
-  ========================= -->
+  <img
+    class="logo"
+    src="IMG_6552.PNG"
+    alt="Santa Luzia Tomates"
+  >
 
-  <header class="cabecalho">
+  <h1>SANTA LUZIA CENTRAL</h1>
 
-    <img
-      class="logo"
-      src="IMG_6552.PNG"
-      alt="Santa Luzia Tomates"
+  <p class="subtitulo">
+    Tudo da Santa Luzia em um só lugar.
+  </p>
+
+  <div class="selo">
+    ✓ CENTRAL OFICIAL
+  </div>
+
+</header>
+
+
+<!-- LOGIN -->
+
+<section class="area-login">
+
+  <div class="login-card">
+
+    <div class="login-icone" id="loginIcone">
+      👤
+    </div>
+
+    <div class="login-info">
+
+      <strong id="loginTitulo">
+        Verificando conta...
+      </strong>
+
+      <span id="loginTexto">
+        Aguarde um momento
+      </span>
+
+    </div>
+
+    <button
+      type="button"
+      class="botao-google"
+      id="botaoGoogle"
+      disabled
     >
+      Aguarde...
+    </button>
 
-    <h1>SANTA LUZIA CENTRAL</h1>
+  </div>
 
-    <p class="subtitulo">
-      Tudo da Santa Luzia em um só lugar.
+  <div
+    class="login-status"
+    id="loginStatus"
+  ></div>
+
+</section>
+
+
+<main class="conteudo">
+
+  <section class="boas-vindas">
+
+    <h2>🍅 Bem-vindo à Santa Luzia</h2>
+
+    <p>
+      Acesse documentos, skins, jogos, eventos,
+      notícias e tudo relacionado à nossa empresa.
     </p>
-
-    <div class="selo">
-      ✓ CENTRAL OFICIAL
-    </div>
-
-  </header>
-
-
-  <!-- =========================
-       LOGIN GOOGLE
-  ========================= -->
-
-  <section class="area-login">
-
-    <div class="login-card">
-
-      <div class="login-icone" id="loginIcone">
-        👤
-      </div>
-
-      <div class="login-info">
-
-        <strong id="loginTitulo">
-          Acesse sua conta
-        </strong>
-
-        <span id="loginTexto">
-          Entre com sua conta Google
-        </span>
-
-      </div>
-
-      <button
-        type="button"
-        class="botao-google"
-        id="botaoGoogle"
-      >
-        Entrar com Google
-      </button>
-
-    </div>
-
-    <div
-      class="login-status"
-      id="loginStatus"
-    ></div>
 
   </section>
 
 
-  <!-- =========================
-       CONTEÚDO
-  ========================= -->
-
-  <main class="conteudo">
-
-
-    <!-- BOAS-VINDAS -->
-
-    <section class="boas-vindas">
-
-      <h2>🍅 Bem-vindo à Santa Luzia</h2>
-
-      <p>
-        Acesse documentos, skins, jogos, eventos,
-        notícias e tudo relacionado à nossa empresa.
-      </p>
-
-    </section>
+  <div class="titulo-secao">
+    <h2>👤 MOTORISTA</h2>
+    <div class="linha"></div>
+  </div>
 
 
-    <!-- =========================
-         MOTORISTA
-    ========================= -->
+  <a
+    href="santaluziiaid.html"
+    class="id-destaque"
+  >
 
-    <div class="titulo-secao">
-      <h2>👤 MOTORISTA</h2>
-      <div class="linha"></div>
+    <div class="id-icone">
+      👤
     </div>
 
+    <div class="id-texto">
 
-    <!-- SANTA LUZIA ID -->
+      <h2>SANTA LUZIA ID</h2>
 
-    <a
-      href="santaluziaid.html"
-      class="id-destaque"
-    >
+      <p>
+        Seu perfil e identificação de motorista
+      </p>
 
-      <div class="id-icone">
-        👤
-      </div>
+    </div>
 
-      <div class="id-texto">
+    <div class="seta">
+      →
+    </div>
 
-        <h2>SANTA LUZIA ID</h2>
+  </a>
 
-        <p>
-          Seu perfil e identificação de motorista
-        </p>
 
-      </div>
+  <div class="grade">
 
-      <div class="seta">
-        →
-      </div>
+    <a href="cnh.html" class="botao">
+
+      <div class="icone">🪪</div>
+
+      <h3>CRIAR MINHA CNH</h3>
+
+      <p>
+        Crie sua habilitação interna
+      </p>
 
     </a>
 
 
-    <!-- CNH -->
+    <a href="skins.html" class="botao">
 
-    <div class="grade">
+      <div class="icone">🎨</div>
 
-      <a
-        href="cnh.html"
-        class="botao"
-      >
+      <h3>SKINS</h3>
 
-        <div class="icone">🪪</div>
+      <p>
+        Skins oficiais da empresa
+      </p>
 
-        <h3>CRIAR MINHA CNH</h3>
+    </a>
 
-        <p>
-          Crie sua habilitação interna
-        </p>
+  </div>
 
-      </a>
 
+  <div class="titulo-secao">
+    <h2>🚛 JOGOS</h2>
+    <div class="linha"></div>
+  </div>
 
-      <!-- SKINS -->
 
-      <a
-        href="skins.html"
-        class="botao"
-      >
+  <div class="grade">
 
-        <div class="icone">🎨</div>
+    <a href="globaltruck.html" class="botao">
 
-        <h3>SKINS</h3>
+      <div class="icone">🚛</div>
 
-        <p>
-          Skins oficiais da empresa
-        </p>
+      <h3>GLOBAL TRUCK</h3>
 
-      </a>
+      <p>
+        Informações e conteúdos
+      </p>
 
-    </div>
+    </a>
 
 
-    <!-- =========================
-         JOGOS
-    ========================= -->
+    <a href="truckers.html" class="botao">
 
-    <div class="titulo-secao">
-      <h2>🚛 JOGOS</h2>
-      <div class="linha"></div>
-    </div>
+      <div class="icone">🚚</div>
 
+      <h3>TRUCKERS</h3>
 
-    <div class="grade">
+      <p>
+        Informações e conteúdos
+      </p>
 
-      <a
-        href="globaltruck.html"
-        class="botao"
-      >
+    </a>
 
-        <div class="icone">🚛</div>
+  </div>
 
-        <h3>GLOBAL TRUCK</h3>
 
-        <p>
-          Informações e conteúdos
-        </p>
+  <div class="titulo-secao">
+    <h2>🏢 EMPRESA</h2>
+    <div class="linha"></div>
+  </div>
 
-      </a>
 
+  <div class="grade">
 
-      <a
-        href="truckers.html"
-        class="botao"
-      >
+    <a href="comoentrar.html" class="botao">
 
-        <div class="icone">🚚</div>
+      <div class="icone">📖</div>
 
-        <h3>TRUCKERS</h3>
+      <h3>COMO ENTRAR</h3>
 
-        <p>
-          Informações e conteúdos
-        </p>
+      <p>
+        Veja como fazer parte
+      </p>
 
-      </a>
+    </a>
 
-    </div>
 
+    <a href="noticias.html" class="botao">
 
-    <!-- =========================
-         EMPRESA
-    ========================= -->
+      <div class="icone">📰</div>
 
-    <div class="titulo-secao">
-      <h2>🏢 EMPRESA</h2>
-      <div class="linha"></div>
-    </div>
+      <h3>NOTÍCIAS</h3>
 
+      <p>
+        Novidades da Santa Luzia
+      </p>
 
-    <div class="grade">
+    </a>
 
-      <a
-        href="comoentrar.html"
-        class="botao"
-      >
 
-        <div class="icone">📖</div>
+    <a href="eventos.html" class="botao">
 
-        <h3>COMO ENTRAR</h3>
+      <div class="icone">🏆</div>
 
-        <p>
-          Veja como fazer parte
-        </p>
+      <h3>EVENTOS</h3>
 
-      </a>
+      <p>
+        Competições e premiações
+      </p>
 
+    </a>
 
-      <a
-        href="noticias.html"
-        class="botao"
-      >
 
-        <div class="icone">📰</div>
+    <a href="notas.html" class="botao">
 
-        <h3>NOTÍCIAS</h3>
+      <div class="icone">🧾</div>
 
-        <p>
-          Novidades da Santa Luzia
-        </p>
+      <h3>NOTAS</h3>
 
-      </a>
+      <p>
+        Liberação e controle de notas
+      </p>
 
+    </a>
 
-      <a
-        href="eventos.html"
-        class="botao"
-      >
 
-        <div class="icone">🏆</div>
+    <a href="links.html" class="botao">
 
-        <h3>EVENTOS</h3>
+      <div class="icone">🔗</div>
 
-        <p>
-          Competições e premiações
-        </p>
+      <h3>LINKS</h3>
 
-      </a>
+      <p>
+        Nossas redes e canais
+      </p>
 
+    </a>
 
-      <!-- =========================
-           NOTAS
-      ========================= -->
 
-      <a
-        href="notas.html"
-        class="botao"
-      >
+    <a href="sobrenos.html" class="botao">
 
-        <div class="icone">🧾</div>
+      <div class="icone">🏢</div>
 
-        <h3>NOTAS</h3>
+      <h3>SOBRE NÓS</h3>
 
-        <p>
-          Liberação e controle de notas
-        </p>
+      <p>
+        Conheça a Santa Luzia
+      </p>
 
-      </a>
+    </a>
 
+  </div>
 
-      <a
-        href="links.html"
-        class="botao"
-      >
+</main>
 
-        <div class="icone">🔗</div>
 
-        <h3>LINKS</h3>
+<footer class="rodape">
 
-        <p>
-          Nossas redes e canais
-        </p>
+  <strong>Santa Luzia Tomates</strong><br>
 
-      </a>
+  Santa Luzia Central • 2026
 
+</footer>
 
-      <a
-        href="sobrenos.html"
-        class="botao"
-      >
 
-        <div class="icone">🏢</div>
+<!-- SUPABASE LOGIN -->
 
-        <h3>SOBRE NÓS</h3>
+<script>
 
-        <p>
-          Conheça a Santa Luzia
-        </p>
+const SUPABASE_URL =
+  "https://cckypvqophyviphqhich.supabase.co";
 
-      </a>
+const SUPABASE_KEY =
+  "sb_publishable_M_6iIpO4FNhxskWG0XXrA_Uwuw_bbP";
 
-    </div>
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-  </main>
+const botaoGoogle =
+  document.getElementById("botaoGoogle");
 
+const loginTitulo =
+  document.getElementById("loginTitulo");
 
-  <!-- =========================
-       RODAPÉ
-  ========================= -->
+const loginTexto =
+  document.getElementById("loginTexto");
 
-  <footer class="rodape">
+const loginIcone =
+  document.getElementById("loginIcone");
 
-    <strong>Santa Luzia Tomates</strong><br>
+const loginStatus =
+  document.getElementById("loginStatus");
 
-    Santa Luzia Central • 2026
 
-  </footer>
+/* =========================
+   MOSTRAR USUÁRIO
+========================= */
 
+function mostrarUsuario(user) {
 
-  <!-- =========================
-       LOGIN SUPABASE
-  ========================= -->
+  if (!user) {
 
-  <script>
+    loginIcone.textContent = "👤";
 
-    const SUPABASE_URL =
-      "https://cckypvqophyviphqhich.supabase.co";
+    loginTitulo.textContent =
+      "Acesse sua conta";
 
-    const SUPABASE_KEY =
-      "sb_publishable_M_6iIpO4FNhxskWG0XXrA_Uwuw_bbP";
+    loginTexto.textContent =
+      "Entre com sua conta Google";
 
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+    botaoGoogle.textContent =
+      "Entrar com Google";
+
+    botaoGoogle.className =
+      "botao-google";
+
+    botaoGoogle.disabled =
+      false;
+
+    botaoGoogle.dataset.logado =
+      "false";
+
+    loginStatus.textContent =
+      "";
+
+    return;
+  }
+
+
+  const nome =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    "Usuário";
+
+
+  const email =
+    user.email || "";
+
+
+  loginIcone.textContent =
+    "👤";
+
+
+  loginTitulo.textContent =
+    "Olá, " + nome;
+
+
+  loginTexto.textContent =
+    email;
+
+
+  botaoGoogle.textContent =
+    "Sair";
+
+
+  botaoGoogle.className =
+    "botao-sair";
+
+
+  botaoGoogle.disabled =
+    false;
+
+
+  botaoGoogle.dataset.logado =
+    "true";
+
+
+  loginStatus.textContent =
+    "✓ Conta conectada à Santa Luzia Central";
+
+
+  loginStatus.className =
+    "login-status login-ok";
+
+}
+
+
+/* =========================
+   VERIFICAR SESSÃO
+========================= */
+
+async function verificarSessao() {
+
+  try {
+
+    const resultado =
+      await supabaseClient.auth.getSession();
+
+
+    if (resultado.error) {
+
+      console.error(
+        "Erro ao verificar sessão:",
+        resultado.error
       );
 
+      mostrarUsuario(null);
 
-    const botaoGoogle =
-      document.getElementById("botaoGoogle");
+      loginStatus.textContent =
+        "Não foi possível verificar a conta.";
 
-    const loginTitulo =
-      document.getElementById("loginTitulo");
+      loginStatus.className =
+        "login-status login-erro";
 
-    const loginTexto =
-      document.getElementById("loginTexto");
-
-    const loginIcone =
-      document.getElementById("loginIcone");
-
-    const loginStatus =
-      document.getElementById("loginStatus");
-
-
-    /* =========================
-       ATUALIZA ÁREA DO LOGIN
-    ========================= */
-
-    function atualizarLogin(user) {
-
-      if (user) {
-
-        const nome =
-          user.user_metadata?.full_name ||
-          user.user_metadata?.name ||
-          "Usuário";
-
-        const email =
-          user.email || "";
-
-        loginIcone.textContent = "👤";
-
-        loginTitulo.textContent =
-          "Olá, " + nome;
-
-        loginTexto.textContent =
-          email;
-
-        botaoGoogle.textContent =
-          "Sair";
-
-        botaoGoogle.className =
-          "botao-sair";
-
-        botaoGoogle.dataset.logado =
-          "true";
-
-        loginStatus.textContent =
-          "✓ Conta conectada à Santa Luzia Central";
-
-      } else {
-
-        loginIcone.textContent = "👤";
-
-        loginTitulo.textContent =
-          "Acesse sua conta";
-
-        loginTexto.textContent =
-          "Entre com sua conta Google";
-
-        botaoGoogle.textContent =
-          "Entrar com Google";
-
-        botaoGoogle.className =
-          "botao-google";
-
-        botaoGoogle.dataset.logado =
-          "false";
-
-        loginStatus.textContent =
-          "";
-
-      }
+      return;
 
     }
 
 
-    /* =========================
-       ENTRAR / SAIR
-    ========================= */
-
-    botaoGoogle.addEventListener(
-      "click",
-      async function () {
-
-        if (
-          botaoGoogle.dataset.logado === "true"
-        ) {
-
-          const { error } =
-            await supabaseClient.auth.signOut();
-
-          if (error) {
-
-            loginStatus.textContent =
-              "Não foi possível sair. Tente novamente.";
-
-            console.error(error);
-
-            return;
-          }
-
-          atualizarLogin(null);
-
-          return;
-        }
+    const session =
+      resultado.data?.session;
 
 
-        loginStatus.textContent =
-          "Abrindo login do Google...";
+    if (session?.user) {
 
+      mostrarUsuario(
+        session.user
+      );
 
-        const { error } =
-          await supabaseClient.auth.signInWithOAuth({
+    } else {
 
-            provider: "google",
+      mostrarUsuario(null);
 
-            options: {
+    }
 
-              redirectTo:
-                "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
+  } catch (erro) {
 
-            }
-
-          });
-
-
-        if (error) {
-
-          console.error(error);
-
-          loginStatus.textContent =
-            "Erro ao abrir o Google. Verifique a configuração do Supabase.";
-
-        }
-
-      }
+    console.error(
+      "Erro:",
+      erro
     );
 
+    mostrarUsuario(null);
 
-    /* =========================
-       VERIFICAR USUÁRIO
-    ========================= */
+  }
 
-    async function verificarSessao() {
-
-      const {
-        data,
-        error
-      } = await supabaseClient.auth.getSession();
+}
 
 
-      if (error) {
+/* =========================
+   ENTRAR COM GOOGLE
+========================= */
 
-        console.error(error);
+async function entrarGoogle() {
 
-        atualizarLogin(null);
+  loginStatus.textContent =
+    "Abrindo login do Google...";
 
-        return;
+  loginStatus.className =
+    "login-status";
+
+
+  const resultado =
+    await supabaseClient.auth.signInWithOAuth({
+
+      provider: "google",
+
+      options: {
+
+        redirectTo:
+          "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
+
       }
 
-
-      atualizarLogin(
-        data.session?.user || null
-      );
-
-    }
+    });
 
 
-    /* =========================
-       ESCUTAR LOGIN / LOGOUT
-    ========================= */
+  if (resultado.error) {
 
-    supabaseClient.auth.onAuthStateChange(
-      function (
-        event,
-        session
-      ) {
+    console.error(
+      resultado.error
+    );
 
-        atualizarLogin(
-          session?.user || null
+    loginStatus.textContent =
+      "Erro ao abrir o Google.";
+
+    loginStatus.className =
+      "login-status login-erro";
+
+  }
+
+}
+
+
+/* =========================
+   BOTÃO
+========================= */
+
+botaoGoogle.addEventListener(
+  "click",
+  async function() {
+
+    if (
+      botaoGoogle.dataset.logado ===
+      "true"
+    ) {
+
+      botaoGoogle.disabled =
+        true;
+
+      const resultado =
+        await supabaseClient.auth.signOut();
+
+
+      if (resultado.error) {
+
+        console.error(
+          resultado.error
         );
 
+        botaoGoogle.disabled =
+          false;
+
+        loginStatus.textContent =
+          "Não foi possível sair.";
+
+        loginStatus.className =
+          "login-status login-erro";
+
+        return;
+
       }
+
+
+      mostrarUsuario(null);
+
+      return;
+
+    }
+
+
+    await entrarGoogle();
+
+  }
+);
+
+
+/* =========================
+   ESCUTAR ALTERAÇÕES
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event, session) {
+
+    console.log(
+      "Supabase Auth:",
+      event
     );
 
 
-    /* =========================
-       INICIAR
-    ========================= */
+    if (session?.user) {
 
-    verificarSessao();
+      mostrarUsuario(
+        session.user
+      );
 
-  </script>
+    } else {
 
+      mostrarUsuario(null);
+
+    }
+
+  }
+);
+
+
+/* =========================
+   INICIAR
+========================= */
+
+verificarSessao();
+
+</script>
 
 </body>
 </html>
