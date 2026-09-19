@@ -594,14 +594,14 @@
           vamos fazer essa ligação corretamente.
         */
 
-        const {
-          data: motorista,
-          error: motoristaError
-        } = await supabaseClient
-          .from("motoristas")
-          .select("*")
-          .eq("email", email)
-          .maybeSingle();
+       const {
+  data: motorista,
+  error: motoristaError
+} = await supabaseClient
+  .from("motoristas")
+  .select("*")
+  .eq("user_id", session.user.id)
+  .maybeSingle();
 
 
         if (motoristaError) {
