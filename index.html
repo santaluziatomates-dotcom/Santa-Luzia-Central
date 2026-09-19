@@ -847,12 +847,13 @@ async function processarRetornoGoogle() {
     if (resultado.error) {
 
       loginStatus.textContent =
-        "❌ Erro ao criar sessão.";
+        "❌ .";
 
       loginStatus.className =
         "login-status login-erro";
 
       console.error(
+        "ERRO COMPLETO DO SUPABASE:",
         resultado.error
       );
 
