@@ -91,17 +91,23 @@
     }
 
     .stacoin-moeda {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #f4d477, #c89c32);
-      border: 2px solid #b88b25;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      color: white;
       flex-shrink: 0;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+
+    .stacoin-imagem {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      display: block;
+      border-radius: 50%;
+      mix-blend-mode: multiply;
     }
 
     .stacoin-info {
@@ -398,9 +404,13 @@
       }
 
       .stacoin-moeda {
-        width: 25px;
-        height: 25px;
-        font-size: 12px;
+        width: 28px;
+        height: 28px;
+      }
+
+      .stacoin-imagem {
+        width: 28px;
+        height: 28px;
       }
 
       .stacoin-valor {
@@ -491,9 +501,13 @@
     id="stacoinTopo"
   >
 
-   <div class="stacoin-moeda">
-  <img src="stacoin.png" alt="STACOIN" class="stacoin-imagem">
-</div>
+    <div class="stacoin-moeda">
+      <img
+        src="stacoin.png"
+        alt="STACOIN"
+        class="stacoin-imagem"
+      >
+    </div>
 
     <div class="stacoin-info">
 
@@ -1100,11 +1114,6 @@ async function processarRetornoGoogle() {
         resultado.data.session.user
       );
 
-
-      /*
-       * Remove os tokens da barra
-       * depois que a sessão foi criada.
-       */
 
       window.history.replaceState(
         {},
