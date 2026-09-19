@@ -671,7 +671,7 @@
 </footer>
 
 
-<!-- SUPABASE LOGIN -->
+  <!-- SUPABASE LOGIN -->
 
 <script>
 
@@ -689,8 +689,7 @@ const supabaseClient =
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: false,
-        flowType: "implicit"
+        detectSessionInUrl: true
       }
     }
   );
@@ -798,133 +797,6 @@ function mostrarUsuario(user) {
 
 
 /* =========================
-   PROCESSAR RETORNO GOOGLE
-========================= */
-
-async function processarRetornoGoogle() {
-
-  const hash =
-    window.location.hash;
-
-
-  if (!hash || !hash.includes("access_token")) {
-    return false;
-  }
-
-
-  try {
-
-    const parametros =
-      new URLSearchParams(
-        hash.substring(1)
-      );
-
-
-    const accessToken =
-      parametros.get("access_token");
-
-    const refreshToken =
-      parametros.get("refresh_token");
-
-
-    if (!accessToken || !refreshToken) {
-
-      console.error(
-        "Tokens de sessão não encontrados."
-      );
-
-      return false;
-    }
-
-
-    loginStatus.textContent =
-      "Finalizando login...";
-
-
-    loginStatus.className =
-      "login-status";
-
-
-    const resultado =
-      await supabaseClient.auth.setSession({
-
-        access_token:
-          accessToken,
-
-        refresh_token:
-          refreshToken
-
-      });
-
-
-    if (resultado.error) {
-
-      console.error(
-        "Erro ao salvar sessão:",
-        resultado.error
-      );
-
-      loginStatus.textContent =
-        "Não foi possível salvar a sessão.";
-
-      loginStatus.className =
-        "login-status login-erro";
-
-      return false;
-    }
-
-
-    console.log(
-      "✓ Sessão Google salva com sucesso."
-    );
-
-
-    /*
-      Remove os tokens da barra de endereço
-      depois que a sessão foi salva.
-    */
-
-    window.history.replaceState(
-      {},
-      document.title,
-      window.location.pathname +
-      window.location.search
-    );
-
-
-    if (resultado.data?.session?.user) {
-
-      mostrarUsuario(
-        resultado.data.session.user
-      );
-
-    }
-
-
-    return true;
-
-
-  } catch (erro) {
-
-    console.error(
-      "Erro ao processar retorno Google:",
-      erro
-    );
-
-    loginStatus.textContent =
-      "Erro ao finalizar o login.";
-
-    loginStatus.className =
-      "login-status login-erro";
-
-    return false;
-
-  }
-
-}
-
-
-/* =========================
    VERIFICAR SESSÃO
 ========================= */
 
@@ -987,6 +859,12 @@ async function verificarSessao() {
 
 async function entrarGoogle() {
 
+  botaoGoogle.disabled = true;
+
+  botaoGoogle.textContent =
+    "Abrindo Google...";
+
+
   loginStatus.textContent =
     "Abrindo login do Google...";
 
@@ -1012,6 +890,7 @@ async function entrarGoogle() {
   if (resultado.error) {
 
     console.error(
+      "Erro ao abrir Google:",
       resultado.error
     );
 
@@ -1020,6 +899,11 @@ async function entrarGoogle() {
 
     loginStatus.className =
       "login-status login-erro";
+
+    botaoGoogle.disabled = false;
+
+    botaoGoogle.textContent =
+      "Entrar com Google";
 
   }
 
@@ -1050,6 +934,7 @@ botaoGoogle.addEventListener(
       if (resultado.error) {
 
         console.error(
+          "Erro ao sair:",
           resultado.error
         );
 
@@ -1113,39 +998,7 @@ supabaseClient.auth.onAuthStateChange(
    INICIALIZAÇÃO
 ========================= */
 
-async function iniciarLogin() {
-
-  /*
-    Primeiro verifica se voltamos
-    do Google com tokens no hash.
-  */
-
-  const processouRetorno =
-    await processarRetornoGoogle();
-
-
-  /*
-    Depois consulta a sessão salva.
-  */
-
-  await verificarSessao();
-
-
-  /*
-    Se acabou de voltar do Google,
-    confirma novamente a sessão.
-  */
-
-  if (processouRetorno) {
-
-    await verificarSessao();
-
-  }
-
-}
-
-
-iniciarLogin();
+verificarSessao();
 
 </script>
 
