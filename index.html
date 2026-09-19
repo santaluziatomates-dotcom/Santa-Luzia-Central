@@ -26,6 +26,7 @@
     }
 
     .cabecalho {
+      position: relative;
       background: #ffffff;
       text-align: center;
       padding: 30px 20px 28px;
@@ -60,6 +61,67 @@
       font-size: 11px;
       font-weight: bold;
       letter-spacing: 0.5px;
+    }
+
+    /* =========================
+       STACOIN NO TOPO
+    ========================= */
+
+    .stacoin-topo {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: none;
+      align-items: center;
+      gap: 7px;
+      background: #f8f4e7;
+      border: 1px solid #d6b24c;
+      border-radius: 14px;
+      padding: 7px 10px;
+      text-decoration: none;
+      color: #1f3d25;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      transition: 0.2s;
+      z-index: 10;
+    }
+
+    .stacoin-topo:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(0,0,0,0.09);
+    }
+
+    .stacoin-moeda {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #f4d477, #c89c32);
+      border: 2px solid #b88b25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .stacoin-info {
+      text-align: left;
+      line-height: 1.05;
+    }
+
+    .stacoin-valor {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      color: #1f3d25;
+    }
+
+    .stacoin-label {
+      display: block;
+      font-size: 8px;
+      color: #777;
+      margin-top: 3px;
+      letter-spacing: 0.4px;
     }
 
     /* LOGIN */
@@ -328,6 +390,27 @@
         font-size: 14px;
       }
 
+      .stacoin-topo {
+        top: 11px;
+        right: 11px;
+        padding: 6px 8px;
+        border-radius: 12px;
+      }
+
+      .stacoin-moeda {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+      }
+
+      .stacoin-valor {
+        font-size: 12px;
+      }
+
+      .stacoin-label {
+        font-size: 7px;
+      }
+
       .area-login {
         padding: 13px 15px 0;
       }
@@ -399,6 +482,36 @@
 <body>
 
 <header class="cabecalho">
+
+  <!-- STACOIN -->
+
+  <a
+    href="perfil.html"
+    class="stacoin-topo"
+    id="stacoinTopo"
+  >
+
+    <div class="stacoin-moeda">
+      🪙
+    </div>
+
+    <div class="stacoin-info">
+
+      <span
+        class="stacoin-valor"
+        id="stacoinValor"
+      >
+        0
+      </span>
+
+      <span class="stacoin-label">
+        STACOIN
+      </span>
+
+    </div>
+
+  </a>
+
 
   <img
     class="logo"
@@ -670,7 +783,8 @@
 
 </footer>
 
-  <!-- SUPABASE LOGIN -->
+
+<!-- SUPABASE LOGIN -->
 
 <script>
 
@@ -710,6 +824,108 @@ const loginIcone =
 const loginStatus =
   document.getElementById("loginStatus");
 
+const stacoinTopo =
+  document.getElementById("stacoinTopo");
+
+const stacoinValor =
+  document.getElementById("stacoinValor");
+
+
+/* =========================
+   STACOIN
+========================= */
+
+async function carregarStacoin(user) {
+
+  if (!user) {
+
+    stacoinTopo.style.display = "none";
+
+    return;
+  }
+
+
+  try {
+
+    const motoristaResultado =
+      await supabaseClient
+        .from("motoristas")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+
+    if (
+      motoristaResultado.error ||
+      !motoristaResultado.data
+    ) {
+
+      console.log(
+        "Motorista não encontrado para esta conta."
+      );
+
+      stacoinTopo.style.display = "none";
+
+      return;
+    }
+
+
+    const motoristaId =
+      motoristaResultado.data.id;
+
+
+    const carteiraResultado =
+      await supabaseClient
+        .from("stacoin_carteiras")
+        .select("saldo")
+        .eq("motorista_id", motoristaId)
+        .maybeSingle();
+
+
+    if (carteiraResultado.error) {
+
+      console.error(
+        "Erro ao carregar STACOIN:",
+        carteiraResultado.error
+      );
+
+      stacoinTopo.style.display = "none";
+
+      return;
+    }
+
+
+    const saldo =
+      carteiraResultado.data?.saldo || 0;
+
+
+    stacoinValor.textContent =
+      Number(saldo).toLocaleString(
+        "pt-BR"
+      );
+
+
+    stacoinTopo.style.display =
+      "flex";
+
+
+  } catch (erro) {
+
+    console.error(
+      "Erro STACOIN:",
+      erro
+    );
+
+    stacoinTopo.style.display =
+      "none";
+  }
+
+}
+
+
+/* =========================
+   MOSTRAR USUÁRIO
+========================= */
 
 function mostrarUsuario(user) {
 
@@ -733,6 +949,9 @@ function mostrarUsuario(user) {
 
     botaoGoogle.dataset.logado =
       "false";
+
+    stacoinTopo.style.display =
+      "none";
 
     return;
   }
@@ -771,6 +990,11 @@ function mostrarUsuario(user) {
 
   loginStatus.className =
     "login-status login-ok";
+
+
+  /* CARREGAR SALDO */
+
+  carregarStacoin(user);
 }
 
 
@@ -844,28 +1068,30 @@ async function processarRetornoGoogle() {
     );
 
 
-   if (resultado.error) {
+    if (resultado.error) {
 
-  const erroCompleto =
-    JSON.stringify(
-      resultado.error,
-      Object.getOwnPropertyNames(resultado.error),
-      2
-    );
+      const erroCompleto =
+        JSON.stringify(
+          resultado.error,
+          Object.getOwnPropertyNames(resultado.error),
+          2
+        );
 
-  console.error(
-    "ERRO COMPLETO:",
-    erroCompleto
-  );
 
-  loginStatus.textContent =
-    "❌ " + erroCompleto;
+      console.error(
+        "ERRO COMPLETO:",
+        erroCompleto
+      );
 
-  loginStatus.className =
-    "login-status login-erro";
 
-  return false;
-}
+      loginStatus.textContent =
+        "❌ " + erroCompleto;
+
+      loginStatus.className =
+        "login-status login-erro";
+
+      return false;
+    }
 
 
     if (resultado.data?.session?.user) {
@@ -893,6 +1119,7 @@ async function processarRetornoGoogle() {
 
 
     return false;
+
 
   } catch (erro) {
 
@@ -946,6 +1173,7 @@ async function verificarSessao() {
     mostrarUsuario(null);
 
     return false;
+
 
   } catch (erro) {
 
