@@ -8,6 +8,9 @@
 
   <title>Santa Luzia Central</title>
 
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
 
     * {
@@ -61,6 +64,100 @@
       font-size: 11px;
       font-weight: bold;
       letter-spacing: 0.5px;
+    }
+
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    .area-login {
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 16px 18px 0;
+    }
+
+    .login-card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 17px;
+      padding: 13px 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .login-icone {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: #f3f4f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      flex-shrink: 0;
+    }
+
+    .login-info {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+
+    .login-info strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .login-info span {
+      display: block;
+      color: #777;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .botao-google {
+      border: none;
+      background: #176b3a;
+      color: white;
+      border-radius: 11px;
+      padding: 11px 14px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .botao-google:hover {
+      opacity: 0.92;
+    }
+
+    .botao-sair {
+      border: 1px solid #ddd;
+      background: white;
+      color: #555;
+      border-radius: 11px;
+      padding: 10px 13px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .botao-sair:hover {
+      background: #f5f5f5;
+    }
+
+    .login-status {
+      font-size: 10px;
+      color: #888;
+      margin-top: 7px;
+      text-align: center;
     }
 
 
@@ -266,6 +363,34 @@
         font-size: 14px;
       }
 
+      .area-login {
+        padding: 13px 15px 0;
+      }
+
+      .login-card {
+        padding: 12px;
+      }
+
+      .login-icone {
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+      }
+
+      .login-info strong {
+        font-size: 13px;
+      }
+
+      .login-info span {
+        font-size: 10px;
+      }
+
+      .botao-google,
+      .botao-sair {
+        padding: 10px 11px;
+        font-size: 11px;
+      }
+
       .conteudo {
         padding: 20px 15px 35px;
       }
@@ -333,6 +458,48 @@
     </div>
 
   </header>
+
+
+  <!-- =========================
+       LOGIN GOOGLE
+  ========================= -->
+
+  <section class="area-login">
+
+    <div class="login-card">
+
+      <div class="login-icone" id="loginIcone">
+        👤
+      </div>
+
+      <div class="login-info">
+
+        <strong id="loginTitulo">
+          Acesse sua conta
+        </strong>
+
+        <span id="loginTexto">
+          Entre com sua conta Google
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        class="botao-google"
+        id="botaoGoogle"
+      >
+        Entrar com Google
+      </button>
+
+    </div>
+
+    <div
+      class="login-status"
+      id="loginStatus"
+    ></div>
+
+  </section>
 
 
   <!-- =========================
@@ -608,6 +775,223 @@
     Santa Luzia Central • 2026
 
   </footer>
+
+
+  <!-- =========================
+       LOGIN SUPABASE
+  ========================= -->
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://cckypvqophyviphqhich.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_M_6iIpO4FNhxskWG0XXrA_Uwuw_bbP";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    const botaoGoogle =
+      document.getElementById("botaoGoogle");
+
+    const loginTitulo =
+      document.getElementById("loginTitulo");
+
+    const loginTexto =
+      document.getElementById("loginTexto");
+
+    const loginIcone =
+      document.getElementById("loginIcone");
+
+    const loginStatus =
+      document.getElementById("loginStatus");
+
+
+    /* =========================
+       ATUALIZA ÁREA DO LOGIN
+    ========================= */
+
+    function atualizarLogin(user) {
+
+      if (user) {
+
+        const nome =
+          user.user_metadata?.full_name ||
+          user.user_metadata?.name ||
+          "Usuário";
+
+        const email =
+          user.email || "";
+
+        loginIcone.textContent = "👤";
+
+        loginTitulo.textContent =
+          "Olá, " + nome;
+
+        loginTexto.textContent =
+          email;
+
+        botaoGoogle.textContent =
+          "Sair";
+
+        botaoGoogle.className =
+          "botao-sair";
+
+        botaoGoogle.dataset.logado =
+          "true";
+
+        loginStatus.textContent =
+          "✓ Conta conectada à Santa Luzia Central";
+
+      } else {
+
+        loginIcone.textContent = "👤";
+
+        loginTitulo.textContent =
+          "Acesse sua conta";
+
+        loginTexto.textContent =
+          "Entre com sua conta Google";
+
+        botaoGoogle.textContent =
+          "Entrar com Google";
+
+        botaoGoogle.className =
+          "botao-google";
+
+        botaoGoogle.dataset.logado =
+          "false";
+
+        loginStatus.textContent =
+          "";
+
+      }
+
+    }
+
+
+    /* =========================
+       ENTRAR / SAIR
+    ========================= */
+
+    botaoGoogle.addEventListener(
+      "click",
+      async function () {
+
+        if (
+          botaoGoogle.dataset.logado === "true"
+        ) {
+
+          const { error } =
+            await supabaseClient.auth.signOut();
+
+          if (error) {
+
+            loginStatus.textContent =
+              "Não foi possível sair. Tente novamente.";
+
+            console.error(error);
+
+            return;
+          }
+
+          atualizarLogin(null);
+
+          return;
+        }
+
+
+        loginStatus.textContent =
+          "Abrindo login do Google...";
+
+
+        const { error } =
+          await supabaseClient.auth.signInWithOAuth({
+
+            provider: "google",
+
+            options: {
+
+              redirectTo:
+                "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
+
+            }
+
+          });
+
+
+        if (error) {
+
+          console.error(error);
+
+          loginStatus.textContent =
+            "Erro ao abrir o Google. Verifique a configuração do Supabase.";
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       VERIFICAR USUÁRIO
+    ========================= */
+
+    async function verificarSessao() {
+
+      const {
+        data,
+        error
+      } = await supabaseClient.auth.getSession();
+
+
+      if (error) {
+
+        console.error(error);
+
+        atualizarLogin(null);
+
+        return;
+      }
+
+
+      atualizarLogin(
+        data.session?.user || null
+      );
+
+    }
+
+
+    /* =========================
+       ESCUTAR LOGIN / LOGOUT
+    ========================= */
+
+    supabaseClient.auth.onAuthStateChange(
+      function (
+        event,
+        session
+      ) {
+
+        atualizarLogin(
+          session?.user || null
+        );
+
+      }
+    );
+
+
+    /* =========================
+       INICIAR
+    ========================= */
+
+    verificarSessao();
+
+  </script>
 
 
 </body>
