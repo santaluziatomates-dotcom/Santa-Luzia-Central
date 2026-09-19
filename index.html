@@ -690,6 +690,7 @@ const supabaseClient =
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
+        flowType: "implicit"
       }
     }
   );
@@ -739,8 +740,10 @@ function mostrarUsuario(user) {
     botaoGoogle.dataset.logado =
       "false";
 
-    loginStatus.textContent =
-      "";
+    loginStatus.textContent = "";
+
+    loginStatus.className =
+      "login-status";
 
     return;
   }
@@ -795,6 +798,133 @@ function mostrarUsuario(user) {
 
 
 /* =========================
+   PROCESSAR RETORNO GOOGLE
+========================= */
+
+async function processarRetornoGoogle() {
+
+  const hash =
+    window.location.hash;
+
+
+  if (!hash || !hash.includes("access_token")) {
+    return false;
+  }
+
+
+  try {
+
+    const parametros =
+      new URLSearchParams(
+        hash.substring(1)
+      );
+
+
+    const accessToken =
+      parametros.get("access_token");
+
+    const refreshToken =
+      parametros.get("refresh_token");
+
+
+    if (!accessToken || !refreshToken) {
+
+      console.error(
+        "Tokens de sessão não encontrados."
+      );
+
+      return false;
+    }
+
+
+    loginStatus.textContent =
+      "Finalizando login...";
+
+
+    loginStatus.className =
+      "login-status";
+
+
+    const resultado =
+      await supabaseClient.auth.setSession({
+
+        access_token:
+          accessToken,
+
+        refresh_token:
+          refreshToken
+
+      });
+
+
+    if (resultado.error) {
+
+      console.error(
+        "Erro ao salvar sessão:",
+        resultado.error
+      );
+
+      loginStatus.textContent =
+        "Não foi possível salvar a sessão.";
+
+      loginStatus.className =
+        "login-status login-erro";
+
+      return false;
+    }
+
+
+    console.log(
+      "✓ Sessão Google salva com sucesso."
+    );
+
+
+    /*
+      Remove os tokens da barra de endereço
+      depois que a sessão foi salva.
+    */
+
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname +
+      window.location.search
+    );
+
+
+    if (resultado.data?.session?.user) {
+
+      mostrarUsuario(
+        resultado.data.session.user
+      );
+
+    }
+
+
+    return true;
+
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao processar retorno Google:",
+      erro
+    );
+
+    loginStatus.textContent =
+      "Erro ao finalizar o login.";
+
+    loginStatus.className =
+      "login-status login-erro";
+
+    return false;
+
+  }
+
+}
+
+
+/* =========================
    VERIFICAR SESSÃO
 ========================= */
 
@@ -814,12 +944,6 @@ async function verificarSessao() {
       );
 
       mostrarUsuario(null);
-
-      loginStatus.textContent =
-        "Não foi possível verificar a conta.";
-
-      loginStatus.className =
-        "login-status login-erro";
 
       return;
 
@@ -841,6 +965,7 @@ async function verificarSessao() {
       mostrarUsuario(null);
 
     }
+
 
   } catch (erro) {
 
@@ -917,6 +1042,7 @@ botaoGoogle.addEventListener(
       botaoGoogle.disabled =
         true;
 
+
       const resultado =
         await supabaseClient.auth.signOut();
 
@@ -973,7 +1099,7 @@ supabaseClient.auth.onAuthStateChange(
         session.user
       );
 
-    } else {
+    } else if (event === "SIGNED_OUT") {
 
       mostrarUsuario(null);
 
@@ -981,106 +1107,45 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 );
+
+
 /* =========================
-   DIAGNÓSTICO VISÍVEL
+   INICIALIZAÇÃO
 ========================= */
 
-const diagnostico =
-  document.createElement("div");
+async function iniciarLogin() {
 
-diagnostico.style.cssText = `
-  margin: 12px 18px 0;
-  padding: 14px;
-  background: #fff8e1;
-  border: 1px solid #e0c76a;
-  border-radius: 14px;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.6;
-  color: #333;
-  word-break: break-word;
-`;
+  /*
+    Primeiro verifica se voltamos
+    do Google com tokens no hash.
+  */
 
-diagnostico.innerHTML = `
-  <strong>🔎 Diagnóstico do Login</strong>
-  <div id="diagConteudo">
-    Verificando...
-  </div>
-`;
-
-document
-  .querySelector(".area-login")
-  .appendChild(diagnostico);
+  const processouRetorno =
+    await processarRetornoGoogle();
 
 
-async function diagnosticarLogin() {
+  /*
+    Depois consulta a sessão salva.
+  */
 
-  const diag =
-    document.getElementById("diagConteudo");
+  await verificarSessao();
 
-  try {
 
-    const resultado =
-      await supabaseClient.auth.getSession();
+  /*
+    Se acabou de voltar do Google,
+    confirma novamente a sessão.
+  */
 
-    const session =
-      resultado.data?.session;
+  if (processouRetorno) {
 
-    const erro =
-      resultado.error;
-
-    diag.innerHTML = `
-      <strong>🔎 Diagnóstico do Login</strong><br><br>
-
-      <b>Supabase:</b>
-      ${window.supabase ? "✅ Carregado" : "❌ Não carregado"}<br>
-
-      <b>Sessão:</b>
-      ${session ? "✅ ENCONTRADA" : "❌ NÃO ENCONTRADA"}<br>
-
-      <b>Usuário:</b>
-      ${
-        session?.user?.email
-        ? "✅ " + session.user.email
-        : "❌ Nenhum"
-      }<br>
-
-      <b>Hash:</b>
-      ${
-        window.location.hash
-        ? "⚠️ Existe retorno no hash"
-        : "— vazio"
-      }<br>
-
-      <b>URL:</b><br>
-      ${window.location.href}<br>
-
-      <b>Erro:</b>
-      ${
-        erro
-        ? "❌ " + erro.message
-        : "✅ Nenhum"
-      }
-    `;
-
-  } catch (erro) {
-
-    diag.innerHTML = `
-      <strong>🔎 Diagnóstico do Login</strong><br><br>
-      ❌ Erro ao consultar o Supabase:<br>
-      ${erro.message}
-    `;
+    await verificarSessao();
 
   }
 
 }
 
-diagnosticarLogin();
-/* =========================
-   INICIAR
-========================= */
 
-verificarSessao();
+iniciarLogin();
 
 </script>
 
