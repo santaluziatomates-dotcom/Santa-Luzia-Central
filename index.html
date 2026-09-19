@@ -670,7 +670,7 @@
 
 </footer>
 
-<!-- SUPABASE LOGIN -->
+  <!-- SUPABASE LOGIN -->
 
 <script>
 
@@ -688,7 +688,7 @@ const supabaseClient =
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: true,
+        detectSessionInUrl: false,
         flowType: "implicit"
       }
     }
@@ -775,33 +775,141 @@ function mostrarUsuario(user) {
 
 
 /* =========================
-   DIAGNÓSTICO
+   PROCESSAR RETORNO GOOGLE
 ========================= */
 
-async function diagnostico() {
+async function processarRetornoGoogle() {
 
-  const status =
-    document.getElementById("loginStatus");
-
-  status.className =
-    "login-status";
-
-  status.innerHTML =
-    "🔎 Verificando sessão...";
+  const hash =
+    window.location.hash.substring(1);
 
 
-  console.log("========== SANTA LUZIA AUTH ==========");
+  if (!hash) {
+
+    console.log(
+      "Nenhum retorno Google encontrado."
+    );
+
+    return false;
+  }
+
+
+  const parametros =
+    new URLSearchParams(hash);
+
+
+  const accessToken =
+    parametros.get("access_token");
+
+  const refreshToken =
+    parametros.get("refresh_token");
+
+
+  if (!accessToken || !refreshToken) {
+
+    console.log(
+      "Hash existe, mas não possui tokens de sessão."
+    );
+
+    return false;
+  }
+
+
+  loginStatus.textContent =
+    "🔐 Finalizando login...";
+
 
   console.log(
-    "URL:",
-    window.location.href.split("#")[0]
+    "Retorno Google encontrado."
   );
 
-  console.log(
-    "Hash existe:",
-    window.location.hash.length > 0
-  );
 
+  try {
+
+    const resultado =
+      await supabaseClient.auth.setSession({
+
+        access_token:
+          accessToken,
+
+        refresh_token:
+          refreshToken
+
+      });
+
+
+    console.log(
+      "Resultado setSession:",
+      resultado
+    );
+
+
+    if (resultado.error) {
+
+      loginStatus.textContent =
+        "❌ Erro ao criar sessão.";
+
+      loginStatus.className =
+        "login-status login-erro";
+
+      console.error(
+        resultado.error
+      );
+
+      return false;
+    }
+
+
+    if (resultado.data?.session?.user) {
+
+      mostrarUsuario(
+        resultado.data.session.user
+      );
+
+
+      /*
+       * Remove os tokens da barra
+       * depois que a sessão foi criada.
+       */
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname +
+        window.location.search
+      );
+
+
+      return true;
+    }
+
+
+    return false;
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao processar retorno:",
+      erro
+    );
+
+    loginStatus.textContent =
+      "❌ Erro ao finalizar login.";
+
+    loginStatus.className =
+      "login-status login-erro";
+
+    return false;
+  }
+
+}
+
+
+/* =========================
+   VERIFICAR SESSÃO
+========================= */
+
+async function verificarSessao() {
 
   try {
 
@@ -810,67 +918,36 @@ async function diagnostico() {
 
 
     console.log(
-      "getSession:",
+      "Sessão atual:",
       resultado
     );
 
 
-    if (resultado.error) {
-
-      status.innerHTML =
-        "❌ Erro Supabase: " +
-        resultado.error.message;
-
-      status.className =
-        "login-status login-erro";
-
-      return;
-    }
-
-
-    if (resultado.data?.session?.user) {
-
-      console.log(
-        "USUÁRIO ENCONTRADO:",
-        resultado.data.session.user.email
-      );
+    if (
+      resultado.data?.session?.user
+    ) {
 
       mostrarUsuario(
         resultado.data.session.user
       );
 
-      return;
+      return true;
     }
 
 
-    console.log(
-      "NENHUMA SESSÃO ENCONTRADA"
-    );
-
-
-    status.innerHTML =
-      "⚠️ Google retornou, mas nenhuma sessão foi encontrada.";
-
-    status.className =
-      "login-status login-erro";
-
     mostrarUsuario(null);
 
+    return false;
 
   } catch (erro) {
 
     console.error(
-      "ERRO GERAL:",
       erro
     );
 
-    status.innerHTML =
-      "❌ Erro: " + erro.message;
-
-    status.className =
-      "login-status login-erro";
-
     mostrarUsuario(null);
+
+    return false;
   }
 
 }
@@ -887,8 +964,9 @@ async function entrarGoogle() {
   botaoGoogle.textContent =
     "Abrindo Google...";
 
+
   loginStatus.textContent =
-    "Abrindo login...";
+    "Abrindo login do Google...";
 
 
   const resultado =
@@ -913,12 +991,14 @@ async function entrarGoogle() {
     );
 
     loginStatus.textContent =
-      "❌ " + resultado.error.message;
+      "❌ " +
+      resultado.error.message;
 
     loginStatus.className =
       "login-status login-erro";
 
-    botaoGoogle.disabled = false;
+    botaoGoogle.disabled =
+      false;
 
     botaoGoogle.textContent =
       "Entrar com Google";
@@ -947,6 +1027,7 @@ botaoGoogle.addEventListener(
       return;
     }
 
+
     await entrarGoogle();
 
   }
@@ -954,19 +1035,15 @@ botaoGoogle.addEventListener(
 
 
 /* =========================
-   EVENTOS SUPABASE
+   AUTH STATE
 ========================= */
 
 supabaseClient.auth.onAuthStateChange(
   function(event, session) {
 
     console.log(
-      "AUTH EVENT:",
-      event
-    );
-
-    console.log(
-      "SESSION:",
+      "Auth:",
+      event,
       session
     );
 
@@ -984,10 +1061,22 @@ supabaseClient.auth.onAuthStateChange(
 
 
 /* =========================
-   INICIAR
+   INICIALIZAÇÃO
 ========================= */
 
-diagnostico();
+(async function() {
+
+  const processou =
+    await processarRetornoGoogle();
+
+
+  if (!processou) {
+
+    await verificarSessao();
+
+  }
+
+})();
 
 </script>
 
