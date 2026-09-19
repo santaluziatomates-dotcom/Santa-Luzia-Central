@@ -844,21 +844,28 @@ async function processarRetornoGoogle() {
     );
 
 
-    if (resultado.error) {
+   if (resultado.error) {
 
-      loginStatus.textContent =
-        "❌ .";
+  const erroCompleto =
+    JSON.stringify(
+      resultado.error,
+      Object.getOwnPropertyNames(resultado.error),
+      2
+    );
 
-      loginStatus.className =
-        "login-status login-erro";
+  console.error(
+    "ERRO COMPLETO:",
+    erroCompleto
+  );
 
-      console.error(
-        "ERRO COMPLETO DO SUPABASE:",
-        resultado.error
-      );
+  loginStatus.textContent =
+    "❌ " + erroCompleto;
 
-      return false;
-    }
+  loginStatus.className =
+    "login-status login-erro";
+
+  return false;
+}
 
 
     if (resultado.data?.session?.user) {
