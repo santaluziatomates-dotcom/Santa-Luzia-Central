@@ -981,7 +981,15 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 );
+console.log("=== DIAGNÓSTICO SANTA LUZIA ===");
+console.log("URL atual:", window.location.href);
+console.log("Hash:", window.location.hash);
+console.log("Query:", window.location.search);
 
+supabaseClient.auth.getSession().then(({ data, error }) => {
+  console.log("SESSION:", data?.session);
+  console.log("ERRO SESSION:", error);
+});
 
 /* =========================
    INICIAR
