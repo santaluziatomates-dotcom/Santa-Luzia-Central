@@ -25,25 +25,29 @@
       color: #222;
     }
 
+    /* =========================
+       CABEÇALHO
+    ========================= */
+
     .cabecalho {
       position: relative;
       background: #ffffff;
       text-align: center;
-      padding: 30px 20px 28px;
+      padding: 28px 20px 25px;
       border-bottom: 1px solid #ddd;
     }
 
     .logo {
-      width: 95px;
-      height: 95px;
+      width: 82px;
+      height: 82px;
       object-fit: contain;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .cabecalho h1 {
-      font-size: 29px;
-      margin-bottom: 7px;
-      letter-spacing: -0.5px;
+      font-size: 28px;
+      margin-bottom: 6px;
+      letter-spacing: -0.6px;
     }
 
     .subtitulo {
@@ -53,7 +57,7 @@
 
     .selo {
       display: inline-block;
-      margin-top: 14px;
+      margin-top: 13px;
       padding: 6px 12px;
       border-radius: 20px;
       background: #e9f3ec;
@@ -63,25 +67,33 @@
       letter-spacing: 0.5px;
     }
 
+
     /* =========================
        STACOIN NO TOPO
     ========================= */
 
     .stacoin-topo {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 16px;
+      right: 16px;
+
       display: none;
       align-items: center;
       gap: 7px;
+
       background: #f8f4e7;
       border: 1px solid #d6b24c;
       border-radius: 14px;
+
       padding: 7px 10px;
+
       text-decoration: none;
       color: #1f3d25;
+
       box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+
       transition: 0.2s;
+
       z-index: 10;
     }
 
@@ -93,10 +105,13 @@
     .stacoin-moeda {
       width: 32px;
       height: 32px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       flex-shrink: 0;
+
       overflow: hidden;
       border-radius: 50%;
     }
@@ -104,9 +119,12 @@
     .stacoin-imagem {
       width: 32px;
       height: 32px;
+
       object-fit: contain;
       display: block;
+
       border-radius: 50%;
+
       mix-blend-mode: multiply;
     }
 
@@ -117,66 +135,90 @@
 
     .stacoin-valor {
       display: block;
+
       font-size: 13px;
       font-weight: bold;
+
       color: #1f3d25;
     }
 
     .stacoin-label {
       display: block;
+
       font-size: 8px;
       color: #777;
+
       margin-top: 3px;
+
       letter-spacing: 0.4px;
     }
 
-    /* LOGIN */
+
+    /* =========================
+       LOGIN
+    ========================= */
 
     .area-login {
       max-width: 850px;
       margin: 0 auto;
-      padding: 16px 18px 0;
+
+      padding: 15px 18px 0;
     }
 
     .login-card {
       background: #ffffff;
+
       border: 1px solid #ddd;
       border-radius: 17px;
+
       padding: 13px 15px;
+
       display: flex;
       align-items: center;
       gap: 12px;
+
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
 
     .login-icone {
       width: 42px;
       height: 42px;
+
       border-radius: 13px;
+
       background: #f3f4f3;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 21px;
+
       flex-shrink: 0;
     }
 
     .login-info {
       flex: 1;
       min-width: 0;
+
       text-align: left;
     }
 
     .login-info strong {
       display: block;
+
       font-size: 14px;
+
       margin-bottom: 3px;
     }
 
     .login-info span {
       display: block;
+
       color: #777;
+
       font-size: 11px;
+
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -184,13 +226,19 @@
 
     .botao-google {
       border: none;
+
       background: #176b3a;
       color: white;
+
       border-radius: 11px;
+
       padding: 11px 14px;
+
       font-size: 12px;
       font-weight: bold;
+
       cursor: pointer;
+
       white-space: nowrap;
     }
 
@@ -200,13 +248,19 @@
 
     .botao-sair {
       border: 1px solid #ddd;
+
       background: white;
       color: #555;
+
       border-radius: 11px;
+
       padding: 10px 13px;
+
       font-size: 12px;
       font-weight: bold;
+
       cursor: pointer;
+
       white-space: nowrap;
     }
 
@@ -216,8 +270,11 @@
 
     .login-status {
       font-size: 10px;
+
       color: #888;
+
       margin-top: 7px;
+
       text-align: center;
     }
 
@@ -231,161 +288,493 @@
       font-weight: bold;
     }
 
-    /* CONTEÚDO */
+
+    /* =========================
+       CONTEÚDO
+    ========================= */
 
     .conteudo {
       max-width: 850px;
+
       margin: auto;
-      padding: 25px 18px 40px;
+
+      padding: 20px 18px 40px;
     }
+
+
+    /* =========================
+       BOAS-VINDAS
+    ========================= */
 
     .boas-vindas {
       background: #176b3a;
       color: white;
+
       border-radius: 20px;
-      padding: 24px 22px;
-      margin-bottom: 28px;
+
+      padding: 22px 21px;
+
+      margin-bottom: 22px;
+
       box-shadow: 0 5px 15px rgba(0,0,0,0.10);
     }
 
     .boas-vindas h2 {
-      font-size: 21px;
-      margin-bottom: 7px;
+      font-size: 20px;
+
+      margin-bottom: 6px;
     }
 
     .boas-vindas p {
-      font-size: 14px;
+      font-size: 13px;
+
       line-height: 1.5;
+
       opacity: 0.92;
     }
+
+
+    /* =========================
+       TITULO DAS ÁREAS
+    ========================= */
 
     .titulo-secao {
       display: flex;
       align-items: center;
+
       gap: 9px;
-      margin: 25px 3px 12px;
+
+      margin: 23px 3px 11px;
     }
 
     .titulo-secao h2 {
-      font-size: 17px;
+      font-size: 16px;
     }
 
     .linha {
       flex: 1;
+
       height: 1px;
+
       background: #ddd;
     }
 
-    .grade {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 13px;
-    }
 
-    .botao {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 17px;
-      padding: 19px 15px;
-      text-decoration: none;
-      color: #222;
-      text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-      transition: 0.2s;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 105px;
-    }
+    /* =========================
+       MEU ESPAÇO
+    ========================= */
 
-    .botao:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 16px rgba(0,0,0,0.09);
-    }
-
-    .icone {
-      font-size: 27px;
-      margin-bottom: 7px;
-    }
-
-    .botao h3 {
-      font-size: 17px;
-      margin-bottom: 5px;
-    }
-
-    .botao p {
-      font-size: 12px;
-      color: #777;
-      font-weight: normal;
-      line-height: 1.3;
-    }
-
-    .id-destaque {
+    .espaco-principal {
       background: #ffffff;
-      border: 2px solid #176b3a;
+
+      border: 1px solid #ddd;
+
       border-radius: 19px;
-      padding: 21px 18px;
-      text-decoration: none;
-      color: #222;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 13px;
-      box-shadow: 0 4px 13px rgba(0,0,0,0.06);
+
+      padding: 17px;
+
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
 
-    .id-icone {
-      width: 52px;
-      height: 52px;
-      border-radius: 15px;
+    .espaco-cabecalho {
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      margin-bottom: 14px;
+    }
+
+    .espaco-icone {
+      width: 46px;
+      height: 46px;
+
+      border-radius: 14px;
+
       background: #e9f3ec;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 27px;
+
+      font-size: 24px;
+
       flex-shrink: 0;
     }
 
-    .id-texto {
+    .espaco-texto {
       flex: 1;
     }
 
-    .id-texto h2 {
+    .espaco-texto h2 {
       font-size: 18px;
-      margin-bottom: 4px;
+
+      color: #17351f;
+
+      margin-bottom: 3px;
     }
 
-    .id-texto p {
-      color: #666;
-      font-size: 13px;
+    .espaco-texto p {
+      color: #777;
+
+      font-size: 12px;
     }
 
-    .seta {
+
+    /* =========================
+       BOTÕES PEQUENOS
+    ========================= */
+
+    .mini-grade {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 10px;
+    }
+
+    .mini-botao {
+      background: #f7f8f7;
+
+      border: 1px solid #e1e4e1;
+
+      border-radius: 14px;
+
+      padding: 14px 10px;
+
+      text-decoration: none;
+
+      color: #222;
+
+      text-align: center;
+
+      transition: 0.2s;
+    }
+
+    .mini-botao:hover {
+      background: #eef4ef;
+
+      transform: translateY(-1px);
+    }
+
+    .mini-icone {
       font-size: 23px;
-      color: #176b3a;
-      font-weight: bold;
+
+      margin-bottom: 6px;
     }
+
+    .mini-botao strong {
+      display: block;
+
+      font-size: 13px;
+
+      margin-bottom: 3px;
+    }
+
+    .mini-botao span {
+      display: block;
+
+      color: #777;
+
+      font-size: 10px;
+
+      line-height: 1.3;
+    }
+
+
+    /* =========================
+       CARDS PRINCIPAIS
+    ========================= */
+
+    .cards-principais {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 12px;
+    }
+
+    .card-principal {
+      min-height: 145px;
+
+      background: #ffffff;
+
+      border: 1px solid #ddd;
+
+      border-radius: 18px;
+
+      padding: 18px 15px;
+
+      text-decoration: none;
+
+      color: #222;
+
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+
+      display: flex;
+      flex-direction: column;
+
+      justify-content: center;
+
+      transition: 0.2s;
+
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-principal:hover {
+      transform: translateY(-2px);
+
+      box-shadow: 0 7px 16px rgba(0,0,0,0.09);
+    }
+
+    .card-principal .icone-grande {
+      font-size: 31px;
+
+      margin-bottom: 9px;
+    }
+
+    .card-principal h3 {
+      font-size: 16px;
+
+      margin-bottom: 5px;
+    }
+
+    .card-principal p {
+      font-size: 11px;
+
+      color: #777;
+
+      line-height: 1.35;
+    }
+
+    .card-principal.destaque {
+      border: 2px solid #176b3a;
+    }
+
+    .card-principal.stacoin-card {
+      border-color: #d6b24c;
+      background: #fffdf6;
+    }
+
+    .card-principal.em-breve {
+      opacity: 0.68;
+
+      cursor: default;
+    }
+
+    .badge-breve {
+      display: inline-block;
+
+      width: fit-content;
+
+      margin-top: 9px;
+
+      padding: 4px 8px;
+
+      border-radius: 20px;
+
+      background: #f1f2f1;
+
+      color: #777;
+
+      font-size: 9px;
+
+      font-weight: bold;
+
+      letter-spacing: 0.4px;
+    }
+
+
+    /* =========================
+       EMPRESA
+    ========================= */
+
+    .empresa-caixa {
+      background: #ffffff;
+
+      border: 1px solid #ddd;
+
+      border-radius: 18px;
+
+      overflow: hidden;
+
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .empresa-topo {
+      width: 100%;
+
+      border: none;
+
+      background: white;
+
+      padding: 17px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      text-align: left;
+
+      cursor: pointer;
+
+      color: #222;
+    }
+
+    .empresa-topo:hover {
+      background: #fafafa;
+    }
+
+    .empresa-icone {
+      width: 45px;
+      height: 45px;
+
+      border-radius: 13px;
+
+      background: #f1f3f1;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 23px;
+
+      flex-shrink: 0;
+    }
+
+    .empresa-texto {
+      flex: 1;
+    }
+
+    .empresa-texto strong {
+      display: block;
+
+      font-size: 17px;
+
+      margin-bottom: 3px;
+    }
+
+    .empresa-texto span {
+      color: #777;
+
+      font-size: 11px;
+    }
+
+    .empresa-seta {
+      color: #176b3a;
+
+      font-size: 21px;
+
+      transition: 0.2s;
+    }
+
+    .empresa-caixa.aberta .empresa-seta {
+      transform: rotate(90deg);
+    }
+
+    .empresa-conteudo {
+      display: none;
+
+      padding: 0 13px 13px;
+    }
+
+    .empresa-caixa.aberta .empresa-conteudo {
+      display: block;
+    }
+
+    .empresa-grade {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 10px;
+    }
+
+    .empresa-botao {
+      background: #f7f8f7;
+
+      border: 1px solid #e1e4e1;
+
+      border-radius: 14px;
+
+      padding: 14px 10px;
+
+      text-decoration: none;
+
+      color: #222;
+
+      text-align: center;
+
+      transition: 0.2s;
+    }
+
+    .empresa-botao:hover {
+      background: #eef4ef;
+
+      transform: translateY(-1px);
+    }
+
+    .empresa-botao .icone {
+      display: block;
+
+      font-size: 22px;
+
+      margin-bottom: 6px;
+    }
+
+    .empresa-botao strong {
+      display: block;
+
+      font-size: 13px;
+
+      margin-bottom: 3px;
+    }
+
+    .empresa-botao span {
+      display: block;
+
+      font-size: 10px;
+
+      color: #777;
+
+      line-height: 1.3;
+    }
+
+
+    /* =========================
+       RODAPÉ
+    ========================= */
 
     .rodape {
       text-align: center;
-      padding: 25px 20px 35px;
+
+      padding: 20px 20px 35px;
+
       color: #888;
-      font-size: 12px;
+
+      font-size: 11px;
     }
 
     .rodape strong {
       color: #176b3a;
     }
 
+
+    /* =========================
+       MOBILE
+    ========================= */
+
     @media (max-width: 600px) {
 
       .cabecalho {
-        padding: 27px 15px 25px;
+        padding: 26px 15px 24px;
       }
 
       .logo {
-        width: 85px;
-        height: 85px;
+        width: 82px;
+        height: 82px;
       }
 
       .cabecalho h1 {
@@ -396,10 +785,13 @@
         font-size: 14px;
       }
 
+
       .stacoin-topo {
-        top: 11px;
-        right: 11px;
+        top: 10px;
+        right: 10px;
+
         padding: 6px 8px;
+
         border-radius: 12px;
       }
 
@@ -421,8 +813,9 @@
         font-size: 7px;
       }
 
+
       .area-login {
-        padding: 13px 15px 0;
+        padding: 12px 15px 0;
       }
 
       .login-card {
@@ -432,6 +825,7 @@
       .login-icone {
         width: 38px;
         height: 38px;
+
         font-size: 19px;
       }
 
@@ -446,42 +840,118 @@
       .botao-google,
       .botao-sair {
         padding: 10px 11px;
+
         font-size: 11px;
       }
 
+
       .conteudo {
-        padding: 20px 15px 35px;
+        padding: 18px 15px 30px;
       }
 
+
       .boas-vindas {
-        padding: 21px 19px;
+        padding: 19px 18px;
+
         border-radius: 18px;
+
+        margin-bottom: 19px;
       }
 
       .boas-vindas h2 {
-        font-size: 19px;
+        font-size: 18px;
       }
 
-      .grade {
-        grid-template-columns: 1fr 1fr;
-        gap: 11px;
+      .boas-vindas p {
+        font-size: 12px;
       }
 
-      .botao {
-        min-height: 105px;
-        padding: 16px 10px;
+
+      .titulo-secao {
+        margin-top: 21px;
       }
 
-      .botao h3 {
-        font-size: 15px;
+
+      .espaco-principal {
+        padding: 14px;
       }
 
-      .botao p {
-        font-size: 11px;
+      .espaco-cabecalho {
+        margin-bottom: 12px;
       }
 
-      .icone {
-        font-size: 25px;
+      .espaco-texto h2 {
+        font-size: 17px;
+      }
+
+
+      .mini-grade {
+        gap: 8px;
+      }
+
+      .mini-botao {
+        padding: 12px 8px;
+      }
+
+      .mini-icone {
+        font-size: 21px;
+      }
+
+      .mini-botao strong {
+        font-size: 12px;
+      }
+
+
+      .cards-principais {
+        gap: 10px;
+      }
+
+      .card-principal {
+        min-height: 140px;
+
+        padding: 15px 12px;
+      }
+
+      .card-principal .icone-grande {
+        font-size: 28px;
+      }
+
+      .card-principal h3 {
+        font-size: 14px;
+      }
+
+      .card-principal p {
+        font-size: 10px;
+      }
+
+
+      .empresa-grade {
+        gap: 8px;
+      }
+
+      .empresa-botao {
+        padding: 12px 8px;
+      }
+
+      .empresa-botao .icone {
+        font-size: 21px;
+      }
+
+      .empresa-botao strong {
+        font-size: 12px;
+      }
+
+    }
+
+
+    @media (max-width: 360px) {
+
+      .cards-principais {
+        grid-template-columns: 1fr;
+      }
+
+      .card-principal {
+        min-height: 115px;
       }
 
     }
@@ -489,9 +959,16 @@
   </style>
 </head>
 
+
 <body>
 
+
+<!-- =========================
+     CABEÇALHO
+========================= -->
+
 <header class="cabecalho">
+
 
   <!-- STACOIN -->
 
@@ -502,12 +979,15 @@
   >
 
     <div class="stacoin-moeda">
+
       <img
         src="stacoin.png"
         alt="STACOIN"
         class="stacoin-imagem"
       >
+
     </div>
+
 
     <div class="stacoin-info">
 
@@ -527,17 +1007,24 @@
   </a>
 
 
+  <!-- LOGO -->
+
   <img
     class="logo"
     src="IMG_6552.PNG"
     alt="Santa Luzia Tomates"
   >
 
-  <h1>SANTA LUZIA CENTRAL</h1>
+
+  <h1>
+    SANTA LUZIA CENTRAL
+  </h1>
+
 
   <p class="subtitulo">
     Tudo da Santa Luzia em um só lugar.
   </p>
+
 
   <div class="selo">
     ✓ CENTRAL OFICIAL
@@ -546,15 +1033,23 @@
 </header>
 
 
-<!-- LOGIN -->
+
+<!-- =========================
+     LOGIN
+========================= -->
 
 <section class="area-login">
 
   <div class="login-card">
 
-    <div class="login-icone" id="loginIcone">
+
+    <div
+      class="login-icone"
+      id="loginIcone"
+    >
       👤
     </div>
+
 
     <div class="login-info">
 
@@ -568,6 +1063,7 @@
 
     </div>
 
+
     <button
       type="button"
       class="botao-google"
@@ -579,6 +1075,7 @@
 
   </div>
 
+
   <div
     class="login-status"
     id="loginStatus"
@@ -587,226 +1084,535 @@
 </section>
 
 
+
 <main class="conteudo">
+
+
+  <!-- =========================
+       BOAS-VINDAS
+  ========================= -->
 
   <section class="boas-vindas">
 
-    <h2>🍅 Bem-vindo à Santa Luzia</h2>
+    <h2>
+      🍅 Bem-vindo à Santa Luzia
+    </h2>
 
     <p>
-      Acesse documentos, skins, jogos, eventos,
-      notícias e tudo relacionado à nossa empresa.
+      Sua central oficial para acessar
+      tudo da nossa empresa.
     </p>
 
   </section>
 
 
+
+  <!-- =========================
+       MEU ESPAÇO
+  ========================= -->
+
   <div class="titulo-secao">
-    <h2>👤 MOTORISTA</h2>
+
+    <h2>
+      👤 MEU ESPAÇO
+    </h2>
+
     <div class="linha"></div>
+
   </div>
 
 
-  <a
-    href="santaluziaid.html"
-    class="id-destaque"
+  <section class="espaco-principal">
+
+
+    <div class="espaco-cabecalho">
+
+      <div class="espaco-icone">
+        👤
+      </div>
+
+
+      <div class="espaco-texto">
+
+        <h2>
+          Área do Motorista
+        </h2>
+
+        <p>
+          Seus documentos, perfil e identificação.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="mini-grade">
+
+
+      <a
+        href="santaluziaid.html"
+        class="mini-botao"
+      >
+
+        <div class="mini-icone">
+          🪪
+        </div>
+
+        <strong>
+          Santa Luzia ID
+        </strong>
+
+        <span>
+          Identificação oficial
+        </span>
+
+      </a>
+
+
+      <a
+        href="perfil.html"
+        class="mini-botao"
+      >
+
+        <div class="mini-icone">
+          👤
+        </div>
+
+        <strong>
+          Meu Perfil
+        </strong>
+
+        <span>
+          Dados e STACOIN
+        </span>
+
+      </a>
+
+
+      <a
+        href="cnh.html"
+        class="mini-botao"
+      >
+
+        <div class="mini-icone">
+          🪪
+        </div>
+
+        <strong>
+          Minha CNH
+        </strong>
+
+        <span>
+          Habilitação interna
+        </span>
+
+      </a>
+
+
+      <a
+        href="skins.html"
+        class="mini-botao"
+      >
+
+        <div class="mini-icone">
+          🎨
+        </div>
+
+        <strong>
+          Skins
+        </strong>
+
+        <span>
+          Skins da empresa
+        </span>
+
+      </a>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       PRINCIPAIS
+  ========================= -->
+
+  <div class="titulo-secao">
+
+    <h2>
+      ⭐ DESTAQUES
+    </h2>
+
+    <div class="linha"></div>
+
+  </div>
+
+
+  <div class="cards-principais">
+
+
+    <!-- LOJA -->
+
+    <div class="card-principal stacoin-card em-breve">
+
+      <div class="icone-grande">
+        🛒
+      </div>
+
+      <h3>
+        LOJA SANTA LUZIA
+      </h3>
+
+      <p>
+        Skins, baús, cabines, bandeiras e muito mais.
+      </p>
+
+      <span class="badge-breve">
+        EM BREVE
+      </span>
+
+    </div>
+
+
+    <!-- GAMES -->
+
+    <div class="card-principal em-breve">
+
+      <div class="icone-grande">
+        🎮
+      </div>
+
+      <h3>
+        CENTRAL GAMES
+      </h3>
+
+      <p>
+        Jogue, faça pontos e ganhe STACOIN.
+      </p>
+
+      <span class="badge-breve">
+        EM BREVE
+      </span>
+
+    </div>
+
+
+    <!-- COMUNIDADE -->
+
+    <div class="card-principal em-breve">
+
+      <div class="icone-grande">
+        🏆
+      </div>
+
+      <h3>
+        COMUNIDADE
+      </h3>
+
+      <p>
+        Rankings, ADM, doadores e novidades.
+      </p>
+
+      <span class="badge-breve">
+        EM BREVE
+      </span>
+
+    </div>
+
+
+    <!-- STACOIN -->
+
+    <a
+      href="perfil.html"
+      class="card-principal destaque"
+    >
+
+      <div class="icone-grande">
+        🪙
+      </div>
+
+      <h3>
+        MEU STACOIN
+      </h3>
+
+      <p>
+        Consulte seu saldo e seu extrato.
+      </p>
+
+    </a>
+
+
+  </div>
+
+
+
+  <!-- =========================
+       EMPRESA
+  ========================= -->
+
+  <div class="titulo-secao">
+
+    <h2>
+      🏢 EMPRESA
+    </h2>
+
+    <div class="linha"></div>
+
+  </div>
+
+
+  <section
+    class="empresa-caixa"
+    id="empresaCaixa"
   >
 
-    <div class="id-icone">
-      👤
+
+    <button
+      type="button"
+      class="empresa-topo"
+      id="botaoEmpresa"
+    >
+
+
+      <div class="empresa-icone">
+        🏢
+      </div>
+
+
+      <div class="empresa-texto">
+
+        <strong>
+          Área da Empresa
+        </strong>
+
+        <span>
+          Notícias, eventos, jogos, notas e informações.
+        </span>
+
+      </div>
+
+
+      <div class="empresa-seta">
+        →
+      </div>
+
+
+    </button>
+
+
+
+    <div class="empresa-conteudo">
+
+
+      <div class="empresa-grade">
+
+
+        <a
+          href="globaltruck.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            🚛
+          </span>
+
+          <strong>
+            Global Truck
+          </strong>
+
+          <span>
+            Informações e conteúdos
+          </span>
+
+        </a>
+
+
+        <a
+          href="truckers.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            🚚
+          </span>
+
+          <strong>
+            Truckers
+          </strong>
+
+          <span>
+            Informações e conteúdos
+          </span>
+
+        </a>
+
+
+        <a
+          href="comoentrar.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            📖
+          </span>
+
+          <strong>
+            Como Entrar
+          </strong>
+
+          <span>
+            Veja como fazer parte
+          </span>
+
+        </a>
+
+
+        <a
+          href="noticias.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            📰
+          </span>
+
+          <strong>
+            Notícias
+          </strong>
+
+          <span>
+            Novidades da Santa Luzia
+          </span>
+
+        </a>
+
+
+        <a
+          href="eventos.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            🏆
+          </span>
+
+          <strong>
+            Eventos
+          </strong>
+
+          <span>
+            Competições e premiações
+          </span>
+
+        </a>
+
+
+        <a
+          href="notas.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            🧾
+          </span>
+
+          <strong>
+            Notas
+          </strong>
+
+          <span>
+            Liberação e controle
+          </span>
+
+        </a>
+
+
+        <a
+          href="links.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            🔗
+          </span>
+
+          <strong>
+            Links
+          </strong>
+
+          <span>
+            Redes e canais
+          </span>
+
+        </a>
+
+
+        <a
+          href="sobrenos.html"
+          class="empresa-botao"
+        >
+
+          <span class="icone">
+            🏢
+          </span>
+
+          <strong>
+            Sobre Nós
+          </strong>
+
+          <span>
+            Conheça a Santa Luzia
+          </span>
+
+        </a>
+
+
+      </div>
+
     </div>
 
-    <div class="id-texto">
+  </section>
 
-      <h2>SANTA LUZIA ID</h2>
-
-      <p>
-        Seu perfil e identificação de motorista
-      </p>
-
-    </div>
-
-    <div class="seta">
-      →
-    </div>
-
-  </a>
-
-
-  <div class="grade">
-
-    <a href="cnh.html" class="botao">
-
-      <div class="icone">🪪</div>
-
-      <h3>CRIAR MINHA CNH</h3>
-
-      <p>
-        Crie sua habilitação interna
-      </p>
-
-    </a>
-
-
-    <a href="skins.html" class="botao">
-
-      <div class="icone">🎨</div>
-
-      <h3>SKINS</h3>
-
-      <p>
-        Skins oficiais da empresa
-      </p>
-
-    </a>
-
-  </div>
-
-
-  <div class="titulo-secao">
-    <h2>🚛 JOGOS</h2>
-    <div class="linha"></div>
-  </div>
-
-
-  <div class="grade">
-
-    <a href="globaltruck.html" class="botao">
-
-      <div class="icone">🚛</div>
-
-      <h3>GLOBAL TRUCK</h3>
-
-      <p>
-        Informações e conteúdos
-      </p>
-
-    </a>
-
-
-    <a href="truckers.html" class="botao">
-
-      <div class="icone">🚚</div>
-
-      <h3>TRUCKERS</h3>
-
-      <p>
-        Informações e conteúdos
-      </p>
-
-    </a>
-
-  </div>
-
-
-  <div class="titulo-secao">
-    <h2>🏢 EMPRESA</h2>
-    <div class="linha"></div>
-  </div>
-
-
-  <div class="grade">
-
-    <a href="comoentrar.html" class="botao">
-
-      <div class="icone">📖</div>
-
-      <h3>COMO ENTRAR</h3>
-
-      <p>
-        Veja como fazer parte
-      </p>
-
-    </a>
-
-
-    <a href="noticias.html" class="botao">
-
-      <div class="icone">📰</div>
-
-      <h3>NOTÍCIAS</h3>
-
-      <p>
-        Novidades da Santa Luzia
-      </p>
-
-    </a>
-
-
-    <a href="eventos.html" class="botao">
-
-      <div class="icone">🏆</div>
-
-      <h3>EVENTOS</h3>
-
-      <p>
-        Competições e premiações
-      </p>
-
-    </a>
-
-
-    <a href="notas.html" class="botao">
-
-      <div class="icone">🧾</div>
-
-      <h3>NOTAS</h3>
-
-      <p>
-        Liberação e controle de notas
-      </p>
-
-    </a>
-
-
-    <a href="links.html" class="botao">
-
-      <div class="icone">🔗</div>
-
-      <h3>LINKS</h3>
-
-      <p>
-        Nossas redes e canais
-      </p>
-
-    </a>
-
-
-    <a href="sobrenos.html" class="botao">
-
-      <div class="icone">🏢</div>
-
-      <h3>SOBRE NÓS</h3>
-
-      <p>
-        Conheça a Santa Luzia
-      </p>
-
-    </a>
-
-  </div>
 
 </main>
 
 
+
+<!-- =========================
+     RODAPÉ
+========================= -->
+
 <footer class="rodape">
 
-  <strong>Santa Luzia Tomates</strong><br>
+  <strong>
+    Santa Luzia Tomates
+  </strong>
+
+  <br>
 
   Santa Luzia Central • 2026
 
 </footer>
 
 
-<!-- SUPABASE LOGIN -->
+
+<!-- =========================
+     SUPABASE LOGIN
+========================= -->
 
 <script>
+
 
 const SUPABASE_URL =
   "https://cckypvqophyviphqhich.supabase.co";
 
+
 const SUPABASE_KEY =
   "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+
 
 const supabaseClient =
   window.supabase.createClient(
@@ -823,39 +1629,97 @@ const supabaseClient =
   );
 
 
+
+/* =========================
+   ELEMENTOS
+========================= */
+
 const botaoGoogle =
-  document.getElementById("botaoGoogle");
+  document.getElementById(
+    "botaoGoogle"
+  );
+
 
 const loginTitulo =
-  document.getElementById("loginTitulo");
+  document.getElementById(
+    "loginTitulo"
+  );
+
 
 const loginTexto =
-  document.getElementById("loginTexto");
+  document.getElementById(
+    "loginTexto"
+  );
+
 
 const loginIcone =
-  document.getElementById("loginIcone");
+  document.getElementById(
+    "loginIcone"
+  );
+
 
 const loginStatus =
-  document.getElementById("loginStatus");
+  document.getElementById(
+    "loginStatus"
+  );
+
 
 const stacoinTopo =
-  document.getElementById("stacoinTopo");
+  document.getElementById(
+    "stacoinTopo"
+  );
+
 
 const stacoinValor =
-  document.getElementById("stacoinValor");
+  document.getElementById(
+    "stacoinValor"
+  );
+
+
+/* =========================
+   EMPRESA
+========================= */
+
+const empresaCaixa =
+  document.getElementById(
+    "empresaCaixa"
+  );
+
+
+const botaoEmpresa =
+  document.getElementById(
+    "botaoEmpresa"
+  );
+
+
+botaoEmpresa.addEventListener(
+  "click",
+  function() {
+
+    empresaCaixa.classList.toggle(
+      "aberta"
+    );
+
+  }
+);
+
 
 
 /* =========================
    STACOIN
 ========================= */
 
-async function carregarStacoin(user) {
+async function carregarStacoin(
+  user
+) {
 
   if (!user) {
 
-    stacoinTopo.style.display = "none";
+    stacoinTopo.style.display =
+      "none";
 
     return;
+
   }
 
 
@@ -865,7 +1729,10 @@ async function carregarStacoin(user) {
       await supabaseClient
         .from("motoristas")
         .select("id")
-        .eq("user_id", user.id)
+        .eq(
+          "user_id",
+          user.id
+        )
         .maybeSingle();
 
 
@@ -878,9 +1745,11 @@ async function carregarStacoin(user) {
         "Motorista não encontrado para esta conta."
       );
 
-      stacoinTopo.style.display = "none";
+      stacoinTopo.style.display =
+        "none";
 
       return;
+
     }
 
 
@@ -892,20 +1761,27 @@ async function carregarStacoin(user) {
       await supabaseClient
         .from("stacoin_carteiras")
         .select("saldo")
-        .eq("motorista_id", motoristaId)
+        .eq(
+          "motorista_id",
+          motoristaId
+        )
         .maybeSingle();
 
 
-    if (carteiraResultado.error) {
+    if (
+      carteiraResultado.error
+    ) {
 
       console.error(
         "Erro ao carregar STACOIN:",
         carteiraResultado.error
       );
 
-      stacoinTopo.style.display = "none";
+      stacoinTopo.style.display =
+        "none";
 
       return;
+
     }
 
 
@@ -923,7 +1799,9 @@ async function carregarStacoin(user) {
       "flex";
 
 
-  } catch (erro) {
+  }
+
+  catch (erro) {
 
     console.error(
       "Erro STACOIN:",
@@ -932,42 +1810,66 @@ async function carregarStacoin(user) {
 
     stacoinTopo.style.display =
       "none";
+
   }
 
 }
+
 
 
 /* =========================
    MOSTRAR USUÁRIO
 ========================= */
 
-function mostrarUsuario(user) {
+function mostrarUsuario(
+  user
+) {
+
 
   if (!user) {
 
-    loginIcone.textContent = "👤";
+    loginIcone.textContent =
+      "👤";
+
 
     loginTitulo.textContent =
       "Acesse sua conta";
 
+
     loginTexto.textContent =
       "Entre com sua conta Google";
+
 
     botaoGoogle.textContent =
       "Entrar com Google";
 
+
     botaoGoogle.className =
       "botao-google";
 
-    botaoGoogle.disabled = false;
+
+    botaoGoogle.disabled =
+      false;
+
 
     botaoGoogle.dataset.logado =
       "false";
 
+
+    loginStatus.textContent =
+      "";
+
+
+    loginStatus.className =
+      "login-status";
+
+
     stacoinTopo.style.display =
       "none";
 
+
     return;
+
   }
 
 
@@ -976,40 +1878,51 @@ function mostrarUsuario(user) {
     user.user_metadata?.name ||
     "Usuário";
 
+
   const email =
     user.email || "";
 
 
-  loginIcone.textContent = "👤";
+  loginIcone.textContent =
+    "👤";
+
 
   loginTitulo.textContent =
     "Olá, " + nome;
 
+
   loginTexto.textContent =
     email;
+
 
   botaoGoogle.textContent =
     "Sair";
 
+
   botaoGoogle.className =
     "botao-sair";
 
-  botaoGoogle.disabled = false;
+
+  botaoGoogle.disabled =
+    false;
+
 
   botaoGoogle.dataset.logado =
     "true";
 
+
   loginStatus.textContent =
     "✓ Conta conectada à Santa Luzia Central";
+
 
   loginStatus.className =
     "login-status login-ok";
 
 
-  /* CARREGAR SALDO */
-
   carregarStacoin(user);
+
 }
+
 
 
 /* =========================
@@ -1018,8 +1931,11 @@ function mostrarUsuario(user) {
 
 async function processarRetornoGoogle() {
 
+
   const hash =
-    window.location.hash.substring(1);
+    window.location.hash.substring(
+      1
+    );
 
 
   if (!hash) {
@@ -1029,6 +1945,7 @@ async function processarRetornoGoogle() {
     );
 
     return false;
+
   }
 
 
@@ -1037,29 +1954,33 @@ async function processarRetornoGoogle() {
 
 
   const accessToken =
-    parametros.get("access_token");
+    parametros.get(
+      "access_token"
+    );
+
 
   const refreshToken =
-    parametros.get("refresh_token");
+    parametros.get(
+      "refresh_token"
+    );
 
 
-  if (!accessToken || !refreshToken) {
+  if (
+    !accessToken ||
+    !refreshToken
+  ) {
 
     console.log(
       "Hash existe, mas não possui tokens de sessão."
     );
 
     return false;
+
   }
 
 
   loginStatus.textContent =
     "🔐 Finalizando login...";
-
-
-  console.log(
-    "Retorno Google encontrado."
-  );
 
 
   try {
@@ -1076,18 +1997,16 @@ async function processarRetornoGoogle() {
       });
 
 
-    console.log(
-      "Resultado setSession:",
-      resultado
-    );
-
-
-    if (resultado.error) {
+    if (
+      resultado.error
+    ) {
 
       const erroCompleto =
         JSON.stringify(
           resultado.error,
-          Object.getOwnPropertyNames(resultado.error),
+          Object.getOwnPropertyNames(
+            resultado.error
+          ),
           2
         );
 
@@ -1101,14 +2020,19 @@ async function processarRetornoGoogle() {
       loginStatus.textContent =
         "❌ " + erroCompleto;
 
+
       loginStatus.className =
         "login-status login-erro";
 
+
       return false;
+
     }
 
 
-    if (resultado.data?.session?.user) {
+    if (
+      resultado.data?.session?.user
+    ) {
 
       mostrarUsuario(
         resultado.data.session.user
@@ -1124,29 +2048,36 @@ async function processarRetornoGoogle() {
 
 
       return true;
+
     }
 
 
     return false;
 
+  }
 
-  } catch (erro) {
+  catch (erro) {
 
     console.error(
       "Erro ao processar retorno:",
       erro
     );
 
+
     loginStatus.textContent =
       "❌ Erro ao finalizar login.";
+
 
     loginStatus.className =
       "login-status login-erro";
 
+
     return false;
+
   }
 
 }
+
 
 
 /* =========================
@@ -1161,12 +2092,6 @@ async function verificarSessao() {
       await supabaseClient.auth.getSession();
 
 
-    console.log(
-      "Sessão atual:",
-      resultado
-    );
-
-
     if (
       resultado.data?.session?.user
     ) {
@@ -1175,27 +2100,39 @@ async function verificarSessao() {
         resultado.data.session.user
       );
 
+
       return true;
+
     }
 
 
-    mostrarUsuario(null);
+    mostrarUsuario(
+      null
+    );
+
 
     return false;
 
+  }
 
-  } catch (erro) {
+  catch (erro) {
 
     console.error(
       erro
     );
 
-    mostrarUsuario(null);
+
+    mostrarUsuario(
+      null
+    );
+
 
     return false;
+
   }
 
 }
+
 
 
 /* =========================
@@ -1204,7 +2141,10 @@ async function verificarSessao() {
 
 async function entrarGoogle() {
 
-  botaoGoogle.disabled = true;
+
+  botaoGoogle.disabled =
+    true;
+
 
   botaoGoogle.textContent =
     "Abrindo Google...";
@@ -1217,7 +2157,8 @@ async function entrarGoogle() {
   const resultado =
     await supabaseClient.auth.signInWithOAuth({
 
-      provider: "google",
+      provider:
+        "google",
 
       options: {
 
@@ -1229,36 +2170,45 @@ async function entrarGoogle() {
     });
 
 
-  if (resultado.error) {
+  if (
+    resultado.error
+  ) {
 
     console.error(
       resultado.error
     );
 
+
     loginStatus.textContent =
       "❌ " +
       resultado.error.message;
 
+
     loginStatus.className =
       "login-status login-erro";
+
 
     botaoGoogle.disabled =
       false;
 
+
     botaoGoogle.textContent =
       "Entrar com Google";
+
   }
 
 }
 
 
+
 /* =========================
-   BOTÃO
+   BOTÃO LOGIN
 ========================= */
 
 botaoGoogle.addEventListener(
   "click",
   async function() {
+
 
     if (
       botaoGoogle.dataset.logado ===
@@ -1267,9 +2217,14 @@ botaoGoogle.addEventListener(
 
       await supabaseClient.auth.signOut();
 
-      mostrarUsuario(null);
+
+      mostrarUsuario(
+        null
+      );
+
 
       return;
+
     }
 
 
@@ -1279,12 +2234,17 @@ botaoGoogle.addEventListener(
 );
 
 
+
 /* =========================
    AUTH STATE
 ========================= */
 
 supabaseClient.auth.onAuthStateChange(
-  function(event, session) {
+  function(
+    event,
+    session
+  ) {
+
 
     console.log(
       "Auth:",
@@ -1293,7 +2253,9 @@ supabaseClient.auth.onAuthStateChange(
     );
 
 
-    if (session?.user) {
+    if (
+      session?.user
+    ) {
 
       mostrarUsuario(
         session.user
@@ -1305,11 +2267,13 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
+
 /* =========================
    INICIALIZAÇÃO
 ========================= */
 
 (async function() {
+
 
   const processou =
     await processarRetornoGoogle();
@@ -1321,9 +2285,11 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 
+
 })();
 
 </script>
+
 
 </body>
 </html>
