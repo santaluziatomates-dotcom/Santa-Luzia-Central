@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Colheita de Tomates • Santa Luzia Central</title>
+
+  <style>
+
+    :root {
+      --verde: #07552f;
+      --verde-escuro: #063b23;
+      --verde-claro: #0b7543;
+      --dourado: #d9b94b;
+      --fundo: #06140d;
+      --branco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--branco);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* =========================
+       CABEÇALHO
+    ========================= */
+
+    .topo {
+      min-height: 82px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 14px;
+
+      padding: 10px 18px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #064526,
+          #0a6339
+        );
+
+      border-bottom:
+        2px solid var(--dourado);
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+      background: white;
+
+      border: 2px solid var(--dourado);
+
+      flex-shrink: 0;
+    }
+
+    .titulo h1 {
+      margin: 0;
+
+      font-size:
+        clamp(
+          20px,
+          3vw,
+          30px
+        );
+    }
+
+    .titulo p {
+      margin: 3px 0 0;
+
+      font-size: 15px;
+
+      opacity: 0.9;
+    }
+
+    .espaco {
+      flex: 1;
+    }
+
+    .voltar {
+      color: white;
+
+      text-decoration: none;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.4
+        );
+
+      padding: 10px 14px;
+
+      border-radius: 12px;
+
+      font-weight: bold;
+    }
+
+    /* =========================
+       PAINEL DO JOGO
+    ========================= */
+
+    .painel {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 10px;
+
+      padding: 10px;
+
+      background: #06140d;
+    }
+
+    .painel-card {
+      background: #103323;
+
+      border:
+        1px solid
+        rgba(
+          217,
+          185,
+          75,
+          0.55
+        );
+
+      border-radius: 14px;
+
+      padding: 9px 13px;
+    }
+
+    .painel-label {
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      opacity: 0.7;
+    }
+
+    .painel-valor {
+      margin-top: 2px;
+
+      font-size: 23px;
+
+      font-weight: 800;
+    }
+
+    /* =========================
+       ÁREA DA ROÇA
+    ========================= */
+
+    .jogo {
+      position: relative;
+
+      width: 100%;
+
+      aspect-ratio: 3 / 2;
+
+      overflow: hidden;
+
+      background: #321e12;
+
+      touch-action: manipulation;
+    }
+
+    .cenario {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      user-select: none;
+
+      -webkit-user-drag: none;
+    }
+
+    /* =========================
+       ÁREA DOS TOMATES
+    ========================= */
+
+    .tomates {
+      position: absolute;
+
+      inset: 0;
+    }
+
+    /*
+      Os pontos abaixo ficam sobre
+      tomates vermelhos da imagem.
+    */
+
+    .tomate {
+
+      position: absolute;
+
+      width: 48px;
+      height: 48px;
+
+      margin: -24px 0 0 -24px;
+
+      border-radius: 50%;
+
+      border: 3px solid
+        rgba(
+          89,
+          255,
+          94,
+          0.95
+        );
+
+      background:
+        rgba(
+          255,
+          70,
+          50,
+          0.08
+        );
+
+      box-shadow:
+        0 0 0 5px
+        rgba(
+          55,
+          255,
+          75,
+          0.12
+        ),
+
+        0 0 20px
+        rgba(
+          55,
+          255,
+          75,
+          0.5
+        );
+
+      cursor: pointer;
+
+      transition:
+        transform 0.15s,
+        opacity 0.2s;
+    }
+
+    .tomate::after {
+      content: "";
+
+      position: absolute;
+
+      inset: 10px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(
+          255,
+          60,
+          45,
+          0.18
+        );
+    }
+
+    .tomate:hover {
+      transform: scale(1.12);
+    }
+
+    .tomate:active {
+      transform: scale(0.82);
+    }
+
+    .tomate.colhido {
+      opacity: 0;
+
+      pointer-events: none;
+
+      transform:
+        scale(1.7);
+    }
+
+    /* =========================
+       INSTRUÇÃO
+    ========================= */
+
+    .instrucao {
+
+      position: absolute;
+
+      left: 18px;
+      bottom: 18px;
+
+      max-width: 360px;
+
+      padding:
+        12px 16px;
+
+      border-radius: 15px;
+
+      background:
+        rgba(
+          4,
+          49,
+          29,
+          0.90
+        );
+
+      border:
+        1px solid
+        rgba(
+          217,
+          185,
+          75,
+          0.7
+        );
+
+      font-weight: bold;
+
+      pointer-events: none;
+    }
+
+    .instrucao small {
+
+      display: block;
+
+      margin-top: 4px;
+
+      font-weight: normal;
+
+      opacity: 0.78;
+    }
+
+    /* =========================
+       BOTÃO PAUSAR
+    ========================= */
+
+    .pausar {
+
+      position: absolute;
+
+      right: 18px;
+      bottom: 18px;
+
+      border: 0;
+
+      border-radius: 14px;
+
+      padding:
+        12px 18px;
+
+      background:
+        rgba(
+          5,
+          64,
+          38,
+          0.94
+        );
+
+      color: white;
+
+      border:
+        1px solid
+        rgba(
+          217,
+          185,
+          75,
+          0.7
+        );
+
+      font-size: 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    /* =========================
+       RESULTADO
+    ========================= */
+
+    .resultado {
+
+      display: none;
+
+      padding:
+        28px 18px 35px;
+
+      text-align: center;
+
+      background: #0b2016;
+    }
+
+    .resultado.ativo {
+      display: block;
+    }
+
+    .resultado h2 {
+      margin-top: 0;
+    }
+
+    .resultado strong {
+      color: #f2cf57;
+    }
+
+    .botoes {
+
+      display: flex;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 18px;
+    }
+
+    .botao {
+
+      display: inline-block;
+
+      padding:
+        12px 18px;
+
+      border-radius: 12px;
+
+      border: 0;
+
+      text-decoration: none;
+
+      font-size: 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .botao-principal {
+      background: var(--dourado);
+
+      color: #172015;
+    }
+
+    .botao-secundario {
+
+      background: #17472f;
+
+      color: white;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.2
+        );
+    }
+
+    /* =========================
+       AVISO
+    ========================= */
+
+    .aviso {
+
+      text-align: center;
+
+      padding:
+        10px 14px 20px;
+
+      font-size: 12px;
+
+      opacity: 0.6;
+    }
+
+    /* =========================
+       CELULAR
+    ========================= */
+
+    @media (
+      max-width: 700px
+    ) {
+
+      .topo {
+
+        min-height: 70px;
+
+        padding:
+          8px 10px;
+      }
+
+      .logo {
+
+        width: 48px;
+        height: 48px;
+      }
+
+      .titulo h1 {
+
+        font-size: 19px;
+      }
+
+      .titulo p {
+
+        font-size: 13px;
+      }
+
+      .voltar {
+
+        padding:
+          8px 10px;
+
+        font-size: 13px;
+      }
+
+      .painel {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 7px;
+
+        padding: 7px;
+      }
+
+      .painel-card {
+
+        padding:
+          8px 10px;
+      }
+
+      .painel-valor {
+
+        font-size: 20px;
+      }
+
+      .jogo {
+
+        aspect-ratio: 3 / 2;
+
+        min-height: 320px;
+      }
+
+      .tomate {
+
+        width: 42px;
+        height: 42px;
+
+        margin:
+          -21px 0 0 -21px;
+      }
+
+      .instrucao {
+
+        left: 10px;
+        bottom: 10px;
+
+        max-width:
+          calc(
+            100% - 20px
+          );
+
+        font-size: 13px;
+      }
+
+      .pausar {
+
+        right: 10px;
+        bottom: 10px;
+
+        padding:
+          10px 13px;
+
+        font-size: 13px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+  <!-- =========================
+       CABEÇALHO
+  ========================= -->
+
+  <header class="topo">
+
+    <img
+      src="logo-santa-luzia.png"
+      class="logo"
+      alt="Santa Luzia Tomates"
+    >
+
+    <div class="titulo">
+
+      <h1>
+        SANTA LUZIA CENTRAL
+      </h1>
+
+      <p>
+        🍅 Colheita de Tomates
+      </p>
+
+    </div>
+
+    <div class="espaco"></div>
+
+    <a
+      href="index.html"
+      class="voltar"
+    >
+      ← Central
+    </a>
+
+  </header>
+
+
+  <!-- =========================
+       PAINEL
+  ========================= -->
+
+  <section class="painel">
+
+    <div class="painel-card">
+
+      <div class="painel-label">
+        Tempo
+      </div>
+
+      <div
+        id="tempo"
+        class="painel-valor"
+      >
+        30s
+      </div>
+
+    </div>
+
+
+    <div class="painel-card">
+
+      <div class="painel-label">
+        Colhidos
+      </div>
+
+      <div
+        id="colhidos"
+        class="painel-valor"
+      >
+        0 / 12
+      </div>
+
+    </div>
+
+
+    <div class="painel-card">
+
+      <div class="painel-label">
+        Pontos
+      </div>
+
+      <div
+        id="pontos"
+        class="painel-valor"
+      >
+        0
+      </div>
+
+    </div>
+
+
+    <div class="painel-card">
+
+      <div class="painel-label">
+        STACOIN
+      </div>
+
+      <div
+        id="stacoin"
+        class="painel-valor"
+      >
+        +0
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       JOGO
+  ========================= -->
+
+  <main
+    class="jogo"
+    id="jogo"
+  >
+
+    <!--
+      IMPORTANTE:
+      Essa imagem deve ser a imagem
+      LIMPA da nossa roça.
+    -->
+
+    <img
+      src="colheita-cenario.png"
+      class="cenario"
+      alt="Plantação de tomates da Santa Luzia"
+    >
+
+
+    <!-- TOMATES INTERATIVOS -->
+
+    <div
+      class="tomates"
+      id="tomates"
+    ></div>
+
+
+    <!-- INSTRUÇÃO -->
+
+    <div class="instrucao">
+
+      🍅 Toque nos tomates maduros!
+
+      <small>
+        Colha o máximo que conseguir
+        antes do tempo acabar.
+      </small>
+
+    </div>
+
+
+    <!-- PAUSAR -->
+
+    <button
+      class="pausar"
+      id="botaoPausar"
+      type="button"
+    >
+      ⏸ Pausar
+    </button>
+
+  </main>
+
+
+  <!-- =========================
+       RESULTADO
+  ========================= -->
+
+  <section
+    class="resultado"
+    id="resultado"
+  >
+
+    <h2>
+      🌱 Colheita encerrada!
+    </h2>
+
+    <p id="resumo"></p>
+
+    <div class="botoes">
+
+      <button
+        class="botao botao-principal"
+        id="jogarNovamente"
+        type="button"
+      >
+        🍅 Jogar novamente
+      </button>
+
+      <a
+        href="index.html"
+        class="botao botao-secundario"
+      >
+        ← Voltar para Central
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <div class="aviso">
+
+    🪙 STACOIN está em modo de teste.
+    Nenhum saldo real é alterado nesta versão.
+
+  </div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    /*
+      POSIÇÕES DOS TOMATES
+
+      Os valores são porcentagens
+      da imagem da roça.
+
+      left = posição horizontal
+      top  = posição vertical
+    */
+
+    const posicoesTomates = [
+
+      [18, 52],
+      [24, 59],
+      [30, 55],
+      [36, 63],
+
+      [42, 58],
+      [47, 65],
+      [53, 57],
+      [58, 62],
+
+      [64, 56],
+      [70, 64],
+      [77, 55],
+      [84, 61]
+
+    ];
+
+
+    let tempo = 30;
+
+    let quantidadeColhida = 0;
+
+    let pontos = 0;
+
+    let jogoPausado = false;
+
+    let jogoEncerrado = false;
+
+    let intervalo = null;
+
+
+    const tempoElemento =
+      document.getElementById(
+        "tempo"
+      );
+
+    const colhidosElemento =
+      document.getElementById(
+        "colhidos"
+      );
+
+    const pontosElemento =
+      document.getElementById(
+        "pontos"
+      );
+
+    const stacoinElemento =
+      document.getElementById(
+        "stacoin"
+      );
+
+    const tomatesElemento =
+      document.getElementById(
+        "tomates"
+      );
+
+    const resultadoElemento =
+      document.getElementById(
+        "resultado"
+      );
+
+    const resumoElemento =
+      document.getElementById(
+        "resumo"
+      );
+
+    const botaoPausar =
+      document.getElementById(
+        "botaoPausar"
+      );
+
+    const botaoJogarNovamente =
+      document.getElementById(
+        "jogarNovamente"
+      );
+
+
+    /* =========================
+       ATUALIZAR PAINEL
+    ========================= */
+
+    function atualizarPainel() {
+
+      tempoElemento.textContent =
+        tempo + "s";
+
+
+      colhidosElemento.textContent =
+        quantidadeColhida +
+        " / " +
+        posicoesTomates.length;
+
+
+      pontosElemento.textContent =
+        pontos;
+
+
+      /*
+        POR ENQUANTO:
+
+        10 pontos = 1 STACOIN
+
+        É somente teste.
+
+        Depois vamos ligar isso
+        ao Supabase com segurança.
+      */
+
+      const recompensa =
+        Math.floor(
+          pontos / 10
+        );
+
+
+      stacoinElemento.textContent =
+        "+" +
+        recompensa;
+
+    }
+
+
+    /* =========================
+       CRIAR TOMATES
+    ========================= */
+
+    function criarTomates() {
+
+      tomatesElemento.innerHTML =
+        "";
+
+
+      posicoesTomates.forEach(
+        (
+          posicao,
+          indice
+        ) => {
+
+          const tomate =
+            document.createElement(
+              "button"
+            );
+
+
+          tomate.type =
+            "button";
+
+
+          tomate.className =
+            "tomate";
+
+
+          tomate.setAttribute(
+            "aria-label",
+            "Colher tomate " +
+            (indice + 1)
+          );
+
+
+          tomate.style.left =
+            posicao[0] + "%";
+
+
+          tomate.style.top =
+            posicao[1] + "%";
+
+
+          tomate.addEventListener(
+            "click",
+            function () {
+
+              colherTomate(
+                tomate
+              );
+
+            }
+          );
+
+
+          tomatesElemento.appendChild(
+            tomate
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       COLHER TOMATE
+    ========================= */
+
+    function colherTomate(
+      tomate
+    ) {
+
+      if (
+        jogoEncerrado ||
+        jogoPausado ||
+        tomate.classList.contains(
+          "colhido"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      tomate.classList.add(
+        "colhido"
+      );
+
+
+      quantidadeColhida++;
+
+
+      /*
+        Cada tomate:
+
+        +10 pontos
+      */
+
+      pontos += 10;
+
+
+      atualizarPainel();
+
+
+      /*
+        Se todos forem colhidos,
+        encerra automaticamente.
+      */
+
+      if (
+        quantidadeColhida >=
+        posicoesTomates.length
+      ) {
+
+        finalizarJogo();
+
+      }
+
+    }
+
+
+    /* =========================
+       CRONÔMETRO
+    ========================= */
+
+    function iniciarCronometro() {
+
+      clearInterval(
+        intervalo
+      );
+
+
+      intervalo =
+        setInterval(
+          function () {
+
+            if (
+              jogoPausado ||
+              jogoEncerrado
+            ) {
+
+              return;
+
+            }
+
+
+            tempo--;
+
+
+            atualizarPainel();
+
+
+            if (
+              tempo <= 0
+            ) {
+
+              finalizarJogo();
+
+            }
+
+          },
+
+          1000
+        );
+
+    }
+
+
+    /* =========================
+       PAUSAR
+    ========================= */
+
+    function alternarPausa() {
+
+      if (
+        jogoEncerrado
+      ) {
+
+        return;
+
+      }
+
+
+      jogoPausado =
+        !jogoPausado;
+
+
+      if (
+        jogoPausado
+      ) {
+
+        botaoPausar.textContent =
+          "▶ Continuar";
+
+      } else {
+
+        botaoPausar.textContent =
+          "⏸ Pausar";
+
+      }
+
+    }
+
+
+    /* =========================
+       FINALIZAR
+    ========================= */
+
+    function finalizarJogo() {
+
+      if (
+        jogoEncerrado
+      ) {
+
+        return;
+
+      }
+
+
+      jogoEncerrado =
+        true;
+
+
+      clearInterval(
+        intervalo
+      );
+
+
+      const recompensa =
+        Math.floor(
+          pontos / 10
+        );
+
+
+      resumoElemento.innerHTML =
+
+        "Você colheu " +
+
+        "<strong>" +
+        quantidadeColhida +
+        "</strong>" +
+
+        " tomates e fez " +
+
+        "<strong>" +
+        pontos +
+        "</strong>" +
+
+        " pontos." +
+
+        "<br><br>" +
+
+        "Recompensa de teste: " +
+
+        "<strong>+" +
+        recompensa +
+        " STACOIN</strong>";
+
+
+      resultadoElemento.classList.add(
+        "ativo"
+      );
+
+
+      resultadoElemento.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }
+
+
+    /* =========================
+       INICIAR JOGO
+    ========================= */
+
+    function iniciarJogo() {
+
+      clearInterval(
+        intervalo
+      );
+
+
+      tempo = 30;
+
+      quantidadeColhida =
+        0;
+
+      pontos = 0;
+
+      jogoPausado =
+        false;
+
+      jogoEncerrado =
+        false;
+
+
+      botaoPausar.textContent =
+        "⏸ Pausar";
+
+
+      resultadoElemento.classList.remove(
+        "ativo"
+      );
+
+
+      criarTomates();
+
+
+      atualizarPainel();
+
+
+      iniciarCronometro();
+
+    }
+
+
+    /* =========================
+       EVENTOS
+    ========================= */
+
+    botaoPausar.addEventListener(
+      "click",
+      alternarPausa
+    );
+
+
+    botaoJogarNovamente.addEventListener(
+      "click",
+      iniciarJogo
+    );
+
+
+    /* =========================
+       COMEÇAR
+    ========================= */
+
+    iniciarJogo();
+
+  </script>
+
+</body>
+</html>
