@@ -15,6 +15,7 @@
       --dourado: #d9b94b;
       --fundo: #06140d;
       --branco: #ffffff;
+      --vermelho: #e63225;
     }
 
     * {
@@ -27,7 +28,6 @@
       color: var(--branco);
       font-family: Arial, Helvetica, sans-serif;
     }
-
 
     /* =========================
        CABEÇALHO
@@ -50,8 +50,7 @@
           #0a6339
         );
 
-      border-bottom:
-        2px solid var(--dourado);
+      border-bottom: 2px solid var(--dourado);
     }
 
     .logo {
@@ -72,12 +71,7 @@
     .titulo h1 {
       margin: 0;
 
-      font-size:
-        clamp(
-          20px,
-          3vw,
-          30px
-        );
+      font-size: clamp(20px, 3vw, 30px);
     }
 
     .titulo p {
@@ -97,22 +91,16 @@
 
       text-decoration: none;
 
-      border:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.4
-        );
+      border: 1px solid rgba(255,255,255,0.4);
 
       padding: 10px 14px;
 
       border-radius: 12px;
 
       font-weight: bold;
-    }
 
+      white-space: nowrap;
+    }
 
     /* =========================
        PAINEL
@@ -121,8 +109,7 @@
     .painel {
       display: grid;
 
-      grid-template-columns:
-        repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr);
 
       gap: 10px;
 
@@ -134,14 +121,7 @@
     .painel-card {
       background: #103323;
 
-      border:
-        1px solid
-        rgba(
-          217,
-          185,
-          75,
-          0.55
-        );
+      border: 1px solid rgba(217,185,75,0.55);
 
       border-radius: 14px;
 
@@ -164,9 +144,8 @@
       font-weight: 800;
     }
 
-
     /* =========================
-       ÁREA DA ROÇA
+       ÁREA DO JOGO
     ========================= */
 
     .jogo {
@@ -174,13 +153,15 @@
 
       width: 100%;
 
-      aspect-ratio: 3 / 2;
+      aspect-ratio: 16 / 9;
+
+      min-height: 360px;
 
       overflow: hidden;
 
       background: #321e12;
 
-      touch-action: manipulation;
+      touch-action: none;
     }
 
     .cenario {
@@ -198,18 +179,50 @@
       -webkit-user-drag: none;
     }
 
+    /* Escurece levemente a parte inferior,
+       onde o personagem fica */
 
-    /* =========================
-       TOMATES
-    ========================= */
-
-    .tomates {
+    .sombra-cenario {
       position: absolute;
 
-      inset: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
 
-      z-index: 5;
+      height: 30%;
+
+      background:
+        linear-gradient(
+          transparent,
+          rgba(0,0,0,0.25)
+        );
+
+      pointer-events: none;
     }
+
+    /* =========================
+       FILEIRA DE TOMATES
+    ========================= */
+
+    .fileira-tomates {
+      position: absolute;
+
+      left: 7%;
+      right: 7%;
+
+      top: 39%;
+
+      height: 24%;
+
+      pointer-events: none;
+    }
+
+    /*
+      Os tomates ficam em uma única
+      fileira acompanhando a planta.
+
+      Nada de tomate no chão.
+    */
 
     .tomate {
 
@@ -218,75 +231,65 @@
       width: 46px;
       height: 46px;
 
-      margin: -23px 0 0 -23px;
-
-      padding: 0;
+      transform: translate(-50%, -50%);
 
       border-radius: 50%;
 
-      border:
-        3px solid
-        rgba(
-          89,
-          255,
-          94,
-          0.95
-        );
+      border: 3px solid #73ff55;
 
       background:
-        rgba(
-          255,
-          40,
-          25,
-          0.12
+        radial-gradient(
+          circle at 35% 30%,
+          #ff7966 0%,
+          #ef3829 35%,
+          #b91714 100%
         );
 
       box-shadow:
-        0 0 0 3px
-        rgba(
-          55,
-          255,
-          75,
-          0.10
-        ),
-
-        0 0 16px
-        rgba(
-          55,
-          255,
-          75,
-          0.45
-        );
+        0 0 0 4px rgba(76,255,75,0.13),
+        0 0 18px rgba(76,255,75,0.55);
 
       cursor: pointer;
 
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-size: 28px;
-
-      line-height: 1;
-
-      z-index: 10;
-
-      appearance: none;
-
-      -webkit-appearance: none;
+      pointer-events: auto;
 
       transition:
-        transform 0.15s,
-        opacity 0.2s;
+        transform 0.12s,
+        opacity 0.2s,
+        filter 0.12s;
+
+      z-index: 20;
+
+      padding: 0;
+    }
+
+    .tomate::before {
+      content: "🍃";
+
+      position: absolute;
+
+      left: 50%;
+      top: -14px;
+
+      transform: translateX(-50%);
+
+      font-size: 15px;
+
+      filter: drop-shadow(
+        0 1px 1px rgba(0,0,0,0.5)
+      );
     }
 
     .tomate:hover {
-      transform: scale(1.12);
+      transform:
+        translate(-50%, -50%)
+        scale(1.12);
     }
 
     .tomate:active {
-      transform: scale(0.82);
+      transform:
+        translate(-50%, -50%)
+        scale(0.88);
     }
 
     .tomate.colhido {
@@ -295,9 +298,202 @@
       pointer-events: none;
 
       transform:
-        scale(1.7);
+        translate(-50%, -50%)
+        scale(1.8);
     }
 
+    /*
+      Tomate que está longe do personagem.
+      Continua visível, mas fica um pouco menos destacado.
+    */
+
+    .tomate.longe {
+      filter: saturate(0.7) brightness(0.8);
+      opacity: 0.72;
+    }
+
+    /*
+      Tomate próximo do personagem.
+    */
+
+    .tomate.perto {
+      filter: saturate(1.2) brightness(1.12);
+
+      box-shadow:
+        0 0 0 5px rgba(76,255,75,0.18),
+        0 0 25px rgba(76,255,75,0.85);
+    }
+
+    /* =========================
+       PERSONAGEM
+    ========================= */
+
+    .personagem {
+
+      position: absolute;
+
+      left: 10%;
+
+      bottom: 8%;
+
+      width: 58px;
+      height: 86px;
+
+      transform: translateX(-50%);
+
+      z-index: 30;
+
+      pointer-events: none;
+
+      transition:
+        left 0.08s linear;
+    }
+
+    .personagem-corpo {
+      position: absolute;
+
+      left: 50%;
+      bottom: 0;
+
+      transform: translateX(-50%);
+
+      width: 34px;
+      height: 43px;
+
+      background: #176b42;
+
+      border: 2px solid #063b23;
+
+      border-radius:
+        13px 13px 8px 8px;
+    }
+
+    .personagem-cabeca {
+      position: absolute;
+
+      left: 50%;
+      top: 4px;
+
+      transform: translateX(-50%);
+
+      width: 34px;
+      height: 34px;
+
+      background: #d9975c;
+
+      border: 2px solid #633817;
+
+      border-radius: 50%;
+
+      z-index: 2;
+    }
+
+    .personagem-chapeu {
+      position: absolute;
+
+      left: 50%;
+      top: 0;
+
+      transform: translateX(-50%);
+
+      width: 43px;
+      height: 13px;
+
+      background: #d8b542;
+
+      border-radius: 50%;
+
+      border: 2px solid #765d12;
+
+      z-index: 4;
+    }
+
+    .personagem-perna {
+      position: absolute;
+
+      bottom: -4px;
+
+      width: 10px;
+      height: 25px;
+
+      background: #244b35;
+
+      border-radius: 8px;
+
+      z-index: -1;
+    }
+
+    .perna-esquerda {
+      left: 13px;
+    }
+
+    .perna-direita {
+      right: 13px;
+    }
+
+    .personagem.andando .perna-esquerda {
+      animation: andarEsquerda 0.22s infinite alternate;
+    }
+
+    .personagem.andando .perna-direita {
+      animation: andarDireita 0.22s infinite alternate;
+    }
+
+    @keyframes andarEsquerda {
+      from {
+        transform: rotate(12deg);
+      }
+
+      to {
+        transform: rotate(-12deg);
+      }
+    }
+
+    @keyframes andarDireita {
+      from {
+        transform: rotate(-12deg);
+      }
+
+      to {
+        transform: rotate(12deg);
+      }
+    }
+
+    /* =========================
+       INDICADOR DE DISTÂNCIA
+    ========================= */
+
+    .indicador {
+
+      position: absolute;
+
+      left: 50%;
+
+      bottom: 2%;
+
+      transform: translateX(-50%);
+
+      z-index: 40;
+
+      background:
+        rgba(4,49,29,0.92);
+
+      border:
+        1px solid
+        rgba(217,185,75,0.65);
+
+      border-radius: 12px;
+
+      padding: 7px 12px;
+
+      font-size: 12px;
+
+      font-weight: bold;
+
+      white-space: nowrap;
+
+      pointer-events: none;
+    }
 
     /* =========================
        INSTRUÇÃO
@@ -307,38 +503,27 @@
 
       position: absolute;
 
-      left: 18px;
-      bottom: 18px;
+      left: 15px;
+      top: 15px;
 
-      max-width: 360px;
+      max-width: 320px;
 
-      padding:
-        12px 16px;
+      padding: 11px 15px;
 
-      border-radius: 15px;
+      border-radius: 14px;
 
       background:
-        rgba(
-          4,
-          49,
-          29,
-          0.92
-        );
+        rgba(4,49,29,0.90);
 
       border:
         1px solid
-        rgba(
-          217,
-          185,
-          75,
-          0.7
-        );
+        rgba(217,185,75,0.7);
 
       font-weight: bold;
 
-      pointer-events: none;
+      z-index: 50;
 
-      z-index: 20;
+      pointer-events: none;
     }
 
     .instrucao small {
@@ -349,56 +534,192 @@
 
       font-weight: normal;
 
-      opacity: 0.78;
+      opacity: 0.8;
     }
 
-
     /* =========================
-       BOTÃO PAUSAR
+       CONTROLES
     ========================= */
 
-    .pausar {
+    .controles {
 
       position: absolute;
 
+      left: 18px;
       right: 18px;
       bottom: 18px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      z-index: 60;
+
+      pointer-events: none;
+    }
+
+    .grupo-controle {
+
+      display: flex;
+
+      gap: 10px;
+
+      pointer-events: auto;
+    }
+
+    .controle {
+
+      width: 58px;
+      height: 52px;
+
+      border: 1px solid
+        rgba(217,185,75,0.75);
+
+      border-radius: 14px;
+
+      background:
+        rgba(4,49,29,0.94);
+
+      color: white;
+
+      font-size: 23px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      user-select: none;
+
+      -webkit-user-select: none;
+
+      touch-action: manipulation;
+    }
+
+    .controle:active {
+      transform: scale(0.92);
+
+      background: #0b7543;
+    }
+
+    .pausar {
+
+      width: auto;
+
+      padding:
+        0 17px;
+
+      border: 1px solid
+        rgba(217,185,75,0.75);
+
+      border-radius: 14px;
+
+      height: 52px;
+
+      background:
+        rgba(4,49,29,0.94);
+
+      color: white;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      pointer-events: auto;
+    }
+
+    /* =========================
+       TELA DE INÍCIO
+    ========================= */
+
+    .inicio-jogo {
+
+      position: absolute;
+
+      inset: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      z-index: 100;
+
+      background:
+        rgba(2,25,15,0.48);
+
+      backdrop-filter: blur(2px);
+    }
+
+    .inicio-card {
+
+      width: min(92%, 430px);
+
+      text-align: center;
+
+      background:
+        rgba(5,55,32,0.96);
+
+      border:
+        1px solid
+        rgba(217,185,75,0.8);
+
+      border-radius: 22px;
+
+      padding: 25px 20px;
+
+      box-shadow:
+        0 12px 35px
+        rgba(0,0,0,0.35);
+    }
+
+    .inicio-card h2 {
+      margin: 0 0 8px;
+
+      font-size: 25px;
+    }
+
+    .inicio-card p {
+      margin: 0;
+
+      line-height: 1.5;
+
+      opacity: 0.9;
+    }
+
+    .botao-iniciar {
+
+      margin-top: 20px;
 
       border: 0;
 
       border-radius: 14px;
 
       padding:
-        12px 18px;
+        13px 25px;
 
-      background:
-        rgba(
-          5,
-          64,
-          38,
-          0.94
-        );
+      background: var(--dourado);
 
-      color: white;
+      color: #172015;
 
-      border:
-        1px solid
-        rgba(
-          217,
-          185,
-          75,
-          0.7
-        );
+      font-size: 17px;
 
-      font-size: 16px;
-
-      font-weight: bold;
+      font-weight: 800;
 
       cursor: pointer;
-
-      z-index: 30;
     }
 
+    .botao-iniciar:active {
+      transform: scale(0.96);
+    }
+
+    .inicio-jogo.escondido {
+      display: none;
+    }
 
     /* =========================
        RESULTADO
@@ -468,21 +789,14 @@
     }
 
     .botao-secundario {
-
       background: #17472f;
 
       color: white;
 
       border:
         1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.2
-        );
+        rgba(255,255,255,0.2);
     }
-
 
     /* =========================
        AVISO
@@ -500,49 +814,38 @@
       opacity: 0.6;
     }
 
-
     /* =========================
        CELULAR
     ========================= */
 
-    @media (
-      max-width: 700px
-    ) {
+    @media (max-width: 700px) {
 
       .topo {
-
         min-height: 70px;
 
-        padding:
-          8px 10px;
+        padding: 8px 10px;
       }
 
       .logo {
-
         width: 48px;
         height: 48px;
       }
 
       .titulo h1 {
-
         font-size: 19px;
       }
 
       .titulo p {
-
         font-size: 13px;
       }
 
       .voltar {
-
-        padding:
-          8px 10px;
+        padding: 8px 10px;
 
         font-size: 13px;
       }
 
       .painel {
-
         grid-template-columns:
           repeat(2, 1fr);
 
@@ -552,73 +855,94 @@
       }
 
       .painel-card {
-
-        padding:
-          8px 10px;
+        padding: 8px 10px;
       }
 
       .painel-valor {
-
         font-size: 20px;
       }
 
       .jogo {
-
         aspect-ratio: 3 / 2;
 
-        min-height: 320px;
+        min-height: 410px;
+      }
+
+      .fileira-tomates {
+        left: 4%;
+        right: 4%;
+
+        top: 39%;
+
+        height: 25%;
       }
 
       .tomate {
+        width: 39px;
+        height: 39px;
+      }
 
-        width: 38px;
-        height: 38px;
+      .personagem {
+        width: 52px;
+        height: 78px;
 
-        margin:
-          -19px 0 0 -19px;
+        bottom: 17%;
+      }
 
-        font-size: 24px;
+      .personagem-corpo {
+        width: 31px;
+        height: 39px;
+      }
 
-        border-width: 2px;
+      .personagem-cabeca {
+        width: 31px;
+        height: 31px;
+      }
+
+      .personagem-chapeu {
+        width: 39px;
       }
 
       .instrucao {
-
         left: 10px;
-        bottom: 10px;
+        top: 10px;
 
         max-width:
-          calc(
-            100% - 20px
-          );
+          calc(100% - 20px);
 
         font-size: 13px;
-
-        padding:
-          10px 12px;
       }
 
-      .instrucao small {
+      .controles {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+      }
 
-        font-size: 11px;
+      .controle {
+        width: 54px;
+        height: 50px;
       }
 
       .pausar {
-
-        right: 10px;
-        bottom: 10px;
+        height: 50px;
 
         padding:
-          10px 13px;
+          0 13px;
 
         font-size: 13px;
+      }
+
+      .indicador {
+        bottom: 13%;
+
+        font-size: 11px;
       }
 
     }
 
   </style>
 </head>
-
 
 <body>
 
@@ -665,7 +989,6 @@
 
   <section class="painel">
 
-
     <div class="painel-card">
 
       <div class="painel-label">
@@ -692,7 +1015,7 @@
         id="colhidos"
         class="painel-valor"
       >
-        0 / 40
+        0 / 12
       </div>
 
     </div>
@@ -733,7 +1056,7 @@
 
 
   <!-- =========================
-       JOGO
+       ÁREA DO JOGO
   ========================= -->
 
   <main
@@ -741,26 +1064,57 @@
     id="jogo"
   >
 
-
-    <!--
-      IMAGEM LIMPA DA ROÇA
-    -->
-
     <img
       src="colheita-cenario.PNG"
       class="cenario"
       alt="Plantação de tomates da Santa Luzia"
     >
 
+    <div class="sombra-cenario"></div>
+
 
     <!-- =========================
-         TOMATES INTERATIVOS
+         UMA ÚNICA FILEIRA
     ========================= -->
 
     <div
-      class="tomates"
-      id="tomates"
+      class="fileira-tomates"
+      id="fileiraTomates"
     ></div>
+
+
+    <!-- =========================
+         PERSONAGEM
+    ========================= -->
+
+    <div
+      class="personagem"
+      id="personagem"
+    >
+
+      <div class="personagem-chapeu"></div>
+
+      <div class="personagem-cabeca"></div>
+
+      <div class="personagem-corpo"></div>
+
+      <div class="personagem-perna perna-esquerda"></div>
+
+      <div class="personagem-perna perna-direita"></div>
+
+    </div>
+
+
+    <!-- =========================
+         INDICADOR
+    ========================= -->
+
+    <div
+      class="indicador"
+      id="indicador"
+    >
+      🚶 Chegue perto dos tomates para colher
+    </div>
 
 
     <!-- =========================
@@ -769,28 +1123,86 @@
 
     <div class="instrucao">
 
-      🍅 Toque nos tomates maduros!
+      🍅 Toque no tomate para colher!
 
       <small>
-        Colha o máximo que conseguir
-        antes do tempo acabar.
+        Use ← → para caminhar pela fileira.
       </small>
 
     </div>
 
 
     <!-- =========================
-         PAUSAR
+         CONTROLES
     ========================= -->
 
-    <button
-      class="pausar"
-      id="botaoPausar"
-      type="button"
-    >
-      ⏸ Pausar
-    </button>
+    <div class="controles">
 
+      <div class="grupo-controle">
+
+        <button
+          class="controle"
+          id="esquerda"
+          type="button"
+          aria-label="Andar para esquerda"
+        >
+          ◀
+        </button>
+
+        <button
+          class="controle"
+          id="direita"
+          type="button"
+          aria-label="Andar para direita"
+        >
+          ▶
+        </button>
+
+      </div>
+
+
+      <button
+        class="pausar"
+        id="botaoPausar"
+        type="button"
+      >
+        ⏸ Pausar
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         TELA DE INÍCIO
+    ========================= -->
+
+    <div
+      class="inicio-jogo"
+      id="inicioJogo"
+    >
+
+      <div class="inicio-card">
+
+        <h2>
+          🍅 Colheita de Tomates
+        </h2>
+
+        <p>
+          Caminhe pela fileira e toque
+          nos tomates quando chegar perto.
+        </p>
+
+        <button
+          class="botao-iniciar"
+          id="botaoIniciar"
+          type="button"
+        >
+          🍅 COMEÇAR COLHEITA
+        </button>
+
+      </div>
+
+    </div>
 
   </main>
 
@@ -810,9 +1222,7 @@
 
     <p id="resumo"></p>
 
-
     <div class="botoes">
-
 
       <button
         class="botao botao-principal"
@@ -822,14 +1232,12 @@
         🍅 Jogar novamente
       </button>
 
-
       <a
         href="index.html"
         class="botao botao-secundario"
       >
         ← Voltar para Central
       </a>
-
 
     </div>
 
@@ -854,92 +1262,77 @@
 
   <script>
 
-
     /*
-      ==========================================
-      POSIÇÕES DOS 40 TOMATES
-      ==========================================
-
-      Primeiro número:
-      posição horizontal (%)
-
-      Segundo número:
-      posição vertical (%)
-
-      As posições foram espalhadas pela
-      plantação para não ficarem todas juntas.
+      ========================================
+      CONFIGURAÇÕES DO JOGO
+      ========================================
     */
 
+    const TEMPO_INICIAL = 30;
 
-    const posicoesTomates = [
+    const PONTOS_POR_TOMATE = 10;
 
-      [9, 43],
-      [14, 49],
-      [19, 56],
-      [24, 45],
-      [29, 52],
+    /*
+      Distância necessária para conseguir
+      colher um tomate.
 
-      [34, 60],
-      [39, 48],
-      [44, 55],
-      [49, 63],
-      [54, 51],
+      Quanto menor o número,
+      mais perto o personagem precisa estar.
+    */
 
-      [59, 59],
-      [64, 47],
-      [69, 55],
-      [74, 63],
-      [79, 50],
+    const DISTANCIA_COLHEITA = 10;
 
-      [85, 44],
-      [91, 55],
 
-      [12, 65],
-      [18, 72],
-      [25, 68],
-      [31, 75],
+    /*
+      ========================================
+      POSIÇÕES DOS TOMATES
+      ========================================
 
-      [37, 70],
-      [43, 78],
-      [49, 70],
-      [55, 76],
+      Todos ficam em UMA ÚNICA FILEIRA.
 
-      [61, 69],
-      [67, 78],
-      [73, 70],
-      [79, 76],
+      left = posição horizontal
 
-      [85, 68],
-      [91, 73],
+      top = pequena variação vertical
 
-      [8, 80],
-      [15, 83],
-      [23, 82],
-      [30, 86],
+      A variação é proposital para parecer
+      que os frutos estão presos nos cachos.
+    */
 
-      [38, 83],
-      [47, 88],
-      [56, 84],
-      [65, 87],
+    const tomatesConfig = [
 
-      [74, 82],
-      [84, 85]
+      { left: 7,  top: 58 },
+      { left: 15, top: 49 },
+      { left: 23, top: 55 },
+      { left: 31, top: 47 },
+
+      { left: 39, top: 53 },
+      { left: 47, top: 46 },
+      { left: 55, top: 54 },
+      { left: 63, top: 48 },
+
+      { left: 71, top: 55 },
+      { left: 79, top: 47 },
+      { left: 87, top: 53 },
+      { left: 94, top: 48 }
 
     ];
 
 
     /*
-      ==========================================
-      VARIÁVEIS DO JOGO
-      ==========================================
+      ========================================
+      VARIÁVEIS
+      ========================================
     */
 
-
-    let tempo = 30;
+    let tempo = TEMPO_INICIAL;
 
     let quantidadeColhida = 0;
 
     let pontos = 0;
+
+    let personagemX = 10;
+
+    let jogoIniciado = false;
 
     let jogoPausado = false;
 
@@ -949,75 +1342,64 @@
 
 
     /*
-      ==========================================
-      ELEMENTOS DA PÁGINA
-      ==========================================
+      ========================================
+      ELEMENTOS
+      ========================================
     */
 
-
     const tempoElemento =
-      document.getElementById(
-        "tempo"
-      );
-
+      document.getElementById("tempo");
 
     const colhidosElemento =
-      document.getElementById(
-        "colhidos"
-      );
-
+      document.getElementById("colhidos");
 
     const pontosElemento =
-      document.getElementById(
-        "pontos"
-      );
-
+      document.getElementById("pontos");
 
     const stacoinElemento =
-      document.getElementById(
-        "stacoin"
-      );
+      document.getElementById("stacoin");
 
+    const fileiraTomates =
+      document.getElementById("fileiraTomates");
 
-    const tomatesElemento =
-      document.getElementById(
-        "tomates"
-      );
+    const personagem =
+      document.getElementById("personagem");
 
-
-    const resultadoElemento =
-      document.getElementById(
-        "resultado"
-      );
-
-
-    const resumoElemento =
-      document.getElementById(
-        "resumo"
-      );
-
+    const indicador =
+      document.getElementById("indicador");
 
     const botaoPausar =
-      document.getElementById(
-        "botaoPausar"
-      );
+      document.getElementById("botaoPausar");
 
+    const inicioJogo =
+      document.getElementById("inicioJogo");
+
+    const botaoIniciar =
+      document.getElementById("botaoIniciar");
+
+    const resultado =
+      document.getElementById("resultado");
+
+    const resumo =
+      document.getElementById("resumo");
 
     const botaoJogarNovamente =
-      document.getElementById(
-        "jogarNovamente"
-      );
+      document.getElementById("jogarNovamente");
+
+    const botaoEsquerda =
+      document.getElementById("esquerda");
+
+    const botaoDireita =
+      document.getElementById("direita");
 
 
     /*
-      ==========================================
-      ATUALIZAR PAINEL
-      ==========================================
+      ========================================
+      ATUALIZA PAINEL
+      ========================================
     */
 
-
     function atualizarPainel() {
-
 
       tempoElemento.textContent =
         tempo + "s";
@@ -1026,7 +1408,7 @@
       colhidosElemento.textContent =
         quantidadeColhida +
         " / " +
-        posicoesTomates.length;
+        tomatesConfig.length;
 
 
       pontosElemento.textContent =
@@ -1036,14 +1418,10 @@
       /*
         TESTE:
 
-        A cada 10 pontos:
+        10 pontos = 1 STACOIN
 
-        +1 STACOIN
-
-        Ainda NÃO mexe no saldo
-        real do usuário.
+        Depois ligaremos isso ao Supabase.
       */
-
 
       const recompensa =
         Math.floor(
@@ -1052,128 +1430,225 @@
 
 
       stacoinElemento.textContent =
-        "+" +
-        recompensa;
+        "+" + recompensa;
 
     }
 
 
     /*
-      ==========================================
-      CRIAR OS 40 TOMATES
-      ==========================================
+      ========================================
+      CRIA OS TOMATES
+      ========================================
     */
-
 
     function criarTomates() {
 
-
-      tomatesElemento.innerHTML =
-        "";
+      fileiraTomates.innerHTML = "";
 
 
-      posicoesTomates.forEach(
-        (
-          posicao,
-          indice
-        ) => {
-
+      tomatesConfig.forEach(
+        (config, indice) => {
 
           const tomate =
-            document.createElement(
-              "button"
-            );
+            document.createElement("button");
 
 
-          /*
-            IMPORTANTE:
-
-            O botão agora recebe
-            o emoji do tomate.
-          */
-
-
-          tomate.type =
-            "button";
+          tomate.type = "button";
 
 
           tomate.className =
             "tomate";
 
 
-          tomate.textContent =
-            "🍅";
+          tomate.dataset.index =
+            indice;
+
+
+          tomate.style.left =
+            config.left + "%";
+
+
+          tomate.style.top =
+            config.top + "%";
 
 
           tomate.setAttribute(
             "aria-label",
-            "Colher tomate " +
-            (indice + 1)
+            "Colher tomate"
           );
-
-
-          /*
-            POSIÇÃO DO TOMATE
-          */
-
-
-          tomate.style.left =
-            posicao[0] + "%";
-
-
-          tomate.style.top =
-            posicao[1] + "%";
-
-
-          /*
-            QUANDO CLICAR
-          */
 
 
           tomate.addEventListener(
             "click",
-            function () {
+            () => {
 
-
-              colherTomate(
-                tomate
+              tentarColher(
+                tomate,
+                config.left
               );
-
 
             }
           );
 
 
-          tomatesElemento.appendChild(
+          fileiraTomates.appendChild(
             tomate
           );
 
-
         }
       );
-
 
     }
 
 
     /*
-      ==========================================
-      COLHER TOMATE
-      ==========================================
+      ========================================
+      ATUALIZA PERSONAGEM
+      ========================================
     */
 
+    function atualizarPersonagem() {
 
-    function colherTomate(
-      tomate
-    ) {
+      personagem.style.left =
+        personagemX + "%";
+
+
+      atualizarTomatesProximos();
+
+    }
+
+
+    /*
+      ========================================
+      VERIFICA TOMATES PRÓXIMOS
+      ========================================
+    */
+
+    function atualizarTomatesProximos() {
+
+      const tomates =
+        document.querySelectorAll(
+          ".tomate:not(.colhido)"
+        );
+
+
+      let tomateMaisProximo =
+        null;
+
+      let menorDistancia =
+        Infinity;
+
+
+      tomates.forEach(
+        (tomate) => {
+
+          const posicao =
+            parseFloat(
+              tomate.style.left
+            );
+
+
+          const distancia =
+            Math.abs(
+              personagemX - posicao
+            );
+
+
+          tomate.classList.remove(
+            "perto"
+          );
+
+          tomate.classList.remove(
+            "longe"
+          );
+
+
+          if (
+            distancia <=
+            DISTANCIA_COLHEITA
+          ) {
+
+            tomate.classList.add(
+              "perto"
+            );
+
+          } else {
+
+            tomate.classList.add(
+              "longe"
+            );
+
+          }
+
+
+          if (
+            distancia <
+            menorDistancia
+          ) {
+
+            menorDistancia =
+              distancia;
+
+            tomateMaisProximo =
+              tomate;
+
+          }
+
+        }
+      );
 
 
       if (
-        jogoEncerrado ||
+        tomateMaisProximo
+      ) {
+
+        const posicao =
+          parseFloat(
+            tomateMaisProximo.style.left
+          );
+
+
+        const distancia =
+          Math.abs(
+            personagemX - posicao
+          );
+
+
+        if (
+          distancia <=
+          DISTANCIA_COLHEITA
+        ) {
+
+          indicador.textContent =
+            "🍅 Toque no tomate para colher!";
+
+        } else {
+
+          indicador.textContent =
+            "🚶 Caminhe até o próximo tomate";
+
+        }
+
+      }
+
+    }
+
+
+    /*
+      ========================================
+      TENTAR COLHER
+      ========================================
+    */
+
+    function tentarColher(
+      tomate,
+      posicaoTomate
+    ) {
+
+      if (
+        !jogoIniciado ||
         jogoPausado ||
-        tomate.classList.contains(
-          "colhido"
-        )
+        jogoEncerrado
       ) {
 
         return;
@@ -1181,55 +1656,92 @@
       }
 
 
+      const distancia =
+        Math.abs(
+          personagemX -
+          posicaoTomate
+        );
+
+
       /*
-        Faz o tomate desaparecer.
+        O jogador PRECISA estar perto.
       */
 
+      if (
+        distancia >
+        DISTANCIA_COLHEITA
+      ) {
+
+        indicador.textContent =
+          "🚶 Você está longe! Chegue mais perto.";
+
+        /*
+          Pequeno destaque no personagem.
+        */
+
+        personagem.animate(
+          [
+            {
+              transform:
+                "translateX(-50%) translateX(0)"
+            },
+            {
+              transform:
+                "translateX(-50%) translateX(-5px)"
+            },
+            {
+              transform:
+                "translateX(-50%) translateX(5px)"
+            },
+            {
+              transform:
+                "translateX(-50%) translateX(0)"
+            }
+          ],
+          {
+            duration: 220
+          }
+        );
+
+        return;
+
+      }
+
+
+      /*
+        COLHEU!
+      */
 
       tomate.classList.add(
         "colhido"
       );
 
 
-      /*
-        Soma 1 tomate.
-      */
-
-
       quantidadeColhida++;
 
 
-      /*
-        Cada tomate vale
-        10 pontos.
-      */
-
-
-      pontos += 10;
-
-
-      /*
-        Atualiza a tela.
-      */
+      pontos +=
+        PONTOS_POR_TOMATE;
 
 
       atualizarPainel();
 
 
-      /*
-        Se colher os 40,
-        encerra o jogo.
-      */
+      indicador.textContent =
+        "🍅 Tomate colhido! +10 pontos";
 
+
+      /*
+        Se colheu todos,
+        termina o jogo.
+      */
 
       if (
         quantidadeColhida >=
-        posicoesTomates.length
+        tomatesConfig.length
       ) {
 
-
         finalizarJogo();
-
 
       }
 
@@ -1237,14 +1749,270 @@
 
 
     /*
-      ==========================================
-      CRONÔMETRO
-      ==========================================
+      ========================================
+      ANDAR
+      ========================================
     */
 
+    function andar(direcao) {
+
+      if (
+        !jogoIniciado ||
+        jogoPausado ||
+        jogoEncerrado
+      ) {
+
+        return;
+
+      }
+
+
+      const velocidade =
+        2.5;
+
+
+      personagemX +=
+        direcao *
+        velocidade;
+
+
+      /*
+        Limites da fileira.
+      */
+
+      if (
+        personagemX < 5
+      ) {
+
+        personagemX = 5;
+
+      }
+
+
+      if (
+        personagemX > 95
+      ) {
+
+        personagemX = 95;
+
+      }
+
+
+      personagem.classList.add(
+        "andando"
+      );
+
+
+      atualizarPersonagem();
+
+    }
+
+
+    /*
+      ========================================
+      CONTROLES DE TOQUE
+      ========================================
+    */
+
+    function iniciarMovimento(
+      direcao
+    ) {
+
+      andar(direcao);
+
+
+      /*
+        Continua andando enquanto
+        o botão estiver pressionado.
+      */
+
+      const repeticao =
+        setInterval(
+          () => {
+
+            if (
+              !jogoIniciado ||
+              jogoPausado ||
+              jogoEncerrado
+            ) {
+
+              clearInterval(
+                repeticao
+              );
+
+              return;
+
+            }
+
+
+            andar(direcao);
+
+          },
+          100
+        );
+
+
+      function parar() {
+
+        clearInterval(
+          repeticao
+        );
+
+
+        personagem.classList.remove(
+          "andando"
+        );
+
+
+        botaoEsquerda.removeEventListener(
+          "pointerup",
+          parar
+        );
+
+        botaoEsquerda.removeEventListener(
+          "pointercancel",
+          parar
+        );
+
+        botaoDireita.removeEventListener(
+          "pointerup",
+          parar
+        );
+
+        botaoDireita.removeEventListener(
+          "pointercancel",
+          parar
+        );
+
+      }
+
+
+      if (
+        direcao < 0
+      ) {
+
+        botaoEsquerda.addEventListener(
+          "pointerup",
+          parar,
+          { once: true }
+        );
+
+        botaoEsquerda.addEventListener(
+          "pointercancel",
+          parar,
+          { once: true }
+        );
+
+      } else {
+
+        botaoDireita.addEventListener(
+          "pointerup",
+          parar,
+          { once: true }
+        );
+
+        botaoDireita.addEventListener(
+          "pointercancel",
+          parar,
+          { once: true }
+        );
+
+      }
+
+    }
+
+
+    /*
+      ========================================
+      TECLADO
+      ========================================
+    */
+
+    const teclasPressionadas =
+      new Set();
+
+
+    document.addEventListener(
+      "keydown",
+      (evento) => {
+
+        if (
+          evento.key === "ArrowLeft" ||
+          evento.key === "ArrowRight"
+        ) {
+
+          evento.preventDefault();
+
+        }
+
+
+        teclasPressionadas.add(
+          evento.key
+        );
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keyup",
+      (evento) => {
+
+        teclasPressionadas.delete(
+          evento.key
+        );
+
+      }
+    );
+
+
+    setInterval(
+      () => {
+
+        if (
+          !jogoIniciado ||
+          jogoPausado ||
+          jogoEncerrado
+        ) {
+
+          return;
+
+        }
+
+
+        if (
+          teclasPressionadas.has(
+            "ArrowLeft"
+          )
+        ) {
+
+          andar(-1);
+
+        }
+
+
+        if (
+          teclasPressionadas.has(
+            "ArrowRight"
+          )
+        ) {
+
+          andar(1);
+
+        }
+
+      },
+      80
+    );
+
+
+    /*
+      ========================================
+      CRONÔMETRO
+      ========================================
+    */
 
     function iniciarCronometro() {
-
 
       clearInterval(
         intervalo
@@ -1253,11 +2021,11 @@
 
       intervalo =
         setInterval(
-          function () {
-
+          () => {
 
             if (
               jogoPausado ||
+              !jogoIniciado ||
               jogoEncerrado
             ) {
 
@@ -1276,34 +2044,27 @@
               tempo <= 0
             ) {
 
-
               finalizarJogo();
-
 
             }
 
-
           },
-
           1000
-
         );
-
 
     }
 
 
     /*
-      ==========================================
-      PAUSAR / CONTINUAR
-      ==========================================
+      ========================================
+      PAUSAR
+      ========================================
     */
-
 
     function alternarPausa() {
 
-
       if (
+        !jogoIniciado ||
         jogoEncerrado
       ) {
 
@@ -1320,17 +2081,21 @@
         jogoPausado
       ) {
 
-
         botaoPausar.textContent =
           "▶️ Continuar";
 
 
-      } else {
+        indicador.textContent =
+          "⏸ Jogo pausado";
 
+      } else {
 
         botaoPausar.textContent =
           "⏸ Pausar";
 
+
+        indicador.textContent =
+          "🍅 Continue a colheita!";
 
       }
 
@@ -1338,14 +2103,12 @@
 
 
     /*
-      ==========================================
-      FINALIZAR JOGO
-      ==========================================
+      ========================================
+      FINALIZAR
+      ========================================
     */
 
-
     function finalizarJogo() {
-
 
       if (
         jogoEncerrado
@@ -1365,10 +2128,9 @@
       );
 
 
-      /*
-        Calcula recompensa
-        apenas para demonstração.
-      */
+      personagem.classList.remove(
+        "andando"
+      );
 
 
       const recompensa =
@@ -1377,7 +2139,7 @@
         );
 
 
-      resumoElemento.innerHTML =
+      resumo.innerHTML =
 
         "Você colheu " +
 
@@ -1385,15 +2147,23 @@
         quantidadeColhida +
         "</strong>" +
 
-        " tomates e fez " +
+        " de " +
+
+        "<strong>" +
+        tomatesConfig.length +
+        "</strong>" +
+
+        " tomates." +
+
+        "<br><br>" +
+
+        "Pontuação: " +
 
         "<strong>" +
         pontos +
-        "</strong>" +
+        " pontos</strong>" +
 
-        " pontos." +
-
-        "<br><br>" +
+        "<br>" +
 
         "Recompensa de teste: " +
 
@@ -1402,52 +2172,50 @@
         " STACOIN</strong>";
 
 
-      resultadoElemento.classList.add(
+      resultado.classList.add(
         "ativo"
       );
 
 
-      /*
-        Leva o usuário para
-        o resultado.
-      */
-
-
-      resultadoElemento.scrollIntoView({
-
+      resultado.scrollIntoView({
         behavior: "smooth",
-
         block: "start"
-
       });
-
 
     }
 
 
     /*
-      ==========================================
-      INICIAR / REINICIAR JOGO
-      ==========================================
+      ========================================
+      INICIAR PARTIDA
+      ========================================
     */
 
-
-    function iniciarJogo() {
-
+    function iniciarPartida() {
 
       clearInterval(
         intervalo
       );
 
 
-      tempo = 30;
+      tempo =
+        TEMPO_INICIAL;
 
 
       quantidadeColhida =
         0;
 
 
-      pontos = 0;
+      pontos =
+        0;
+
+
+      personagemX =
+        10;
+
+
+      jogoIniciado =
+        true;
 
 
       jogoPausado =
@@ -1462,44 +2230,50 @@
         "⏸ Pausar";
 
 
-      resultadoElemento.classList.remove(
+      resultado.classList.remove(
         "ativo"
       );
 
 
-      /*
-        Cria novamente
-        os 40 tomates.
-      */
+      inicioJogo.classList.add(
+        "escondido"
+      );
 
 
       criarTomates();
 
 
-      /*
-        Zera o painel.
-      */
-
-
       atualizarPainel();
 
 
-      /*
-        Começa o cronômetro.
-      */
+      atualizarPersonagem();
+
+
+      indicador.textContent =
+        "🚶 Caminhe até os tomates";
 
 
       iniciarCronometro();
-
 
     }
 
 
     /*
-      ==========================================
+      ========================================
       EVENTOS
-      ==========================================
+      ========================================
     */
+
+    botaoIniciar.addEventListener(
+      "click",
+      iniciarPartida
+    );
+
+
+    botaoJogarNovamente.addEventListener(
+      "click",
+      iniciarPartida
+    );
 
 
     botaoPausar.addEventListener(
@@ -1508,24 +2282,51 @@
     );
 
 
-    botaoJogarNovamente.addEventListener(
-      "click",
-      iniciarJogo
+    /*
+      Botão esquerdo
+    */
+
+    botaoEsquerda.addEventListener(
+      "pointerdown",
+      (evento) => {
+
+        evento.preventDefault();
+
+        iniciarMovimento(-1);
+
+      }
     );
 
 
     /*
-      ==========================================
-      COMEÇAR AUTOMATICAMENTE
-      ==========================================
+      Botão direito
     */
 
+    botaoDireita.addEventListener(
+      "pointerdown",
+      (evento) => {
 
-    iniciarJogo();
+        evento.preventDefault();
 
+        iniciarMovimento(1);
+
+      }
+    );
+
+
+    /*
+      ========================================
+      ESTADO INICIAL
+      ========================================
+    */
+
+    criarTomates();
+
+    atualizarPainel();
+
+    atualizarPersonagem();
 
   </script>
-
 
 </body>
 </html>
