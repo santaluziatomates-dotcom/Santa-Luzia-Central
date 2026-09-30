@@ -1,2332 +1,2380 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <title>Colheita de Tomates • Santa Luzia Central</title>
+<title>Santa Luzia Games • Colheita</title>
 
-  <style>
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-    :root {
-      --verde: #07552f;
-      --verde-escuro: #063b23;
-      --verde-claro: #0b7543;
-      --dourado: #d9b94b;
-      --fundo: #06140d;
-      --branco: #ffffff;
-      --vermelho: #e63225;
-    }
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #8fc7ff;
+    font-family: Arial, Helvetica, sans-serif;
+    touch-action: none;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+#game {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
 
-    body {
-      margin: 0;
-      background: var(--fundo);
-      color: var(--branco);
-      font-family: Arial, Helvetica, sans-serif;
-    }
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
-    /* =========================
-       CABEÇALHO
-    ========================= */
+/* =========================
+   HUD
+========================= */
 
-    .topo {
-      min-height: 82px;
+#hud {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    z-index: 20;
 
-      display: flex;
-      align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
-      gap: 14px;
+    pointer-events: none;
+}
 
-      padding: 10px 18px;
+.hud-card {
+    background: rgba(255,255,255,.94);
+    border: 1px solid rgba(19,68,38,.12);
+    border-radius: 16px;
+    padding: 10px 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
 
-      background:
+.hud-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .8px;
+    color: #174b2c;
+    margin-bottom: 3px;
+}
+
+.hud-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: #173d25;
+}
+
+#timer {
+    color: #a43b27;
+}
+
+#message {
+    position: fixed;
+    top: 92px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    z-index: 30;
+
+    padding: 11px 18px;
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.95);
+    color: #174b2c;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,.12);
+
+    opacity: 0;
+    transition: opacity .2s ease;
+
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+#message.show {
+    opacity: 1;
+}
+
+/* =========================
+   CONTROLES
+========================= */
+
+#controls {
+    position: fixed;
+    left: 18px;
+    bottom: 20px;
+    z-index: 40;
+
+    display: grid;
+    grid-template-columns: repeat(3, 58px);
+    grid-template-rows: repeat(2, 58px);
+    gap: 7px;
+}
+
+.control {
+    width: 58px;
+    height: 58px;
+
+    border: none;
+    border-radius: 17px;
+
+    background: rgba(255,255,255,.90);
+    color: #174b2c;
+
+    font-size: 23px;
+    font-weight: 900;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    user-select: none;
+    touch-action: none;
+}
+
+.control:active {
+    transform: scale(.94);
+    background: #174b2c;
+    color: white;
+}
+
+#up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#down {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+/* =========================
+   BOTÕES DIREITA
+========================= */
+
+#actions {
+    position: fixed;
+    right: 18px;
+    bottom: 20px;
+    z-index: 40;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-button {
+    min-width: 120px;
+    min-height: 50px;
+
+    border: none;
+    border-radius: 16px;
+
+    padding: 0 16px;
+
+    background: rgba(255,255,255,.94);
+    color: #174b2c;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.18);
+}
+
+.action-button:active {
+    transform: scale(.96);
+}
+
+#harvestButton {
+    background: #174b2c;
+    color: white;
+}
+
+/* =========================
+   TELA INICIAL
+========================= */
+
+#startScreen {
+    position: fixed;
+    inset: 0;
+
+    z-index: 100;
+
+    background:
         linear-gradient(
-          90deg,
-          #064526,
-          #0a6339
+            rgba(11,43,25,.20),
+            rgba(11,43,25,.50)
         );
 
-      border-bottom: 2px solid var(--dourado);
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .logo {
-      width: 58px;
-      height: 58px;
+    padding: 20px;
+}
 
-      border-radius: 50%;
+.start-card {
+    width: min(430px, 100%);
 
-      object-fit: cover;
+    background: rgba(255,255,255,.97);
+    border-radius: 26px;
 
-      background: white;
+    padding: 28px 22px;
 
-      border: 2px solid var(--dourado);
+    text-align: center;
 
-      flex-shrink: 0;
-    }
+    box-shadow: 0 20px 60px rgba(0,0,0,.28);
+}
 
-    .titulo h1 {
-      margin: 0;
+.logo-circle {
+    width: 72px;
+    height: 72px;
 
-      font-size: clamp(20px, 3vw, 30px);
-    }
+    margin: 0 auto 15px;
 
-    .titulo p {
-      margin: 3px 0 0;
+    border-radius: 50%;
 
-      font-size: 15px;
+    background: #174b2c;
 
-      opacity: 0.9;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .espaco {
-      flex: 1;
-    }
+    font-size: 37px;
+}
 
-    .voltar {
-      color: white;
+.start-card h1 {
+    margin: 0;
+    color: #174b2c;
+    font-size: 25px;
+}
 
-      text-decoration: none;
+.start-card p {
+    margin: 9px 0 20px;
+    color: #5b665e;
+    font-size: 14px;
+    line-height: 1.5;
+}
 
-      border: 1px solid rgba(255,255,255,0.4);
+.start-button {
+    width: 100%;
+    height: 52px;
 
-      padding: 10px 14px;
+    border: none;
+    border-radius: 15px;
 
-      border-radius: 12px;
+    background: #174b2c;
+    color: white;
 
-      font-weight: bold;
+    font-size: 15px;
+    font-weight: 900;
+}
 
-      white-space: nowrap;
-    }
+.instructions {
+    margin-top: 18px;
+    padding: 13px;
 
-    /* =========================
-       PAINEL
-    ========================= */
+    background: #f1f5f1;
+    border-radius: 14px;
 
-    .painel {
-      display: grid;
+    color: #526056;
+    font-size: 12px;
+    line-height: 1.5;
+}
 
-      grid-template-columns: repeat(4, 1fr);
+.hidden {
+    display: none !important;
+}
 
-      gap: 10px;
+/* =========================
+   MOBILE
+========================= */
 
-      padding: 10px;
+@media (max-width: 600px) {
 
-      background: #06140d;
-    }
-
-    .painel-card {
-      background: #103323;
-
-      border: 1px solid rgba(217,185,75,0.55);
-
-      border-radius: 14px;
-
-      padding: 9px 13px;
-    }
-
-    .painel-label {
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      opacity: 0.7;
-    }
-
-    .painel-valor {
-      margin-top: 2px;
-
-      font-size: 23px;
-
-      font-weight: 800;
-    }
-
-    /* =========================
-       ÁREA DO JOGO
-    ========================= */
-
-    .jogo {
-      position: relative;
-
-      width: 100%;
-
-      aspect-ratio: 16 / 9;
-
-      min-height: 360px;
-
-      overflow: hidden;
-
-      background: #321e12;
-
-      touch-action: none;
-    }
-
-    .cenario {
-      position: absolute;
-
-      inset: 0;
-
-      width: 100%;
-      height: 100%;
-
-      object-fit: cover;
-
-      user-select: none;
-
-      -webkit-user-drag: none;
-    }
-
-    /* Escurece levemente a parte inferior,
-       onde o personagem fica */
-
-    .sombra-cenario {
-      position: absolute;
-
-      left: 0;
-      right: 0;
-      bottom: 0;
-
-      height: 30%;
-
-      background:
-        linear-gradient(
-          transparent,
-          rgba(0,0,0,0.25)
-        );
-
-      pointer-events: none;
-    }
-
-    /* =========================
-       FILEIRA DE TOMATES
-    ========================= */
-
-    .fileira-tomates {
-      position: absolute;
-
-      left: 7%;
-      right: 7%;
-
-      top: 39%;
-
-      height: 24%;
-
-      pointer-events: none;
-    }
-
-    /*
-      Os tomates ficam em uma única
-      fileira acompanhando a planta.
-
-      Nada de tomate no chão.
-    */
-
-    .tomate {
-
-      position: absolute;
-
-      width: 46px;
-      height: 46px;
-
-      transform: translate(-50%, -50%);
-
-      border-radius: 50%;
-
-      border: 3px solid #73ff55;
-
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #ff7966 0%,
-          #ef3829 35%,
-          #b91714 100%
-        );
-
-      box-shadow:
-        0 0 0 4px rgba(76,255,75,0.13),
-        0 0 18px rgba(76,255,75,0.55);
-
-      cursor: pointer;
-
-      pointer-events: auto;
-
-      transition:
-        transform 0.12s,
-        opacity 0.2s,
-        filter 0.12s;
-
-      z-index: 20;
-
-      padding: 0;
-    }
-
-    .tomate::before {
-      content: "🍃";
-
-      position: absolute;
-
-      left: 50%;
-      top: -14px;
-
-      transform: translateX(-50%);
-
-      font-size: 15px;
-
-      filter: drop-shadow(
-        0 1px 1px rgba(0,0,0,0.5)
-      );
-    }
-
-    .tomate:hover {
-      transform:
-        translate(-50%, -50%)
-        scale(1.12);
-    }
-
-    .tomate:active {
-      transform:
-        translate(-50%, -50%)
-        scale(0.88);
-    }
-
-    .tomate.colhido {
-      opacity: 0;
-
-      pointer-events: none;
-
-      transform:
-        translate(-50%, -50%)
-        scale(1.8);
-    }
-
-    /*
-      Tomate que está longe do personagem.
-      Continua visível, mas fica um pouco menos destacado.
-    */
-
-    .tomate.longe {
-      filter: saturate(0.7) brightness(0.8);
-      opacity: 0.72;
-    }
-
-    /*
-      Tomate próximo do personagem.
-    */
-
-    .tomate.perto {
-      filter: saturate(1.2) brightness(1.12);
-
-      box-shadow:
-        0 0 0 5px rgba(76,255,75,0.18),
-        0 0 25px rgba(76,255,75,0.85);
-    }
-
-    /* =========================
-       PERSONAGEM
-    ========================= */
-
-    .personagem {
-
-      position: absolute;
-
-      left: 10%;
-
-      bottom: 8%;
-
-      width: 58px;
-      height: 86px;
-
-      transform: translateX(-50%);
-
-      z-index: 30;
-
-      pointer-events: none;
-
-      transition:
-        left 0.08s linear;
-    }
-
-    .personagem-corpo {
-      position: absolute;
-
-      left: 50%;
-      bottom: 0;
-
-      transform: translateX(-50%);
-
-      width: 34px;
-      height: 43px;
-
-      background: #176b42;
-
-      border: 2px solid #063b23;
-
-      border-radius:
-        13px 13px 8px 8px;
-    }
-
-    .personagem-cabeca {
-      position: absolute;
-
-      left: 50%;
-      top: 4px;
-
-      transform: translateX(-50%);
-
-      width: 34px;
-      height: 34px;
-
-      background: #d9975c;
-
-      border: 2px solid #633817;
-
-      border-radius: 50%;
-
-      z-index: 2;
-    }
-
-    .personagem-chapeu {
-      position: absolute;
-
-      left: 50%;
-      top: 0;
-
-      transform: translateX(-50%);
-
-      width: 43px;
-      height: 13px;
-
-      background: #d8b542;
-
-      border-radius: 50%;
-
-      border: 2px solid #765d12;
-
-      z-index: 4;
-    }
-
-    .personagem-perna {
-      position: absolute;
-
-      bottom: -4px;
-
-      width: 10px;
-      height: 25px;
-
-      background: #244b35;
-
-      border-radius: 8px;
-
-      z-index: -1;
-    }
-
-    .perna-esquerda {
-      left: 13px;
-    }
-
-    .perna-direita {
-      right: 13px;
-    }
-
-    .personagem.andando .perna-esquerda {
-      animation: andarEsquerda 0.22s infinite alternate;
-    }
-
-    .personagem.andando .perna-direita {
-      animation: andarDireita 0.22s infinite alternate;
-    }
-
-    @keyframes andarEsquerda {
-      from {
-        transform: rotate(12deg);
-      }
-
-      to {
-        transform: rotate(-12deg);
-      }
-    }
-
-    @keyframes andarDireita {
-      from {
-        transform: rotate(-12deg);
-      }
-
-      to {
-        transform: rotate(12deg);
-      }
-    }
-
-    /* =========================
-       INDICADOR DE DISTÂNCIA
-    ========================= */
-
-    .indicador {
-
-      position: absolute;
-
-      left: 50%;
-
-      bottom: 2%;
-
-      transform: translateX(-50%);
-
-      z-index: 40;
-
-      background:
-        rgba(4,49,29,0.92);
-
-      border:
-        1px solid
-        rgba(217,185,75,0.65);
-
-      border-radius: 12px;
-
-      padding: 7px 12px;
-
-      font-size: 12px;
-
-      font-weight: bold;
-
-      white-space: nowrap;
-
-      pointer-events: none;
-    }
-
-    /* =========================
-       INSTRUÇÃO
-    ========================= */
-
-    .instrucao {
-
-      position: absolute;
-
-      left: 15px;
-      top: 15px;
-
-      max-width: 320px;
-
-      padding: 11px 15px;
-
-      border-radius: 14px;
-
-      background:
-        rgba(4,49,29,0.90);
-
-      border:
-        1px solid
-        rgba(217,185,75,0.7);
-
-      font-weight: bold;
-
-      z-index: 50;
-
-      pointer-events: none;
-    }
-
-    .instrucao small {
-
-      display: block;
-
-      margin-top: 4px;
-
-      font-weight: normal;
-
-      opacity: 0.8;
-    }
-
-    /* =========================
-       CONTROLES
-    ========================= */
-
-    .controles {
-
-      position: absolute;
-
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      z-index: 60;
-
-      pointer-events: none;
-    }
-
-    .grupo-controle {
-
-      display: flex;
-
-      gap: 10px;
-
-      pointer-events: auto;
-    }
-
-    .controle {
-
-      width: 58px;
-      height: 52px;
-
-      border: 1px solid
-        rgba(217,185,75,0.75);
-
-      border-radius: 14px;
-
-      background:
-        rgba(4,49,29,0.94);
-
-      color: white;
-
-      font-size: 23px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      user-select: none;
-
-      -webkit-user-select: none;
-
-      touch-action: manipulation;
-    }
-
-    .controle:active {
-      transform: scale(0.92);
-
-      background: #0b7543;
-    }
-
-    .pausar {
-
-      width: auto;
-
-      padding:
-        0 17px;
-
-      border: 1px solid
-        rgba(217,185,75,0.75);
-
-      border-radius: 14px;
-
-      height: 52px;
-
-      background:
-        rgba(4,49,29,0.94);
-
-      color: white;
-
-      font-size: 15px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      pointer-events: auto;
-    }
-
-    /* =========================
-       TELA DE INÍCIO
-    ========================= */
-
-    .inicio-jogo {
-
-      position: absolute;
-
-      inset: 0;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      z-index: 100;
-
-      background:
-        rgba(2,25,15,0.48);
-
-      backdrop-filter: blur(2px);
-    }
-
-    .inicio-card {
-
-      width: min(92%, 430px);
-
-      text-align: center;
-
-      background:
-        rgba(5,55,32,0.96);
-
-      border:
-        1px solid
-        rgba(217,185,75,0.8);
-
-      border-radius: 22px;
-
-      padding: 25px 20px;
-
-      box-shadow:
-        0 12px 35px
-        rgba(0,0,0,0.35);
-    }
-
-    .inicio-card h2 {
-      margin: 0 0 8px;
-
-      font-size: 25px;
-    }
-
-    .inicio-card p {
-      margin: 0;
-
-      line-height: 1.5;
-
-      opacity: 0.9;
-    }
-
-    .botao-iniciar {
-
-      margin-top: 20px;
-
-      border: 0;
-
-      border-radius: 14px;
-
-      padding:
-        13px 25px;
-
-      background: var(--dourado);
-
-      color: #172015;
-
-      font-size: 17px;
-
-      font-weight: 800;
-
-      cursor: pointer;
-    }
-
-    .botao-iniciar:active {
-      transform: scale(0.96);
-    }
-
-    .inicio-jogo.escondido {
-      display: none;
-    }
-
-    /* =========================
-       RESULTADO
-    ========================= */
-
-    .resultado {
-
-      display: none;
-
-      padding:
-        28px 18px 35px;
-
-      text-align: center;
-
-      background: #0b2016;
-    }
-
-    .resultado.ativo {
-      display: block;
-    }
-
-    .resultado h2 {
-      margin-top: 0;
-    }
-
-    .resultado strong {
-      color: #f2cf57;
-    }
-
-    .botoes {
-
-      display: flex;
-
-      justify-content: center;
-
-      flex-wrap: wrap;
-
-      gap: 10px;
-
-      margin-top: 18px;
-    }
-
-    .botao {
-
-      display: inline-block;
-
-      padding:
-        12px 18px;
-
-      border-radius: 12px;
-
-      border: 0;
-
-      text-decoration: none;
-
-      font-size: 16px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-    .botao-principal {
-      background: var(--dourado);
-
-      color: #172015;
-    }
-
-    .botao-secundario {
-      background: #17472f;
-
-      color: white;
-
-      border:
-        1px solid
-        rgba(255,255,255,0.2);
-    }
-
-    /* =========================
-       AVISO
-    ========================= */
-
-    .aviso {
-
-      text-align: center;
-
-      padding:
-        10px 14px 20px;
-
-      font-size: 12px;
-
-      opacity: 0.6;
-    }
-
-    /* =========================
-       CELULAR
-    ========================= */
-
-    @media (max-width: 700px) {
-
-      .topo {
-        min-height: 70px;
-
-        padding: 8px 10px;
-      }
-
-      .logo {
-        width: 48px;
-        height: 48px;
-      }
-
-      .titulo h1 {
-        font-size: 19px;
-      }
-
-      .titulo p {
-        font-size: 13px;
-      }
-
-      .voltar {
-        padding: 8px 10px;
-
-        font-size: 13px;
-      }
-
-      .painel {
-        grid-template-columns:
-          repeat(2, 1fr);
-
-        gap: 7px;
-
-        padding: 7px;
-      }
-
-      .painel-card {
-        padding: 8px 10px;
-      }
-
-      .painel-valor {
-        font-size: 20px;
-      }
-
-      .jogo {
-        aspect-ratio: 3 / 2;
-
-        min-height: 410px;
-      }
-
-      .fileira-tomates {
-        left: 4%;
-        right: 4%;
-
-        top: 39%;
-
-        height: 25%;
-      }
-
-      .tomate {
-        width: 39px;
-        height: 39px;
-      }
-
-      .personagem {
-        width: 52px;
-        height: 78px;
-
-        bottom: 17%;
-      }
-
-      .personagem-corpo {
-        width: 31px;
-        height: 39px;
-      }
-
-      .personagem-cabeca {
-        width: 31px;
-        height: 31px;
-      }
-
-      .personagem-chapeu {
-        width: 39px;
-      }
-
-      .instrucao {
-        left: 10px;
+    #hud {
         top: 10px;
-
-        max-width:
-          calc(100% - 20px);
-
-        font-size: 13px;
-      }
-
-      .controles {
         left: 10px;
         right: 10px;
-        bottom: 10px;
-      }
-
-      .controle {
-        width: 54px;
-        height: 50px;
-      }
-
-      .pausar {
-        height: 50px;
-
-        padding:
-          0 13px;
-
-        font-size: 13px;
-      }
-
-      .indicador {
-        bottom: 13%;
-
-        font-size: 11px;
-      }
-
     }
 
-  </style>
+    .hud-card {
+        padding: 8px 11px;
+        border-radius: 13px;
+    }
+
+    .hud-value {
+        font-size: 17px;
+    }
+
+    #message {
+        top: 75px;
+        font-size: 11px;
+    }
+
+    #controls {
+        left: 12px;
+        bottom: 12px;
+
+        grid-template-columns: repeat(3, 52px);
+        grid-template-rows: repeat(2, 52px);
+    }
+
+    .control {
+        width: 52px;
+        height: 52px;
+        border-radius: 15px;
+        font-size: 20px;
+    }
+
+    #actions {
+        right: 12px;
+        bottom: 12px;
+    }
+
+    .action-button {
+        min-width: 105px;
+        min-height: 46px;
+        font-size: 11px;
+    }
+}
+</style>
+
+<!-- Three.js -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"
+    }
+}
+</script>
+
 </head>
 
 <body>
 
+<div id="game"></div>
 
-  <!-- =========================
-       CABEÇALHO
-  ========================= -->
+<!-- =========================
+     HUD
+========================= -->
 
-  <header class="topo">
+<div id="hud">
 
-    <img
-      src="logo.sta.PNG"
-      class="logo"
-      alt="Santa Luzia Tomates"
-    >
-
-    <div class="titulo">
-
-      <h1>
-        SANTA LUZIA CENTRAL
-      </h1>
-
-      <p>
-        🍅 Colheita de Tomates
-      </p>
-
+    <div class="hud-card">
+        <div class="hud-title">🍅 COLHEITA</div>
+        <div class="hud-value">
+            <span id="score">0</span> tomates
+        </div>
     </div>
 
-    <div class="espaco"></div>
-
-    <a
-      href="index.html"
-      class="voltar"
-    >
-      ← Central
-    </a>
-
-  </header>
-
-
-  <!-- =========================
-       PAINEL
-  ========================= -->
-
-  <section class="painel">
-
-    <div class="painel-card">
-
-      <div class="painel-label">
-        Tempo
-      </div>
-
-      <div
-        id="tempo"
-        class="painel-valor"
-      >
-        30s
-      </div>
-
+    <div class="hud-card">
+        <div class="hud-title">⏱ TEMPO</div>
+        <div class="hud-value" id="timer">60</div>
     </div>
 
+</div>
 
-    <div class="painel-card">
+<div id="message"></div>
 
-      <div class="painel-label">
-        Colhidos
-      </div>
+<!-- =========================
+     CONTROLES
+========================= -->
 
-      <div
-        id="colhidos"
-        class="painel-valor"
-      >
-        0 / 12
-      </div>
+<div id="controls">
 
-    </div>
+    <button class="control" id="up">▲</button>
 
+    <button class="control" id="left">◀</button>
 
-    <div class="painel-card">
+    <button class="control" id="down">▼</button>
 
-      <div class="painel-label">
-        Pontos
-      </div>
+    <button class="control" id="right">▶</button>
 
-      <div
-        id="pontos"
-        class="painel-valor"
-      >
-        0
-      </div>
+</div>
 
-    </div>
+<div id="actions">
 
+    <button class="action-button" id="harvestButton">
+        🍅 COLHER
+    </button>
 
-    <div class="painel-card">
+    <button class="action-button" id="restartButton">
+        ↻ RECOMEÇAR
+    </button>
 
-      <div class="painel-label">
-        STACOIN
-      </div>
+</div>
 
-      <div
-        id="stacoin"
-        class="painel-valor"
-      >
-        +0
-      </div>
+<!-- =========================
+     TELA INICIAL
+========================= -->
 
-    </div>
+<div id="startScreen">
 
-  </section>
+    <div class="start-card">
 
+        <div class="logo-circle">
+            🍅
+        </div>
 
-  <!-- =========================
-       ÁREA DO JOGO
-  ========================= -->
-
-  <main
-    class="jogo"
-    id="jogo"
-  >
-
-    <img
-      src="colheita-cenario.PNG"
-      class="cenario"
-      alt="Plantação de tomates da Santa Luzia"
-    >
-
-    <div class="sombra-cenario"></div>
-
-
-    <!-- =========================
-         UMA ÚNICA FILEIRA
-    ========================= -->
-
-    <div
-      class="fileira-tomates"
-      id="fileiraTomates"
-    ></div>
-
-
-    <!-- =========================
-         PERSONAGEM
-    ========================= -->
-
-    <div
-      class="personagem"
-      id="personagem"
-    >
-
-      <div class="personagem-chapeu"></div>
-
-      <div class="personagem-cabeca"></div>
-
-      <div class="personagem-corpo"></div>
-
-      <div class="personagem-perna perna-esquerda"></div>
-
-      <div class="personagem-perna perna-direita"></div>
-
-    </div>
-
-
-    <!-- =========================
-         INDICADOR
-    ========================= -->
-
-    <div
-      class="indicador"
-      id="indicador"
-    >
-      🚶 Chegue perto dos tomates para colher
-    </div>
-
-
-    <!-- =========================
-         INSTRUÇÃO
-    ========================= -->
-
-    <div class="instrucao">
-
-      🍅 Toque no tomate para colher!
-
-      <small>
-        Use ← → para caminhar pela fileira.
-      </small>
-
-    </div>
-
-
-    <!-- =========================
-         CONTROLES
-    ========================= -->
-
-    <div class="controles">
-
-      <div class="grupo-controle">
-
-        <button
-          class="controle"
-          id="esquerda"
-          type="button"
-          aria-label="Andar para esquerda"
-        >
-          ◀
-        </button>
-
-        <button
-          class="controle"
-          id="direita"
-          type="button"
-          aria-label="Andar para direita"
-        >
-          ▶
-        </button>
-
-      </div>
-
-
-      <button
-        class="pausar"
-        id="botaoPausar"
-        type="button"
-      >
-        ⏸ Pausar
-      </button>
-
-    </div>
-
-
-    <!-- =========================
-         TELA DE INÍCIO
-    ========================= -->
-
-    <div
-      class="inicio-jogo"
-      id="inicioJogo"
-    >
-
-      <div class="inicio-card">
-
-        <h2>
-          🍅 Colheita de Tomates
-        </h2>
+        <h1>Colheita de Tomates</h1>
 
         <p>
-          Caminhe pela fileira e toque
-          nos tomates quando chegar perto.
+            Entre na roça, caminhe pela fileira
+            e colha os tomates maduros.
         </p>
 
-        <button
-          class="botao-iniciar"
-          id="botaoIniciar"
-          type="button"
-        >
-          🍅 COMEÇAR COLHEITA
+        <button class="start-button" id="startButton">
+            COMEÇAR COLHEITA
         </button>
 
-      </div>
+        <div class="instructions">
+
+            🎮 <b>PC:</b> use WASD ou as setas<br>
+            📱 <b>Celular:</b> use os controles na tela<br>
+            🍅 Fique perto do tomate e toque em <b>COLHER</b>
+
+        </div>
 
     </div>
 
-  </main>
+</div>
 
 
-  <!-- =========================
-       RESULTADO
-  ========================= -->
+<script type="module">
 
-  <section
-    class="resultado"
-    id="resultado"
-  >
+import * as THREE from "three";
 
-    <h2>
-      🌱 Colheita encerrada!
-    </h2>
 
-    <p id="resumo"></p>
+/* =========================================================
+   CONFIGURAÇÕES
+========================================================= */
 
-    <div class="botoes">
+const GAME_TIME = 60;
 
-      <button
-        class="botao botao-principal"
-        id="jogarNovamente"
-        type="button"
-      >
-        🍅 Jogar novamente
-      </button>
+const FIELD_WIDTH = 34;
+const FIELD_LENGTH = 100;
 
-      <a
-        href="index.html"
-        class="botao botao-secundario"
-      >
-        ← Voltar para Central
-      </a>
+const PLAYER_SPEED = 5.5;
 
-    </div>
+const HARVEST_DISTANCE = 4.2;
 
-  </section>
 
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
 
-  <!-- =========================
-       AVISO
-  ========================= -->
+let scene;
+let camera;
+let renderer;
 
-  <div class="aviso">
+let player;
 
-    🪙 STACOIN está em modo de teste.
-    Nenhum saldo real é alterado nesta versão.
+let tomatoes = [];
 
-  </div>
+let score = 0;
 
+let timeLeft = GAME_TIME;
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
+let gameStarted = false;
+let gameOver = false;
 
-  <script>
+let lastTime = 0;
 
-    /*
-      ========================================
-      CONFIGURAÇÕES DO JOGO
-      ========================================
-    */
+const keys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+};
 
-    const TEMPO_INICIAL = 30;
 
-    const PONTOS_POR_TOMATE = 10;
+/* =========================================================
+   ELEMENTOS HTML
+========================================================= */
 
-    /*
-      Distância necessária para conseguir
-      colher um tomate.
+const game = document.getElementById("game");
 
-      Quanto menor o número,
-      mais perto o personagem precisa estar.
-    */
+const scoreElement =
+    document.getElementById("score");
 
-    const DISTANCIA_COLHEITA = 10;
+const timerElement =
+    document.getElementById("timer");
 
+const messageElement =
+    document.getElementById("message");
 
-    /*
-      ========================================
-      POSIÇÕES DOS TOMATES
-      ========================================
+const startScreen =
+    document.getElementById("startScreen");
 
-      Todos ficam em UMA ÚNICA FILEIRA.
 
-      left = posição horizontal
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
 
-      top = pequena variação vertical
+init();
 
-      A variação é proposital para parecer
-      que os frutos estão presos nos cachos.
-    */
 
-    const tomatesConfig = [
+function init() {
 
-      { left: 7,  top: 58 },
-      { left: 15, top: 49 },
-      { left: 23, top: 55 },
-      { left: 31, top: 47 },
+    createScene();
 
-      { left: 39, top: 53 },
-      { left: 47, top: 46 },
-      { left: 55, top: 54 },
-      { left: 63, top: 48 },
+    createLights();
 
-      { left: 71, top: 55 },
-      { left: 79, top: 47 },
-      { left: 87, top: 53 },
-      { left: 94, top: 48 }
+    createWorld();
 
-    ];
+    createField();
 
+    createPlayer();
 
-    /*
-      ========================================
-      VARIÁVEIS
-      ========================================
-    */
+    createCamera();
 
-    let tempo = TEMPO_INICIAL;
+    createRenderer();
 
-    let quantidadeColhida = 0;
+    setupControls();
 
-    let pontos = 0;
+    animate();
 
-    let personagemX = 10;
+}
 
-    let jogoIniciado = false;
 
-    let jogoPausado = false;
+/* =========================================================
+   CENA
+========================================================= */
 
-    let jogoEncerrado = false;
+function createScene() {
 
-    let intervalo = null;
+    scene = new THREE.Scene();
 
+    scene.background =
+        new THREE.Color(0x8fc8ff);
 
-    /*
-      ========================================
-      ELEMENTOS
-      ========================================
-    */
-
-    const tempoElemento =
-      document.getElementById("tempo");
-
-    const colhidosElemento =
-      document.getElementById("colhidos");
-
-    const pontosElemento =
-      document.getElementById("pontos");
-
-    const stacoinElemento =
-      document.getElementById("stacoin");
-
-    const fileiraTomates =
-      document.getElementById("fileiraTomates");
-
-    const personagem =
-      document.getElementById("personagem");
-
-    const indicador =
-      document.getElementById("indicador");
-
-    const botaoPausar =
-      document.getElementById("botaoPausar");
-
-    const inicioJogo =
-      document.getElementById("inicioJogo");
-
-    const botaoIniciar =
-      document.getElementById("botaoIniciar");
-
-    const resultado =
-      document.getElementById("resultado");
-
-    const resumo =
-      document.getElementById("resumo");
-
-    const botaoJogarNovamente =
-      document.getElementById("jogarNovamente");
-
-    const botaoEsquerda =
-      document.getElementById("esquerda");
-
-    const botaoDireita =
-      document.getElementById("direita");
-
-
-    /*
-      ========================================
-      ATUALIZA PAINEL
-      ========================================
-    */
-
-    function atualizarPainel() {
-
-      tempoElemento.textContent =
-        tempo + "s";
-
-
-      colhidosElemento.textContent =
-        quantidadeColhida +
-        " / " +
-        tomatesConfig.length;
-
-
-      pontosElemento.textContent =
-        pontos;
-
-
-      /*
-        TESTE:
-
-        10 pontos = 1 STACOIN
-
-        Depois ligaremos isso ao Supabase.
-      */
-
-      const recompensa =
-        Math.floor(
-          pontos / 10
+    scene.fog =
+        new THREE.Fog(
+            0x8fc8ff,
+            35,
+            125
         );
 
+}
 
-      stacoinElemento.textContent =
-        "+" + recompensa;
+
+/* =========================================================
+   ILUMINAÇÃO
+========================================================= */
+
+function createLights() {
+
+    const ambient =
+        new THREE.HemisphereLight(
+            0xffffff,
+            0x5a4630,
+            2.2
+        );
+
+    scene.add(ambient);
+
+
+    const sun =
+        new THREE.DirectionalLight(
+            0xffffff,
+            3
+        );
+
+    sun.position.set(
+        -20,
+        35,
+        20
+    );
+
+    sun.castShadow = true;
+
+    scene.add(sun);
+
+}
+
+
+/* =========================================================
+   MATERIAIS
+========================================================= */
+
+const materials = {
+
+    grass:
+        new THREE.MeshStandardMaterial({
+            color: 0x4f8d3b
+        }),
+
+    dirt:
+        new THREE.MeshStandardMaterial({
+            color: 0x8a5a35
+        }),
+
+    dirtDark:
+        new THREE.MeshStandardMaterial({
+            color: 0x704326
+        }),
+
+    wood:
+        new THREE.MeshStandardMaterial({
+            color: 0x68432a
+        }),
+
+    wire:
+        new THREE.MeshStandardMaterial({
+            color: 0x4b4b4b,
+            metalness: .6,
+            roughness: .5
+        }),
+
+    leaf:
+        new THREE.MeshStandardMaterial({
+            color: 0x286d2d
+        }),
+
+    tomato:
+        new THREE.MeshStandardMaterial({
+            color: 0xc92f27,
+            roughness: .65
+        }),
+
+    tomatoLight:
+        new THREE.MeshStandardMaterial({
+            color: 0xf04432
+        }),
+
+    shirt:
+        new THREE.MeshStandardMaterial({
+            color: 0x174b2c
+        }),
+
+    skin:
+        new THREE.MeshStandardMaterial({
+            color: 0xc88b62
+        }),
+
+    pants:
+        new THREE.MeshStandardMaterial({
+            color: 0x2c3440
+        }),
+
+    shoe:
+        new THREE.MeshStandardMaterial({
+            color: 0x202020
+        })
+
+};
+
+
+/* =========================================================
+   MUNDO
+========================================================= */
+
+function createWorld() {
+
+    const groundGeometry =
+        new THREE.PlaneGeometry(
+            180,
+            180
+        );
+
+    const ground =
+        new THREE.Mesh(
+            groundGeometry,
+            materials.grass
+        );
+
+    ground.rotation.x =
+        -Math.PI / 2;
+
+    ground.position.y = -0.05;
+
+    ground.receiveShadow = true;
+
+    scene.add(ground);
+
+
+    /*
+       Estrada principal
+    */
+
+    const roadGeometry =
+        new THREE.PlaneGeometry(
+            8,
+            FIELD_LENGTH
+        );
+
+    const road =
+        new THREE.Mesh(
+            roadGeometry,
+            materials.dirt
+        );
+
+    road.rotation.x =
+        -Math.PI / 2;
+
+    road.position.set(
+        0,
+        0,
+        0
+    );
+
+    scene.add(road);
+
+
+    /*
+       Pequenos caminhos laterais
+    */
+
+    for (
+        let x = -15;
+        x <= 15;
+        x += 10
+    ) {
+
+        const path =
+            new THREE.Mesh(
+                new THREE.PlaneGeometry(
+                    3,
+                    FIELD_LENGTH
+                ),
+                materials.dirtDark
+            );
+
+        path.rotation.x =
+            -Math.PI / 2;
+
+        path.position.set(
+            x,
+            0.01,
+            0
+        );
+
+        scene.add(path);
 
     }
 
 
     /*
-      ========================================
-      CRIA OS TOMATES
-      ========================================
+       Pequenos detalhes de terra
     */
 
-    function criarTomates() {
+    for (
+        let i = 0;
+        i < 100;
+        i++
+    ) {
 
-      fileiraTomates.innerHTML = "";
+        const stone =
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    .05 + Math.random() * .08,
+                    6,
+                    6
+                ),
+                materials.dirtDark
+            );
 
+        stone.position.set(
+            (Math.random() - .5) * 30,
+            .04,
+            (Math.random() - .5) * 90
+        );
 
-      tomatesConfig.forEach(
-        (config, indice) => {
+        scene.add(stone);
 
-          const tomate =
-            document.createElement("button");
+    }
 
-
-          tomate.type = "button";
-
-
-          tomate.className =
-            "tomate";
-
-
-          tomate.dataset.index =
-            indice;
-
-
-          tomate.style.left =
-            config.left + "%";
-
-
-          tomate.style.top =
-            config.top + "%";
+}
 
 
-          tomate.setAttribute(
-            "aria-label",
-            "Colher tomate"
-          );
+/* =========================================================
+   CAMPO DE TOMATES
+========================================================= */
+
+function createField() {
+
+    /*
+       Duas fileiras principais.
+
+       O corredor central é onde
+       o personagem poderá caminhar.
+    */
+
+    createTomatoRow(-7);
+
+    createTomatoRow(7);
+
+}
 
 
-          tomate.addEventListener(
-            "click",
-            () => {
+/* =========================================================
+   FILEIRA
+========================================================= */
 
-              tentarColher(
-                tomate,
-                config.left
-              );
+function createTomatoRow(x) {
 
+    const spacing = 5;
+
+    for (
+        let z = -45;
+        z <= 45;
+        z += spacing
+    ) {
+
+        createPlant(
+            x,
+            z
+        );
+
+    }
+
+    /*
+       Arames horizontais
+    */
+
+    for (
+        let wireHeight = 1.4;
+        wireHeight <= 2.8;
+        wireHeight += .7
+    ) {
+
+        const wire =
+            new THREE.Mesh(
+                new THREE.CylinderGeometry(
+                    .025,
+                    .025,
+                    90,
+                    6
+                ),
+                materials.wire
+            );
+
+        wire.rotation.x =
+            Math.PI / 2;
+
+        wire.position.set(
+            x,
+            wireHeight,
+            0
+        );
+
+        scene.add(wire);
+
+    }
+
+}
+
+
+/* =========================================================
+   PLANTA
+========================================================= */
+
+function createPlant(x, z) {
+
+    /*
+       Palanque
+    */
+
+    const post =
+        new THREE.Mesh(
+            new THREE.CylinderGeometry(
+                .10,
+                .13,
+                3.4,
+                8
+            ),
+            materials.wood
+        );
+
+    post.position.set(
+        x,
+        1.7,
+        z
+    );
+
+    post.castShadow = true;
+
+    scene.add(post);
+
+
+    /*
+       Pequena cruzeta no topo
+    */
+
+    const cross =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                1.0,
+                .10,
+                .10
+            ),
+            materials.wood
+        );
+
+    cross.position.set(
+        x,
+        3.0,
+        z
+    );
+
+    scene.add(cross);
+
+
+    /*
+       Planta principal
+    */
+
+    const stem =
+        new THREE.Mesh(
+            new THREE.CylinderGeometry(
+                .055,
+                .08,
+                2.5,
+                6
+            ),
+            materials.leaf
+        );
+
+    stem.position.set(
+        x,
+        1.3,
+        z
+    );
+
+    scene.add(stem);
+
+
+    /*
+       Galhos
+    */
+
+    for (
+        let branch = 0;
+        branch < 4;
+        branch++
+    ) {
+
+        const branchMesh =
+            new THREE.Mesh(
+                new THREE.CylinderGeometry(
+                    .025,
+                    .035,
+                    1.2,
+                    5
+                ),
+                materials.leaf
+            );
+
+        branchMesh.rotation.z =
+            branch % 2 === 0
+                ? .55
+                : -.55;
+
+        branchMesh.position.set(
+            x +
+            (branch % 2 === 0 ? .28 : -.28),
+            1.0 + branch * .35,
+            z
+        );
+
+        scene.add(branchMesh);
+
+    }
+
+
+    /*
+       Folhas
+    */
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        const leaf =
+            new THREE.Mesh(
+                new THREE.SphereGeometry(
+                    .22,
+                    7,
+                    5
+                ),
+                materials.leaf
+            );
+
+        leaf.scale.y = .35;
+
+        leaf.position.set(
+            x +
+            (Math.random() - .5) * .8,
+
+            .8 +
+            Math.random() * 2.1,
+
+            z +
+            (Math.random() - .5) * .35
+        );
+
+        leaf.rotation.z =
+            Math.random() * Math.PI;
+
+        scene.add(leaf);
+
+    }
+
+
+    /*
+       Tomates
+
+       Eles ficam próximos
+       da planta, nunca no chão.
+    */
+
+    const tomatoCount =
+        3 + Math.floor(Math.random() * 3);
+
+
+    for (
+        let i = 0;
+        i < tomatoCount;
+        i++
+    ) {
+
+        const tomato =
+            createTomato(
+                x,
+                z,
+                i
+            );
+
+        tomatoes.push(tomato);
+
+    }
+
+}
+
+
+/* =========================================================
+   TOMATE
+========================================================= */
+
+function createTomato(x, z, index) {
+
+    const tomato =
+        new THREE.Mesh(
+            new THREE.SphereGeometry(
+                .24,
+                12,
+                10
+            ),
+            index % 2 === 0
+                ? materials.tomato
+                : materials.tomatoLight
+        );
+
+
+    const side =
+        Math.random() > .5
+            ? 1
+            : -1;
+
+
+    tomato.position.set(
+
+        x +
+        side *
+        (.30 + Math.random() * .35),
+
+        .95 +
+        Math.random() * 1.8,
+
+        z +
+        (Math.random() - .5) * .35
+
+    );
+
+
+    tomato.scale.y = .82;
+
+    tomato.castShadow = true;
+
+    tomato.userData.isTomato = true;
+
+    tomato.userData.harvested = false;
+
+
+    scene.add(tomato);
+
+
+    /*
+       Cabinho
+    */
+
+    const stem =
+        new THREE.Mesh(
+            new THREE.CylinderGeometry(
+                .025,
+                .025,
+                .15,
+                5
+            ),
+            materials.leaf
+        );
+
+    stem.position.copy(
+        tomato.position
+    );
+
+    stem.position.y += .22;
+
+    scene.add(stem);
+
+
+    tomato.userData.stem =
+        stem;
+
+
+    return tomato;
+
+}
+
+
+/* =========================================================
+   PERSONAGEM
+========================================================= */
+
+function createPlayer() {
+
+    player =
+        new THREE.Group();
+
+
+    /*
+       Corpo
+    */
+
+    const body =
+        new THREE.Mesh(
+            new THREE.BoxGeometry(
+                .55,
+                .8,
+                .38
+            ),
+            materials.shirt
+        );
+
+    body.position.y =
+        1.15;
+
+    player.add(body);
+
+
+    /*
+       Cabeça
+    */
+
+    const head =
+        new THREE.Mesh(
+            new THREE.SphereGeometry(
+                .27,
+                16,
+                12
+            ),
+            materials.skin
+        );
+
+    head.position.y =
+        1.75;
+
+    player.add(head);
+
+
+    /*
+       Boné
+    */
+
+    const cap =
+        new THREE.Mesh(
+            new THREE.CylinderGeometry(
+                .30,
+                .30,
+                .12,
+                16
+            ),
+            materials.shirt
+        );
+
+    cap.position.y =
+        2.02;
+
+    player.add(cap);
+
+
+    /*
+       Pernas
+    */
+
+    const legGeometry =
+        new THREE.BoxGeometry(
+            .18,
+            .7,
+            .20
+        );
+
+
+    const leftLeg =
+        new THREE.Mesh(
+            legGeometry,
+            materials.pants
+        );
+
+    leftLeg.position.set(
+        -.14,
+        .45,
+        0
+    );
+
+    player.add(leftLeg);
+
+
+    const rightLeg =
+        new THREE.Mesh(
+            legGeometry,
+            materials.pants
+        );
+
+    rightLeg.position.set(
+        .14,
+        .45,
+        0
+    );
+
+    player.add(rightLeg);
+
+
+    /*
+       Braços
+    */
+
+    const armGeometry =
+        new THREE.BoxGeometry(
+            .16,
+            .65,
+            .16
+        );
+
+
+    const leftArm =
+        new THREE.Mesh(
+            armGeometry,
+            materials.skin
+        );
+
+    leftArm.position.set(
+        -.40,
+        1.18,
+        0
+    );
+
+    leftArm.rotation.z =
+        -.15;
+
+    player.add(leftArm);
+
+
+    const rightArm =
+        new THREE.Mesh(
+            armGeometry,
+            materials.skin
+        );
+
+    rightArm.position.set(
+        .40,
+        1.18,
+        0
+    );
+
+    rightArm.rotation.z =
+        .15;
+
+    player.add(rightArm);
+
+
+    /*
+       Botas
+    */
+
+    const shoeGeometry =
+        new THREE.BoxGeometry(
+            .22,
+            .14,
+            .36
+        );
+
+
+    const leftShoe =
+        new THREE.Mesh(
+            shoeGeometry,
+            materials.shoe
+        );
+
+    leftShoe.position.set(
+        -.14,
+        .08,
+        -.05
+    );
+
+    player.add(leftShoe);
+
+
+    const rightShoe =
+        new THREE.Mesh(
+            shoeGeometry,
+            materials.shoe
+        );
+
+    rightShoe.position.set(
+        .14,
+        .08,
+        -.05
+    );
+
+    player.add(rightShoe);
+
+
+    /*
+       Posição inicial
+
+       Dentro do corredor.
+    */
+
+    player.position.set(
+        0,
+        0,
+        38
+    );
+
+
+    scene.add(player);
+
+}
+
+
+/* =========================================================
+   CÂMERA
+========================================================= */
+
+function createCamera() {
+
+    camera =
+        new THREE.PerspectiveCamera(
+            60,
+            window.innerWidth /
+            window.innerHeight,
+            .1,
+            200
+        );
+
+
+    camera.position.set(
+        0,
+        6,
+        45
+    );
+
+
+    camera.lookAt(
+        player.position
+    );
+
+}
+
+
+/* =========================================================
+   RENDERER
+========================================================= */
+
+function createRenderer() {
+
+    renderer =
+        new THREE.WebGLRenderer({
+            antialias: true,
+            powerPreference: "high-performance"
+        });
+
+
+    renderer.setPixelRatio(
+        Math.min(
+            window.devicePixelRatio,
+            1.7
+        )
+    );
+
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+
+
+    renderer.shadowMap.enabled = true;
+
+
+    renderer.shadowMap.type =
+        THREE.PCFSoftShadowMap;
+
+
+    game.appendChild(
+        renderer.domElement
+    );
+
+
+    window.addEventListener(
+        "resize",
+        resize
+    );
+
+}
+
+
+/* =========================================================
+   CONTROLES
+========================================================= */
+
+function setupControls() {
+
+    /*
+       Teclado
+    */
+
+    window.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "ArrowUp" ||
+                event.key.toLowerCase() === "w"
+            ) {
+                keys.up = true;
             }
-          );
 
+            if (
+                event.key === "ArrowDown" ||
+                event.key.toLowerCase() === "s"
+            ) {
+                keys.down = true;
+            }
 
-          fileiraTomates.appendChild(
-            tomate
-          );
+            if (
+                event.key === "ArrowLeft" ||
+                event.key.toLowerCase() === "a"
+            ) {
+                keys.left = true;
+            }
+
+            if (
+                event.key === "ArrowRight" ||
+                event.key.toLowerCase() === "d"
+            ) {
+                keys.right = true;
+            }
+
+            if (
+                event.code === "Space"
+            ) {
+                harvestNearest();
+            }
 
         }
-      );
+    );
 
-    }
+
+    window.addEventListener(
+        "keyup",
+        event => {
+
+            if (
+                event.key === "ArrowUp" ||
+                event.key.toLowerCase() === "w"
+            ) {
+                keys.up = false;
+            }
+
+            if (
+                event.key === "ArrowDown" ||
+                event.key.toLowerCase() === "s"
+            ) {
+                keys.down = false;
+            }
+
+            if (
+                event.key === "ArrowLeft" ||
+                event.key.toLowerCase() === "a"
+            ) {
+                keys.left = false;
+            }
+
+            if (
+                event.key === "ArrowRight" ||
+                event.key.toLowerCase() === "d"
+            ) {
+                keys.right = false;
+            }
+
+        }
+    );
 
 
     /*
-      ========================================
-      ATUALIZA PERSONAGEM
-      ========================================
+       Botões touch
     */
 
-    function atualizarPersonagem() {
+    bindTouchButton(
+        "up",
+        "up"
+    );
 
-      personagem.style.left =
-        personagemX + "%";
+    bindTouchButton(
+        "down",
+        "down"
+    );
 
+    bindTouchButton(
+        "left",
+        "left"
+    );
 
-      atualizarTomatesProximos();
-
-    }
+    bindTouchButton(
+        "right",
+        "right"
+    );
 
 
     /*
-      ========================================
-      VERIFICA TOMATES PRÓXIMOS
-      ========================================
+       Colher
     */
 
-    function atualizarTomatesProximos() {
-
-      const tomates =
-        document.querySelectorAll(
-          ".tomate:not(.colhido)"
+    document
+        .getElementById("harvestButton")
+        .addEventListener(
+            "click",
+            harvestNearest
         );
 
 
-      let tomateMaisProximo =
-        null;
+    /*
+       Reiniciar
+    */
 
-      let menorDistancia =
+    document
+        .getElementById("restartButton")
+        .addEventListener(
+            "click",
+            restartGame
+        );
+
+
+    /*
+       Começar
+    */
+
+    document
+        .getElementById("startButton")
+        .addEventListener(
+            "click",
+            startGame
+        );
+
+
+    /*
+       Clique direto no tomate
+    */
+
+    renderer.domElement.addEventListener(
+        "pointerdown",
+        event => {
+
+            if (!gameStarted || gameOver)
+                return;
+
+            /*
+               Ignora região dos controles.
+            */
+
+            if (
+                event.clientY >
+                window.innerHeight - 150
+            ) {
+                return;
+            }
+
+
+            harvestNearest();
+
+        }
+    );
+
+}
+
+
+function bindTouchButton(
+    id,
+    key
+) {
+
+    const button =
+        document.getElementById(id);
+
+
+    button.addEventListener(
+        "pointerdown",
+        event => {
+
+            event.preventDefault();
+
+            keys[key] = true;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerup",
+        event => {
+
+            event.preventDefault();
+
+            keys[key] = false;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointercancel",
+        () => {
+
+            keys[key] = false;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerleave",
+        () => {
+
+            keys[key] = false;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   COMEÇAR
+========================================================= */
+
+function startGame() {
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    gameStarted = true;
+    gameOver = false;
+
+    score = 0;
+
+    timeLeft = GAME_TIME;
+
+    updateHUD();
+
+    showMessage(
+        "🍅 Boa colheita!"
+    );
+
+}
+
+
+/* =========================================================
+   RECOMEÇAR
+========================================================= */
+
+function restartGame() {
+
+    /*
+       Remove tomates atuais
+    */
+
+    tomatoes.forEach(
+        tomato => {
+
+            if (
+                tomato.parent
+            ) {
+                tomato.parent.remove(
+                    tomato
+                );
+            }
+
+            if (
+                tomato.userData.stem &&
+                tomato.userData.stem.parent
+            ) {
+                tomato.userData.stem.parent.remove(
+                    tomato.userData.stem
+                );
+            }
+
+        }
+    );
+
+
+    tomatoes = [];
+
+
+    /*
+       Recria as fileiras
+    */
+
+    createField();
+
+
+    player.position.set(
+        0,
+        0,
+        38
+    );
+
+
+    player.rotation.y = 0;
+
+
+    score = 0;
+
+    timeLeft = GAME_TIME;
+
+    gameStarted = true;
+
+    gameOver = false;
+
+    startScreen.classList.add(
+        "hidden"
+    );
+
+    updateHUD();
+
+    showMessage(
+        "↻ Nova colheita!"
+    );
+
+}
+
+
+/* =========================================================
+   MOVIMENTO
+========================================================= */
+
+function updatePlayer(
+    delta
+) {
+
+    if (
+        !gameStarted ||
+        gameOver
+    ) {
+        return;
+    }
+
+
+    let dx = 0;
+    let dz = 0;
+
+
+    if (keys.left)
+        dx -= 1;
+
+    if (keys.right)
+        dx += 1;
+
+    if (keys.up)
+        dz -= 1;
+
+    if (keys.down)
+        dz += 1;
+
+
+    if (
+        dx === 0 &&
+        dz === 0
+    ) {
+        return;
+    }
+
+
+    const length =
+        Math.sqrt(
+            dx * dx +
+            dz * dz
+        );
+
+
+    dx /= length;
+    dz /= length;
+
+
+    const speed =
+        PLAYER_SPEED *
+        delta;
+
+
+    player.position.x +=
+        dx * speed;
+
+
+    player.position.z +=
+        dz * speed;
+
+
+    /*
+       Limites laterais.
+
+       O jogador fica no
+       corredor central.
+    */
+
+    player.position.x =
+        THREE.MathUtils.clamp(
+            player.position.x,
+            -3.2,
+            3.2
+        );
+
+
+    /*
+       Limite da plantação
+    */
+
+    player.position.z =
+        THREE.MathUtils.clamp(
+            player.position.z,
+            -45,
+            40
+        );
+
+
+    /*
+       Rotação do personagem
+    */
+
+    if (
+        Math.abs(dx) >
+        Math.abs(dz)
+    ) {
+
+        player.rotation.y =
+            dx > 0
+                ? Math.PI / 2
+                : -Math.PI / 2;
+
+    } else {
+
+        player.rotation.y =
+            dz > 0
+                ? Math.PI
+                : 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   CÂMERA SEGUINDO JOGADOR
+========================================================= */
+
+function updateCamera() {
+
+    if (!player)
+        return;
+
+
+    const target =
+        new THREE.Vector3(
+            player.position.x,
+            player.position.y + 1.2,
+            player.position.z
+        );
+
+
+    const desired =
+        new THREE.Vector3(
+            player.position.x,
+            player.position.y + 5.8,
+            player.position.z + 7.5
+        );
+
+
+    camera.position.lerp(
+        desired,
+        .08
+    );
+
+
+    camera.lookAt(
+        target
+    );
+
+}
+
+
+/* =========================================================
+   COLHER TOMATE
+========================================================= */
+
+function harvestNearest() {
+
+    if (
+        !gameStarted ||
+        gameOver
+    ) {
+        return;
+    }
+
+
+    let nearest = null;
+
+    let nearestDistance =
         Infinity;
 
 
-      tomates.forEach(
-        (tomate) => {
+    tomatoes.forEach(
+        tomato => {
 
-          const posicao =
-            parseFloat(
-              tomate.style.left
-            );
-
-
-          const distancia =
-            Math.abs(
-              personagemX - posicao
-            );
+            if (
+                tomato.userData.harvested
+            ) {
+                return;
+            }
 
 
-          tomate.classList.remove(
-            "perto"
-          );
-
-          tomate.classList.remove(
-            "longe"
-          );
+            const distance =
+                player.position.distanceTo(
+                    tomato.position
+                );
 
 
-          if (
-            distancia <=
-            DISTANCIA_COLHEITA
-          ) {
+            if (
+                distance <
+                nearestDistance
+            ) {
 
-            tomate.classList.add(
-              "perto"
-            );
+                nearestDistance =
+                    distance;
 
-          } else {
+                nearest =
+                    tomato;
 
-            tomate.classList.add(
-              "longe"
-            );
-
-          }
-
-
-          if (
-            distancia <
-            menorDistancia
-          ) {
-
-            menorDistancia =
-              distancia;
-
-            tomateMaisProximo =
-              tomate;
-
-          }
+            }
 
         }
-      );
+    );
 
 
-      if (
-        tomateMaisProximo
-      ) {
-
-        const posicao =
-          parseFloat(
-            tomateMaisProximo.style.left
-          );
-
-
-        const distancia =
-          Math.abs(
-            personagemX - posicao
-          );
-
-
-        if (
-          distancia <=
-          DISTANCIA_COLHEITA
-        ) {
-
-          indicador.textContent =
-            "🍅 Toque no tomate para colher!";
-
-        } else {
-
-          indicador.textContent =
-            "🚶 Caminhe até o próximo tomate";
-
-        }
-
-      }
-
-    }
-
-
-    /*
-      ========================================
-      TENTAR COLHER
-      ========================================
-    */
-
-    function tentarColher(
-      tomate,
-      posicaoTomate
+    if (
+        !nearest ||
+        nearestDistance >
+        HARVEST_DISTANCE
     ) {
 
-      if (
-        !jogoIniciado ||
-        jogoPausado ||
-        jogoEncerrado
-      ) {
-
-        return;
-
-      }
-
-
-      const distancia =
-        Math.abs(
-          personagemX -
-          posicaoTomate
-        );
-
-
-      /*
-        O jogador PRECISA estar perto.
-      */
-
-      if (
-        distancia >
-        DISTANCIA_COLHEITA
-      ) {
-
-        indicador.textContent =
-          "🚶 Você está longe! Chegue mais perto.";
-
-        /*
-          Pequeno destaque no personagem.
-        */
-
-        personagem.animate(
-          [
-            {
-              transform:
-                "translateX(-50%) translateX(0)"
-            },
-            {
-              transform:
-                "translateX(-50%) translateX(-5px)"
-            },
-            {
-              transform:
-                "translateX(-50%) translateX(5px)"
-            },
-            {
-              transform:
-                "translateX(-50%) translateX(0)"
-            }
-          ],
-          {
-            duration: 220
-          }
+        showMessage(
+            "🍅 Chegue mais perto do tomate!"
         );
 
         return;
-
-      }
-
-
-      /*
-        COLHEU!
-      */
-
-      tomate.classList.add(
-        "colhido"
-      );
-
-
-      quantidadeColhida++;
-
-
-      pontos +=
-        PONTOS_POR_TOMATE;
-
-
-      atualizarPainel();
-
-
-      indicador.textContent =
-        "🍅 Tomate colhido! +10 pontos";
-
-
-      /*
-        Se colheu todos,
-        termina o jogo.
-      */
-
-      if (
-        quantidadeColhida >=
-        tomatesConfig.length
-      ) {
-
-        finalizarJogo();
-
-      }
 
     }
 
 
     /*
-      ========================================
-      ANDAR
-      ========================================
+       Marca colhido
     */
 
-    function andar(direcao) {
-
-      if (
-        !jogoIniciado ||
-        jogoPausado ||
-        jogoEncerrado
-      ) {
-
-        return;
-
-      }
-
-
-      const velocidade =
-        2.5;
-
-
-      personagemX +=
-        direcao *
-        velocidade;
-
-
-      /*
-        Limites da fileira.
-      */
-
-      if (
-        personagemX < 5
-      ) {
-
-        personagemX = 5;
-
-      }
-
-
-      if (
-        personagemX > 95
-      ) {
-
-        personagemX = 95;
-
-      }
-
-
-      personagem.classList.add(
-        "andando"
-      );
-
-
-      atualizarPersonagem();
-
-    }
-
-
-    /*
-      ========================================
-      CONTROLES DE TOQUE
-      ========================================
-    */
-
-    function iniciarMovimento(
-      direcao
-    ) {
-
-      andar(direcao);
-
-
-      /*
-        Continua andando enquanto
-        o botão estiver pressionado.
-      */
-
-      const repeticao =
-        setInterval(
-          () => {
-
-            if (
-              !jogoIniciado ||
-              jogoPausado ||
-              jogoEncerrado
-            ) {
-
-              clearInterval(
-                repeticao
-              );
-
-              return;
-
-            }
-
-
-            andar(direcao);
-
-          },
-          100
-        );
-
-
-      function parar() {
-
-        clearInterval(
-          repeticao
-        );
-
-
-        personagem.classList.remove(
-          "andando"
-        );
-
-
-        botaoEsquerda.removeEventListener(
-          "pointerup",
-          parar
-        );
-
-        botaoEsquerda.removeEventListener(
-          "pointercancel",
-          parar
-        );
-
-        botaoDireita.removeEventListener(
-          "pointerup",
-          parar
-        );
-
-        botaoDireita.removeEventListener(
-          "pointercancel",
-          parar
-        );
-
-      }
-
-
-      if (
-        direcao < 0
-      ) {
-
-        botaoEsquerda.addEventListener(
-          "pointerup",
-          parar,
-          { once: true }
-        );
-
-        botaoEsquerda.addEventListener(
-          "pointercancel",
-          parar,
-          { once: true }
-        );
-
-      } else {
-
-        botaoDireita.addEventListener(
-          "pointerup",
-          parar,
-          { once: true }
-        );
-
-        botaoDireita.addEventListener(
-          "pointercancel",
-          parar,
-          { once: true }
-        );
-
-      }
-
-    }
-
-
-    /*
-      ========================================
-      TECLADO
-      ========================================
-    */
-
-    const teclasPressionadas =
-      new Set();
-
-
-    document.addEventListener(
-      "keydown",
-      (evento) => {
-
-        if (
-          evento.key === "ArrowLeft" ||
-          evento.key === "ArrowRight"
-        ) {
-
-          evento.preventDefault();
-
-        }
-
-
-        teclasPressionadas.add(
-          evento.key
-        );
-
-      }
-    );
-
-
-    document.addEventListener(
-      "keyup",
-      (evento) => {
-
-        teclasPressionadas.delete(
-          evento.key
-        );
-
-      }
-    );
-
-
-    setInterval(
-      () => {
-
-        if (
-          !jogoIniciado ||
-          jogoPausado ||
-          jogoEncerrado
-        ) {
-
-          return;
-
-        }
-
-
-        if (
-          teclasPressionadas.has(
-            "ArrowLeft"
-          )
-        ) {
-
-          andar(-1);
-
-        }
-
-
-        if (
-          teclasPressionadas.has(
-            "ArrowRight"
-          )
-        ) {
-
-          andar(1);
-
-        }
-
-      },
-      80
-    );
-
-
-    /*
-      ========================================
-      CRONÔMETRO
-      ========================================
-    */
-
-    function iniciarCronometro() {
-
-      clearInterval(
-        intervalo
-      );
-
-
-      intervalo =
-        setInterval(
-          () => {
-
-            if (
-              jogoPausado ||
-              !jogoIniciado ||
-              jogoEncerrado
-            ) {
-
-              return;
-
-            }
-
-
-            tempo--;
-
-
-            atualizarPainel();
-
-
-            if (
-              tempo <= 0
-            ) {
-
-              finalizarJogo();
-
-            }
-
-          },
-          1000
-        );
-
-    }
-
-
-    /*
-      ========================================
-      PAUSAR
-      ========================================
-    */
-
-    function alternarPausa() {
-
-      if (
-        !jogoIniciado ||
-        jogoEncerrado
-      ) {
-
-        return;
-
-      }
-
-
-      jogoPausado =
-        !jogoPausado;
-
-
-      if (
-        jogoPausado
-      ) {
-
-        botaoPausar.textContent =
-          "▶️ Continuar";
-
-
-        indicador.textContent =
-          "⏸ Jogo pausado";
-
-      } else {
-
-        botaoPausar.textContent =
-          "⏸ Pausar";
-
-
-        indicador.textContent =
-          "🍅 Continue a colheita!";
-
-      }
-
-    }
-
-
-    /*
-      ========================================
-      FINALIZAR
-      ========================================
-    */
-
-    function finalizarJogo() {
-
-      if (
-        jogoEncerrado
-      ) {
-
-        return;
-
-      }
-
-
-      jogoEncerrado =
+    nearest.userData.harvested =
         true;
 
 
-      clearInterval(
-        intervalo
-      );
+    /*
+       Remove tomate
+    */
+
+    scene.remove(
+        nearest
+    );
 
 
-      personagem.classList.remove(
-        "andando"
-      );
+    if (
+        nearest.userData.stem
+    ) {
+
+        scene.remove(
+            nearest.userData.stem
+        );
+
+    }
 
 
-      const recompensa =
-        Math.floor(
-          pontos / 10
+    score++;
+
+
+    updateHUD();
+
+
+    showMessage(
+        "🍅 Tomate colhido! +1"
+    );
+
+
+    /*
+       Pequena vibração
+       quando disponível.
+    */
+
+    if (
+        navigator.vibrate
+    ) {
+
+        navigator.vibrate(
+            30
+        );
+
+    }
+
+
+    /*
+       Verifica final
+    */
+
+    const remaining =
+        tomatoes.filter(
+            t =>
+                !t.userData.harvested
+        ).length;
+
+
+    if (
+        remaining === 0
+    ) {
+
+        finishGame(
+            "🏆 Você colheu todos os tomates!"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+function updateHUD() {
+
+    scoreElement.textContent =
+        score;
+
+
+    timerElement.textContent =
+        Math.max(
+            0,
+            Math.ceil(timeLeft)
+        );
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function updateTimer(
+    delta
+) {
+
+    if (
+        !gameStarted ||
+        gameOver
+    ) {
+        return;
+    }
+
+
+    timeLeft -= delta;
+
+
+    if (
+        timeLeft <= 0
+    ) {
+
+        timeLeft = 0;
+
+        finishGame(
+            "⏱ Tempo encerrado!"
+        );
+
+    }
+
+
+    updateHUD();
+
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+function finishGame(
+    text
+) {
+
+    gameOver = true;
+
+    showMessage(
+        text
+    );
+
+
+    setTimeout(
+        () => {
+
+            startScreen.classList.remove(
+                "hidden"
+            );
+
+
+            const card =
+                startScreen.querySelector(
+                    ".start-card"
+                );
+
+
+            card.querySelector(
+                "h1"
+            ).textContent =
+                "Colheita encerrada";
+
+
+            card.querySelector(
+                "p"
+            ).innerHTML =
+                `
+                Você colheu
+                <b>${score}</b>
+                tomate${score === 1 ? "" : "s"}.
+                <br><br>
+                Esta é a primeira versão
+                do nosso jogo 3D.
+                `;
+
+
+            card.querySelector(
+                ".start-button"
+            ).textContent =
+                "JOGAR NOVAMENTE";
+
+
+            gameStarted = false;
+
+        },
+        800
+    );
+
+}
+
+
+/* =========================================================
+   MENSAGEM
+========================================================= */
+
+let messageTimeout = null;
+
+
+function showMessage(
+    text
+) {
+
+    messageElement.textContent =
+        text;
+
+
+    messageElement.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        messageTimeout
+    );
+
+
+    messageTimeout =
+        setTimeout(
+            () => {
+
+                messageElement.classList.remove(
+                    "show"
+                );
+
+            },
+            1300
+        );
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+function resize() {
+
+    camera.aspect =
+        window.innerWidth /
+        window.innerHeight;
+
+
+    camera.updateProjectionMatrix();
+
+
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
+
+
+    renderer.setPixelRatio(
+        Math.min(
+            window.devicePixelRatio,
+            1.7
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ANIMAÇÃO
+========================================================= */
+
+function animate(
+    time = 0
+) {
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    const delta =
+        Math.min(
+            (time - lastTime) / 1000,
+            .05
         );
 
 
-      resumo.innerHTML =
-
-        "Você colheu " +
-
-        "<strong>" +
-        quantidadeColhida +
-        "</strong>" +
-
-        " de " +
-
-        "<strong>" +
-        tomatesConfig.length +
-        "</strong>" +
-
-        " tomates." +
-
-        "<br><br>" +
-
-        "Pontuação: " +
-
-        "<strong>" +
-        pontos +
-        " pontos</strong>" +
-
-        "<br>" +
-
-        "Recompensa de teste: " +
-
-        "<strong>+" +
-        recompensa +
-        " STACOIN</strong>";
+    lastTime = time;
 
 
-      resultado.classList.add(
-        "ativo"
-      );
-
-
-      resultado.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }
-
-
-    /*
-      ========================================
-      INICIAR PARTIDA
-      ========================================
-    */
-
-    function iniciarPartida() {
-
-      clearInterval(
-        intervalo
-      );
-
-
-      tempo =
-        TEMPO_INICIAL;
-
-
-      quantidadeColhida =
-        0;
-
-
-      pontos =
-        0;
-
-
-      personagemX =
-        10;
-
-
-      jogoIniciado =
-        true;
-
-
-      jogoPausado =
-        false;
-
-
-      jogoEncerrado =
-        false;
-
-
-      botaoPausar.textContent =
-        "⏸ Pausar";
-
-
-      resultado.classList.remove(
-        "ativo"
-      );
-
-
-      inicioJogo.classList.add(
-        "escondido"
-      );
-
-
-      criarTomates();
-
-
-      atualizarPainel();
-
-
-      atualizarPersonagem();
-
-
-      indicador.textContent =
-        "🚶 Caminhe até os tomates";
-
-
-      iniciarCronometro();
-
-    }
-
-
-    /*
-      ========================================
-      EVENTOS
-      ========================================
-    */
-
-    botaoIniciar.addEventListener(
-      "click",
-      iniciarPartida
+    updatePlayer(
+        delta
     );
 
 
-    botaoJogarNovamente.addEventListener(
-      "click",
-      iniciarPartida
-    );
+    updateCamera();
 
 
-    botaoPausar.addEventListener(
-      "click",
-      alternarPausa
+    updateTimer(
+        delta
     );
 
 
     /*
-      Botão esquerdo
+       Pequena animação dos tomates
+       para dar vida ao cenário.
     */
 
-    botaoEsquerda.addEventListener(
-      "pointerdown",
-      (evento) => {
+    tomatoes.forEach(
+        (tomato, index) => {
 
-        evento.preventDefault();
+            if (
+                tomato.userData.harvested
+            ) {
+                return;
+            }
 
-        iniciarMovimento(-1);
 
-      }
+            tomato.rotation.y +=
+                .003;
+
+
+            const scale =
+                1 +
+                Math.sin(
+                    time * .003 +
+                    index
+                ) * .025;
+
+
+            tomato.scale.x =
+                scale;
+
+            tomato.scale.z =
+                scale;
+
+        }
     );
 
 
-    /*
-      Botão direito
-    */
-
-    botaoDireita.addEventListener(
-      "pointerdown",
-      (evento) => {
-
-        evento.preventDefault();
-
-        iniciarMovimento(1);
-
-      }
+    renderer.render(
+        scene,
+        camera
     );
 
+}
 
-    /*
-      ========================================
-      ESTADO INICIAL
-      ========================================
-    */
-
-    criarTomates();
-
-    atualizarPainel();
-
-    atualizarPersonagem();
-
-  </script>
+</script>
 
 </body>
 </html>
