@@ -28,6 +28,7 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+
     /* =========================
        CABEÇALHO
     ========================= */
@@ -112,8 +113,9 @@
       font-weight: bold;
     }
 
+
     /* =========================
-       PAINEL DO JOGO
+       PAINEL
     ========================= */
 
     .painel {
@@ -162,6 +164,7 @@
       font-weight: 800;
     }
 
+
     /* =========================
        ÁREA DA ROÇA
     ========================= */
@@ -195,33 +198,34 @@
       -webkit-user-drag: none;
     }
 
+
     /* =========================
-       ÁREA DOS TOMATES
+       TOMATES
     ========================= */
 
     .tomates {
       position: absolute;
 
       inset: 0;
-    }
 
-    /*
-      Os pontos abaixo ficam sobre
-      tomates vermelhos da imagem.
-    */
+      z-index: 5;
+    }
 
     .tomate {
 
       position: absolute;
 
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
 
-      margin: -24px 0 0 -24px;
+      margin: -23px 0 0 -23px;
+
+      padding: 0;
 
       border-radius: 50%;
 
-      border: 3px solid
+      border:
+        3px solid
         rgba(
           89,
           255,
@@ -232,51 +236,49 @@
       background:
         rgba(
           255,
-          70,
-          50,
-          0.08
+          40,
+          25,
+          0.12
         );
 
       box-shadow:
-        0 0 0 5px
+        0 0 0 3px
         rgba(
           55,
           255,
           75,
-          0.12
+          0.10
         ),
 
-        0 0 20px
+        0 0 16px
         rgba(
           55,
           255,
           75,
-          0.5
+          0.45
         );
 
       cursor: pointer;
 
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 28px;
+
+      line-height: 1;
+
+      z-index: 10;
+
+      appearance: none;
+
+      -webkit-appearance: none;
+
       transition:
         transform 0.15s,
         opacity 0.2s;
-    }
-
-    .tomate::after {
-      content: "";
-
-      position: absolute;
-
-      inset: 10px;
-
-      border-radius: 50%;
-
-      background:
-        rgba(
-          255,
-          60,
-          45,
-          0.18
-        );
     }
 
     .tomate:hover {
@@ -295,6 +297,7 @@
       transform:
         scale(1.7);
     }
+
 
     /* =========================
        INSTRUÇÃO
@@ -319,7 +322,7 @@
           4,
           49,
           29,
-          0.90
+          0.92
         );
 
       border:
@@ -334,6 +337,8 @@
       font-weight: bold;
 
       pointer-events: none;
+
+      z-index: 20;
     }
 
     .instrucao small {
@@ -346,6 +351,7 @@
 
       opacity: 0.78;
     }
+
 
     /* =========================
        BOTÃO PAUSAR
@@ -389,7 +395,10 @@
       font-weight: bold;
 
       cursor: pointer;
+
+      z-index: 30;
     }
+
 
     /* =========================
        RESULTADO
@@ -474,6 +483,7 @@
         );
     }
 
+
     /* =========================
        AVISO
     ========================= */
@@ -489,6 +499,7 @@
 
       opacity: 0.6;
     }
+
 
     /* =========================
        CELULAR
@@ -560,11 +571,15 @@
 
       .tomate {
 
-        width: 42px;
-        height: 42px;
+        width: 38px;
+        height: 38px;
 
         margin:
-          -21px 0 0 -21px;
+          -19px 0 0 -19px;
+
+        font-size: 24px;
+
+        border-width: 2px;
       }
 
       .instrucao {
@@ -578,6 +593,14 @@
           );
 
         font-size: 13px;
+
+        padding:
+          10px 12px;
+      }
+
+      .instrucao small {
+
+        font-size: 11px;
       }
 
       .pausar {
@@ -590,10 +613,12 @@
 
         font-size: 13px;
       }
+
     }
 
   </style>
 </head>
+
 
 <body>
 
@@ -640,6 +665,7 @@
 
   <section class="painel">
 
+
     <div class="painel-card">
 
       <div class="painel-label">
@@ -666,7 +692,7 @@
         id="colhidos"
         class="painel-valor"
       >
-        0 / 12
+        0 / 40
       </div>
 
     </div>
@@ -715,10 +741,9 @@
     id="jogo"
   >
 
+
     <!--
-      IMPORTANTE:
-      Essa imagem deve ser a imagem
-      LIMPA da nossa roça.
+      IMAGEM LIMPA DA ROÇA
     -->
 
     <img
@@ -728,7 +753,9 @@
     >
 
 
-    <!-- TOMATES INTERATIVOS -->
+    <!-- =========================
+         TOMATES INTERATIVOS
+    ========================= -->
 
     <div
       class="tomates"
@@ -736,7 +763,9 @@
     ></div>
 
 
-    <!-- INSTRUÇÃO -->
+    <!-- =========================
+         INSTRUÇÃO
+    ========================= -->
 
     <div class="instrucao">
 
@@ -750,7 +779,9 @@
     </div>
 
 
-    <!-- PAUSAR -->
+    <!-- =========================
+         PAUSAR
+    ========================= -->
 
     <button
       class="pausar"
@@ -759,6 +790,7 @@
     >
       ⏸ Pausar
     </button>
+
 
   </main>
 
@@ -778,7 +810,9 @@
 
     <p id="resumo"></p>
 
+
     <div class="botoes">
+
 
       <button
         class="botao botao-principal"
@@ -788,6 +822,7 @@
         🍅 Jogar novamente
       </button>
 
+
       <a
         href="index.html"
         class="botao botao-secundario"
@@ -795,10 +830,15 @@
         ← Voltar para Central
       </a>
 
+
     </div>
 
   </section>
 
+
+  <!-- =========================
+       AVISO
+  ========================= -->
 
   <div class="aviso">
 
@@ -814,34 +854,85 @@
 
   <script>
 
+
     /*
-      POSIÇÕES DOS TOMATES
+      ==========================================
+      POSIÇÕES DOS 40 TOMATES
+      ==========================================
 
-      Os valores são porcentagens
-      da imagem da roça.
+      Primeiro número:
+      posição horizontal (%)
 
-      left = posição horizontal
-      top  = posição vertical
+      Segundo número:
+      posição vertical (%)
+
+      As posições foram espalhadas pela
+      plantação para não ficarem todas juntas.
     */
+
 
     const posicoesTomates = [
 
-      [18, 52],
-      [24, 59],
-      [30, 55],
-      [36, 63],
+      [9, 43],
+      [14, 49],
+      [19, 56],
+      [24, 45],
+      [29, 52],
 
-      [42, 58],
-      [47, 65],
-      [53, 57],
-      [58, 62],
+      [34, 60],
+      [39, 48],
+      [44, 55],
+      [49, 63],
+      [54, 51],
 
-      [64, 56],
-      [70, 64],
-      [77, 55],
-      [84, 61]
+      [59, 59],
+      [64, 47],
+      [69, 55],
+      [74, 63],
+      [79, 50],
+
+      [85, 44],
+      [91, 55],
+
+      [12, 65],
+      [18, 72],
+      [25, 68],
+      [31, 75],
+
+      [37, 70],
+      [43, 78],
+      [49, 70],
+      [55, 76],
+
+      [61, 69],
+      [67, 78],
+      [73, 70],
+      [79, 76],
+
+      [85, 68],
+      [91, 73],
+
+      [8, 80],
+      [15, 83],
+      [23, 82],
+      [30, 86],
+
+      [38, 83],
+      [47, 88],
+      [56, 84],
+      [65, 87],
+
+      [74, 82],
+      [84, 85]
 
     ];
+
+
+    /*
+      ==========================================
+      VARIÁVEIS DO JOGO
+      ==========================================
+    */
 
 
     let tempo = 30;
@@ -857,45 +948,60 @@
     let intervalo = null;
 
 
+    /*
+      ==========================================
+      ELEMENTOS DA PÁGINA
+      ==========================================
+    */
+
+
     const tempoElemento =
       document.getElementById(
         "tempo"
       );
+
 
     const colhidosElemento =
       document.getElementById(
         "colhidos"
       );
 
+
     const pontosElemento =
       document.getElementById(
         "pontos"
       );
+
 
     const stacoinElemento =
       document.getElementById(
         "stacoin"
       );
 
+
     const tomatesElemento =
       document.getElementById(
         "tomates"
       );
+
 
     const resultadoElemento =
       document.getElementById(
         "resultado"
       );
 
+
     const resumoElemento =
       document.getElementById(
         "resumo"
       );
 
+
     const botaoPausar =
       document.getElementById(
         "botaoPausar"
       );
+
 
     const botaoJogarNovamente =
       document.getElementById(
@@ -903,11 +1009,15 @@
       );
 
 
-    /* =========================
-       ATUALIZAR PAINEL
-    ========================= */
+    /*
+      ==========================================
+      ATUALIZAR PAINEL
+      ==========================================
+    */
+
 
     function atualizarPainel() {
+
 
       tempoElemento.textContent =
         tempo + "s";
@@ -924,15 +1034,16 @@
 
 
       /*
-        POR ENQUANTO:
+        TESTE:
 
-        10 pontos = 1 STACOIN
+        A cada 10 pontos:
 
-        É somente teste.
+        +1 STACOIN
 
-        Depois vamos ligar isso
-        ao Supabase com segurança.
+        Ainda NÃO mexe no saldo
+        real do usuário.
       */
+
 
       const recompensa =
         Math.floor(
@@ -947,11 +1058,15 @@
     }
 
 
-    /* =========================
-       CRIAR TOMATES
-    ========================= */
+    /*
+      ==========================================
+      CRIAR OS 40 TOMATES
+      ==========================================
+    */
+
 
     function criarTomates() {
+
 
       tomatesElemento.innerHTML =
         "";
@@ -963,10 +1078,19 @@
           indice
         ) => {
 
+
           const tomate =
             document.createElement(
               "button"
             );
+
+
+          /*
+            IMPORTANTE:
+
+            O botão agora recebe
+            o emoji do tomate.
+          */
 
 
           tomate.type =
@@ -977,11 +1101,20 @@
             "tomate";
 
 
+          tomate.textContent =
+            "🍅";
+
+
           tomate.setAttribute(
             "aria-label",
             "Colher tomate " +
             (indice + 1)
           );
+
+
+          /*
+            POSIÇÃO DO TOMATE
+          */
 
 
           tomate.style.left =
@@ -992,13 +1125,20 @@
             posicao[1] + "%";
 
 
+          /*
+            QUANDO CLICAR
+          */
+
+
           tomate.addEventListener(
             "click",
             function () {
 
+
               colherTomate(
                 tomate
               );
+
 
             }
           );
@@ -1008,19 +1148,25 @@
             tomate
           );
 
+
         }
       );
+
 
     }
 
 
-    /* =========================
-       COLHER TOMATE
-    ========================= */
+    /*
+      ==========================================
+      COLHER TOMATE
+      ==========================================
+    */
+
 
     function colherTomate(
       tomate
     ) {
+
 
       if (
         jogoEncerrado ||
@@ -1035,48 +1181,70 @@
       }
 
 
+      /*
+        Faz o tomate desaparecer.
+      */
+
+
       tomate.classList.add(
         "colhido"
       );
+
+
+      /*
+        Soma 1 tomate.
+      */
 
 
       quantidadeColhida++;
 
 
       /*
-        Cada tomate:
-
-        +10 pontos
+        Cada tomate vale
+        10 pontos.
       */
 
+
       pontos += 10;
+
+
+      /*
+        Atualiza a tela.
+      */
 
 
       atualizarPainel();
 
 
       /*
-        Se todos forem colhidos,
-        encerra automaticamente.
+        Se colher os 40,
+        encerra o jogo.
       */
+
 
       if (
         quantidadeColhida >=
         posicoesTomates.length
       ) {
 
+
         finalizarJogo();
+
 
       }
 
     }
 
 
-    /* =========================
-       CRONÔMETRO
-    ========================= */
+    /*
+      ==========================================
+      CRONÔMETRO
+      ==========================================
+    */
+
 
     function iniciarCronometro() {
+
 
       clearInterval(
         intervalo
@@ -1086,6 +1254,7 @@
       intervalo =
         setInterval(
           function () {
+
 
             if (
               jogoPausado ||
@@ -1107,23 +1276,32 @@
               tempo <= 0
             ) {
 
+
               finalizarJogo();
 
+
             }
+
 
           },
 
           1000
+
         );
+
 
     }
 
 
-    /* =========================
-       PAUSAR
-    ========================= */
+    /*
+      ==========================================
+      PAUSAR / CONTINUAR
+      ==========================================
+    */
+
 
     function alternarPausa() {
+
 
       if (
         jogoEncerrado
@@ -1142,24 +1320,32 @@
         jogoPausado
       ) {
 
+
         botaoPausar.textContent =
-          "▶ Continuar";
+          "▶️ Continuar";
+
 
       } else {
 
+
         botaoPausar.textContent =
           "⏸ Pausar";
+
 
       }
 
     }
 
 
-    /* =========================
-       FINALIZAR
-    ========================= */
+    /*
+      ==========================================
+      FINALIZAR JOGO
+      ==========================================
+    */
+
 
     function finalizarJogo() {
+
 
       if (
         jogoEncerrado
@@ -1177,6 +1363,12 @@
       clearInterval(
         intervalo
       );
+
+
+      /*
+        Calcula recompensa
+        apenas para demonstração.
+      */
 
 
       const recompensa =
@@ -1215,19 +1407,33 @@
       );
 
 
+      /*
+        Leva o usuário para
+        o resultado.
+      */
+
+
       resultadoElemento.scrollIntoView({
+
         behavior: "smooth",
+
         block: "start"
+
       });
+
 
     }
 
 
-    /* =========================
-       INICIAR JOGO
-    ========================= */
+    /*
+      ==========================================
+      INICIAR / REINICIAR JOGO
+      ==========================================
+    */
+
 
     function iniciarJogo() {
+
 
       clearInterval(
         intervalo
@@ -1236,13 +1442,17 @@
 
       tempo = 30;
 
+
       quantidadeColhida =
         0;
 
+
       pontos = 0;
+
 
       jogoPausado =
         false;
+
 
       jogoEncerrado =
         false;
@@ -1257,20 +1467,40 @@
       );
 
 
+      /*
+        Cria novamente
+        os 40 tomates.
+      */
+
+
       criarTomates();
+
+
+      /*
+        Zera o painel.
+      */
 
 
       atualizarPainel();
 
 
+      /*
+        Começa o cronômetro.
+      */
+
+
       iniciarCronometro();
+
 
     }
 
 
-    /* =========================
-       EVENTOS
-    ========================= */
+    /*
+      ==========================================
+      EVENTOS
+      ==========================================
+    */
+
 
     botaoPausar.addEventListener(
       "click",
@@ -1284,13 +1514,18 @@
     );
 
 
-    /* =========================
-       COMEÇAR
-    ========================= */
+    /*
+      ==========================================
+      COMEÇAR AUTOMATICAMENTE
+      ==========================================
+    */
+
 
     iniciarJogo();
 
+
   </script>
+
 
 </body>
 </html>
