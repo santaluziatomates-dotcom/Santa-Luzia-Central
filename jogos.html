@@ -5,464 +5,581 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>Santa Luzia Games • Colheita</title>
 
+
 <style>
 
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
-body{
+body {
 
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    background:#9fcdf1;
+    background: #9fcdf1;
 
     font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
-#game{
+#game {
 
-    position:fixed;
+    position: fixed;
 
-    inset:0;
+    inset: 0;
 
-    overflow:hidden;
+    overflow: hidden;
 }
 
-canvas{
+canvas {
 
-    display:block;
+    display: block;
 
-    width:100%;
-    height:100%;
-}
-
-
-/* =========================
-HUD
-========================= */
-
-.hud{
-
-    position:fixed;
-
-    top:18px;
-    left:18px;
-    right:18px;
-
-    z-index:20;
-
-    display:flex;
-    justify-content:space-between;
-
-    pointer-events:none;
-}
-
-.hud-card{
-
-    min-width:150px;
-
-    padding:12px 18px;
-
-    background:
-    rgba(255,255,255,.94);
-
-    border:
-    2px solid
-    rgba(255,255,255,.8);
-
-    border-radius:22px;
-
-    box-shadow:
-    0 5px 18px rgba(0,0,0,.15);
-
-    color:#234b32;
-}
-
-.hud-label{
-
-    font-size:15px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-}
-
-.hud-value{
-
-    margin-top:3px;
-
-    font-size:30px;
-
-    font-weight:800;
+    width: 100%;
+    height: 100%;
 }
 
 
-/* =========================
-MENSAGEM
-========================= */
+/* =========================================================
+   HUD
+========================================================= */
 
-#message{
+.hud {
 
-    position:fixed;
+    position: fixed;
 
-    left:50%;
-    bottom:160px;
+    top: 18px;
+    left: 18px;
+    right: 18px;
 
-    transform:
-    translateX(-50%);
+    z-index: 20;
 
-    z-index:25;
+    display: flex;
 
-    max-width:330px;
+    justify-content: space-between;
+
+    pointer-events: none;
+}
+
+
+.hud-card {
+
+    min-width: 150px;
 
     padding:
-    14px 22px;
+        12px 18px;
 
     background:
-    rgba(30,86,50,.94);
+        rgba(255,255,255,.94);
 
-    color:white;
+    border:
+        2px solid rgba(255,255,255,.8);
 
-    border-radius:24px;
-
-    font-size:17px;
-
-    font-weight:700;
-
-    text-align:center;
+    border-radius:
+        22px;
 
     box-shadow:
-    0 6px 20px
-    rgba(0,0,0,.22);
+        0 5px 18px rgba(0,0,0,.15),
+        inset 0 1px 0 rgba(255,255,255,.8);
 
-    opacity:0;
+    color:
+        #234b32;
+}
 
-    pointer-events:none;
+
+.hud-label {
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        1px;
+}
+
+
+.hud-value {
+
+    margin-top:
+        3px;
+
+    font-size:
+        30px;
+
+    font-weight:
+        800;
+}
+
+
+/* =========================================================
+   MENSAGEM
+========================================================= */
+
+#message {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 160px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 25;
+
+    max-width:
+        330px;
+
+    padding:
+        14px 22px;
+
+    background:
+        rgba(30,86,50,.94);
+
+    color:
+        white;
+
+    border-radius:
+        24px;
+
+    font-size:
+        17px;
+
+    font-weight:
+        700;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.22);
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
 
     transition:
-    opacity .2s ease;
-}
-
-#message.show{
-
-    opacity:1;
+        opacity .2s ease;
 }
 
 
-/* =========================
-CONTROLES
-========================= */
+#message.show {
 
-.controls{
+    opacity:
+        1;
+}
 
-    position:fixed;
 
-    left:18px;
-    bottom:28px;
+/* =========================================================
+   CONTROLES
+========================================================= */
 
-    z-index:30;
+.controls {
 
-    display:grid;
+    position: fixed;
+
+    left: 18px;
+    bottom: 28px;
+
+    z-index: 30;
+
+    display: grid;
 
     grid-template-columns:
-    64px 64px 64px;
+        64px 64px 64px;
 
     grid-template-rows:
-    64px 64px;
+        64px 64px;
 
-    gap:10px;
+    gap:
+        10px;
 }
 
-.control{
 
-    width:64px;
-    height:64px;
+.control {
 
-    border:0;
+    width: 64px;
+    height: 64px;
 
-    border-radius:20px;
+    border: 0;
+
+    border-radius:
+        20px;
 
     background:
-    rgba(255,255,255,.94);
+        rgba(255,255,255,.94);
 
-    color:#245536;
+    color:
+        #245536;
 
-    font-size:30px;
+    font-size:
+        30px;
 
-    font-weight:900;
+    font-weight:
+        900;
 
     box-shadow:
-    0 5px 15px
-    rgba(0,0,0,.16);
+        0 5px 15px rgba(0,0,0,.16);
 
-    touch-action:manipulation;
-}
-
-.control:active{
-
-    transform:scale(.94);
-}
-
-.up{
-
-    grid-column:2;
-    grid-row:1;
-}
-
-.left{
-
-    grid-column:1;
-    grid-row:2;
-}
-
-.down{
-
-    grid-column:2;
-    grid-row:2;
-}
-
-.right{
-
-    grid-column:3;
-    grid-row:2;
+    touch-action:
+        manipulation;
 }
 
 
-/* =========================
-AÇÕES
-========================= */
+.control:active {
 
-.actions{
-
-    position:fixed;
-
-    right:18px;
-    bottom:28px;
-
-    z-index:30;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
+    transform:
+        scale(.94);
 }
 
-.action{
 
-    min-width:190px;
+.up {
 
-    min-height:58px;
+    grid-column:
+        2;
 
-    border:0;
+    grid-row:
+        1;
+}
 
-    border-radius:20px;
 
-    font-size:18px;
+.left {
 
-    font-weight:800;
+    grid-column:
+        1;
+
+    grid-row:
+        2;
+}
+
+
+.down {
+
+    grid-column:
+        2;
+
+    grid-row:
+        2;
+}
+
+
+.right {
+
+    grid-column:
+        3;
+
+    grid-row:
+        2;
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.actions {
+
+    position: fixed;
+
+    right: 18px;
+    bottom: 28px;
+
+    z-index: 30;
+
+    display: flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        10px;
+}
+
+
+.action {
+
+    min-width:
+        190px;
+
+    min-height:
+        58px;
+
+    border:
+        0;
+
+    border-radius:
+        20px;
+
+    font-size:
+        18px;
+
+    font-weight:
+        800;
 
     box-shadow:
-    0 5px 15px
-    rgba(0,0,0,.16);
+        0 5px 15px rgba(0,0,0,.16);
 
-    touch-action:manipulation;
+    touch-action:
+        manipulation;
 }
 
-.harvest{
 
-    background:#245b35;
-
-    color:white;
-}
-
-.restart{
+.harvest {
 
     background:
-    rgba(255,255,255,.95);
+        #245b35;
 
-    color:#245b35;
-}
-
-.action:active{
-
-    transform:scale(.96);
+    color:
+        white;
 }
 
 
-/* =========================
-RESULTADO
-========================= */
-
-#result{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:100;
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
+.restart {
 
     background:
-    rgba(15,35,24,.72);
+        rgba(255,255,255,.95);
+
+    color:
+        #245b35;
+}
+
+
+.action:active {
+
+    transform:
+        scale(.96);
+}
+
+
+/* =========================================================
+   RESULTADO
+========================================================= */
+
+#result {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        rgba(15,35,24,.72);
 
     backdrop-filter:
-    blur(6px);
+        blur(6px);
 }
 
-.result-card{
 
-    width:min(90%,360px);
+.result-card {
 
-    padding:28px;
+    width:
+        min(90%, 360px);
 
-    background:white;
+    padding:
+        28px;
 
-    border-radius:28px;
+    background:
+        white;
 
-    text-align:center;
+    border-radius:
+        28px;
+
+    text-align:
+        center;
 
     box-shadow:
-    0 15px 50px
-    rgba(0,0,0,.3);
+        0 15px 50px rgba(0,0,0,.3);
 }
 
-.result-card h1{
+
+.result-card h1 {
 
     margin:
-    0 0 12px;
+        0 0 12px;
 
-    color:#245b35;
-}
-
-.result-card p{
-
-    color:#4d5c52;
-
-    font-size:18px;
-}
-
-.result-card button{
-
-    width:100%;
-
-    padding:15px;
-
-    border:0;
-
-    border-radius:16px;
-
-    background:#245b35;
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:800;
+    color:
+        #245b35;
 }
 
 
-/* =========================
-MOBILE
-========================= */
+.result-card p {
 
-@media(max-width:600px){
+    color:
+        #4d5c52;
 
-    .hud{
+    font-size:
+        18px;
+}
 
-        top:14px;
 
-        left:12px;
-        right:12px;
+.result-card button {
+
+    width:
+        100%;
+
+    padding:
+        15px;
+
+    border:
+        0;
+
+    border-radius:
+        16px;
+
+    background:
+        #245b35;
+
+    color:
+        white;
+
+    font-size:
+        17px;
+
+    font-weight:
+        800;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .hud {
+
+        top:
+            14px;
+
+        left:
+            12px;
+
+        right:
+            12px;
     }
 
-    .hud-card{
 
-        min-width:125px;
+    .hud-card {
+
+        min-width:
+            125px;
 
         padding:
-        10px 14px;
+            10px 14px;
 
-        border-radius:18px;
+        border-radius:
+            18px;
     }
 
-    .hud-label{
 
-        font-size:13px;
+    .hud-label {
+
+        font-size:
+            13px;
     }
 
-    .hud-value{
 
-        font-size:24px;
+    .hud-value {
+
+        font-size:
+            24px;
     }
 
-    .controls{
 
-        left:12px;
-        bottom:18px;
+    .controls {
+
+        left:
+            12px;
+
+        bottom:
+            18px;
 
         grid-template-columns:
-        58px 58px 58px;
+            58px 58px 58px;
 
         grid-template-rows:
-        58px 58px;
+            58px 58px;
     }
 
-    .control{
 
-        width:58px;
-        height:58px;
+    .control {
 
-        border-radius:18px;
+        width:
+            58px;
+
+        height:
+            58px;
+
+        border-radius:
+            18px;
     }
 
-    .actions{
 
-        right:12px;
-        bottom:18px;
+    .actions {
+
+        right:
+            12px;
+
+        bottom:
+            18px;
     }
 
-    .action{
 
-        min-width:160px;
+    .action {
 
-        min-height:54px;
+        min-width:
+            160px;
 
-        font-size:16px;
+        min-height:
+            54px;
+
+        font-size:
+            16px;
     }
 
-    #message{
 
-        bottom:145px;
+    #message {
 
-        max-width:290px;
+        bottom:
+            145px;
 
-        font-size:15px;
+        max-width:
+            290px;
+
+        font-size:
+            15px;
     }
+
 }
 
 </style>
@@ -476,9 +593,9 @@ MOBILE
 <div id="game"></div>
 
 
-<!-- =========================
-HUD
-========================= -->
+<!-- =======================================================
+     HUD
+======================================================= -->
 
 <div class="hud">
 
@@ -523,79 +640,73 @@ HUD
 <div id="message"></div>
 
 
-<!-- =========================
-CONTROLES
-========================= -->
+<!-- =======================================================
+     CONTROLES
+======================================================= -->
 
 <div class="controls">
 
     <button
-    class="control up"
-    data-key="ArrowUp">
-
+        class="control up"
+        data-key="ArrowUp"
+    >
         ▲
-
     </button>
 
 
     <button
-    class="control left"
-    data-key="ArrowLeft">
-
+        class="control left"
+        data-key="ArrowLeft"
+    >
         ◀
-
     </button>
 
 
     <button
-    class="control down"
-    data-key="ArrowDown">
-
+        class="control down"
+        data-key="ArrowDown"
+    >
         ▼
-
     </button>
 
 
     <button
-    class="control right"
-    data-key="ArrowRight">
-
+        class="control right"
+        data-key="ArrowRight"
+    >
         ▶
-
     </button>
 
 </div>
 
 
-<!-- =========================
-AÇÕES
-========================= -->
+<!-- =======================================================
+     AÇÕES
+======================================================= -->
 
 <div class="actions">
 
     <button
-    class="action harvest"
-    id="harvest">
-
+        class="action harvest"
+        id="harvest"
+    >
         🍅 COLHER
-
     </button>
 
 
     <button
-    class="action restart"
-    id="restart">
-
+        class="action restart"
+        id="restart"
+    >
         ↻ RECOMEÇAR
-
     </button>
 
 </div>
 
 
-<!-- =========================
-RESULTADO
-========================= -->
+<!-- =======================================================
+     RESULTADO
+======================================================= -->
 
 <div id="result">
 
@@ -629,9 +740,9 @@ RESULTADO
 </div>
 
 
-<!-- =========================
-THREE.JS
-========================= -->
+<!-- =======================================================
+     THREE.JS
+======================================================= -->
 
 <script type="importmap">
 
@@ -650,72 +761,69 @@ THREE.JS
 <script type="module">
 
 import * as THREE
-from "three";
+    from "three";
+
+
+import {
+    GLTFLoader
+} from
+    "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/loaders/GLTFLoader.js";
 
 
 /* =========================================================
-CONFIGURAÇÕES
+   CONFIGURAÇÕES
 ========================================================= */
 
-const GAME_TIME = 60;
+const GAME_TIME =
+    60;
+
+
+const FIELD_LENGTH =
+    125;
+
+
+const PLANT_SPACING =
+    1.55;
 
 
 /*
-    Campo mais curto para o celular.
-
-    Depois que a base estiver aprovada,
-    podemos aumentar tranquilamente.
+   No jogo reduzimos a distância real
+   para deixar a plantação mais divertida.
 */
 
-const FIELD_LENGTH = 90;
+
+const PLANTS_PER_SECTION =
+    8;
+
+
+const ROW_X =
+    6.4;
+
+
+const ROAD_WIDTH =
+    8.5;
 
 
 /*
-    Não usamos 75cm reais.
+   Futuro modelo real.
 
-    Aqui usamos uma distância menor
-    para deixar a plantação bonita
-    dentro da tela.
+   Quando tivermos o arquivo:
+
+   assets/pe-tomate.glb
+
+   o jogo tentará carregar automaticamente.
+
+   Se ele não existir,
+   o jogo continua usando
+   o pé procedural.
 */
 
-const PLANT_SPACING = 2.0;
-
-
-/*
-    Cada bloco possui 8 pés.
-
-    Exemplo:
-
-    PALANQUE
-       |
-    8 PÉS
-       |
-    CRUZETA
-       |
-    8 PÉS
-       |
-    PALANQUE
-*/
-
-const PLANTS_PER_SECTION = 8;
-
-
-/*
-    Distância da estrada.
-*/
-
-const ROW_X = 6.2;
-
-
-/*
-    Estrada central.
-*/
-
-const ROAD_WIDTH = 8;
+const TOMATO_GLB =
+    "assets/pe-tomate.glb";
 
 
 /* =========================================================
-CENA
+   CENA
 ========================================================= */
 
 const scene =
@@ -729,28 +837,27 @@ scene.background =
 
 
 scene.fog =
-    new THREE.Fog(
+    new THREE.FogExp2(
         0x9fcdf1,
-        55,
-        135
+        0.009
     );
 
 
 /* =========================================================
-CÂMERA
+   CÂMERA
 ========================================================= */
 
 const camera =
     new THREE.PerspectiveCamera(
 
-        60,
+        58,
 
         window.innerWidth /
         window.innerHeight,
 
-        .1,
+        0.1,
 
-        250
+        350
 
     );
 
@@ -763,16 +870,20 @@ camera.position.set(
 
 
 /* =========================================================
-RENDERER
+   RENDER
 ========================================================= */
 
 const renderer =
     new THREE.WebGLRenderer({
 
-        antialias:true,
+        antialias:
+            true,
 
         powerPreference:
-        "high-performance"
+            "high-performance",
+
+        alpha:
+            false
 
     });
 
@@ -790,7 +901,7 @@ renderer.setPixelRatio(
 
     Math.min(
         window.devicePixelRatio,
-        1.25
+        1.7
     )
 
 );
@@ -813,28 +924,28 @@ renderer.toneMapping =
 
 
 renderer.toneMappingExposure =
-    1.05;
+    1.08;
 
 
 document
-.getElementById("game")
-.appendChild(
-    renderer.domElement
-);
+    .getElementById("game")
+    .appendChild(
+        renderer.domElement
+    );
 
 
 /* =========================================================
-ILUMINAÇÃO
+   ILUMINAÇÃO
 ========================================================= */
 
 const hemisphere =
     new THREE.HemisphereLight(
 
-        0xd9efff,
+        0xcfe8ff,
 
-        0x526b3d,
+        0x4c6339,
 
-        1.8
+        1.65
 
     );
 
@@ -847,17 +958,17 @@ scene.add(
 const sunLight =
     new THREE.DirectionalLight(
 
-        0xffedc0,
+        0xffe5ad,
 
-        3.2
+        3.8
 
     );
 
 
 sunLight.position.set(
-    -40,
-    55,
-    30
+    -45,
+    70,
+    35
 );
 
 
@@ -865,35 +976,36 @@ sunLight.castShadow =
     true;
 
 
-/*
-    Shadow menor para
-    economizar memória.
-*/
-
 sunLight.shadow.mapSize.width =
-    1024;
+    2048;
+
 
 sunLight.shadow.mapSize.height =
-    1024;
+    2048;
 
 
 sunLight.shadow.camera.left =
-    -55;
+    -75;
+
 
 sunLight.shadow.camera.right =
-    55;
+    75;
+
 
 sunLight.shadow.camera.top =
-    60;
+    75;
+
 
 sunLight.shadow.camera.bottom =
-    -60;
+    -75;
+
 
 sunLight.shadow.camera.near =
     1;
 
+
 sunLight.shadow.camera.far =
-    150;
+    190;
 
 
 scene.add(
@@ -902,22 +1014,22 @@ scene.add(
 
 
 /* =========================================================
-SOL
+   SOL
 ========================================================= */
 
 const sun =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
-            4,
-            16,
-            12
+            4.5,
+            24,
+            24
         ),
 
         new THREE.MeshBasicMaterial({
 
             color:
-            0xffdf72
+                0xffdf75
 
         })
 
@@ -925,11 +1037,9 @@ const sun =
 
 
 sun.position.set(
-
-    -42,
-    48,
+    -55,
+    65,
     -80
-
 );
 
 
@@ -939,61 +1049,64 @@ scene.add(
 
 
 /* =========================================================
-NUVENS
+   NUVENS
 ========================================================= */
-
-const cloudMaterial =
-    new THREE.MeshBasicMaterial({
-
-        color:
-        0xffffff,
-
-        transparent:true,
-
-        opacity:.88
-
-    });
-
 
 function createCloud(
     x,
     y,
     z,
     scale
-){
+) {
 
     const cloud =
         new THREE.Group();
 
 
+    const material =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0xffffff,
+
+            roughness:
+                1
+
+        });
+
+
     const parts = [
 
-        [-1.8,0,0,1.4],
+        [-2, 0, 0, 1.6],
 
-        [0,.25,0,1.8],
+        [0, .35, 0, 2.0],
 
-        [1.8,0,0,1.3],
+        [2, 0, 0, 1.5],
 
-        [.7,.65,0,1.05]
+        [.8, .75, 0, 1.1]
 
     ];
 
 
-    for(
+    for (
         const part
         of parts
-    ){
+    ) {
 
         const mesh =
             new THREE.Mesh(
 
                 new THREE.SphereGeometry(
+
                     part[3],
-                    8,
-                    6
+
+                    12,
+
+                    8
+
                 ),
 
-                cloudMaterial
+                material
 
             );
 
@@ -1038,23 +1151,30 @@ function createCloud(
 const clouds = [
 
     createCloud(
-        -25,
-        34,
         -30,
-        1.5
+        34,
+        -35,
+        1.8
     ),
 
     createCloud(
         25,
-        39,
-        -65,
-        1.9
+        40,
+        -70,
+        2.2
     ),
 
     createCloud(
-        -5,
-        32,
-        -110,
+        0,
+        31,
+        -120,
+        1.5
+    ),
+
+    createCloud(
+        55,
+        37,
+        -20,
         1.4
     )
 
@@ -1062,27 +1182,17 @@ const clouds = [
 
 
 /* =========================================================
-MATERIAIS REUTILIZADOS
+   MATERIAIS
 ========================================================= */
-
-const groundMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0x6e994d,
-
-        roughness:1
-
-    });
-
 
 const soilMaterial =
     new THREE.MeshStandardMaterial({
 
         color:
-        0x80552f,
+            0x80502d,
 
-        roughness:1
+        roughness:
+            1
 
     });
 
@@ -1091,9 +1201,22 @@ const roadMaterial =
     new THREE.MeshStandardMaterial({
 
         color:
-        0x9f7448,
+            0x9b7046,
 
-        roughness:1
+        roughness:
+            1
+
+    });
+
+
+const grassMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:
+            0x649449,
+
+        roughness:
+            1
 
     });
 
@@ -1102,9 +1225,10 @@ const woodMaterial =
     new THREE.MeshStandardMaterial({
 
         color:
-        0x70472b,
+            0x754726,
 
-        roughness:.95
+        roughness:
+            .95
 
     });
 
@@ -1113,9 +1237,10 @@ const darkWoodMaterial =
     new THREE.MeshStandardMaterial({
 
         color:
-        0x4a2d1c,
+            0x4a2c1b,
 
-        roughness:1
+        roughness:
+            1
 
     });
 
@@ -1124,128 +1249,35 @@ const wireMaterial =
     new THREE.MeshStandardMaterial({
 
         color:
-        0x24251f,
+            0x252820,
 
-        roughness:.8,
+        roughness:
+            .72,
 
-        metalness:.1
-
-    });
-
-
-const stemMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0x3c6838,
-
-        roughness:1
-
-    });
-
-
-const leafMaterials = [
-
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0x3f7b3b,
-
-        roughness:1
-
-    }),
-
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0x579347,
-
-        roughness:1
-
-    }),
-
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0x6da951,
-
-        roughness:1
-
-    })
-
-];
-
-
-const redMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0xd9382d,
-
-        roughness:.65
-
-    });
-
-
-const greenTomatoMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0x4d963e,
-
-        roughness:.7
-
-    });
-
-
-const yellowTomatoMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0xd6a82d,
-
-        roughness:.68
-
-    });
-
-
-const flowerWhiteMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0xf4eed8,
-
-        roughness:1
-
-    });
-
-
-const flowerYellowMaterial =
-    new THREE.MeshStandardMaterial({
-
-        color:
-        0xe4bd3e,
-
-        roughness:.9
+        metalness:
+            .15
 
     });
 
 
 /* =========================================================
-CHÃO
+   CHÃO
 ========================================================= */
 
-function createGround(){
+function createGround() {
 
     const ground =
         new THREE.Mesh(
 
             new THREE.PlaneGeometry(
-                90,
-                FIELD_LENGTH + 30
+
+                100,
+
+                FIELD_LENGTH + 80
+
             ),
 
-            groundMaterial
+            grassMaterial
 
         );
 
@@ -1271,8 +1303,11 @@ function createGround(){
         new THREE.Mesh(
 
             new THREE.PlaneGeometry(
+
                 ROAD_WIDTH,
-                FIELD_LENGTH + 30
+
+                FIELD_LENGTH + 35
+
             ),
 
             roadMaterial
@@ -1285,7 +1320,7 @@ function createGround(){
 
 
     road.position.y =
-        .01;
+        .012;
 
 
     road.position.z =
@@ -1302,21 +1337,25 @@ function createGround(){
 
 
     /*
-        Camas de terra
-        onde ficam os tomates.
+       Canteiros
     */
 
-    for(
-        const x
-        of [-ROW_X, ROW_X]
-    ){
+    for (
+        const x of [
+            -ROW_X,
+            ROW_X
+        ]
+    ) {
 
         const bed =
             new THREE.Mesh(
 
                 new THREE.PlaneGeometry(
-                    4.2,
-                    FIELD_LENGTH + 30
+
+                    4.7,
+
+                    FIELD_LENGTH + 35
+
                 ),
 
                 soilMaterial
@@ -1354,73 +1393,156 @@ createGround();
 
 
 /* =========================================================
-PEDRAS / VEGETAÇÃO
+   DETALHES DO SOLO
 ========================================================= */
 
-const rockMaterial =
-    new THREE.MeshStandardMaterial({
+function createGroundDetails() {
 
-        color:
-        0x553c2a,
+    const rockMaterial =
+        new THREE.MeshStandardMaterial({
 
-        roughness:1
+            color:
+                0x523a28,
 
-    });
+            roughness:
+                1
 
-
-const rockGeometry =
-    new THREE.DodecahedronGeometry(
-        .075,
-        0
-    );
+        });
 
 
-for(
-    let i=0;
-    i<90;
-    i++
-){
+    for (
+        let i = 0;
+        i < 240;
+        i++
+    ) {
 
-    const rock =
-        new THREE.Mesh(
+        const rock =
+            new THREE.Mesh(
 
-            rockGeometry,
+                new THREE.DodecahedronGeometry(
 
-            rockMaterial
+                    .05 +
+                    Math.random() * .08,
+
+                    0
+
+                ),
+
+                rockMaterial
+
+            );
+
+
+        const side =
+            Math.random() > .5
+                ? 1
+                : -1;
+
+
+        rock.position.set(
+
+            side *
+            (
+                ROAD_WIDTH / 2 +
+                Math.random() * 4
+            ),
+
+            .04,
+
+            -Math.random() *
+            FIELD_LENGTH
 
         );
 
 
-    rock.position.set(
-
-        (Math.random()-.5) *
-        16,
-
-        .04,
-
-        -Math.random() *
-        FIELD_LENGTH
-
-    );
+        rock.rotation.y =
+            Math.random() *
+            Math.PI;
 
 
-    rock.scale.setScalar(
-
-        .6 +
-        Math.random()*.8
-
-    );
+        rock.castShadow =
+            true;
 
 
-    scene.add(
-        rock
-    );
+        scene.add(
+            rock
+        );
+
+    }
+
+
+    const grassBladeMaterial =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0x3e783b,
+
+            roughness:
+                1
+
+        });
+
+
+    for (
+        let i = 0;
+        i < 300;
+        i++
+    ) {
+
+        const blade =
+            new THREE.Mesh(
+
+                new THREE.ConeGeometry(
+
+                    .025,
+                    .12 +
+                    Math.random() * .18,
+
+                    3
+
+                ),
+
+                grassBladeMaterial
+
+            );
+
+
+        blade.position.set(
+
+            (
+                Math.random() -
+                .5
+            ) * 85,
+
+            .08,
+
+            -Math.random() *
+            FIELD_LENGTH
+
+        );
+
+
+        blade.rotation.z =
+            (
+                Math.random() -
+                .5
+            ) * .7;
+
+
+        scene.add(
+            blade
+        );
+
+    }
 
 }
 
 
+createGroundDetails();
+
+
 /* =========================================================
-CILINDRO ENTRE PONTOS
+   CILINDRO ENTRE PONTOS
 ========================================================= */
 
 function cylinderBetween(
@@ -1429,36 +1551,20 @@ function cylinderBetween(
     b,
     radius,
     material,
-    segments=6
+    segments = 7
 
-){
+) {
 
     const direction =
         new THREE.Vector3()
-        .subVectors(
-            b,
-            a
-        );
+            .subVectors(
+                b,
+                a
+            );
 
 
     const length =
         direction.length();
-
-
-    /*
-        Proteção importante.
-
-        Nunca criamos cilindro
-        com tamanho zero.
-    */
-
-    if(
-        length < .001
-    ){
-
-        return null;
-
-    }
 
 
     const geometry =
@@ -1466,9 +1572,7 @@ function cylinderBetween(
 
             radius,
             radius,
-
             length,
-
             segments
 
         );
@@ -1486,8 +1590,8 @@ function cylinderBetween(
     mesh.position.copy(
 
         a.clone()
-        .add(b)
-        .multiplyScalar(.5)
+            .add(b)
+            .multiplyScalar(.5)
 
     );
 
@@ -1509,19 +1613,23 @@ function cylinderBetween(
         true;
 
 
+    mesh.receiveShadow =
+        true;
+
+
     return mesh;
 
 }
 
 
 /* =========================================================
-PALANQUE
+   PALANQUE
 ========================================================= */
 
-function createPalanque(
+function createMainPalanque(
     x,
     z
-){
+) {
 
     const group =
         new THREE.Group();
@@ -1531,10 +1639,12 @@ function createPalanque(
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
-                .105,
-                .14,
-                4.4,
-                7
+
+                .11,
+                .15,
+                4.5,
+                8
+
             ),
 
             darkWoodMaterial
@@ -1543,11 +1653,14 @@ function createPalanque(
 
 
     post.position.y =
-        2.2;
+        2.25;
 
 
     post.rotation.z =
-        (Math.random()-.5)*.04;
+        (
+            Math.random() -
+            .5
+        ) * .04;
 
 
     post.castShadow =
@@ -1559,14 +1672,20 @@ function createPalanque(
     );
 
 
+    /*
+       Ponta acima do arame
+    */
+
     const top =
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
-                .07,
-                .08,
-                .65,
-                6
+
+                .075,
+                .09,
+                .75,
+                7
+
             ),
 
             woodMaterial
@@ -1575,7 +1694,7 @@ function createPalanque(
 
 
     top.position.y =
-        4.65;
+        4.82;
 
 
     top.castShadow =
@@ -1598,17 +1717,20 @@ function createPalanque(
         group
     );
 
+
+    return group;
+
 }
 
 
 /* =========================================================
-CRUZETA
+   CRUZETA
 ========================================================= */
 
 function createCruzeta(
     x,
     z
-){
+) {
 
     const group =
         new THREE.Group();
@@ -1618,10 +1740,12 @@ function createCruzeta(
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
+
                 .10,
                 .14,
                 4.35,
-                7
+                8
+
             ),
 
             darkWoodMaterial
@@ -1630,7 +1754,7 @@ function createCruzeta(
 
 
     post.position.y =
-        2.18;
+        2.175;
 
 
     post.castShadow =
@@ -1642,13 +1766,20 @@ function createCruzeta(
     );
 
 
+    /*
+       Cruzeta diagonalizada
+       para parecer mais natural.
+    */
+
     const cross =
         new THREE.Mesh(
 
             new THREE.BoxGeometry(
-                2.5,
-                .14,
-                .14
+
+                2.7,
+                .16,
+                .16
+
             ),
 
             woodMaterial
@@ -1658,6 +1789,10 @@ function createCruzeta(
 
     cross.position.y =
         3.65;
+
+
+    cross.rotation.z =
+        .02;
 
 
     cross.castShadow =
@@ -1680,24 +1815,36 @@ function createCruzeta(
         group
     );
 
+
+    return group;
+
 }
 
 
 /* =========================================================
-VARINHA
+   VARINHA ALTERNADA
 ========================================================= */
 
 function createVara(
     x,
     z,
     side
-){
+) {
 
-    const bottom =
+    /*
+       Uma de cada lado:
+
+       /
+       \
+       /
+       \
+    */
+
+    const start =
         new THREE.Vector3(
 
             x +
-            side*.7,
+            side * .62,
 
             .12,
 
@@ -1706,13 +1853,13 @@ function createVara(
         );
 
 
-    const top =
+    const end =
         new THREE.Vector3(
 
             x -
-            side*.28,
+            side * .18,
 
-            3.55,
+            3.65,
 
             z
 
@@ -1722,46 +1869,42 @@ function createVara(
     const vara =
         cylinderBetween(
 
-            bottom,
-            top,
+            start,
+            end,
 
-            .038,
+            .042,
 
             woodMaterial,
 
-            5
+            6
 
         );
 
 
-    if(
+    scene.add(
         vara
-    ){
+    );
 
-        scene.add(
-            vara
-        );
 
-    }
+    return vara;
 
 }
 
 
 /* =========================================================
-ARAMES
+   ARAME
 ========================================================= */
 
-function createWire(
-    x,
-    height
-){
+function createMainWire(
+    x
+) {
 
     const start =
         new THREE.Vector3(
 
             x,
-            height,
-            3
+            3.65,
+            4.3
 
         );
 
@@ -1770,8 +1913,8 @@ function createWire(
         new THREE.Vector3(
 
             x,
-            height,
-            -FIELD_LENGTH-3
+            3.65,
+            -FIELD_LENGTH - 3
 
         );
 
@@ -1782,107 +1925,104 @@ function createWire(
             start,
             end,
 
-            .018,
+            .022,
 
             wireMaterial,
 
-            5
+            6
 
         );
 
 
-    if(
+    scene.add(
         wire
-    ){
+    );
 
-        scene.add(
-            wire
-        );
 
-    }
+    return wire;
 
 }
 
 
-/*
-    A estrutura real tem:
-
-    1º PALANQUE
-       |
-       | 8 pés
-       |
-    CRUZETA
-       |
-       | 8 pés
-       |
-    PALANQUE
-       |
-       | 8 pés
-       |
-    CRUZETA
-*/
+/* =========================================================
+   ESTRUTURA REAL DA ROÇA
+========================================================= */
 
 function createSupportStructure(
     x
-){
+) {
 
-    const sectionLength =
+    /*
+       PALANQUE INICIAL
+    */
+
+    createMainPalanque(
+        x,
+        3
+    );
+
+
+    /*
+       Depois de cada 8 pés:
+
+       8 pés
+       CRUZETA
+
+       8 pés
+       PALANQUE
+
+       8 pés
+       CRUZETA
+
+       8 pés
+       PALANQUE
+    */
+
+
+    const sectionDistance =
         PLANTS_PER_SECTION *
         PLANT_SPACING;
 
 
-    createPalanque(
-        x,
-        2
-    );
+    for (
+        let section = 1;
+        section <= 5;
+        section++
+    ) {
+
+        const z =
+            3 -
+            section *
+            sectionDistance;
 
 
-    let index = 1;
-
-
-    for(
-
-        let z =
-        2-sectionLength;
-
-        z >
-        -FIELD_LENGTH;
-
-        z -= sectionLength
-
-    ){
-
-        if(
-            index % 2 === 1
-        ){
+        if (
+            section % 2 === 1
+        ) {
 
             createCruzeta(
                 x,
                 z
             );
 
-        }else{
+        } else {
 
-            createPalanque(
+            createMainPalanque(
                 x,
                 z
             );
 
         }
 
-
-        index++;
-
     }
 
 
     /*
-        Um arame principal.
+       UM ÚNICO FIO PRINCIPAL
     */
 
-    createWire(
-        x,
-        3.35
+    createMainWire(
+        x
     );
 
 }
@@ -1899,128 +2039,152 @@ createSupportStructure(
 
 
 /* =========================================================
-FOLHA
+   FOLHAS
 ========================================================= */
 
-const leafGeometry =
-    new THREE.SphereGeometry(
-        1,
-        6,
-        5
-    );
-
-
 function createLeaf(
-    group,
-    x,
-    y,
-    z,
-    size,
-    rotation
-){
+    position,
+    scale,
+    rotationY = 0
+) {
 
     const material =
-        leafMaterials[
-            Math.floor(
-                Math.random() *
-                leafMaterials.length
-            )
-        ];
+        new THREE.MeshStandardMaterial({
+
+            color:
+                new THREE.Color()
+                    .setHSL(
+
+                        .30 +
+                        Math.random() * .04,
+
+                        .55,
+
+                        .28 +
+                        Math.random() * .14
+
+                    ),
+
+            roughness:
+                .92
+
+        });
 
 
     const leaf =
         new THREE.Mesh(
 
-            leafGeometry,
+            new THREE.SphereGeometry(
+
+                1,
+
+                7,
+
+                5
+
+            ),
+
             material
 
         );
 
 
-    leaf.position.set(
-        x,
-        y,
-        z
+    leaf.scale.set(
+
+        scale * 1.5,
+
+        scale * .20,
+
+        scale * .62
+
     );
 
 
-    leaf.scale.set(
-
-        size*1.5,
-
-        size*.22,
-
-        size*.7
-
+    leaf.position.copy(
+        position
     );
 
 
     leaf.rotation.y =
-        rotation;
+        rotationY;
 
 
     leaf.rotation.z =
-        (Math.random()-.5)*.4;
+        (
+            Math.random() -
+            .5
+        ) * .6;
 
 
     leaf.castShadow =
         true;
 
 
-    group.add(
+    leaf.receiveShadow =
+        true;
+
+
+    scene.add(
         leaf
     );
+
+
+    return leaf;
 
 }
 
 
 /* =========================================================
-TOMATE
+   TOMATES
 ========================================================= */
 
-const tomatoGeometry =
-    new THREE.SphereGeometry(
-        .23,
-        9,
-        7
-    );
-
-
-const crownGeometry =
-    new THREE.ConeGeometry(
-        .09,
-        .11,
-        5
-    );
-
-
-const tomatoObjects = [];
+const tomatoObjects =
+    [];
 
 
 function createTomato(
 
-    group,
+    position,
+    color,
+    mature = false,
+    scale = 1
 
-    x,
-    y,
-    z,
+) {
 
-    material,
-
-    mature
-
-){
-
-    const tomatoGroup =
+    const group =
         new THREE.Group();
+
+
+    const tomatoMaterial =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                color,
+
+            roughness:
+                .55,
+
+            metalness:
+                .01
+
+        });
 
 
     const tomato =
         new THREE.Mesh(
 
-            tomatoGeometry,
+            new THREE.SphereGeometry(
 
-            material
+                .24 *
+                scale,
+
+                14,
+
+                12
+
+            ),
+
+            tomatoMaterial
 
         );
 
@@ -2033,127 +2197,175 @@ function createTomato(
         true;
 
 
-    tomatoGroup.add(
+    tomato.receiveShadow =
+        true;
+
+
+    group.add(
         tomato
     );
 
 
+    /*
+       Coroa verde
+    */
+
     const crown =
         new THREE.Mesh(
 
-            crownGeometry,
+            new THREE.ConeGeometry(
 
-            stemMaterial
+                .105 *
+                scale,
+
+                .13 *
+                scale,
+
+                5
+
+            ),
+
+            new THREE.MeshStandardMaterial({
+
+                color:
+                    0x326b32,
+
+                roughness:
+                    1
+
+            })
 
         );
 
 
     crown.position.y =
-        .22;
+        .21 *
+        scale;
 
 
     crown.rotation.x =
         Math.PI;
 
 
-    tomatoGroup.add(
+    group.add(
         crown
     );
 
 
-    tomatoGroup.position.set(
-        x,
-        y,
-        z
+    group.position.copy(
+        position
     );
 
 
-    tomatoGroup.userData.mature =
-        mature;
-
-
-    tomatoGroup.userData.tomato =
+    group.userData.tomato =
         true;
 
 
-    group.add(
-        tomatoGroup
+    group.userData.mature =
+        mature;
+
+
+    scene.add(
+        group
     );
 
 
-    if(
+    if (
         mature
-    ){
+    ) {
 
         tomatoObjects.push(
-            tomatoGroup
+            group
         );
 
     }
+
+
+    return group;
 
 }
 
 
 /* =========================================================
-FLORES
+   FLORES
 ========================================================= */
 
-const flowerPetalGeometry =
-    new THREE.SphereGeometry(
-        .075,
-        6,
-        5
-    );
-
-
-const flowerCenterGeometry =
-    new THREE.SphereGeometry(
-        .05,
-        6,
-        5
-    );
-
-
 function createFlower(
-    group,
-    x,
-    y,
-    z
-){
+    position,
+    scale = 1
+) {
 
-    const flower =
+    const group =
         new THREE.Group();
 
 
-    for(
-        let i=0;
-        i<5;
+    const white =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0xf6f1d9,
+
+            roughness:
+                1
+
+        });
+
+
+    const yellow =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0xe4bd42,
+
+            roughness:
+                .8
+
+        });
+
+
+    for (
+        let i = 0;
+        i < 5;
         i++
-    ){
+    ) {
 
         const petal =
             new THREE.Mesh(
 
-                flowerPetalGeometry,
+                new THREE.SphereGeometry(
 
-                flowerWhiteMaterial
+                    .075 *
+                    scale,
+
+                    7,
+
+                    5
+
+                ),
+
+                white
 
             );
 
 
         const angle =
             i *
-            Math.PI*2 /
+            Math.PI *
+            2 /
             5;
 
 
         petal.position.set(
 
-            Math.cos(angle)*.10,
+            Math.cos(angle) *
+            .10 *
+            scale,
 
             0,
 
-            Math.sin(angle)*.10
+            Math.sin(angle) *
+            .10 *
+            scale
 
         );
 
@@ -2162,7 +2374,7 @@ function createFlower(
             .55;
 
 
-        flower.add(
+        group.add(
             petal
         );
 
@@ -2172,58 +2384,127 @@ function createFlower(
     const center =
         new THREE.Mesh(
 
-            flowerCenterGeometry,
+            new THREE.SphereGeometry(
 
-            flowerYellowMaterial
+                .055 *
+                scale,
+
+                7,
+
+                6
+
+            ),
+
+            yellow
 
         );
 
 
-    flower.add(
+    center.position.y =
+        .01;
+
+
+    group.add(
         center
     );
 
 
-    flower.position.set(
-        x,
-        y,
-        z
+    group.position.copy(
+        position
     );
 
 
-    group.add(
-        flower
+    scene.add(
+        group
     );
+
+
+    return group;
 
 }
 
 
 /* =========================================================
-PÉ DE TOMATE
+   GALHO
 ========================================================= */
 
-function createTomatoPlant(
+function createBranch(
+    base,
+    end
+) {
+
+    const branch =
+        cylinderBetween(
+
+            base,
+            end,
+
+            .032,
+
+            new THREE.MeshStandardMaterial({
+
+                color:
+                    0x3d6635,
+
+                roughness:
+                    1
+
+            }),
+
+            6
+
+        );
+
+
+    scene.add(
+        branch
+    );
+
+
+    return branch;
+
+}
+
+
+/* =========================================================
+   PÉ PROCEDURAL
+========================================================= */
+
+function createProceduralPlant(
     x,
-    z,
-    index
-){
+    z
+) {
 
     const plant =
         new THREE.Group();
 
 
+    const stemMaterial =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0x3a6838,
+
+            roughness:
+                1
+
+        });
+
+
     /*
-        CAULE PRINCIPAL
+       CAULE PRINCIPAL
     */
 
     const stem =
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
-                .055,
-                .085,
-                3.2,
-                6
+
+                .065,
+                .095,
+                3.35,
+                8
+
             ),
 
             stemMaterial
@@ -2232,7 +2513,7 @@ function createTomatoPlant(
 
 
     stem.position.y =
-        1.6;
+        1.68;
 
 
     stem.castShadow =
@@ -2245,242 +2526,331 @@ function createTomatoPlant(
 
 
     /*
-        GALHOS
+       GALHOS
     */
 
-    for(
-        let b=0;
-        b<7;
+    for (
+        let b = 0;
+        b < 9;
         b++
-    ){
+    ) {
 
         const y =
-            .65 +
-            b*.38;
+            .55 +
+            b *
+            .31;
 
 
-        const side =
-            b%2===0
-            ? 1
-            : -1;
+        const direction =
+            b % 2 === 0
+                ? 1
+                : -1;
 
 
         const base =
             new THREE.Vector3(
+
                 0,
                 y,
                 0
+
             );
 
 
         const end =
             new THREE.Vector3(
 
-                side *
-                (.45 +
-                Math.random()*.25),
+                direction *
+                (
+                    .55 +
+                    Math.random() *
+                    .35
+                ),
 
                 y +
-                .12,
+                .15 +
+                Math.random() *
+                .18,
 
-                (Math.random()-.5)*.25
+                (
+                    Math.random() -
+                    .5
+                ) *
+                .35
 
             );
-
-
-        const worldBase =
-            base.clone();
-
-
-        const worldEnd =
-            end.clone();
 
 
         const branch =
-            cylinderBetween(
+            createBranch(
 
-                worldBase,
-                worldEnd,
+                base.clone()
+                    .add(
+                        new THREE.Vector3(
+                            x,
+                            0,
+                            z
+                        )
+                    ),
 
-                .025,
-
-                stemMaterial,
-
-                5
+                end.clone()
+                    .add(
+                        new THREE.Vector3(
+                            x,
+                            0,
+                            z
+                        )
+                    )
 
             );
 
 
-        if(
+        branch.position.sub(
+            new THREE.Vector3(
+                x,
+                0,
+                z
+            )
+        );
+
+
+        plant.add(
             branch
-        ){
+        );
+
+
+        /*
+           FOLHAS NOS GALHOS
+        */
+
+        for (
+            let l = 0;
+            l < 3;
+            l++
+        ) {
+
+            const leaf =
+                createLeaf(
+
+                    new THREE.Vector3(
+
+                        end.x +
+                        (
+                            Math.random() -
+                            .5
+                        ) *
+                        .35,
+
+                        end.y +
+                        (
+                            Math.random() -
+                            .5
+                        ) *
+                        .25,
+
+                        end.z +
+                        (
+                            Math.random() -
+                            .5
+                        ) *
+                        .35
+
+                    ),
+
+                    .35 +
+                    Math.random() *
+                    .18,
+
+                    Math.random() *
+                    Math.PI
+
+                );
+
+
+            leaf.position.sub(
+                new THREE.Vector3(
+                    x,
+                    0,
+                    z
+                )
+            );
+
 
             plant.add(
-                branch
+                leaf
             );
 
         }
 
-
-        /*
-            folhas dos galhos
-        */
-
-        createLeaf(
-
-            plant,
-
-            end.x,
-
-            end.y+.08,
-
-            end.z+.05,
-
-            .28,
-
-            side*.7
-
-        );
-
-
-        createLeaf(
-
-            plant,
-
-            end.x*.75,
-
-            end.y-.05,
-
-            end.z-.08,
-
-            .25,
-
-            -side*.9
-
-        );
-
     }
 
 
     /*
-        FOLHAGEM PRINCIPAL
-
-        Poucas folhas grandes,
-        em vez de milhares de objetos.
+       FOLHAGEM EXTRA
     */
 
-    for(
-        let i=0;
-        i<15;
+    for (
+        let i = 0;
+        i < 28;
         i++
-    ){
+    ) {
 
         const y =
             .45 +
-            Math.random()*2.45;
+            Math.random() *
+            2.6;
 
 
         const angle =
             Math.random() *
-            Math.PI*2;
+            Math.PI *
+            2;
 
 
         const radius =
             .25 +
-            Math.random()*.48;
+            Math.random() *
+            .70;
 
 
-        createLeaf(
+        const leaf =
+            createLeaf(
 
-            plant,
+                new THREE.Vector3(
 
-            Math.cos(angle)*radius,
+                    Math.cos(angle) *
+                    radius,
 
-            y,
+                    y,
 
-            Math.sin(angle)*radius,
+                    Math.sin(angle) *
+                    radius
 
-            .28 +
-            Math.random()*.12,
+                ),
 
-            angle
+                .30 +
+                Math.random() *
+                .22,
 
+                angle
+
+            );
+
+
+        leaf.position.sub(
+            new THREE.Vector3(
+                x,
+                0,
+                z
+            )
+        );
+
+
+        plant.add(
+            leaf
         );
 
     }
 
 
     /*
-        CACHOS DE TOMATES
+       CACHOS
     */
 
-    for(
-        let c=0;
-        c<4;
+    const clusters =
+        6;
+
+
+    for (
+        let c = 0;
+        c < clusters;
         c++
-    ){
+    ) {
 
         const y =
-            .75 +
-            c*.55;
+            .65 +
+            c *
+            .45 +
+            Math.random() *
+            .15;
 
 
         const side =
-            c%2===0
-            ? 1
-            : -1;
+            c % 2 === 0
+                ? 1
+                : -1;
 
 
-        const baseX =
+        const clusterX =
             side *
-            (.45 +
-            Math.random()*.18);
-
-
-        /*
-            3 ou 4 tomates por cacho.
-        */
-
-        const amount =
-            3 +
-            Math.floor(
-                Math.random()*2
+            (
+                .52 +
+                Math.random() *
+                .28
             );
 
 
-        for(
-            let t=0;
-            t<amount;
+        const amount =
+            4 +
+            Math.floor(
+                Math.random() *
+                3
+            );
+
+
+        for (
+            let t = 0;
+            t < amount;
             t++
-        ){
+        ) {
 
             const stage =
                 Math.random();
 
 
-            let material;
+            let color;
             let mature =
                 false;
 
 
-            if(
-                stage < .42
-            ){
+            /*
+               VERDE
+            */
 
-                material =
-                    greenTomatoMaterial;
+            if (
+                stage <
+                .38
+            ) {
 
-            }else if(
-                stage < .65
-            ){
+                color =
+                    0x4c983c;
 
-                material =
-                    yellowTomatoMaterial;
+            }
 
-            }else{
 
-                material =
-                    redMaterial;
+            /*
+               AMARELO
+            */
+
+            else if (
+                stage <
+                .63
+            ) {
+
+                color =
+                    0xd3a92e;
+
+            }
+
+
+            /*
+               VERMELHO MADURO
+            */
+
+            else {
+
+                color =
+                    0xd7392c;
 
                 mature =
                     true;
@@ -2488,22 +2858,59 @@ function createTomatoPlant(
             }
 
 
-            createTomato(
+            const tomato =
+                createTomato(
 
-                plant,
+                    new THREE.Vector3(
 
-                baseX +
-                (Math.random()-.5)*.28,
+                        x +
+                        clusterX +
+                        (
+                            Math.random() -
+                            .5
+                        ) *
+                        .35,
 
-                y +
-                (Math.random()-.5)*.28,
+                        y +
+                        (
+                            Math.random() -
+                            .5
+                        ) *
+                        .35,
 
-                (Math.random()-.5)*.22,
+                        z +
+                        (
+                            Math.random() -
+                            .5
+                        ) *
+                        .30
 
-                material,
+                    ),
 
-                mature
+                    color,
 
+                    mature,
+
+                    .75 +
+                    Math.random() *
+                    .35
+
+                );
+
+
+            tomato.position.sub(
+
+                new THREE.Vector3(
+                    x,
+                    0,
+                    z
+                )
+
+            );
+
+
+            plant.add(
+                tomato
             );
 
         }
@@ -2512,42 +2919,61 @@ function createTomatoPlant(
 
 
     /*
-        FLORES
-
-        Algumas ainda estão florindo.
+       FLORES
     */
 
-    for(
-        let f=0;
-        f<3;
+    for (
+        let f = 0;
+        f < 7;
         f++
-    ){
+    ) {
 
-        createFlower(
+        const flower =
+            createFlower(
 
-            plant,
+                new THREE.Vector3(
 
-            (Math.random()-.5)*.9,
+                    x +
+                    (
+                        Math.random() -
+                        .5
+                    ) *
+                    1.1,
 
-            1.1 +
-            Math.random()*1.5,
+                    1.0 +
+                    Math.random() *
+                    1.7,
 
-            (Math.random()-.5)*.45
+                    z +
+                    (
+                        Math.random() -
+                        .5
+                    ) *
+                    .8
+
+                ),
+
+                .75
+
+            );
+
+
+        flower.position.sub(
+
+            new THREE.Vector3(
+                x,
+                0,
+                z
+            )
 
         );
 
+
+        plant.add(
+            flower
+        );
+
     }
-
-
-    /*
-        POSICIONAMENTO
-    */
-
-    plant.position.set(
-        x,
-        0,
-        z
-    );
 
 
     scene.add(
@@ -2561,51 +2987,138 @@ function createTomatoPlant(
 
 
 /* =========================================================
-PLANTAÇÃO
+   SISTEMA GLB
 ========================================================= */
 
-const plantGroups = [];
+const gltfLoader =
+    new GLTFLoader();
 
 
-/*
-    Cada lado possui
-    sua própria sequência.
+let glbPlant =
+    null;
 
-    Importante:
 
-    As varinhas alternam
-    de lado em lado.
-*/
+let glbAvailable =
+    false;
 
-for(
+
+async function loadRealTomatoPlant() {
+
+    try {
+
+        const result =
+            await gltfLoader.loadAsync(
+                TOMATO_GLB
+            );
+
+
+        glbPlant =
+            result.scene;
+
+
+        glbPlant.traverse(
+            object => {
+
+                if (
+                    object.isMesh
+                ) {
+
+                    object.castShadow =
+                        true;
+
+                    object.receiveShadow =
+                        true;
+
+
+                    if (
+                        object.material
+                    ) {
+
+                        object.material
+                            .roughness ??=
+                            .75;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        glbPlant.visible =
+            false;
+
+
+        scene.add(
+            glbPlant
+        );
+
+
+        glbAvailable =
+            true;
+
+
+        console.log(
+            "🍅 GLB do pé de tomate carregado."
+        );
+
+
+        replacePlantsWithGLB();
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.log(
+            "ℹ️ GLB ainda não encontrado. Usando pé procedural."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PLANTAÇÃO
+========================================================= */
+
+const plantGroups =
+    [];
+
+
+let plantIndex =
+    0;
+
+
+for (
     const rowSide
-    of [-1,1]
-){
+    of [-1, 1]
+) {
 
     const x =
         rowSide *
         ROW_X;
 
 
-    let plantNumber = 0;
+    /*
+       Começamos alguns metros
+       depois do palanque.
+    */
 
-
-    for(
-
-        let z=-2;
-
-        z>-FIELD_LENGTH;
-
-        z-=PLANT_SPACING
-
-    ){
+    for (
+        let z = 0;
+        z > -FIELD_LENGTH;
+        z -= PLANT_SPACING
+    ) {
 
         const plant =
-            createTomatoPlant(
+            createProceduralPlant(
 
                 x,
-                z,
-                plantNumber
+                z
 
             );
 
@@ -2616,18 +3129,13 @@ for(
 
 
         /*
-            Alternância:
-
-            /
-            \
-            /
-            \
+           VARINHAS ALTERNADAS
         */
 
         const side =
-            plantNumber%2===0
-            ? 1
-            : -1;
+            plantIndex % 2 === 0
+                ? 1
+                : -1;
 
 
         createVara(
@@ -2637,7 +3145,7 @@ for(
         );
 
 
-        plantNumber++;
+        plantIndex++;
 
     }
 
@@ -2645,22 +3153,55 @@ for(
 
 
 /* =========================================================
-PERSONAGEM
+   SUBSTITUIR PROCEDURAL PELO GLB
+========================================================= */
+
+function replacePlantsWithGLB() {
+
+    if (
+        !glbAvailable ||
+        !glbPlant
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+       Nesta primeira versão,
+       mantemos o sistema procedural
+       visível até termos o GLB real
+       com tomates/interação.
+
+       O carregador já está preparado.
+    */
+
+    console.log(
+        "🌱 Sistema GLB preparado."
+    );
+
+}
+
+
+/* =========================================================
+   PERSONAGEM
 ========================================================= */
 
 const player =
     new THREE.Group();
 
 
-function createPlayer(){
+function createPlayer() {
 
     const shirt =
         new THREE.MeshStandardMaterial({
 
             color:
-            0x174d2b,
+                0x174d2b,
 
-            roughness:.85
+            roughness:
+                .85
 
         });
 
@@ -2669,9 +3210,10 @@ function createPlayer(){
         new THREE.MeshStandardMaterial({
 
             color:
-            0xd39a72,
+                0xd39a72,
 
-            roughness:.9
+            roughness:
+                .9
 
         });
 
@@ -2680,9 +3222,10 @@ function createPlayer(){
         new THREE.MeshStandardMaterial({
 
             color:
-            0x263746,
+                0x24394a,
 
-            roughness:.9
+            roughness:
+                .9
 
         });
 
@@ -2691,9 +3234,10 @@ function createPlayer(){
         new THREE.MeshStandardMaterial({
 
             color:
-            0x171717,
+                0x161616,
 
-            roughness:.9
+            roughness:
+                .85
 
         });
 
@@ -2702,29 +3246,34 @@ function createPlayer(){
         new THREE.MeshStandardMaterial({
 
             color:
-            0xd4ad45,
+                0xd7ae45,
 
-            roughness:.8
+            roughness:
+                .8
 
         });
 
 
     /*
-        pernas
+       PERNAS
     */
 
-    for(
-        const x
-        of [-.16,.16]
-    ){
+    for (
+        const x of [
+            -.16,
+            .16
+        ]
+    ) {
 
         const leg =
             new THREE.Mesh(
 
                 new THREE.BoxGeometry(
+
                     .18,
                     .65,
                     .18
+
                 ),
 
                 pants
@@ -2733,9 +3282,11 @@ function createPlayer(){
 
 
         leg.position.set(
+
             x,
             .33,
             0
+
         );
 
 
@@ -2752,9 +3303,11 @@ function createPlayer(){
             new THREE.Mesh(
 
                 new THREE.BoxGeometry(
+
                     .22,
                     .14,
                     .35
+
                 ),
 
                 black
@@ -2763,9 +3316,11 @@ function createPlayer(){
 
 
         shoe.position.set(
+
             x,
             .05,
             -.07
+
         );
 
 
@@ -2777,16 +3332,18 @@ function createPlayer(){
 
 
     /*
-        corpo
+       CORPO
     */
 
     const body =
         new THREE.Mesh(
 
             new THREE.BoxGeometry(
+
                 .75,
                 .95,
                 .42
+
             ),
 
             shirt
@@ -2808,16 +3365,18 @@ function createPlayer(){
 
 
     /*
-        cabeça
+       CABEÇA
     */
 
     const head =
         new THREE.Mesh(
 
             new THREE.SphereGeometry(
+
                 .35,
-                12,
-                9
+                16,
+                12
+
             ),
 
             skin
@@ -2839,17 +3398,19 @@ function createPlayer(){
 
 
     /*
-        boné
+       BONÉ
     */
 
     const cap =
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
+
                 .38,
                 .38,
                 .12,
-                12
+                16
+
             ),
 
             shirt
@@ -2867,16 +3428,18 @@ function createPlayer(){
 
 
     /*
-        caixa
+       CAIXA
     */
 
     const box =
         new THREE.Mesh(
 
             new THREE.BoxGeometry(
+
                 .72,
                 .55,
                 .58
+
             ),
 
             black
@@ -2885,9 +3448,11 @@ function createPlayer(){
 
 
     box.position.set(
+
         0,
         1.0,
         .48
+
     );
 
 
@@ -2901,16 +3466,18 @@ function createPlayer(){
 
 
     /*
-        faixa dourada
+       FAIXA DOURADA
     */
 
     const stripe =
         new THREE.Mesh(
 
             new THREE.BoxGeometry(
+
                 .76,
                 .07,
                 .62
+
             ),
 
             yellow
@@ -2919,15 +3486,20 @@ function createPlayer(){
 
 
     stripe.position.set(
+
         0,
         .83,
         .48
+
     );
 
 
     player.add(
         stripe
     );
+
+
+    return player;
 
 }
 
@@ -2948,10 +3520,11 @@ scene.add(
 
 
 /* =========================================================
-CONTROLE
+   CONTROLES
 ========================================================= */
 
-const keys = {};
+const keys =
+    {};
 
 
 window.addEventListener(
@@ -2977,67 +3550,67 @@ window.addEventListener(
 
 
 /* =========================================================
-CONTROLES TOUCH
+   CONTROLES MOBILE
 ========================================================= */
 
 document
-.querySelectorAll(".control")
-.forEach(button => {
+    .querySelectorAll(".control")
+    .forEach(button => {
 
-    const key =
-        button.dataset.key;
-
-
-    const start =
-        event => {
-
-            event.preventDefault();
-
-            keys[key] =
-                true;
-
-        };
+        const key =
+            button.dataset.key;
 
 
-    const stop =
-        event => {
+        const start =
+            event => {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            keys[key] =
-                false;
+                keys[key] =
+                    true;
 
-        };
-
-
-    button.addEventListener(
-        "pointerdown",
-        start
-    );
+            };
 
 
-    button.addEventListener(
-        "pointerup",
-        stop
-    );
+        const stop =
+            event => {
+
+                event.preventDefault();
+
+                keys[key] =
+                    false;
+
+            };
 
 
-    button.addEventListener(
-        "pointercancel",
-        stop
-    );
+        button.addEventListener(
+            "pointerdown",
+            start
+        );
 
 
-    button.addEventListener(
-        "pointerleave",
-        stop
-    );
+        button.addEventListener(
+            "pointerup",
+            stop
+        );
 
-});
+
+        button.addEventListener(
+            "pointercancel",
+            stop
+        );
+
+
+        button.addEventListener(
+            "pointerleave",
+            stop
+        );
+
+    });
 
 
 /* =========================================================
-MOVIMENTO
+   MOVIMENTO
 ========================================================= */
 
 const clock =
@@ -3046,74 +3619,88 @@ const clock =
 
 function updatePlayer(
     delta
-){
+) {
 
     const speed =
         4.2;
 
 
-    let dx=0;
-    let dz=0;
+    let dx =
+        0;
 
 
-    if(
+    let dz =
+        0;
+
+
+    if (
         keys["ArrowLeft"] ||
         keys["a"] ||
         keys["A"]
-    ){
+    ) {
 
-        dx--;
+        dx -=
+            1;
 
     }
 
 
-    if(
+    if (
         keys["ArrowRight"] ||
         keys["d"] ||
         keys["D"]
-    ){
+    ) {
 
-        dx++;
+        dx +=
+            1;
 
     }
 
 
-    if(
+    if (
         keys["ArrowUp"] ||
         keys["w"] ||
         keys["W"]
-    ){
+    ) {
 
-        dz--;
+        dz -=
+            1;
 
     }
 
 
-    if(
+    if (
         keys["ArrowDown"] ||
         keys["s"] ||
         keys["S"]
-    ){
+    ) {
 
-        dz++;
+        dz +=
+            1;
 
     }
 
 
-    if(
-        dx!==0 ||
-        dz!==0
-    ){
+    if (
+        dx !== 0 ||
+        dz !== 0
+    ) {
 
         const length =
             Math.sqrt(
-                dx*dx+
-                dz*dz
+
+                dx * dx +
+                dz * dz
+
             );
 
 
-        dx/=length;
-        dz/=length;
+        dx /=
+            length;
+
+
+        dz /=
+            length;
 
 
         player.position.x +=
@@ -3129,8 +3716,8 @@ function updatePlayer(
 
 
         /*
-            Mantém o trabalhador
-            na estrada.
+           Mantemos o jogador
+           no corredor.
         */
 
         player.position.x =
@@ -3138,9 +3725,9 @@ function updatePlayer(
 
                 player.position.x,
 
-                -3.2,
+                -3.35,
 
-                3.2
+                3.35
 
             );
 
@@ -3150,7 +3737,7 @@ function updatePlayer(
 
                 player.position.z,
 
-                -FIELD_LENGTH+3,
+                -FIELD_LENGTH + 3,
 
                 7
 
@@ -3169,59 +3756,60 @@ function updatePlayer(
 
 
 /* =========================================================
-TOMATE MAIS PRÓXIMO
+   TOMATE MAIS PRÓXIMO
 ========================================================= */
 
 let nearestTomato =
     null;
 
 
-function findNearestTomato(){
+function findNearestTomato() {
 
     nearestTomato =
         null;
 
 
-    let best =
+    let bestDistance =
         Infinity;
 
 
-    const temp =
-        new THREE.Vector3();
-
-
-    for(
+    for (
         const tomato
         of tomatoObjects
-    ){
+    ) {
 
-        if(
+        if (
             !tomato.visible ||
             !tomato.userData.mature
-        ){
+        ) {
 
             continue;
 
         }
 
 
-        tomato.getWorldPosition(
-            temp
-        );
+        const worldPosition =
+            tomato.getWorldPosition(
+
+                new THREE.Vector3()
+
+            );
 
 
         const distance =
             player.position.distanceTo(
-                temp
+                worldPosition
             );
 
 
-        if(
-            distance < best
-        ){
+        if (
+            distance <
+            bestDistance
+        ) {
 
-            best =
+            bestDistance =
                 distance;
+
 
             nearestTomato =
                 tomato;
@@ -3237,26 +3825,29 @@ function findNearestTomato(){
 
 
 /* =========================================================
-COLHEITA
+   COLHEITA
 ========================================================= */
 
 let score =
     0;
 
 
-function harvestTomato(){
+function harvestTomato() {
 
     const tomato =
         findNearestTomato();
 
 
-    if(
+    if (
         !tomato
-    ){
+    ) {
 
         showMessage(
+
             "🍅 Nenhum tomate maduro por perto."
+
         );
+
 
         return;
 
@@ -3265,7 +3856,9 @@ function harvestTomato(){
 
     const worldPosition =
         tomato.getWorldPosition(
+
             new THREE.Vector3()
+
         );
 
 
@@ -3275,13 +3868,17 @@ function harvestTomato(){
         );
 
 
-    if(
-        distance > 4.2
-    ){
+    if (
+        distance >
+        4.2
+    ) {
 
         showMessage(
+
             "🍅 TOMATE NO ALCANCE • chegue mais perto"
+
         );
+
 
         return;
 
@@ -3296,39 +3893,53 @@ function harvestTomato(){
 
 
     document
-    .getElementById("score")
-    .textContent =
+        .getElementById("score")
+        .textContent =
         score;
 
 
     /*
-        Coloca um tomate
-        na caixa.
+       TOMATE NA CAIXA
     */
 
     const picked =
         new THREE.Mesh(
 
             new THREE.SphereGeometry(
+
                 .09,
-                8,
-                6
+                10,
+                8
+
             ),
 
-            redMaterial
+            new THREE.MeshStandardMaterial({
+
+                color:
+                    0xd83229,
+
+                roughness:
+                    .6
+
+            })
 
         );
 
 
     picked.position.set(
 
-        (Math.random()-.5)*.25,
+        (
+            Math.random() -
+            .5
+        ) * .25,
 
-        .98+
-        Math.random()*.35,
+        .98 +
+        Math.random() *
+        .35,
 
-        .48+
-        Math.random()*.25
+        .48 +
+        Math.random() *
+        .25
 
     );
 
@@ -3349,16 +3960,20 @@ function harvestTomato(){
 }
 
 
+/* =========================================================
+   BOTÃO COLHER
+========================================================= */
+
 document
-.getElementById("harvest")
-.addEventListener(
-    "click",
-    harvestTomato
-);
+    .getElementById("harvest")
+    .addEventListener(
+        "click",
+        harvestTomato
+    );
 
 
 /* =========================================================
-MENSAGEM
+   MENSAGEM
 ========================================================= */
 
 let messageTimer =
@@ -3367,7 +3982,7 @@ let messageTimer =
 
 function showMessage(
     text
-){
+) {
 
     const message =
         document.getElementById(
@@ -3408,7 +4023,7 @@ function showMessage(
 
 
 /* =========================================================
-TEMPO
+   TEMPO
 ========================================================= */
 
 let timeLeft =
@@ -3425,47 +4040,49 @@ const timeElement =
     );
 
 
-function finishGame(){
+function finishGame() {
 
     gameRunning =
         false;
 
 
     document
-    .getElementById(
-        "finalScore"
-    )
-    .textContent =
+        .getElementById(
+            "finalScore"
+        )
+        .textContent =
         score;
 
 
     document
-    .getElementById(
-        "result"
-    )
-    .style.display =
+        .getElementById(
+            "result"
+        )
+        .style.display =
         "flex";
 
 }
 
 
-function updateTimer(){
+function updateTimer() {
 
-    if(
+    if (
         !gameRunning
-    ){
+    ) {
 
         return;
 
     }
 
 
-    timeLeft--;
+    timeLeft -=
+        1;
 
 
-    if(
-        timeLeft < 0
-    ){
+    if (
+        timeLeft <
+        0
+    ) {
 
         timeLeft =
             0;
@@ -3477,9 +4094,10 @@ function updateTimer(){
         timeLeft;
 
 
-    if(
-        timeLeft <= 0
-    ){
+    if (
+        timeLeft <=
+        0
+    ) {
 
         finishGame();
 
@@ -3495,10 +4113,10 @@ setInterval(
 
 
 /* =========================================================
-REINICIAR
+   REINICIAR
 ========================================================= */
 
-function restartGame(){
+function restartGame() {
 
     location.reload();
 
@@ -3506,39 +4124,41 @@ function restartGame(){
 
 
 document
-.getElementById("restart")
-.addEventListener(
-    "click",
-    restartGame
-);
+    .getElementById("restart")
+    .addEventListener(
+        "click",
+        restartGame
+    );
 
 
 document
-.getElementById("resultRestart")
-.addEventListener(
-    "click",
-    restartGame
-);
+    .getElementById("resultRestart")
+    .addEventListener(
+        "click",
+        restartGame
+    );
 
 
 /* =========================================================
-CÂMERA
+   CÂMERA
 ========================================================= */
 
 const cameraTarget =
     new THREE.Vector3();
 
 
-function updateCamera(){
+function updateCamera() {
 
     const desired =
         new THREE.Vector3(
 
-            player.position.x*.3,
+            player.position.x *
+            .35,
 
-            5.8,
+            5.7,
 
-            player.position.z+8.5
+            player.position.z +
+            8.5
 
         );
 
@@ -3558,7 +4178,8 @@ function updateCamera(){
 
         1.35,
 
-        player.position.z-7
+        player.position.z -
+        7
 
     );
 
@@ -3571,28 +4192,30 @@ function updateCamera(){
 
 
 /* =========================================================
-NUVENS
+   NUVENS
 ========================================================= */
 
 function updateClouds(
     delta
-){
+) {
 
-    for(
+    for (
         const cloud
         of clouds
-    ){
+    ) {
 
         cloud.position.x +=
-            delta*.18;
+            delta *
+            .22;
 
 
-        if(
-            cloud.position.x > 70
-        ){
+        if (
+            cloud.position.x >
+            85
+        ) {
 
             cloud.position.x =
-                -70;
+                -85;
 
         }
 
@@ -3602,10 +4225,56 @@ function updateClouds(
 
 
 /* =========================================================
-ANIMAÇÃO
+   LEVE MOVIMENTO DA PLANTAÇÃO
 ========================================================= */
 
-function animate(){
+function animatePlants(
+    time
+) {
+
+    /*
+       Um pequeno movimento
+       para não parecer tudo parado.
+
+       Futuramente podemos colocar
+       animação real dentro do GLB.
+    */
+
+    for (
+        let i = 0;
+        i < plantGroups.length;
+        i++
+    ) {
+
+        const plant =
+            plantGroups[i];
+
+
+        const amount =
+            .006 +
+            (
+                i % 5
+            ) *
+            .001;
+
+
+        plant.rotation.z =
+            Math.sin(
+                time * .001 +
+                i
+            ) *
+            amount;
+
+    }
+
+}
+
+
+/* =========================================================
+   ANIMAÇÃO
+========================================================= */
+
+function animate() {
 
     requestAnimationFrame(
         animate
@@ -3614,14 +4283,21 @@ function animate(){
 
     const delta =
         Math.min(
+
             clock.getDelta(),
+
             .05
+
         );
 
 
-    if(
+    const elapsed =
+        performance.now();
+
+
+    if (
         gameRunning
-    ){
+    ) {
 
         updatePlayer(
             delta
@@ -3638,6 +4314,11 @@ function animate(){
     );
 
 
+    animatePlants(
+        elapsed
+    );
+
+
     renderer.render(
         scene,
         camera
@@ -3650,11 +4331,20 @@ animate();
 
 
 /* =========================================================
-RESIZE
+   CARREGAR GLB
+========================================================= */
+
+loadRealTomatoPlant();
+
+
+/* =========================================================
+   RESIZE
 ========================================================= */
 
 window.addEventListener(
+
     "resize",
+
     () => {
 
         camera.aspect =
@@ -3674,9 +4364,11 @@ window.addEventListener(
         );
 
     }
+
 );
 
 </script>
 
 </body>
+
 </html>
