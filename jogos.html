@@ -1,2622 +1,1454 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
-
-<title>Santa Luzia Games • Colheita</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Santa Luzia • Colheita</title>
 
 <style>
-
 *{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-html,
-body{
-
-margin:0;
-padding:0;
-
-width:100%;
-height:100%;
-
-overflow:hidden;
-
-background:#9cc9ef;
-
-font-family:
-Arial,
-Helvetica,
-sans-serif;
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#9fcdf1;
 }
 
 #game{
-
-position:fixed;
-inset:0;
-
-overflow:hidden;
+  position:fixed;
+  inset:0;
 }
 
 canvas{
-
-display:block;
-
-width:100%;
-height:100%;
+  display:block;
 }
-
-/* =========================
-HUD
-========================= */
 
 .hud{
-
-position:fixed;
-
-top:18px;
-left:18px;
-right:18px;
-
-z-index:20;
-
-display:flex;
-
-justify-content:space-between;
-
-pointer-events:none;
+  position:fixed;
+  top:12px;
+  left:12px;
+  right:12px;
+  z-index:10;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  pointer-events:none;
 }
 
-.hud-card{
-
-min-width:150px;
-
-padding:12px 18px;
-
-background:rgba(255,255,255,.94);
-
-border:2px solid
-rgba(255,255,255,.8);
-
-border-radius:22px;
-
-box-shadow:
-0 5px 18px rgba(0,0,0,.15),
-inset 0 1px 0
-rgba(255,255,255,.8);
-
-color:#234b32;
+.hud-box{
+  background:rgba(255,255,255,.90);
+  border:1px solid rgba(20,70,35,.15);
+  border-radius:14px;
+  padding:9px 13px;
+  color:#164b27;
+  font-weight:800;
+  box-shadow:0 4px 15px rgba(0,0,0,.12);
 }
 
-.hud-label{
-
-font-size:15px;
-
-font-weight:700;
-
-letter-spacing:1px;
+.hud-box small{
+  display:block;
+  font-size:10px;
+  opacity:.65;
+  margin-bottom:2px;
 }
 
-.hud-value{
-
-margin-top:3px;
-
-font-size:30px;
-
-font-weight:800;
+#mensagem{
+  position:fixed;
+  top:74px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  background:rgba(20,65,30,.9);
+  color:white;
+  padding:9px 16px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:700;
+  opacity:0;
+  transition:.2s;
+  pointer-events:none;
+  white-space:nowrap;
 }
 
-/* =========================
-MENSAGEM
-========================= */
-
-#message{
-
-position:fixed;
-
-left:50%;
-
-bottom:160px;
-
-transform:
-translateX(-50%);
-
-z-index:25;
-
-max-width:330px;
-
-padding:14px 22px;
-
-background:
-rgba(30,86,50,.94);
-
-color:white;
-
-border-radius:24px;
-
-font-size:17px;
-
-font-weight:700;
-
-text-align:center;
-
-box-shadow:
-0 6px 20px
-rgba(0,0,0,.22);
-
-opacity:0;
-
-pointer-events:none;
-
-transition:
-opacity .2s ease;
+#mensagem.show{
+  opacity:1;
 }
 
-#message.show{
-
-opacity:1;
+#colher{
+  position:fixed;
+  bottom:105px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  border:0;
+  border-radius:50px;
+  padding:15px 30px;
+  background:#c92825;
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
+  display:none;
 }
 
-/* =========================
-CONTROLES
-========================= */
-
-.controls{
-
-position:fixed;
-
-left:18px;
-bottom:28px;
-
-z-index:30;
-
-display:grid;
-
-grid-template-columns:
-64px 64px 64px;
-
-grid-template-rows:
-64px 64px;
-
-gap:10px;
+#colher.show{
+  display:block;
 }
 
-.control{
-
-width:64px;
-height:64px;
-
-border:0;
-
-border-radius:20px;
-
-background:
-rgba(255,255,255,.94);
-
-color:#245536;
-
-font-size:30px;
-
-font-weight:900;
-
-box-shadow:
-0 5px 15px
-rgba(0,0,0,.16);
-
-touch-action:manipulation;
+.controles{
+  position:fixed;
+  bottom:15px;
+  left:15px;
+  z-index:20;
+  display:grid;
+  grid-template-columns:52px 52px 52px;
+  grid-template-rows:52px 52px;
+  gap:5px;
 }
 
-.control:active{
-
-transform:scale(.94);
+.controles button{
+  border:0;
+  border-radius:15px;
+  background:rgba(255,255,255,.85);
+  color:#18532b;
+  font-size:22px;
+  font-weight:900;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+  touch-action:none;
 }
 
-.up{
+#cima{grid-column:2}
+#baixo{grid-column:2}
+#esq{grid-column:1;grid-row:2}
+#dir{grid-column:3;grid-row:2}
 
-grid-column:2;
-grid-row:1;
+#reiniciar{
+  position:fixed;
+  bottom:18px;
+  right:18px;
+  z-index:20;
+  border:0;
+  background:white;
+  color:#18532b;
+  border-radius:13px;
+  padding:12px 15px;
+  font-weight:800;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
 }
 
-.left{
-
-grid-column:1;
-grid-row:2;
-}
-
-.down{
-
-grid-column:2;
-grid-row:2;
-}
-
-.right{
-
-grid-column:3;
-grid-row:2;
-}
-
-/* =========================
-AÇÕES
-========================= */
-
-.actions{
-
-position:fixed;
-
-right:18px;
-bottom:28px;
-
-z-index:30;
-
-display:flex;
-
-flex-direction:column;
-
-gap:10px;
-}
-
-.action{
-
-min-width:190px;
-min-height:58px;
-
-border:0;
-
-border-radius:20px;
-
-font-size:18px;
-
-font-weight:800;
-
-box-shadow:
-0 5px 15px
-rgba(0,0,0,.16);
-
-touch-action:manipulation;
-}
-
-.harvest{
-
-background:#245b35;
-
-color:white;
-}
-
-.restart{
-
-background:
-rgba(255,255,255,.95);
-
-color:#245b35;
-}
-
-.action:active{
-
-transform:scale(.96);
-}
-
-/* =========================
-RESULTADO
-========================= */
-
-#result{
-
-position:fixed;
-
-inset:0;
-
-z-index:100;
-
-display:none;
-
-align-items:center;
-
-justify-content:center;
-
-background:
-rgba(15,35,24,.72);
-
-backdrop-filter:
-blur(6px);
+#resultado{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:rgba(5,25,12,.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
 .result-card{
-
-width:min(90%,360px);
-
-padding:28px;
-
-background:white;
-
-border-radius:28px;
-
-text-align:center;
-
-box-shadow:
-0 15px 50px
-rgba(0,0,0,.3);
+  width:min(390px,100%);
+  background:white;
+  border-radius:24px;
+  padding:28px;
+  text-align:center;
+  color:#164b27;
+  box-shadow:0 15px 50px rgba(0,0,0,.35);
 }
 
 .result-card h1{
-
-margin:0 0 12px;
-
-color:#245b35;
+  font-size:26px;
+  margin-bottom:10px;
 }
 
 .result-card p{
-
-color:#4d5c52;
-
-font-size:18px;
+  margin-bottom:20px;
 }
 
 .result-card button{
-
-width:100%;
-
-padding:15px;
-
-border:0;
-
-border-radius:16px;
-
-background:#245b35;
-
-color:white;
-
-font-size:17px;
-
-font-weight:800;
+  border:0;
+  border-radius:14px;
+  padding:14px 22px;
+  background:#17632d;
+  color:white;
+  font-weight:900;
+  font-size:16px;
 }
 
-/* =========================
-MOBILE
-========================= */
-
-@media(max-width:600px){
-
-.hud{
-
-top:14px;
-
-left:12px;
-right:12px;
+@media (min-width:800px){
+  .controles{
+    display:none;
+  }
 }
 
-.hud-card{
+@media (max-width:600px){
+  .hud-box{
+    padding:8px 10px;
+    font-size:13px;
+  }
 
-min-width:125px;
-
-padding:10px 14px;
-
-border-radius:18px;
+  #mensagem{
+    top:68px;
+    max-width:90%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
 }
-
-.hud-label{
-
-font-size:13px;
-}
-
-.hud-value{
-
-font-size:24px;
-}
-
-.controls{
-
-left:12px;
-
-bottom:18px;
-
-grid-template-columns:
-58px 58px 58px;
-
-grid-template-rows:
-58px 58px;
-}
-
-.control{
-
-width:58px;
-height:58px;
-
-border-radius:18px;
-}
-
-.actions{
-
-right:12px;
-
-bottom:18px;
-}
-
-.action{
-
-min-width:160px;
-
-min-height:54px;
-
-font-size:16px;
-}
-
-#message{
-
-bottom:145px;
-
-max-width:290px;
-
-font-size:15px;
-}
-
-}
-
 </style>
 
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"
+  }
+}
+</script>
 </head>
 
 <body>
 
 <div id="game"></div>
 
-
-<!-- =========================
-HUD
-========================= -->
-
 <div class="hud">
+  <div class="hud-box">
+    <small>🍅 COLHEITA</small>
+    <span id="pontuacao">0 tomates</span>
+  </div>
 
-<div class="hud-card">
-
-<div class="hud-label">
-🍅 SANTA LUZIA
+  <div class="hud-box">
+    <small>⏱️ TEMPO</small>
+    <span id="tempo">60s</span>
+  </div>
 </div>
 
-<div class="hud-value">
+<div id="mensagem"></div>
 
-<span id="score">0</span>
-tomates
+<button id="colher">🍅 COLHER TOMATE</button>
 
+<div class="controles">
+  <button id="cima">▲</button>
+  <button id="esq">◀</button>
+  <button id="dir">▶</button>
+  <button id="baixo">▼</button>
 </div>
 
+<button id="reiniciar">↻ Reiniciar</button>
+
+<div id="resultado">
+  <div class="result-card">
+    <h1>🍅 Colheita encerrada!</h1>
+    <p id="resultadoTexto"></p>
+    <button id="jogarNovamente">Jogar novamente</button>
+  </div>
 </div>
-
-
-<div class="hud-card">
-
-<div class="hud-label">
-⏱️ TEMPO
-</div>
-
-<div class="hud-value">
-
-<span id="time">60</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div id="message"></div>
-
-
-<!-- =========================
-CONTROLES
-========================= -->
-
-<div class="controls">
-
-<button
-class="control up"
-data-key="ArrowUp">
-▲
-</button>
-
-<button
-class="control left"
-data-key="ArrowLeft">
-◀
-</button>
-
-<button
-class="control down"
-data-key="ArrowDown">
-▼
-</button>
-
-<button
-class="control right"
-data-key="ArrowRight">
-▶
-</button>
-
-</div>
-
-
-<!-- =========================
-AÇÕES
-========================= -->
-
-<div class="actions">
-
-<button
-class="action harvest"
-id="harvest">
-
-🍅 COLHER
-
-</button>
-
-<button
-class="action restart"
-id="restart">
-
-↻ RECOMEÇAR
-
-</button>
-
-</div>
-
-
-<!-- =========================
-RESULTADO
-========================= -->
-
-<div id="result">
-
-<div class="result-card">
-
-<h1>
-🍅 Colheita encerrada!
-</h1>
-
-<p>
-
-Você colheu
-
-<strong id="finalScore">
-0
-</strong>
-
-tomates.
-
-</p>
-
-<button id="resultRestart">
-
-JOGAR NOVAMENTE
-
-</button>
-
-</div>
-
-</div>
-
-
-<script type="importmap">
-
-{
-
-"imports":{
-
-"three":
-"https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"
-
-}
-
-}
-
-</script>
-
 
 <script type="module">
 
 import * as THREE from "three";
 
-
 /* =========================================================
-CONFIGURAÇÕES
+   CONFIGURAÇÕES
 ========================================================= */
 
 const GAME_TIME = 60;
 
-const FIELD_LENGTH = 90;
+const FIELD_LENGTH = 105;
 
-/*
-36 pés no total
+const PLANTS_PER_ROW = 18;
 
-18 de cada lado
-*/
+const PLANT_SPACING = 5.7;
 
-const PLANT_COUNT = 18;
-
-const PLANT_SPACING = 4.8;
-
-const ROW_X = 6.4;
+const ROW_X = 6.5;
 
 const ROAD_WIDTH = 8.5;
 
 
 /* =========================================================
-CENA
+   CENA
 ========================================================= */
 
-const scene =
-new THREE.Scene();
+const scene = new THREE.Scene();
 
-scene.background =
-new THREE.Color(
-0x9fcdf1
-);
+scene.background = new THREE.Color(0x9fcff2);
 
-scene.fog =
-new THREE.Fog(
-0x9fcdf1,
-55,
-145
+scene.fog = new THREE.Fog(
+  0x9fcff2,
+  45,
+  145
 );
 
 
 /* =========================================================
-CÂMERA
+   CÂMERA
 ========================================================= */
 
-const camera =
-new THREE.PerspectiveCamera(
-
-62,
-
-window.innerWidth /
-window.innerHeight,
-
-0.1,
-
-300
-
+const camera = new THREE.PerspectiveCamera(
+  62,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  250
 );
 
 camera.position.set(
-0,
-5.5,
-9
+  0,
+  5.5,
+  10
 );
 
 
 /* =========================================================
-RENDER
+   RENDER
 ========================================================= */
 
-const renderer =
-new THREE.WebGLRenderer({
-
-antialias:true,
-
-powerPreference:
-"high-performance"
-
+const renderer = new THREE.WebGLRenderer({
+  antialias:true,
+  powerPreference:"high-performance"
 });
 
 renderer.setSize(
-window.innerWidth,
-window.innerHeight
+  window.innerWidth,
+  window.innerHeight
 );
 
 renderer.setPixelRatio(
-
-Math.min(
-window.devicePixelRatio,
-1.4
-)
-
+  Math.min(window.devicePixelRatio || 1, 1.25)
 );
 
-renderer.shadowMap.enabled =
-true;
+renderer.shadowMap.enabled = true;
 
 renderer.shadowMap.type =
-THREE.PCFSoftShadowMap;
+  THREE.PCFSoftShadowMap;
 
 renderer.outputColorSpace =
-THREE.SRGBColorSpace;
+  THREE.SRGBColorSpace;
 
 renderer.toneMapping =
-THREE.ACESFilmicToneMapping;
+  THREE.ACESFilmicToneMapping;
 
-renderer.toneMappingExposure =
-1.08;
+renderer.toneMappingExposure = 1.05;
 
 document
-.getElementById("game")
-.appendChild(
-renderer.domElement
-);
+  .getElementById("game")
+  .appendChild(renderer.domElement);
 
 
 /* =========================================================
-LUZ
+   LUZ
 ========================================================= */
 
-const ambient =
-new THREE.HemisphereLight(
-
-0xd8edff,
-
-0x657449,
-
-1.8
-
+const hemi = new THREE.HemisphereLight(
+  0xbde4ff,
+  0x49632c,
+  2.2
 );
 
-scene.add(ambient);
+scene.add(hemi);
 
 
-const sunLight =
-new THREE.DirectionalLight(
-
-0xffefc0,
-
-3.2
-
+const sunLight = new THREE.DirectionalLight(
+  0xfff2cf,
+  4
 );
 
 sunLight.position.set(
--35,
-55,
-35
+  -35,
+  45,
+  25
 );
 
-sunLight.castShadow =
-true;
+sunLight.castShadow = true;
 
-sunLight.shadow.mapSize.width =
-1536;
+sunLight.shadow.mapSize.width = 1024;
+sunLight.shadow.mapSize.height = 1024;
 
-sunLight.shadow.mapSize.height =
-1536;
-
-sunLight.shadow.camera.left =
--60;
-
-sunLight.shadow.camera.right =
-60;
-
-sunLight.shadow.camera.top =
-60;
-
-sunLight.shadow.camera.bottom =
--60;
-
-sunLight.shadow.camera.near =
-1;
-
-sunLight.shadow.camera.far =
-160;
+sunLight.shadow.camera.left = -45;
+sunLight.shadow.camera.right = 45;
+sunLight.shadow.camera.top = 55;
+sunLight.shadow.camera.bottom = -80;
 
 scene.add(sunLight);
 
 
 /* =========================================================
-SOL
+   SOL
 ========================================================= */
 
-const sun =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-5,
-24,
-24
-),
-
-new THREE.MeshBasicMaterial({
-
-color:
-0xffdf72
-
-})
-
+const sun = new THREE.Mesh(
+  new THREE.SphereGeometry(5,20,20),
+  new THREE.MeshBasicMaterial({
+    color:0xffe38a
+  })
 );
 
 sun.position.set(
--45,
-60,
--70
+  -38,
+  35,
+  -55
 );
 
 scene.add(sun);
 
 
 /* =========================================================
-NUVENS
+   NUVENS
 ========================================================= */
 
-function createCloud(
-x,
-y,
-z,
-scale=1
-){
+const clouds = [];
 
-const cloud =
-new THREE.Group();
+function createCloud(x,y,z,scale=1){
 
+  const group = new THREE.Group();
 
-const material =
-new THREE.MeshStandardMaterial({
+  const material =
+    new THREE.MeshLambertMaterial({
+      color:0xffffff,
+      transparent:true,
+      opacity:.9
+    });
 
-color:0xffffff,
+  const parts = [
+    [-2,0,0,1.4],
+    [0,0.5,0,1.8],
+    [2,0,0,1.3],
+    [.7,.8,.2,1.25],
+    [-.8,.7,.1,1.1]
+  ];
 
-roughness:1
+  parts.forEach(p=>{
 
-});
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(
+        p[3],
+        10,
+        10
+      ),
+      material
+    );
 
+    mesh.position.set(
+      p[0],
+      p[1],
+      p[2]
+    );
 
-const parts = [
+    group.add(mesh);
 
-[-2,0,0,1.7],
+  });
 
-[0,.3,0,2.1],
+  group.position.set(x,y,z);
 
-[2,0,0,1.6],
+  group.scale.setScalar(scale);
 
-[.8,.8,0,1.2]
+  scene.add(group);
 
-];
-
-
-for(
-const p of parts
-){
-
-const mesh =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-p[3],
-10,
-7
-),
-
-material
-
-);
-
-mesh.position.set(
-p[0],
-p[1],
-p[2]
-);
-
-cloud.add(mesh);
-
+  clouds.push(group);
 }
 
-
-cloud.position.set(
-x,
-y,
-z
-);
-
-cloud.scale.setScalar(
-scale
-);
-
-scene.add(cloud);
-
-return cloud;
-
-}
-
-
-const clouds=[];
-
-clouds.push(
-createCloud(
--25,
-35,
--35,
-1.6
-)
-);
-
-clouds.push(
-createCloud(
-25,
-42,
--65,
-2
-)
-);
-
-clouds.push(
-createCloud(
-0,
-32,
--110,
-1.4
-)
-);
+createCloud(-25,29,-45,1.4);
+createCloud(15,32,-65,1.7);
+createCloud(40,27,-35,1.1);
+createCloud(-50,25,5,1.3);
 
 
 /* =========================================================
-MATERIAIS
+   MATERIAIS
 ========================================================= */
-
-const soilMaterial =
-new THREE.MeshStandardMaterial({
-
-color:
-0x79502f,
-
-roughness:1
-
-});
-
-
-const roadMaterial =
-new THREE.MeshStandardMaterial({
-
-color:
-0x9d7044,
-
-roughness:1
-
-});
-
 
 const grassMaterial =
-new THREE.MeshStandardMaterial({
+  new THREE.MeshLambertMaterial({
+    color:0x4e8738
+  });
 
-color:
-0x67994b,
+const roadMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x9b7048
+  });
 
-roughness:1
+const soilMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x765032
+  });
 
-});
-
+const soilDarkMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x513722
+  });
 
 const woodMaterial =
-new THREE.MeshStandardMaterial({
+  new THREE.MeshLambertMaterial({
+    color:0x694224
+  });
 
-color:
-0x70472a,
-
-roughness:.95
-
-});
-
-
-const darkWoodMaterial =
-new THREE.MeshStandardMaterial({
-
-color:
-0x482b1c,
-
-roughness:1
-
-});
-
+const woodLightMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x8c5b31
+  });
 
 const wireMaterial =
-new THREE.MeshStandardMaterial({
+  new THREE.MeshBasicMaterial({
+    color:0x353535
+  });
 
-color:
-0x25271f,
+const leafMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x27752d
+  });
 
-roughness:.7,
+const leafLightMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x42943b
+  });
 
-metalness:.1
+const stemMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x397332
+  });
 
-});
+const tomatoGreen =
+  new THREE.MeshLambertMaterial({
+    color:0x4d8f2d
+  });
+
+const tomatoYellow =
+  new THREE.MeshLambertMaterial({
+    color:0xe0bd32
+  });
+
+const tomatoRed =
+  new THREE.MeshLambertMaterial({
+    color:0xc92b25
+  });
+
+const flowerWhite =
+  new THREE.MeshLambertMaterial({
+    color:0xfffdf0
+  });
+
+const flowerYellow =
+  new THREE.MeshLambertMaterial({
+    color:0xf0c62e
+  });
 
 
 /* =========================================================
-CHÃO
+   TERRENO
 ========================================================= */
 
-function createGround(){
-
-const ground =
-new THREE.Mesh(
-
-new THREE.PlaneGeometry(
-100,
-FIELD_LENGTH+40
-),
-
-grassMaterial
-
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(
+    180,
+    180
+  ),
+  grassMaterial
 );
 
-ground.rotation.x =
--Math.PI/2;
+ground.rotation.x = -Math.PI / 2;
 
-ground.position.z =
--FIELD_LENGTH/2;
+ground.position.y = -0.08;
 
-ground.receiveShadow =
-true;
+ground.receiveShadow = true;
 
 scene.add(ground);
 
 
-const road =
-new THREE.Mesh(
+/* estrada */
 
-new THREE.PlaneGeometry(
-
-ROAD_WIDTH,
-
-FIELD_LENGTH+30
-
-),
-
-roadMaterial
-
+const road = new THREE.Mesh(
+  new THREE.PlaneGeometry(
+    ROAD_WIDTH,
+    FIELD_LENGTH + 35
+  ),
+  roadMaterial
 );
 
-road.rotation.x =
--Math.PI/2;
+road.rotation.x = -Math.PI / 2;
 
-road.position.y =
-.012;
+road.position.set(
+  0,
+  0,
+  -FIELD_LENGTH / 2 + 5
+);
 
-road.position.z =
--FIELD_LENGTH/2;
-
-road.receiveShadow =
-true;
+road.receiveShadow = true;
 
 scene.add(road);
 
 
-for(
-const x of [-ROW_X,ROW_X]
-){
+/* terra das duas fileiras */
 
-const bed =
-new THREE.Mesh(
+for(const x of [-ROW_X,ROW_X]){
 
-new THREE.PlaneGeometry(
+  const soil = new THREE.Mesh(
+    new THREE.PlaneGeometry(
+      5.8,
+      FIELD_LENGTH + 20
+    ),
+    soilMaterial
+  );
 
-4.5,
+  soil.rotation.x = -Math.PI / 2;
 
-FIELD_LENGTH+30
+  soil.position.set(
+    x,
+    .01,
+    -FIELD_LENGTH/2 + 3
+  );
 
-),
-
-soilMaterial
-
-);
-
-bed.rotation.x =
--Math.PI/2;
-
-bed.position.set(
-
-x,
-.025,
--FIELD_LENGTH/2
-
-);
-
-bed.receiveShadow =
-true;
-
-scene.add(bed);
-
+  scene.add(soil);
 }
-
-}
-
-createGround();
 
 
 /* =========================================================
-DETALHES DO SOLO
+   DETALHES DO CHÃO
 ========================================================= */
 
-function createGroundDetails(){
+function addGroundDetails(){
 
-const rockMaterial =
-new THREE.MeshStandardMaterial({
+  for(let i=0;i<120;i++){
 
-color:0x513b29,
+    const rock = new THREE.Mesh(
+      new THREE.DodecahedronGeometry(
+        .06 + Math.random()*.13,
+        0
+      ),
+      soilDarkMaterial
+    );
 
-roughness:1
+    rock.position.set(
+      THREE.MathUtils.randFloat(-14,14),
+      .05,
+      THREE.MathUtils.randFloat(
+        -FIELD_LENGTH,
+        8
+      )
+    );
 
-});
+    rock.scale.y = .45;
+
+    scene.add(rock);
+  }
 
 
-for(
-let i=0;
-i<100;
-i++
-){
+  for(let i=0;i<150;i++){
 
-const rock =
-new THREE.Mesh(
+    const grass = new THREE.Mesh(
+      new THREE.ConeGeometry(
+        .035 + Math.random()*.035,
+        .25 + Math.random()*.25,
+        4
+      ),
+      leafLightMaterial
+    );
 
-new THREE.DodecahedronGeometry(
+    grass.position.set(
+      THREE.MathUtils.randFloat(-15,15),
+      .08,
+      THREE.MathUtils.randFloat(
+        -FIELD_LENGTH,
+        8
+      )
+    );
 
-.05+
-Math.random()*.07,
+    grass.rotation.y =
+      Math.random()*Math.PI;
 
-0
-
-),
-
-rockMaterial
-
-);
-
-const side =
-Math.random()>.5
-?1
-:-1;
-
-rock.position.set(
-
-side*(
-ROAD_WIDTH/2+
-Math.random()*3.5
-),
-
-.04,
-
--Math.random()*
-FIELD_LENGTH
-
-);
-
-rock.rotation.y =
-Math.random()*Math.PI;
-
-scene.add(rock);
-
+    scene.add(grass);
+  }
 }
 
-
-/* pequenos matinhos */
-
-const smallGrass =
-new THREE.MeshStandardMaterial({
-
-color:0x39723a,
-
-roughness:1
-
-});
-
-
-for(
-let i=0;
-i<120;
-i++
-){
-
-const grass =
-new THREE.Mesh(
-
-new THREE.ConeGeometry(
-.025,
-.12+
-Math.random()*.12,
-3
-),
-
-smallGrass
-
-);
-
-grass.position.set(
-
-(Math.random()-.5)*70,
-
-.08,
-
--Math.random()*
-FIELD_LENGTH
-
-);
-
-grass.rotation.z =
-(Math.random()-.5)*.6;
-
-scene.add(grass);
-
-}
-
-}
-
-createGroundDetails();
+addGroundDetails();
 
 
 /* =========================================================
-CILINDRO ENTRE DOIS PONTOS
+   FUNÇÕES DE GEOMETRIA
 ========================================================= */
 
 function cylinderBetween(
-
-a,
-b,
-radius,
-material,
-segments=6
-
+  a,
+  b,
+  radius,
+  material,
+  segments=8
 ){
 
-const direction =
-new THREE.Vector3()
-.subVectors(b,a);
+  const direction =
+    new THREE.Vector3()
+      .subVectors(b,a);
 
-const length =
-direction.length();
+  const length =
+    direction.length();
 
+  const geometry =
+    new THREE.CylinderGeometry(
+      radius,
+      radius,
+      length,
+      segments
+    );
 
-const geometry =
-new THREE.CylinderGeometry(
+  const mesh =
+    new THREE.Mesh(
+      geometry,
+      material
+    );
 
-radius,
-radius,
+  mesh.position
+    .copy(a)
+    .add(b)
+    .multiplyScalar(.5);
 
-length,
+  mesh.quaternion.setFromUnitVectors(
+    new THREE.Vector3(0,1,0),
+    direction.normalize()
+  );
 
-segments
+  mesh.castShadow = true;
 
-);
-
-
-const mesh =
-new THREE.Mesh(
-geometry,
-material
-);
-
-
-mesh.position.copy(
-
-a.clone()
-.add(b)
-.multiplyScalar(.5)
-
-);
-
-
-mesh.quaternion
-.setFromUnitVectors(
-
-new THREE.Vector3(0,1,0),
-
-direction.normalize()
-
-);
-
-
-mesh.castShadow =
-true;
-
-return mesh;
-
+  return mesh;
 }
 
 
 /* =========================================================
-PALANQUE
+   ESTRUTURA DA ROÇA
 ========================================================= */
 
-function createPalanque(
-x,
-z
-){
+function createPalanque(x,z){
 
-const post =
-new THREE.Mesh(
+  const group = new THREE.Group();
 
-new THREE.CylinderGeometry(
+  const post = new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .12,.16,4.4,8
+    ),
+    woodMaterial
+  );
 
-.11,
-.15,
-4.3,
-7
+  post.position.y = 2.1;
 
-),
+  post.castShadow = true;
 
-darkWoodMaterial
-
-);
-
-post.position.set(
-x,
-2.15,
-z
-);
-
-post.castShadow =
-true;
-
-scene.add(post);
+  group.add(post);
 
 
-/* ponta */
+  const top = new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .10,.12,1.4,8
+    ),
+    woodLightMaterial
+  );
 
-const top =
-new THREE.Mesh(
+  top.rotation.z = Math.PI/2;
 
-new THREE.CylinderGeometry(
+  top.position.y = 4.05;
 
-.075,
-.09,
-.6,
-7
+  group.add(top);
 
-),
+  group.position.set(x,0,z);
 
-woodMaterial
+  scene.add(group);
 
-);
-
-top.position.set(
-x,
-4.55,
-z
-);
-
-top.castShadow =
-true;
-
-scene.add(top);
-
+  return group;
 }
+
+
+function createCruzeta(x,z){
+
+  const group = new THREE.Group();
+
+  const post = new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .12,.16,4.4,8
+    ),
+    woodMaterial
+  );
+
+  post.position.y = 2.1;
+
+  group.add(post);
+
+
+  const cross = new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .09,.11,2.8,8
+    ),
+    woodLightMaterial
+  );
+
+  cross.rotation.z = Math.PI/2;
+
+  cross.position.y = 3.75;
+
+  group.add(cross);
+
+  group.position.set(x,0,z);
+
+  scene.add(group);
+}
+
+
+function createVara(x,z,side){
+
+  const bottom =
+    new THREE.Vector3(
+      x + side*1.65,
+      .15,
+      z
+    );
+
+  const top =
+    new THREE.Vector3(
+      x + side*.55,
+      3.35,
+      z
+    );
+
+  const vara =
+    cylinderBetween(
+      bottom,
+      top,
+      .045,
+      woodLightMaterial,
+      6
+    );
+
+  scene.add(vara);
+}
+
+
+function createMainWire(x){
+
+  const points = [];
+
+  for(
+    let z=4;
+    z>=-FIELD_LENGTH-5;
+    z-=1
+  ){
+
+    points.push(
+      new THREE.Vector3(
+        x,
+        3.45,
+        z
+      )
+    );
+
+  }
+
+  const curve =
+    new THREE.CatmullRomCurve3(
+      points
+    );
+
+  const geometry =
+    new THREE.TubeGeometry(
+      curve,
+      120,
+      .018,
+      5,
+      false
+    );
+
+  const wire =
+    new THREE.Mesh(
+      geometry,
+      wireMaterial
+    );
+
+  scene.add(wire);
+}
+
+
+function createSupportStructure(x){
+
+  createPalanque(x,3);
+
+  createMainWire(x);
+
+  let supportIndex=0;
+
+  for(
+    let z=-2;
+    z>-FIELD_LENGTH;
+    z-=PLANT_SPACING*8
+  ){
+
+    if(supportIndex%2===0){
+      createCruzeta(x,z);
+    }else{
+      createPalanque(x,z);
+    }
+
+    supportIndex++;
+  }
+}
+
+createSupportStructure(-ROW_X);
+createSupportStructure(ROW_X);
 
 
 /* =========================================================
-CRUZETA
-========================================================= */
-
-function createCruzeta(
-x,
-z
-){
-
-const post =
-new THREE.Mesh(
-
-new THREE.CylinderGeometry(
-
-.11,
-.15,
-4.2,
-7
-
-),
-
-darkWoodMaterial
-
-);
-
-post.position.set(
-x,
-2.1,
-z
-);
-
-post.castShadow =
-true;
-
-scene.add(post);
-
-
-const cross =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-
-2.5,
-.15,
-.15
-
-),
-
-woodMaterial
-
-);
-
-cross.position.set(
-x,
-3.6,
-z
-);
-
-cross.castShadow =
-true;
-
-scene.add(cross);
-
-}
-
-
-/* =========================================================
-ARAMES
-========================================================= */
-
-/*
-
-Aqui temos a lógica da roça:
-
-PALANQUE
-   ↓
-8 pés
-   ↓
-CRUZETA
-   ↓
-8 pés
-   ↓
-PALANQUE
-
-No jogo a distância foi reduzida
-para caber melhor.
-
-*/
-
-function createWire(
-x,
-height
-){
-
-const start =
-new THREE.Vector3(
-
-x,
-height,
-4
-
-);
-
-const end =
-new THREE.Vector3(
-
-x,
-height,
--FIELD_LENGTH-4
-
-);
-
-
-const wire =
-cylinderBetween(
-
-start,
-end,
-
-.022,
-
-wireMaterial,
-
-5
-
-);
-
-wire.castShadow =
-false;
-
-scene.add(wire);
-
-}
-
-
-/* =========================================================
-ESTRUTURA DA LINHA
-========================================================= */
-
-function createSupportStructure(
-x
-){
-
-/* primeiro palanque */
-
-createPalanque(
-x,
-2
-);
-
-
-/*
-
-A cada 8 pés:
-
-cruzeta
-8 pés
-palanque
-
-*/
-
-for(
-let section=1;
-section<=2;
-section++
-){
-
-const z =
-2-
-section*
-(PLANT_SPACING*8);
-
-if(
-section===1
-){
-
-createCruzeta(
-x,
-z
-);
-
-}else{
-
-createPalanque(
-x,
-z
-);
-
-}
-
-}
-
-
-/* um único arame principal */
-
-createWire(
-x,
-3.45
-);
-
-}
-
-
-/* duas linhas */
-
-createSupportStructure(
--ROW_X
-);
-
-createSupportStructure(
-ROW_X
-);
-
-
-/* =========================================================
-FOLHA MAIS BONITA
+   FOLHAS
 ========================================================= */
 
 function createLeaf(
-position,
-scale,
-rotationY=0
+  parent,
+  x,
+  y,
+  z,
+  scale,
+  rotationX,
+  rotationY,
+  rotationZ
 ){
 
-const material =
-new THREE.MeshStandardMaterial({
+  const geometry =
+    new THREE.SphereGeometry(
+      1,
+      6,
+      4
+    );
 
-color:
-new THREE.Color()
-.setHSL(
+  const leaf =
+    new THREE.Mesh(
+      geometry,
+      Math.random()>.45
+        ? leafMaterial
+        : leafLightMaterial
+    );
 
-.30+
-Math.random()*.035,
+  leaf.scale.set(
+    scale*1.35,
+    scale*.18,
+    scale*.65
+  );
 
-.60,
+  leaf.position.set(
+    x,y,z
+  );
 
-.32+
-Math.random()*.08
+  leaf.rotation.set(
+    rotationX,
+    rotationY,
+    rotationZ
+  );
 
-),
+  leaf.castShadow = true;
 
-roughness:.95,
-
-side:
-THREE.DoubleSide
-
-});
-
-
-/*
-
-Folha mais fina e pontuda.
-
-*/
-
-const geometry =
-new THREE.SphereGeometry(
-
-1,
-
-7,
-
-5
-
-);
-
-
-const leaf =
-new THREE.Mesh(
-geometry,
-material
-);
-
-
-leaf.scale.set(
-
-scale*1.55,
-
-scale*.16,
-
-scale*.65
-
-);
-
-leaf.position.copy(
-position
-);
-
-leaf.rotation.y =
-rotationY;
-
-leaf.rotation.z =
-(Math.random()-.5)*.6;
-
-
-/*
-
-Folhas não recebem sombra individual.
-Isso deixa o jogo MUITO mais leve
-no iPhone.
-
-*/
-
-leaf.castShadow =
-false;
-
-leaf.receiveShadow =
-false;
-
-scene.add(leaf);
-
-return leaf;
-
+  parent.add(leaf);
 }
 
 
 /* =========================================================
-TOMATES
+   TOMATES
 ========================================================= */
 
 const tomatoObjects=[];
 
-
 function createTomato(
-
-position,
-color,
-mature=false,
-scale=1
-
+  parent,
+  x,
+  y,
+  z,
+  stage
 ){
 
-const group =
-new THREE.Group();
+  const material =
+    stage===0
+      ? tomatoGreen
+      : stage===1
+        ? tomatoYellow
+        : tomatoRed;
 
+  const size =
+    stage===2
+      ? .20
+      : .17;
 
-const material =
-new THREE.MeshStandardMaterial({
+  const tomato =
+    new THREE.Mesh(
+      new THREE.SphereGeometry(
+        size,
+        8,
+        8
+      ),
+      material
+    );
 
-color:color,
+  tomato.scale.y=.92;
 
-roughness:.62
+  tomato.position.set(
+    x,y,z
+  );
 
-});
+  tomato.castShadow=true;
 
+  tomato.userData.mature =
+    stage===2;
 
-const tomato =
-new THREE.Mesh(
+  tomato.userData.baseY = y;
 
-new THREE.SphereGeometry(
+  parent.add(tomato);
 
-.23*scale,
-
-10,
-8
-
-),
-
-material
-
-);
-
-tomato.scale.y =
-1.05;
-
-tomato.castShadow =
-true;
-
-group.add(tomato);
-
-
-/* coroa */
-
-const crown =
-new THREE.Mesh(
-
-new THREE.ConeGeometry(
-
-.09*scale,
-
-.11*scale,
-
-5
-
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0x356d35,
-
-roughness:1
-
-})
-
-);
-
-crown.position.y =
-.20*scale;
-
-crown.rotation.x =
-Math.PI;
-
-group.add(crown);
-
-
-group.position.copy(
-position
-);
-
-group.userData.mature =
-mature;
-
-group.userData.tomato =
-true;
-
-scene.add(group);
-
-
-/*
-
-Somente tomate vermelho
-entra na lista de colheita.
-
-*/
-
-if(mature){
-
-tomatoObjects.push(
-group
-);
-
-}
-
-return group;
-
+  if(stage===2){
+    tomatoObjects.push(tomato);
+  }
 }
 
 
 /* =========================================================
-FLORES
+   FLORES
 ========================================================= */
 
 function createFlower(
-position,
-scale=.8
+  parent,
+  x,y,z
 ){
 
-const group =
-new THREE.Group();
+  const flower =
+    new THREE.Group();
+
+  for(let i=0;i<5;i++){
+
+    const petal =
+      new THREE.Mesh(
+        new THREE.SphereGeometry(
+          .10,
+          6,
+          6
+        ),
+        flowerWhite
+      );
+
+    const angle =
+      (Math.PI*2/5)*i;
+
+    petal.position.set(
+      Math.cos(angle)*.13,
+      0,
+      Math.sin(angle)*.13
+    );
+
+    petal.scale.set(
+      .8,
+      .25,
+      .5
+    );
+
+    flower.add(petal);
+  }
 
 
-const white =
-new THREE.MeshStandardMaterial({
+  const center =
+    new THREE.Mesh(
+      new THREE.SphereGeometry(
+        .07,
+        6,
+        6
+      ),
+      flowerYellow
+    );
 
-color:0xf8f4dc,
+    flower.add(center);
 
-roughness:1
+    flower.position.set(
+      x,y,z
+    );
 
-});
-
-
-const yellow =
-new THREE.MeshStandardMaterial({
-
-color:0xe5bd3e,
-
-roughness:.8
-
-});
-
-
-for(
-let i=0;
-i<5;
-i++
-){
-
-const petal =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-
-.07*scale,
-
-6,
-5
-
-),
-
-white
-
-);
-
-const angle =
-i*
-Math.PI*2/5;
-
-petal.position.set(
-
-Math.cos(angle)*
-.10*scale,
-
-0,
-
-Math.sin(angle)*
-.10*scale
-
-);
-
-petal.scale.y =
-.5;
-
-group.add(petal);
-
-}
-
-
-const center =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-
-.05*scale,
-
-6,
-5
-
-),
-
-yellow
-
-);
-
-group.add(center);
-
-
-group.position.copy(
-position
-);
-
-scene.add(group);
-
-return group;
-
+    parent.add(flower);
 }
 
 
 /* =========================================================
-GALHO
-========================================================= */
-
-function createBranch(
-base,
-end
-){
-
-const branch =
-cylinderBetween(
-
-base,
-end,
-
-.035,
-
-new THREE.MeshStandardMaterial({
-
-color:0x3c6536,
-
-roughness:1
-
-}),
-
-5
-
-);
-
-branch.castShadow =
-false;
-
-return branch;
-
-}
-
-
-/* =========================================================
-PÉ DE TOMATE
+   TOMATEIRO REALISTA PROCEDURAL
 ========================================================= */
 
 function createTomatoPlant(
-x,
-z
+  x,
+  z,
+  rowSide,
+  index
 ){
 
-const plant =
-new THREE.Group();
+  const plant =
+    new THREE.Group();
+
+  plant.position.set(
+    x,
+    0,
+    z
+  );
+
+
+  /* caule principal */
+
+  const stem =
+    new THREE.Mesh(
+      new THREE.CylinderGeometry(
+        .055,
+        .09,
+        3.15,
+        7
+      ),
+      stemMaterial
+    );
+
+  stem.position.y=1.58;
+
+  stem.castShadow=true;
+
+  plant.add(stem);
+
+
+  /* ramificações */
+
+  const branchLevels=[
+    .65,
+    1.05,
+    1.45,
+    1.85,
+    2.2,
+    2.55,
+    2.8
+  ];
+
+
+  branchLevels.forEach(
+    (y,i)=>{
+
+      const side =
+        i%2===0 ? -1 : 1;
+
+      const length =
+        .75 + Math.random()*.35;
+
+      const start =
+        new THREE.Vector3(
+          0,
+          y,
+          0
+        );
+
+      const end =
+        new THREE.Vector3(
+          side*length,
+          y+.22,
+          THREE.MathUtils.randFloat(
+            -.12,.12
+          )
+        );
+
+      const branch =
+        cylinderBetween(
+          start,
+          end,
+          .035,
+          stemMaterial,
+          5
+        );
+
+      plant.add(branch);
+
+
+      /* folhas de cada galho */
+
+      for(let j=0;j<4;j++){
+
+        const t=j/3;
+
+        createLeaf(
+          plant,
+          THREE.MathUtils.lerp(
+            start.x,
+            end.x,
+            t
+          ) + THREE.MathUtils.randFloat(-.12,.12),
+          THREE.MathUtils.lerp(
+            start.y,
+            end.y,
+            t
+          ) + .12,
+          THREE.MathUtils.randFloat(-.12,.12),
+          .7,
+          .25 + Math.random()*.15,
+          Math.random()*Math.PI,
+          side>0 ? -.35 : .35
+        );
+      }
 
+    }
+  );
 
-/* =====================
-CAULE PRINCIPAL
-===================== */
 
-const stemMaterial =
-new THREE.MeshStandardMaterial({
+  /* folhas superiores */
 
-color:0x386438,
+  for(let i=0;i<16;i++){
 
-roughness:1
+    const y =
+      .65 + Math.random()*2.35;
 
-});
+    const side =
+      Math.random()<.5 ? -1 : 1;
+
+    createLeaf(
+      plant,
+      side*(.35+Math.random()*.85),
+      y,
+      THREE.MathUtils.randFloat(-.3,.3),
+      .32+Math.random()*.16,
+      .45+Math.random()*.5,
+      Math.random()*Math.PI,
+      side*.4
+    );
+  }
+
 
+  /* cachos */
 
-const stem =
-new THREE.Mesh(
+  const clusterHeights=[
+    .9,
+    1.35,
+    1.8,
+    2.2,
+    2.6
+  ];
 
-new THREE.CylinderGeometry(
 
-.065,
-.09,
-3.35,
-7
+  clusterHeights.forEach(
+    (y,clusterIndex)=>{
 
-),
+      const side =
+        clusterIndex%2===0
+          ? -1
+          : 1;
 
-stemMaterial
+      const cx =
+        side*(.45+Math.random()*.45);
 
-);
+      const cz =
+        THREE.MathUtils.randFloat(
+          -.18,.18
+        );
 
-stem.position.y =
-1.68;
 
-stem.castShadow =
-true;
+      /* galhinho do cacho */
 
-plant.add(stem);
+      const branch =
+        cylinderBetween(
+          new THREE.Vector3(
+            0,y,0
+          ),
+          new THREE.Vector3(
+            cx,
+            y+.05,
+            cz
+          ),
+          .025,
+          stemMaterial,
+          5
+        );
 
+      plant.add(branch);
 
-/* =====================
-GALHOS + FOLHAS
-===================== */
 
-const branchCount=7;
+      const tomatoCount =
+        4 + Math.floor(
+          Math.random()*3
+        );
 
 
-for(
-let b=0;
-b<branchCount;
-b++
-){
+      for(
+        let t=0;
+        t<tomatoCount;
+        t++
+      ){
 
-const y =
-.65+
-b*.38;
+        const angle =
+          Math.PI*2*t/tomatoCount;
 
-const side =
-b%2===0
-?1
-:-1;
+        const radius =
+          .12 + Math.random()*.10;
 
+        const stageRoll =
+          Math.random();
 
-/* galho */
+        let stage;
 
-const base =
-new THREE.Vector3(
+        if(stageRoll<.43){
+          stage=0;
+        }else if(stageRoll<.68){
+          stage=1;
+        }else{
+          stage=2;
+        }
 
-0,
-y,
-0
+        createTomato(
+          plant,
+          cx + Math.cos(angle)*radius,
+          y-.13 + Math.sin(t)*.07,
+          cz + Math.sin(angle)*radius,
+          stage
+        );
+      }
 
-);
+      /* algumas flores */
 
+      if(clusterIndex===0 || clusterIndex===2){
 
-const end =
-new THREE.Vector3(
+        createFlower(
+          plant,
+          cx*.65,
+          y+.22,
+          cz
+        );
 
-side*
-(.55+
-Math.random()*.35),
+      }
 
-y+
-.10+
-Math.random()*.18,
+    }
+  );
 
-(Math.random()-.5)*.35
 
-);
+  /* pequeno apoio do pé */
 
+  const base =
+    new THREE.Mesh(
+      new THREE.CylinderGeometry(
+        .11,.14,.35,7
+      ),
+      stemMaterial
+    );
 
-const branch =
-createBranch(
-base,
-end
-);
+  base.position.y=.18;
 
-plant.add(branch);
+  plant.add(base);
 
 
-/* folhas do galho */
-
-for(
-let l=0;
-l<3;
-l++
-){
-
-const leaf =
-createLeaf(
-
-new THREE.Vector3(
-
-end.x+
-(Math.random()-.5)*.35,
-
-end.y+
-(Math.random()-.5)*.25,
-
-end.z+
-(Math.random()-.5)*.35
-
-),
-
-.35+
-Math.random()*.16,
-
-Math.random()*Math.PI
-
-);
-
-
-plant.add(leaf);
-
-}
-
-}
-
-
-/* =====================
-FOLHAGEM PRINCIPAL
-
-IMPORTANTE:
-muitas folhas visíveis
-===================== */
-
-for(
-let i=0;
-i<18;
-i++
-){
-
-const y =
-.45+
-Math.random()*2.6;
-
-const angle =
-Math.random()*
-Math.PI*2;
-
-const radius =
-.35+
-Math.random()*.65;
-
-
-const leaf =
-createLeaf(
-
-new THREE.Vector3(
-
-Math.cos(angle)*
-radius,
-
-y,
-
-Math.sin(angle)*
-radius
-
-),
-
-.34+
-Math.random()*.18,
-
-angle
-
-);
-
-
-plant.add(leaf);
-
-}
-
-
-/* =====================
-CACHOS DE TOMATE
-===================== */
-
-const clusters=4;
-
-
-for(
-let c=0;
-c<clusters;
-c++
-){
-
-const y =
-.85+
-c*.55+
-Math.random()*.15;
-
-
-const side =
-c%2===0
-?1
-:-1;
-
-
-const clusterX =
-side*
-(.55+
-Math.random()*.18);
-
-
-const amount =
-3+
-Math.floor(
-Math.random()*3
-);
-
-
-for(
-let t=0;
-t<amount;
-t++
-){
-
-const stage =
-Math.random();
-
-
-let color;
-let mature=false;
-
-
-/* verde */
-
-if(
-stage<.40
-){
-
-color=0x4f9b3d;
-
-
-/* começando a amadurecer */
-
-}else if(
-stage<.65
-){
-
-color=0xd2a82d;
-
-
-/* vermelho */
-
-}else{
-
-color=0xd83b2f;
-
-mature=true;
-
-}
-
-
-const tomato =
-createTomato(
-
-new THREE.Vector3(
-
-clusterX+
-(Math.random()-.5)*.3,
-
-y+
-(Math.random()-.5)*.3,
-
-(Math.random()-.5)*.25
-
-),
-
-color,
-
-mature,
-
-.72+
-Math.random()*.25
-
-);
-
-
-plant.add(tomato);
-
-}
-
-}
-
-
-/* =====================
-FLORES
-===================== */
-
-for(
-let f=0;
-f<3;
-f++
-){
-
-const flower =
-createFlower(
-
-new THREE.Vector3(
-
-(Math.random()-.5)*1.0,
-
-1.0+
-Math.random()*1.6,
-
-(Math.random()-.5)*.7
-
-),
-
-.8
-
-);
-
-plant.add(flower);
-
-}
-
-
-/* =====================
-POSIÇÃO
-===================== */
-
-plant.position.set(
-x,
-0,
-z
-);
-
-scene.add(plant);
-
-return plant;
-
+  scene.add(plant);
 }
 
 
 /* =========================================================
-PLANTAÇÃO
-
-18 PÉS DE CADA LADO
-36 NO TOTAL
+   PLANTAÇÃO
 ========================================================= */
 
-const plantGroups=[];
+for(let row=0;row<2;row++){
+
+  const x =
+    row===0
+      ? -ROW_X
+      : ROW_X;
+
+  for(
+    let i=0;
+    i<PLANTS_PER_ROW;
+    i++
+  ){
+
+    const z =
+      -i*PLANT_SPACING;
+
+    createTomatoPlant(
+      x,
+      z,
+      row===0 ? -1 : 1,
+      i
+    );
 
 
-/*
+    /* varinhas alternadas */
 
-Começamos um pouco à frente
-e vamos até o fundo.
+    const side =
+      i%2===0 ? -1 : 1;
 
-*/
-
-for(
-const side of [-1,1]
-){
-
-const x =
-side*
-ROW_X;
-
-
-for(
-let i=0;
-i<PLANT_COUNT;
-i++
-){
-
-const z =
-2-
-i*
-PLANT_SPACING;
-
-
-const plant =
-createTomatoPlant(
-x,
-z
-);
-
-plantGroups.push(
-plant
-);
-
-}
-
+    createVara(
+      x,
+      z,
+      side
+    );
+  }
 }
 
 
 /* =========================================================
-VARINHAS ALTERNADAS
-========================================================= */
-
-for(
-const side of [-1,1]
-){
-
-const x =
-side*
-ROW_X;
-
-
-for(
-let i=0;
-i<PLANT_COUNT;
-i++
-){
-
-const z =
-2-
-i*
-PLANT_SPACING;
-
-
-/*
-
-Alternância:
-
-/  \  /  \
-
-*/
-
-const direction =
-i%2===0
-?1
-:-1;
-
-
-const start =
-new THREE.Vector3(
-
-x+
-direction*.8,
-
-.1,
-
-z
-
-);
-
-
-const end =
-new THREE.Vector3(
-
-x-
-direction*.28,
-
-3.25,
-
-z
-
-);
-
-
-const vara =
-cylinderBetween(
-
-start,
-end,
-
-.045,
-
-woodMaterial,
-
-5
-
-);
-
-vara.castShadow =
-true;
-
-scene.add(vara);
-
-}
-
-}
-
-
-/* =========================================================
-PERSONAGEM
+   PERSONAGEM
 ========================================================= */
 
 const player =
-new THREE.Group();
+  new THREE.Group();
 
-
-function createPlayer(){
-
-const shirt =
-new THREE.MeshStandardMaterial({
-
-color:0x174d2b,
-
-roughness:.85
-
-});
-
-
-const skin =
-new THREE.MeshStandardMaterial({
-
-color:0xd39a72,
-
-roughness:.9
-
-});
-
-
-const pants =
-new THREE.MeshStandardMaterial({
-
-color:0x24394a,
-
-roughness:.9
-
-});
-
-
-const black =
-new THREE.MeshStandardMaterial({
-
-color:0x161616,
-
-roughness:.85
-
-});
-
-
-const yellow =
-new THREE.MeshStandardMaterial({
-
-color:0xd7ae45,
-
-roughness:.8
-
-});
+player.position.set(
+  0,
+  0,
+  5
+);
 
 
 /* pernas */
 
-for(
-const x of [-.16,.16]
-){
+const pantsMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x30363a
+  });
 
-const leg =
-new THREE.Mesh(
+const skinMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0xb9784e
+  });
 
-new THREE.BoxGeometry(
+const shirtMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x176b31
+  });
 
-.18,
-.65,
-.18
+const capMaterial =
+  new THREE.MeshLambertMaterial({
+    color:0x0f5227
+  });
 
-),
 
-pants
+const leg1 =
+  new THREE.Mesh(
+    new THREE.BoxGeometry(
+      .27,.8,.3
+    ),
+    pantsMaterial
+  );
 
+leg1.position.set(
+  -.18,.4,0
 );
 
-leg.position.set(
-x,
-.33,
-0
-);
-
-leg.castShadow =
-true;
-
-player.add(leg);
+player.add(leg1);
 
 
-const shoe =
-new THREE.Mesh(
+const leg2 =
+  leg1.clone();
 
-new THREE.BoxGeometry(
+leg2.position.x=.18;
 
-.22,
-.14,
-.35
-
-),
-
-black
-
-);
-
-shoe.position.set(
-x,
-.05,
--.07
-);
-
-player.add(shoe);
-
-}
+player.add(leg2);
 
 
 /* corpo */
 
 const body =
-new THREE.Mesh(
+  new THREE.Mesh(
+    new THREE.BoxGeometry(
+      .72,1.05,.45
+    ),
+    shirtMaterial
+  );
 
-new THREE.BoxGeometry(
+body.position.y=1.15;
 
-.75,
-.95,
-.42
-
-),
-
-shirt
-
-);
-
-body.position.y =
-1.05;
-
-body.castShadow =
-true;
+body.castShadow=true;
 
 player.add(body);
 
@@ -2624,25 +1456,18 @@ player.add(body);
 /* cabeça */
 
 const head =
-new THREE.Mesh(
+  new THREE.Mesh(
+    new THREE.SphereGeometry(
+      .31,
+      12,
+      12
+    ),
+    skinMaterial
+  );
 
-new THREE.SphereGeometry(
+head.position.y=1.92;
 
-.35,
-16,
-12
-
-),
-
-skin
-
-);
-
-head.position.y =
-1.82;
-
-head.castShadow =
-true;
+head.castShadow=true;
 
 player.add(head);
 
@@ -2650,758 +1475,626 @@ player.add(head);
 /* boné */
 
 const cap =
-new THREE.Mesh(
+  new THREE.Mesh(
+    new THREE.SphereGeometry(
+      .34,
+      12,
+      8,
+      0,
+      Math.PI*2,
+      0,
+      Math.PI/2
+    ),
+    capMaterial
+  );
 
-new THREE.CylinderGeometry(
-
-.38,
-.38,
-.12,
-16
-
-),
-
-shirt
-
-);
-
-cap.position.y =
-2.12;
+cap.position.y=2.17;
 
 player.add(cap);
 
 
+const bill =
+  new THREE.Mesh(
+    new THREE.BoxGeometry(
+      .32,.05,.22
+    ),
+    capMaterial
+  );
+
+bill.position.set(
+  0,
+  2.10,
+  .23
+);
+
+player.add(bill);
+
+
+/* braços */
+
+const arm1 =
+  new THREE.Mesh(
+    new THREE.CylinderGeometry(
+      .12,.13,.75,8
+    ),
+    shirtMaterial
+  );
+
+arm1.position.set(
+  -.48,
+  1.2,
+  0
+);
+
+arm1.rotation.z=-.35;
+
+player.add(arm1);
+
+
+const arm2=arm1.clone();
+
+arm2.position.x=.48;
+
+arm2.rotation.z=.35;
+
+player.add(arm2);
+
+
 /* caixa */
 
-const box =
-new THREE.Mesh(
+const crate =
+  new THREE.Mesh(
+    new THREE.BoxGeometry(
+      .8,.58,.65
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0x161616
+    })
+  );
 
-new THREE.BoxGeometry(
-
-.72,
-.55,
-.58
-
-),
-
-black
-
+crate.position.set(
+  0,
+  .62,
+  .48
 );
 
-box.position.set(
-0,
-1,
-.48
+crate.castShadow=true;
+
+player.add(crate);
+
+
+/* detalhes dourados da caixa */
+
+const crateStripe =
+  new THREE.Mesh(
+    new THREE.BoxGeometry(
+      .84,.08,.68
+    ),
+    new THREE.MeshLambertMaterial({
+      color:0xb88b25
+    })
+  );
+
+crateStripe.position.set(
+  0,
+  .66,
+  .48
 );
 
-box.castShadow =
-true;
+player.add(crateStripe);
 
-player.add(box);
-
-
-/* faixa */
-
-const stripe =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-
-.76,
-.07,
-.62
-
-),
-
-yellow
-
-);
-
-stripe.position.set(
-0,
-.83,
-.48
-);
-
-player.add(stripe);
-
-}
-
-
-createPlayer();
-
-
-player.position.set(
-0,
-0,
-4
-);
 
 scene.add(player);
 
 
 /* =========================================================
-CONTROLES
+   MOVIMENTO
 ========================================================= */
 
-const keys={};
-
-
-window.addEventListener(
-"keydown",
-event=>{
-
-keys[event.key]=true;
-
-});
-
-
-window.addEventListener(
-"keyup",
-event=>{
-
-keys[event.key]=false;
-
-});
-
-
-document
-.querySelectorAll(".control")
-.forEach(button=>{
-
-const key =
-button.dataset.key;
-
-
-const start =
-event=>{
-
-event.preventDefault();
-
-keys[key]=true;
-
+const keys={
+  up:false,
+  down:false,
+  left:false,
+  right:false
 };
 
 
-const stop =
-event=>{
+function setKey(
+  key,
+  value
+){
 
-event.preventDefault();
-
-keys[key]=false;
-
-};
+  keys[key]=value;
+}
 
 
-button.addEventListener(
-"pointerdown",
-start
+window.addEventListener(
+  "keydown",
+  e=>{
+
+    if(
+      e.key==="ArrowUp" ||
+      e.key.toLowerCase()==="w"
+    ){
+      setKey("up",true);
+    }
+
+    if(
+      e.key==="ArrowDown" ||
+      e.key.toLowerCase()==="s"
+    ){
+      setKey("down",true);
+    }
+
+    if(
+      e.key==="ArrowLeft" ||
+      e.key.toLowerCase()==="a"
+    ){
+      setKey("left",true);
+    }
+
+    if(
+      e.key==="ArrowRight" ||
+      e.key.toLowerCase()==="d"
+    ){
+      setKey("right",true);
+    }
+
+  }
 );
 
-button.addEventListener(
-"pointerup",
-stop
+
+window.addEventListener(
+  "keyup",
+  e=>{
+
+    if(
+      e.key==="ArrowUp" ||
+      e.key.toLowerCase()==="w"
+    ){
+      setKey("up",false);
+    }
+
+    if(
+      e.key==="ArrowDown" ||
+      e.key.toLowerCase()==="s"
+    ){
+      setKey("down",false);
+    }
+
+    if(
+      e.key==="ArrowLeft" ||
+      e.key.toLowerCase()==="a"
+    ){
+      setKey("left",false);
+    }
+
+    if(
+      e.key==="ArrowRight" ||
+      e.key.toLowerCase()==="d"
+    ){
+      setKey("right",false);
+    }
+
+  }
 );
 
-button.addEventListener(
-"pointercancel",
-stop
-);
 
-button.addEventListener(
-"pointerleave",
-stop
-);
+/* controles mobile */
 
-});
+function bindButton(
+  id,
+  key
+){
+
+  const button =
+    document.getElementById(id);
+
+  button.addEventListener(
+    "pointerdown",
+    e=>{
+      e.preventDefault();
+      setKey(key,true);
+    }
+  );
+
+  button.addEventListener(
+    "pointerup",
+    e=>{
+      e.preventDefault();
+      setKey(key,false);
+    }
+  );
+
+  button.addEventListener(
+    "pointercancel",
+    ()=>{
+      setKey(key,false);
+    }
+  );
+
+  button.addEventListener(
+    "pointerleave",
+    ()=>{
+      setKey(key,false);
+    }
+  );
+}
+
+bindButton("cima","up");
+bindButton("baixo","down");
+bindButton("esq","left");
+bindButton("dir","right");
 
 
 /* =========================================================
-MOVIMENTO
-========================================================= */
-
-const clock =
-new THREE.Clock();
-
-
-function updatePlayer(delta){
-
-const speed=4.2;
-
-let dx=0;
-let dz=0;
-
-
-if(
-keys["ArrowLeft"]||
-keys["a"]||
-keys["A"]
-){
-
-dx-=1;
-
-}
-
-
-if(
-keys["ArrowRight"]||
-keys["d"]||
-keys["D"]
-){
-
-dx+=1;
-
-}
-
-
-if(
-keys["ArrowUp"]||
-keys["w"]||
-keys["W"]
-){
-
-dz-=1;
-
-}
-
-
-if(
-keys["ArrowDown"]||
-keys["s"]||
-keys["S"]
-){
-
-dz+=1;
-
-}
-
-
-if(
-dx!==0||
-dz!==0
-){
-
-const length =
-Math.sqrt(
-dx*dx+
-dz*dz
-);
-
-
-dx/=length;
-dz/=length;
-
-
-player.position.x +=
-dx*
-speed*
-delta;
-
-player.position.z +=
-dz*
-speed*
-delta;
-
-
-/*
-
-Mantém o personagem
-no corredor.
-
-*/
-
-player.position.x =
-THREE.MathUtils.clamp(
-
-player.position.x,
-
--3.35,
-
-3.35
-
-);
-
-
-player.position.z =
-THREE.MathUtils.clamp(
-
-player.position.z,
-
--FIELD_LENGTH+3,
-
-7
-
-);
-
-
-player.rotation.y =
-Math.atan2(
-dx,
-dz
-);
-
-}
-
-}
-
-
-/* =========================================================
-TOMATE MAIS PRÓXIMO
-========================================================= */
-
-let nearestTomato=null;
-
-
-function findNearestTomato(){
-
-nearestTomato=null;
-
-let bestDistance=
-Infinity;
-
-
-for(
-const tomato
-of tomatoObjects
-){
-
-if(
-!tomato.visible||
-!tomato.userData.mature
-){
-
-continue;
-
-}
-
-
-const worldPosition =
-tomato.getWorldPosition(
-
-new THREE.Vector3()
-
-);
-
-
-const distance =
-player.position.distanceTo(
-worldPosition
-);
-
-
-if(
-distance<
-bestDistance
-){
-
-bestDistance=
-distance;
-
-nearestTomato=
-tomato;
-
-}
-
-}
-
-
-return nearestTomato;
-
-}
-
-
-/* =========================================================
-COLHER
+   COLHEITA
 ========================================================= */
 
 let score=0;
 
+let gameTime=GAME_TIME;
 
-function harvestTomato(){
+let gameRunning=true;
 
-const tomato =
-findNearestTomato();
-
-
-if(!tomato){
-
-showMessage(
-"🍅 Nenhum tomate maduro por perto."
-);
-
-return;
-
-}
+let nearestTomato=null;
 
 
-const worldPosition =
-tomato.getWorldPosition(
+const scoreElement =
+  document.getElementById(
+    "pontuacao"
+  );
 
-new THREE.Vector3()
+const timeElement =
+  document.getElementById(
+    "tempo"
+  );
 
-);
+const messageElement =
+  document.getElementById(
+    "mensagem"
+  );
 
-
-const distance =
-player.position.distanceTo(
-worldPosition
-);
-
-
-if(
-distance>4.2
-){
-
-showMessage(
-"🍅 TOMATE NO ALCANCE • chegue mais perto"
-);
-
-return;
-
-}
-
-
-tomato.visible=false;
-
-score++;
-
-
-document
-.getElementById("score")
-.textContent=
-score;
-
-
-/* tomate na caixa */
-
-const picked =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-
-.09,
-9,
-7
-
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xd83229,
-
-roughness:.6
-
-})
-
-);
-
-
-picked.position.set(
-
-(Math.random()-.5)*.25,
-
-.98+
-Math.random()*.35,
-
-.48+
-Math.random()*.25
-
-);
-
-
-picked.castShadow=
-true;
-
-player.add(picked);
-
-
-showMessage(
-"🍅 Tomate colhido!"
-);
-
-}
-
-
-document
-.getElementById("harvest")
-.addEventListener(
-"click",
-harvestTomato
-);
-
-
-/* =========================================================
-MENSAGEM
-========================================================= */
-
-let messageTimer=null;
+const harvestButton =
+  document.getElementById(
+    "colher"
+  );
 
 
 function showMessage(text){
 
-const message =
-document.getElementById(
-"message"
-);
+  messageElement.textContent=text;
 
+  messageElement.classList.add("show");
 
-message.textContent=
-text;
+  clearTimeout(
+    showMessage.timer
+  );
 
-
-message.classList.add(
-"show"
-);
-
-
-clearTimeout(
-messageTimer
-);
-
-
-messageTimer=
-setTimeout(
-()=>{
-
-message.classList.remove(
-"show"
-);
-
-},
-1800
-);
-
+  showMessage.timer =
+    setTimeout(
+      ()=>{
+        messageElement.classList.remove("show");
+      },
+      1500
+    );
 }
 
 
+function updateScore(){
+
+  scoreElement.textContent =
+    score===1
+      ? "1 tomate"
+      : `${score} tomates`;
+}
+
+
+function findNearestTomato(){
+
+  nearestTomato=null;
+
+  let best=999;
+
+  const playerPosition =
+    new THREE.Vector3();
+
+  player.getWorldPosition(
+    playerPosition
+  );
+
+  for(
+    const tomato of tomatoObjects
+  ){
+
+    if(!tomato.visible) continue;
+
+    const pos =
+      new THREE.Vector3();
+
+    tomato.getWorldPosition(pos);
+
+    const distance =
+      playerPosition.distanceTo(pos);
+
+    if(
+      distance<best &&
+      distance<4.5
+    ){
+
+      best=distance;
+
+      nearestTomato=tomato;
+    }
+  }
+
+
+  if(nearestTomato){
+
+    harvestButton.classList.add(
+      "show"
+    );
+
+  }else{
+
+    harvestButton.classList.remove(
+      "show"
+    );
+
+  }
+}
+
+
+function harvest(){
+
+  if(
+    !gameRunning ||
+    !nearestTomato
+  ) return;
+
+
+  nearestTomato.visible=false;
+
+  score++;
+
+  updateScore();
+
+  showMessage(
+    "🍅 Tomate colhido!"
+  );
+
+  nearestTomato=null;
+
+  harvestButton.classList.remove(
+    "show"
+  );
+}
+
+
+harvestButton.addEventListener(
+  "click",
+  harvest
+);
+
+
 /* =========================================================
-TEMPO
+   TEMPO
 ========================================================= */
 
-let timeLeft=
-GAME_TIME;
+const clock =
+  new THREE.Clock();
 
-let gameRunning=
-true;
-
-
-const timeElement =
-document.getElementById(
-"time"
-);
+let secondCounter=0;
 
 
 function finishGame(){
 
-gameRunning=false;
+  gameRunning=false;
 
+  harvestButton.classList.remove(
+    "show"
+  );
 
-document
-.getElementById(
-"finalScore"
-)
-.textContent=
-score;
+  document.getElementById(
+    "resultadoTexto"
+  ).textContent =
+    `Você colheu ${score} ${
+      score===1
+        ? "tomate"
+        : "tomates"
+    }!`;
 
-
-document
-.getElementById(
-"result"
-)
-.style.display=
-"flex";
-
+  document.getElementById(
+    "resultado"
+  ).style.display="flex";
 }
 
 
-function updateTimer(){
-
-if(!gameRunning){
-
-return;
-
-}
-
-
-timeLeft-=1;
+document.getElementById(
+  "jogarNovamente"
+).addEventListener(
+  "click",
+  ()=>{
+    location.reload();
+  }
+);
 
 
-if(
-timeLeft<0
-){
-
-timeLeft=0;
-
-}
-
-
-timeElement.textContent=
-timeLeft;
-
-
-if(
-timeLeft<=0
-){
-
-finishGame();
-
-}
-
-}
-
-
-setInterval(
-updateTimer,
-1000
+document.getElementById(
+  "reiniciar"
+).addEventListener(
+  "click",
+  ()=>{
+    location.reload();
+  }
 );
 
 
 /* =========================================================
-REINICIAR
-========================================================= */
-
-function restartGame(){
-
-location.reload();
-
-}
-
-
-document
-.getElementById("restart")
-.addEventListener(
-"click",
-restartGame
-);
-
-
-document
-.getElementById("resultRestart")
-.addEventListener(
-"click",
-restartGame
-);
-
-
-/* =========================================================
-CÂMERA
+   ANIMAÇÃO
 ========================================================= */
 
 const cameraTarget =
-new THREE.Vector3();
-
-
-function updateCamera(){
-
-const desired =
-new THREE.Vector3(
-
-player.position.x*.35,
-
-5.7,
-
-player.position.z+8.5
-
-);
-
-
-camera.position.lerp(
-
-desired,
-
-.075
-
-);
-
-
-cameraTarget.set(
-
-player.position.x,
-
-1.35,
-
-player.position.z-7
-
-);
-
-
-camera.lookAt(
-cameraTarget
-);
-
-}
-
-
-/* =========================================================
-NUVENS
-========================================================= */
-
-function updateClouds(delta){
-
-for(
-const cloud
-of clouds
-){
-
-cloud.position.x +=
-delta*.22;
-
-
-if(
-cloud.position.x>80
-){
-
-cloud.position.x=-80;
-
-}
-
-}
-
-}
-
-
-/* =========================================================
-ANIMAÇÃO
-========================================================= */
+  new THREE.Vector3();
 
 function animate(){
 
-requestAnimationFrame(
-animate
-);
+  requestAnimationFrame(
+    animate
+  );
+
+  const delta =
+    Math.min(
+      clock.getDelta(),
+      .05
+    );
 
 
-const delta =
-Math.min(
+  /* tempo */
 
-clock.getDelta(),
+  if(gameRunning){
 
-.05
+    secondCounter+=delta;
 
-);
+    if(
+      secondCounter>=1
+    ){
+
+      secondCounter=0;
+
+      gameTime--;
+
+      timeElement.textContent =
+        `${Math.max(
+          gameTime,
+          0
+        )}s`;
+
+      if(
+        gameTime<=0
+      ){
+
+        finishGame();
+
+      }
+
+    }
+  }
 
 
-if(gameRunning){
+  /* movimento */
 
-updatePlayer(
-delta
-);
+  if(gameRunning){
 
-}
+    const speed =
+      3.8*delta;
+
+    if(keys.up){
+      player.position.z-=speed;
+    }
+
+    if(keys.down){
+      player.position.z+=speed;
+    }
+
+    if(keys.left){
+      player.position.x-=speed;
+    }
+
+    if(keys.right){
+      player.position.x+=speed;
+    }
 
 
-updateCamera();
+    player.position.x =
+      THREE.MathUtils.clamp(
+        player.position.x,
+        -3.2,
+        3.2
+      );
 
-updateClouds(
-delta
-);
+    player.position.z =
+      THREE.MathUtils.clamp(
+        player.position.z,
+        -FIELD_LENGTH+4,
+        7
+      );
+  }
 
 
-renderer.render(
-scene,
-camera
-);
+  /* procurar tomate */
 
+  findNearestTomato();
+
+
+  /* pequenas variações dos tomates */
+
+  const time =
+    performance.now()*.002;
+
+  tomatoObjects.forEach(
+    (tomato,index)=>{
+
+      if(!tomato.visible)
+        return;
+
+      tomato.position.y =
+        tomato.userData.baseY +
+        Math.sin(
+          time + index
+        )*.015;
+
+    }
+  );
+
+
+  /* nuvens */
+
+  clouds.forEach(
+    cloud=>{
+
+      cloud.position.x +=
+        delta*.35;
+
+      if(
+        cloud.position.x>65
+      ){
+        cloud.position.x=-65;
+      }
+
+    }
+  );
+
+
+  /* câmera */
+
+  cameraTarget.set(
+    player.position.x,
+    player.position.y+1.2,
+    player.position.z
+  );
+
+  const desiredCamera =
+    new THREE.Vector3(
+      player.position.x,
+      player.position.y+5.2,
+      player.position.z+8.5
+    );
+
+  camera.position.lerp(
+    desiredCamera,
+    .075
+  );
+
+  camera.lookAt(
+    cameraTarget
+  );
+
+
+  renderer.render(
+    scene,
+    camera
+  );
 }
 
 
@@ -3409,28 +2102,33 @@ animate();
 
 
 /* =========================================================
-RESIZE
+   RESIZE
 ========================================================= */
 
 window.addEventListener(
-"resize",
-()=>{
+  "resize",
+  ()=>{
 
-camera.aspect=
-window.innerWidth/
-window.innerHeight;
+    camera.aspect =
+      window.innerWidth /
+      window.innerHeight;
 
-camera.updateProjectionMatrix();
+    camera.updateProjectionMatrix();
 
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
 
-renderer.setSize(
+    renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio || 1,
+        1.25
+      )
+    );
 
-window.innerWidth,
-window.innerHeight
-
+  }
 );
-
-});
 
 </script>
 
