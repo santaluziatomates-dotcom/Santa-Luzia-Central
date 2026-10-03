@@ -1997,7 +1997,12 @@ body{
 
         <div class="galeria" data-gallery>
 
-          <img src="320branca.PNG" alt="Scania P320 Branca" class="active">
+          <img
+            src="320branca.PNG"
+            alt="Scania P320 Branca"
+            class="active"
+          >
+
           <img
             src="320branca2.PNG"
             alt="Scania P320 Branca"
@@ -2070,43 +2075,43 @@ body{
         >
 
           <img
-            src="crt.tom.JPEG"
+            src="crt.tom.jpeg"
             alt="Carreta Tomate"
             class="active"
           >
 
           <img
-            src="crt.tom2.JPEG"
+            src="crt.tom2.jpeg"
             alt="Carreta Tomate"
           >
 
           <img
-            src="crt.bat.JPEG"
+            src="crt.bat.jpeg"
             alt="Carreta Batata"
           >
 
           <img
-            src="crt.bat2.JPEG"
+            src="crt.bat2.jpeg"
             alt="Carreta Batata"
           >
 
           <img
-            src="bau.bat.JPEG"
+            src="bau.bat.jpeg"
             alt="Bitruck Batata"
           >
 
           <img
-            src="bau.bat2.JPEG"
+            src="bau.bat2.jpeg"
             alt="Bitruck Batata"
           >
 
           <img
-            src="bau.tom.JPEG"
+            src="bau.tom.jpeg"
             alt="Bitruck Tomate"
           >
 
           <img
-            src="bau.tom2.JPEG"
+            src="bau.tom2.jpeg"
             alt="Bitruck Tomate"
           >
 
@@ -2296,7 +2301,7 @@ body{
         <div class="premio-imagem">
 
           <img
-            src="bau.tom.JPEG"
+            src="bau.tom.jpeg"
             alt="Bitruck Tomate"
           >
 
@@ -2323,7 +2328,7 @@ body{
         <div class="premio-imagem">
 
           <img
-            src="bau.bat.JPEG"
+            src="bau.bat.jpeg"
             alt="Bitruck Batata"
           >
 
@@ -2350,7 +2355,7 @@ body{
         <div class="premio-imagem">
 
           <img
-            src="crt.bat.JPEG"
+            src="crt.bat.jpeg"
             alt="Carreta Batata"
           >
 
@@ -2377,7 +2382,7 @@ body{
         <div class="premio-imagem">
 
           <img
-            src="crt.tom.JPEG"
+            src="crt.tom.jpeg"
             alt="Carreta Tomate"
           >
 
@@ -2940,6 +2945,10 @@ let produtoSelecionado =
   null;
 
 
+/* =====================================================
+   ABRIR MODAL DA SKIN
+===================================================== */
+
 document
   .querySelectorAll(
     ".resgatar:not(.abrir-caixa)"
@@ -2962,9 +2971,41 @@ document
               ),
 
             codigo:
-              botao.dataset.codigo
+              botao.dataset.codigo,
+
+            imagem:
+              null
 
           };
+
+
+          /*
+            Pega automaticamente a primeira
+            imagem válida da própria skin.
+          */
+
+          const card =
+            botao.closest(
+              ".produto"
+            );
+
+
+          if(card){
+
+            const imagem =
+              card.querySelector(
+                ".galeria img"
+              );
+
+
+            if(imagem){
+
+              produtoSelecionado.imagem =
+                imagem.src;
+
+            }
+
+          }
 
 
           modalNome.textContent =
@@ -2990,20 +3031,29 @@ document
   );
 
 
+/* =====================================================
+   FECHAR MODAL SKIN
+===================================================== */
+
 function fecharModal(){
 
   modal.classList.remove(
     "show"
   );
 
-  produtoSelecionado=null;
-
 }
 
 
 cancelar.addEventListener(
   "click",
-  fecharModal
+  () => {
+
+    fecharModal();
+
+    produtoSelecionado =
+      null;
+
+  }
 );
 
 
@@ -3017,6 +3067,9 @@ modal.addEventListener(
 
       fecharModal();
 
+      produtoSelecionado =
+        null;
+
     }
 
   }
@@ -3024,7 +3077,8 @@ modal.addEventListener(
 
 
 /* =====================================================
-   RESGATE SKIN — TEMPORÁRIO
+   RESGATE SKIN
+   AGORA MOSTRA O CÓDIGO
 ===================================================== */
 
 confirmar.addEventListener(
@@ -3040,18 +3094,46 @@ confirmar.addEventListener(
     }
 
 
-    const nome =
-      produtoSelecionado.nome;
+    /*
+      Faz uma cópia antes de limpar
+      o produto selecionado.
+    */
+
+    const produto =
+      {
+        ...produtoSelecionado
+      };
 
 
     fecharModal();
 
 
-    mostrarToast(
-      "🛒 " +
-      nome +
-      " selecionada!"
-    );
+    produtoSelecionado =
+      null;
+
+
+    /*
+      Mostra o resultado usando
+      o mesmo modal utilizado
+      pela Caixa Outubro Rosa.
+    */
+
+    mostrarResultadoPremio({
+
+      nome:
+        produto.nome,
+
+      codigo:
+        produto.codigo,
+
+      imagem:
+        produto.imagem ||
+        "stacoin.png",
+
+      tipo:
+        "skin"
+
+    });
 
   }
 );
@@ -3224,7 +3306,7 @@ const premiosCaixa = [
       "fNsm5qn.jpeg",
 
     imagem:
-      "bau.tom.JPEG",
+      "bau.tom.jpeg",
 
     tipo:
       "skin"
@@ -3239,7 +3321,7 @@ const premiosCaixa = [
       "SxNcP1C.jpeg",
 
     imagem:
-      "bau.bat.JPEG",
+      "bau.bat.jpeg",
 
     tipo:
       "skin"
@@ -3254,7 +3336,7 @@ const premiosCaixa = [
       "2zaR70q.jpeg",
 
     imagem:
-      "crt.bat.JPEG",
+      "crt.bat.jpeg",
 
     tipo:
       "skin"
@@ -3269,7 +3351,7 @@ const premiosCaixa = [
       "low6uci.jpeg",
 
     imagem:
-      "crt.tom.JPEG",
+      "crt.tom.jpeg",
 
     tipo:
       "skin"
@@ -3320,7 +3402,6 @@ confirmarCaixa.addEventListener(
       4. registrar a abertura;
       5. entregar o código;
       6. registrar tudo no histórico.
-
     */
 
 
@@ -3388,7 +3469,8 @@ function mostrarResultadoPremio(
 ){
 
   imagemPremio.src =
-    premio.imagem;
+    premio.imagem ||
+    "stacoin.png";
 
 
   codigoPremioBox.style.display =
@@ -3421,7 +3503,8 @@ function mostrarResultadoPremio(
 
 
     codigoPremio.textContent =
-      premio.codigo;
+      premio.codigo ||
+      "-";
 
 
     codigoPremioBox.style.display =
@@ -3436,6 +3519,10 @@ function mostrarResultadoPremio(
 
 }
 
+
+/* =====================================================
+   FECHAR RESULTADO
+===================================================== */
 
 document
   .getElementById(
