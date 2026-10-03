@@ -408,6 +408,10 @@ body{
 }
 
 
+/* =====================================================
+   IMAGEM DO PRODUTO
+===================================================== */
+
 .produto-img{
 
   position:relative;
@@ -427,10 +431,6 @@ body{
 
 }
 
-
-/* =====================================================
-   IMAGENS
-===================================================== */
 
 .galeria{
 
@@ -503,6 +503,11 @@ body{
     rgba(0,0,0,.15);
 
   z-index:3;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
 
 }
 
@@ -587,6 +592,22 @@ body{
   font-weight:900;
 
   z-index:5;
+
+}
+
+
+/* =====================================================
+   TAG EDIÇÃO LIMITADA
+===================================================== */
+
+.tag-rosa{
+
+  background:
+    linear-gradient(
+      135deg,
+      #d85b83,
+      #a9365d
+    );
 
 }
 
@@ -699,6 +720,22 @@ body{
 
 
 /* =====================================================
+   BOTÃO ROSA
+===================================================== */
+
+.abrir-caixa{
+
+  background:
+    linear-gradient(
+      135deg,
+      #d85b83,
+      #b33d65
+    );
+
+}
+
+
+/* =====================================================
    RODAPÉ
 ===================================================== */
 
@@ -728,7 +765,7 @@ body{
 
 
 /* =====================================================
-   MODAL
+   MODAIS
 ===================================================== */
 
 .modal{
@@ -768,6 +805,10 @@ body{
       100%
     );
 
+  max-height:90vh;
+
+  overflow-y:auto;
+
   background:white;
 
   border-radius:24px;
@@ -801,6 +842,18 @@ body{
   justify-content:center;
 
   font-size:27px;
+
+  overflow:hidden;
+
+}
+
+
+.modal-icon img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
 
 }
 
@@ -913,6 +966,283 @@ body{
 
 
 /* =====================================================
+   PRÊMIOS
+===================================================== */
+
+.premios-lista{
+
+  display:grid;
+
+  gap:9px;
+
+  margin:
+    17px
+    0;
+
+}
+
+
+.premio{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  background:#f4f7f4;
+
+  border-radius:14px;
+
+  padding:9px;
+
+}
+
+
+.premio-imagem{
+
+  width:58px;
+  height:48px;
+
+  border-radius:10px;
+
+  background:#e8eee9;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+
+}
+
+
+.premio-imagem img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+
+}
+
+
+.premio-info{
+
+  min-width:0;
+
+}
+
+
+.premio-info strong{
+
+  display:block;
+
+  color:#183c25;
+
+  font-size:12px;
+
+  line-height:1.25;
+
+}
+
+
+.premio-info span{
+
+  display:block;
+
+  color:#879189;
+
+  font-size:9px;
+
+  margin-top:2px;
+
+}
+
+
+.premio-stacoin{
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff9e7,
+      #f3e2aa
+    );
+
+}
+
+
+/* =====================================================
+   BOTÃO VER PRÊMIOS
+===================================================== */
+
+.ver-premios{
+
+  width:100%;
+
+  margin-top:8px;
+
+  border:1px solid #d9b96b;
+
+  background:#fffaf0;
+
+  color:#8c6917;
+
+  padding:10px;
+
+  border-radius:11px;
+
+  font-size:10px;
+
+  font-weight:900;
+
+}
+
+
+/* =====================================================
+   RESULTADO
+===================================================== */
+
+.resultado-premio{
+
+  text-align:center;
+
+}
+
+
+.resultado-imagem{
+
+  width:130px;
+  height:105px;
+
+  margin:
+    0 auto
+    14px;
+
+  border-radius:18px;
+
+  background:#f0f4f0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:hidden;
+
+}
+
+
+.resultado-imagem img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+
+}
+
+
+.resultado-premio h3{
+
+  font-size:23px;
+
+  color:#176b3a;
+
+}
+
+
+.codigo-box{
+
+  margin-top:13px;
+
+  background:#f2f5f2;
+
+  border-radius:13px;
+
+  padding:11px;
+
+}
+
+
+.codigo-box small{
+
+  display:block;
+
+  color:#7d877f;
+
+  font-size:9px;
+
+  margin-bottom:4px;
+
+}
+
+
+.codigo-box strong{
+
+  display:block;
+
+  color:#173d24;
+
+  font-size:14px;
+
+  word-break:break-all;
+
+}
+
+
+.copiar-codigo{
+
+  width:100%;
+
+  margin-top:9px;
+
+  border:0;
+
+  border-radius:11px;
+
+  background:#176b3a;
+
+  color:white;
+
+  padding:11px;
+
+  font-size:11px;
+
+  font-weight:900;
+
+}
+
+
+.fechar-resultado{
+
+  width:100%;
+
+  margin-top:10px;
+
+  border:0;
+
+  border-radius:11px;
+
+  background:#edf0ed;
+
+  color:#536158;
+
+  padding:11px;
+
+  font-size:11px;
+
+  font-weight:900;
+
+}
+
+
+/* =====================================================
    TOAST
 ===================================================== */
 
@@ -965,6 +1295,43 @@ body{
 
 }
 
+
+@media(max-width:600px){
+
+  .header{
+
+    padding-top:15px;
+
+  }
+
+  .logo-circle{
+
+    width:42px;
+    height:42px;
+
+  }
+
+  .logo-text h1{
+
+    font-size:17px;
+
+  }
+
+  .saldo{
+
+    padding:7px 9px;
+
+  }
+
+  .saldo-moeda{
+
+    width:25px;
+    height:25px;
+
+  }
+
+}
+
 </style>
 </head>
 
@@ -984,13 +1351,8 @@ body{
 
       <div class="logo-circle">
 
-        <!--
-          Se o logo da sua Central tiver outro nome,
-          troque somente esta linha.
-        -->
-
         <img
-          src="logo.png"
+          src="logo.sta.PNG"
           alt="Santa Luzia"
           onerror="this.style.display='none'"
         >
@@ -1056,7 +1418,9 @@ body{
 
 
 
-  <!-- CATEGORIAS -->
+  <!-- =================================================
+       CATEGORIAS
+  ================================================== -->
 
   <div class="categorias">
 
@@ -1093,6 +1457,13 @@ body{
       data-filter="iveco"
     >
       Iveco
+    </button>
+
+    <button
+      class="categoria"
+      data-filter="baus"
+    >
+      📦 Baús
     </button>
 
   </div>
@@ -1142,26 +1513,10 @@ body{
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1212,44 +1567,17 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="bob.laranja.PNG"
-            alt="BOB Laranja"
-            class="active"
-          >
-
-          <img
-            src="bob.laranja2.PNG"
-            alt="BOB Laranja"
-          >
+          <img src="bob.laranja.PNG" alt="BOB Laranja" class="active">
+          <img src="bob.laranja2.PNG" alt="BOB Laranja">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1300,44 +1628,17 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="bob.amarelo.PNG"
-            alt="BOB Amarelo"
-            class="active"
-          >
-
-          <img
-            src="bob.amarelo2.PNG"
-            alt="BOB Amarelo"
-          >
+          <img src="bob.amarelo.PNG" alt="BOB Amarelo" class="active">
+          <img src="bob.amarelo2.PNG" alt="BOB Amarelo">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1388,44 +1689,17 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="440.preta.PNG"
-            alt="Scania R440 Preta e Dourada"
-            class="active"
-          >
-
-          <img
-            src="440.preta2.PNG"
-            alt="Scania R440 Preta e Dourada"
-          >
+          <img src="440.preta.PNG" alt="Scania R440 Preta e Dourada" class="active">
+          <img src="440.preta2.PNG" alt="Scania R440 Preta e Dourada">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1476,44 +1750,17 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="440.azul.PNG"
-            alt="Scania R440 Azul"
-            class="active"
-          >
-
-          <img
-            src="440.azul2.PNG"
-            alt="Scania R440 Azul"
-          >
+          <img src="440.azul.PNG" alt="Scania R440 Azul" class="active">
+          <img src="440.azul2.PNG" alt="Scania R440 Azul">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1564,44 +1811,17 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="fh.preta.PNG"
-            alt="Volvo FH Preta e Dourada"
-            class="active"
-          >
-
-          <img
-            src="fh.preta2.PNG"
-            alt="Volvo FH Preta e Dourada"
-          >
+          <img src="fh.preta.PNG" alt="Volvo FH Preta e Dourada" class="active">
+          <img src="fh.preta2.PNG" alt="Volvo FH Preta e Dourada">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1652,44 +1872,17 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="fh.vermelha.PNG"
-            alt="Volvo FH Vermelha"
-            class="active"
-          >
-
-          <img
-            src="fh.vermelha2.PNG"
-            alt="Volvo FH Vermelha"
-          >
+          <img src="fh.vermelha.PNG" alt="Volvo FH Vermelha" class="active">
+          <img src="fh.vermelha2.PNG" alt="Volvo FH Vermelha">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1740,49 +1933,18 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="320cinza.PNG"
-            alt="Scania P320 Cinza"
-            class="active"
-          >
-
-          <img
-            src="320cinza2.PNG"
-            alt="Scania P320 Cinza"
-          >
-
-          <img
-            src="320cinza3.PNG"
-            alt="Scania P320 Cinza"
-          >
+          <img src="320cinza.PNG" alt="Scania P320 Cinza" class="active">
+          <img src="320cinza2.PNG" alt="Scania P320 Cinza">
+          <img src="320cinza3.PNG" alt="Scania P320 Cinza">
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1833,17 +1995,9 @@ body{
 
       <div class="produto-img">
 
-        <div
-          class="galeria"
-          data-gallery
-        >
+        <div class="galeria" data-gallery>
 
-          <img
-            src="320branca.PNG"
-            alt="Scania P320 Branca"
-            class="active"
-          >
-
+          <img src="320branca.PNG" alt="Scania P320 Branca" class="active">
           <img
             src="320branca2.PNG"
             alt="Scania P320 Branca"
@@ -1852,26 +2006,10 @@ body{
 
         </div>
 
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
+        <button class="seta esquerda" data-prev type="button">‹</button>
+        <button class="seta direita" data-next type="button">›</button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+        <div class="indicadores" data-dots></div>
 
       </div>
 
@@ -1910,6 +2048,134 @@ body{
     </article>
 
 
+
+    <!-- =================================================
+         CAIXA OUTUBRO ROSA
+    ================================================== -->
+
+    <article
+      class="produto"
+      data-categoria="baus"
+    >
+
+      <div class="produto-img">
+
+        <span class="tag tag-rosa">
+          EDIÇÃO LIMITADA
+        </span>
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="crt.tom.JPEG"
+            alt="Carreta Tomate"
+            class="active"
+          >
+
+          <img
+            src="crt.tom2.JPEG"
+            alt="Carreta Tomate"
+          >
+
+          <img
+            src="crt.bat.JPEG"
+            alt="Carreta Batata"
+          >
+
+          <img
+            src="crt.bat2.JPEG"
+            alt="Carreta Batata"
+          >
+
+          <img
+            src="bau.bat.JPEG"
+            alt="Bitruck Batata"
+          >
+
+          <img
+            src="bau.bat2.JPEG"
+            alt="Bitruck Batata"
+          >
+
+          <img
+            src="bau.tom.JPEG"
+            alt="Bitruck Tomate"
+          >
+
+          <img
+            src="bau.tom2.JPEG"
+            alt="Bitruck Tomate"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          🌸 EDIÇÃO ESPECIAL
+        </div>
+
+        <div class="produto-nome">
+          Caixa Outubro Rosa
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            100
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar abrir-caixa"
+            id="abrirCaixa"
+            type="button"
+          >
+            ABRIR CAIXA
+          </button>
+
+        </div>
+
+        <button
+          class="ver-premios"
+          id="verPremios"
+          type="button"
+        >
+          👀 VER POSSÍVEIS PRÊMIOS
+        </button>
+
+      </div>
+
+    </article>
+
+
   </section>
 
 
@@ -1927,7 +2193,7 @@ body{
 
 
 <!-- =====================================================
-     MODAL RESGATE
+     MODAL RESGATE SKIN
 ===================================================== -->
 
 <div
@@ -1985,6 +2251,339 @@ body{
       </button>
 
     </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL POSSÍVEIS PRÊMIOS
+===================================================== -->
+
+<div
+  class="modal"
+  id="modalPremios"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-icon">
+
+      <img
+        src="stacoin.png"
+        alt="STACOIN"
+      >
+
+    </div>
+
+    <h3>
+      🎁 Possíveis prêmios
+    </h3>
+
+    <p>
+      A Caixa Outubro Rosa possui 5 resultados possíveis.
+      Cada prêmio tem a mesma chance.
+    </p>
+
+
+    <div class="premios-lista">
+
+
+      <div class="premio">
+
+        <div class="premio-imagem">
+
+          <img
+            src="bau.tom.JPEG"
+            alt="Bitruck Tomate"
+          >
+
+        </div>
+
+        <div class="premio-info">
+
+          <strong>
+            🚛 Bitruck Tomate
+          </strong>
+
+          <span>
+            20% de chance
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="premio">
+
+        <div class="premio-imagem">
+
+          <img
+            src="bau.bat.JPEG"
+            alt="Bitruck Batata"
+          >
+
+        </div>
+
+        <div class="premio-info">
+
+          <strong>
+            🚛 Bitruck Batata
+          </strong>
+
+          <span>
+            20% de chance
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="premio">
+
+        <div class="premio-imagem">
+
+          <img
+            src="crt.bat.JPEG"
+            alt="Carreta Batata"
+          >
+
+        </div>
+
+        <div class="premio-info">
+
+          <strong>
+            🚚 Carreta Batata
+          </strong>
+
+          <span>
+            20% de chance
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="premio">
+
+        <div class="premio-imagem">
+
+          <img
+            src="crt.tom.JPEG"
+            alt="Carreta Tomate"
+          >
+
+        </div>
+
+        <div class="premio-info">
+
+          <strong>
+            🚚 Carreta Tomate
+          </strong>
+
+          <span>
+            20% de chance
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- STACOIN -->
+
+      <div class="premio premio-stacoin">
+
+        <div class="premio-imagem">
+
+          <img
+            src="stacoin.png"
+            alt="100 STACOIN"
+          >
+
+        </div>
+
+        <div class="premio-info">
+
+          <strong>
+            🪙 100 STACOIN
+          </strong>
+
+          <span>
+            20% de chance
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <button
+      class="fechar-resultado"
+      id="fecharPremios"
+      type="button"
+    >
+      FECHAR
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL ABRIR CAIXA
+===================================================== -->
+
+<div
+  class="modal"
+  id="modalCaixa"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-icon">
+
+      <img
+        src="stacoin.png"
+        alt="STACOIN"
+      >
+
+    </div>
+
+    <h3>
+      🌸 Abrir Caixa Outubro Rosa?
+    </h3>
+
+    <p>
+      Esta edição limitada custa
+      <strong>100 STACOIN</strong>.
+    </p>
+
+
+    <div class="modal-produto">
+
+      <strong>
+        🌸 Caixa Outubro Rosa
+      </strong>
+
+      <div class="modal-preco">
+        100 STACOIN
+      </div>
+
+      <p style="margin-top:8px;font-size:11px;">
+        Disponível até 31/10/2026.
+      </p>
+
+    </div>
+
+
+    <div class="modal-botoes">
+
+      <button
+        class="cancelar"
+        id="cancelarCaixa"
+        type="button"
+      >
+        CANCELAR
+      </button>
+
+      <button
+        class="confirmar"
+        id="confirmarCaixa"
+        type="button"
+      >
+        ABRIR
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL RESULTADO
+===================================================== -->
+
+<div
+  class="modal"
+  id="modalResultado"
+>
+
+  <div class="modal-card resultado-premio">
+
+    <div
+      class="resultado-imagem"
+      id="resultadoImagem"
+    >
+
+      <img
+        id="imagemPremio"
+        src="stacoin.png"
+        alt="Prêmio"
+      >
+
+    </div>
+
+
+    <h3 id="tituloPremio">
+      🎉 Parabéns!
+    </h3>
+
+
+    <p id="textoPremio">
+      Você ganhou um prêmio!
+    </p>
+
+
+    <div
+      class="codigo-box"
+      id="codigoPremioBox"
+      style="display:none;"
+    >
+
+      <small>
+        CÓDIGO DA SKIN
+      </small>
+
+      <strong id="codigoPremio">
+        -
+      </strong>
+
+      <button
+        class="copiar-codigo"
+        id="copiarCodigo"
+        type="button"
+      >
+        📋 COPIAR CÓDIGO
+      </button>
+
+    </div>
+
+
+    <button
+      class="fechar-resultado"
+      id="fecharResultado"
+      type="button"
+    >
+      CONTINUAR NA LOJA
+    </button>
 
   </div>
 
@@ -2120,8 +2719,6 @@ document
 
       let atual=0;
 
-
-      /* remove imagens inexistentes */
 
       imagens.forEach(
         img => {
@@ -2306,7 +2903,7 @@ document
 
 
 /* =====================================================
-   MODAL
+   MODAL SKINS
 ===================================================== */
 
 const modal =
@@ -2345,7 +2942,7 @@ let produtoSelecionado =
 
 document
   .querySelectorAll(
-    ".resgatar"
+    ".resgatar:not(.abrir-caixa)"
   )
   .forEach(
     botao => {
@@ -2355,6 +2952,7 @@ document
         () => {
 
           produtoSelecionado = {
+
             nome:
               botao.dataset.nome,
 
@@ -2365,6 +2963,7 @@ document
 
             codigo:
               botao.dataset.codigo
+
           };
 
 
@@ -2425,7 +3024,7 @@ modal.addEventListener(
 
 
 /* =====================================================
-   RESGATE — TEMPORÁRIO
+   RESGATE SKIN — TEMPORÁRIO
 ===================================================== */
 
 confirmar.addEventListener(
@@ -2439,19 +3038,6 @@ confirmar.addEventListener(
       return;
 
     }
-
-
-    /*
-      POR ENQUANTO NÃO DESCONTA STACOIN.
-
-      Aqui vamos colocar depois
-      a chamada segura para o Supabase.
-
-      O código da skin já está
-      guardado em:
-
-      produtoSelecionado.codigo
-    */
 
 
     const nome =
@@ -2469,6 +3055,464 @@ confirmar.addEventListener(
 
   }
 );
+
+
+/* =====================================================
+   MODAL PRÊMIOS
+===================================================== */
+
+const modalPremios =
+  document.getElementById(
+    "modalPremios"
+  );
+
+
+document
+  .getElementById(
+    "verPremios"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      modalPremios.classList.add(
+        "show"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "fecharPremios"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      modalPremios.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+modalPremios.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target === modalPremios
+    ){
+
+      modalPremios.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   CAIXA OUTUBRO ROSA
+===================================================== */
+
+const modalCaixa =
+  document.getElementById(
+    "modalCaixa"
+  );
+
+
+const abrirCaixa =
+  document.getElementById(
+    "abrirCaixa"
+  );
+
+
+const cancelarCaixa =
+  document.getElementById(
+    "cancelarCaixa"
+  );
+
+
+const confirmarCaixa =
+  document.getElementById(
+    "confirmarCaixa"
+  );
+
+
+abrirCaixa.addEventListener(
+  "click",
+  () => {
+
+    const hoje =
+      new Date();
+
+    const fim =
+      new Date(
+        "2026-10-31T23:59:59"
+      );
+
+
+    if(
+      hoje > fim
+    ){
+
+      mostrarToast(
+        "🌸 Esta edição já terminou."
+      );
+
+      return;
+
+    }
+
+
+    modalCaixa.classList.add(
+      "show"
+    );
+
+  }
+);
+
+
+function fecharModalCaixa(){
+
+  modalCaixa.classList.remove(
+    "show"
+  );
+
+}
+
+
+cancelarCaixa.addEventListener(
+  "click",
+  fecharModalCaixa
+);
+
+
+modalCaixa.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target === modalCaixa
+    ){
+
+      fecharModalCaixa();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   PRÊMIOS DA CAIXA
+===================================================== */
+
+const premiosCaixa = [
+
+  {
+    nome:
+      "Bitruck Tomate",
+
+    codigo:
+      "fNsm5qn.jpeg",
+
+    imagem:
+      "bau.tom.JPEG",
+
+    tipo:
+      "skin"
+
+  },
+
+  {
+    nome:
+      "Bitruck Batata",
+
+    codigo:
+      "SxNcP1C.jpeg",
+
+    imagem:
+      "bau.bat.JPEG",
+
+    tipo:
+      "skin"
+
+  },
+
+  {
+    nome:
+      "Carreta Batata",
+
+    codigo:
+      "2zaR70q.jpeg",
+
+    imagem:
+      "crt.bat.JPEG",
+
+    tipo:
+      "skin"
+
+  },
+
+  {
+    nome:
+      "Carreta Tomate",
+
+    codigo:
+      "low6uci.jpeg",
+
+    imagem:
+      "crt.tom.JPEG",
+
+    tipo:
+      "skin"
+
+  },
+
+  {
+    nome:
+      "100 STACOIN",
+
+    codigo:
+      null,
+
+    imagem:
+      "stacoin.png",
+
+    tipo:
+      "stacoin"
+
+  }
+
+];
+
+
+/* =====================================================
+   ABRIR CAIXA — TESTE
+===================================================== */
+
+confirmarCaixa.addEventListener(
+  "click",
+  () => {
+
+    fecharModalCaixa();
+
+
+    /*
+      VERSÃO VISUAL / TESTE
+
+      Cada prêmio possui 20% de chance.
+
+      Depois vamos trocar esta parte
+      por uma função segura no Supabase,
+      que irá:
+
+      1. conferir o saldo;
+      2. descontar 100 STACOIN;
+      3. sortear o prêmio;
+      4. registrar a abertura;
+      5. entregar o código;
+      6. registrar tudo no histórico.
+
+    */
+
+
+    const indice =
+      Math.floor(
+        Math.random() *
+        premiosCaixa.length
+      );
+
+
+    const premio =
+      premiosCaixa[indice];
+
+
+    mostrarResultadoPremio(
+      premio
+    );
+
+  }
+);
+
+
+/* =====================================================
+   RESULTADO
+===================================================== */
+
+const modalResultado =
+  document.getElementById(
+    "modalResultado"
+  );
+
+
+const imagemPremio =
+  document.getElementById(
+    "imagemPremio"
+  );
+
+
+const tituloPremio =
+  document.getElementById(
+    "tituloPremio"
+  );
+
+
+const textoPremio =
+  document.getElementById(
+    "textoPremio"
+  );
+
+
+const codigoPremioBox =
+  document.getElementById(
+    "codigoPremioBox"
+  );
+
+
+const codigoPremio =
+  document.getElementById(
+    "codigoPremio"
+  );
+
+
+function mostrarResultadoPremio(
+  premio
+){
+
+  imagemPremio.src =
+    premio.imagem;
+
+
+  codigoPremioBox.style.display =
+    "none";
+
+
+  if(
+    premio.tipo ===
+    "stacoin"
+  ){
+
+    tituloPremio.textContent =
+      "🪙 Você ganhou STACOIN!";
+
+
+    textoPremio.textContent =
+      "Parabéns! Você ganhou 100 STACOIN.";
+
+
+  }else{
+
+    tituloPremio.textContent =
+      "🎉 Parabéns!";
+
+
+    textoPremio.textContent =
+      "Você ganhou a skin " +
+      premio.nome +
+      "!";
+
+
+    codigoPremio.textContent =
+      premio.codigo;
+
+
+    codigoPremioBox.style.display =
+      "block";
+
+  }
+
+
+  modalResultado.classList.add(
+    "show"
+  );
+
+}
+
+
+document
+  .getElementById(
+    "fecharResultado"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      modalResultado.classList.remove(
+        "show"
+      );
+
+    }
+  );
+
+
+modalResultado.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target ===
+      modalResultado
+    ){
+
+      modalResultado.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   COPIAR CÓDIGO
+===================================================== */
+
+document
+  .getElementById(
+    "copiarCodigo"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      const codigo =
+        codigoPremio.textContent;
+
+
+      try{
+
+        await navigator
+          .clipboard
+          .writeText(
+            codigo
+          );
+
+
+        mostrarToast(
+          "📋 Código copiado!"
+        );
+
+
+      }catch(error){
+
+        mostrarToast(
+          "Código: " +
+          codigo
+        );
+
+      }
+
+    }
+  );
 
 
 /* =====================================================
@@ -2512,19 +3556,6 @@ function mostrarToast(
     );
 
 }
-
-
-/* =====================================================
-   SALDO VISUAL
-===================================================== */
-
-/*
-  Este 16.240 é apenas temporário
-  para a primeira versão visual.
-
-  Na próxima etapa vamos puxar
-  o saldo real do Supabase.
-*/
 
 </script>
 
