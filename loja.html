@@ -1,0 +1,2532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Santa Luzia Shop</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  background:#f4f6f4;
+  color:#183c25;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+  background:
+    linear-gradient(
+      135deg,
+      #176b3a,
+      #0e4e29
+    );
+
+  color:white;
+
+  padding:
+    18px
+    16px
+    22px;
+
+  border-radius:
+    0
+    0
+    24px
+    24px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0,0,0,.14);
+
+}
+
+
+.header-top{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:12px;
+
+}
+
+
+.logo-area{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.logo-circle{
+
+  width:46px;
+  height:46px;
+
+  border-radius:50%;
+
+  background:white;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+
+}
+
+
+.logo-circle img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+
+}
+
+
+.logo-text h1{
+
+  font-size:20px;
+
+  font-weight:900;
+
+  letter-spacing:.3px;
+
+}
+
+
+.logo-text span{
+
+  display:block;
+
+  font-size:11px;
+
+  opacity:.78;
+
+  margin-top:2px;
+
+}
+
+
+.saldo{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  background:
+    rgba(255,255,255,.13);
+
+  border:
+    1px solid
+    rgba(255,255,255,.18);
+
+  padding:
+    8px
+    11px;
+
+  border-radius:14px;
+
+  white-space:nowrap;
+
+}
+
+
+.saldo-moeda{
+
+  width:27px;
+  height:27px;
+
+  border-radius:50%;
+
+  overflow:hidden;
+
+  flex-shrink:0;
+
+}
+
+
+.saldo-moeda img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  display:block;
+
+}
+
+
+.saldo-info small{
+
+  display:block;
+
+  font-size:9px;
+
+  opacity:.72;
+
+}
+
+
+.saldo-info strong{
+
+  display:block;
+
+  font-size:13px;
+
+}
+
+
+/* =====================================================
+   CONTEÚDO
+===================================================== */
+
+.container{
+
+  width:
+    min(
+      100%,
+      760px
+    );
+
+  margin:
+    0 auto;
+
+  padding:
+    18px
+    15px
+    35px;
+
+}
+
+
+/* =====================================================
+   TÍTULO
+===================================================== */
+
+.intro{
+
+  margin:
+    4px
+    0
+    18px;
+
+}
+
+
+.intro h2{
+
+  font-size:24px;
+
+  font-weight:900;
+
+  color:#174c2a;
+
+}
+
+
+.intro p{
+
+  margin-top:5px;
+
+  color:#6b776e;
+
+  font-size:13px;
+
+  line-height:1.4;
+
+}
+
+
+/* =====================================================
+   CATEGORIAS
+===================================================== */
+
+.categorias{
+
+  display:flex;
+
+  gap:8px;
+
+  overflow-x:auto;
+
+  padding:
+    2px
+    0
+    12px;
+
+  scrollbar-width:none;
+
+}
+
+
+.categorias::-webkit-scrollbar{
+
+  display:none;
+
+}
+
+
+.categoria{
+
+  border:0;
+
+  background:white;
+
+  color:#52705b;
+
+  padding:
+    10px
+    14px;
+
+  border-radius:13px;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  white-space:nowrap;
+
+  box-shadow:
+    0 2px 9px
+    rgba(0,0,0,.06);
+
+}
+
+
+.categoria.active{
+
+  background:#176b3a;
+
+  color:white;
+
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.produtos{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  gap:13px;
+
+}
+
+
+@media(max-width:430px){
+
+  .produtos{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.produto{
+
+  background:white;
+
+  border-radius:19px;
+
+  overflow:hidden;
+
+  box-shadow:
+    0 4px 15px
+    rgba(20,60,30,.08);
+
+  border:
+    1px solid
+    rgba(25,80,40,.06);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+
+}
+
+
+.produto:active{
+
+  transform:scale(.985);
+
+}
+
+
+.produto-img{
+
+  position:relative;
+
+  width:100%;
+
+  aspect-ratio:1.25 / 1;
+
+  background:
+    linear-gradient(
+      145deg,
+      #eef2ee,
+      #dfe6e0
+    );
+
+  overflow:hidden;
+
+}
+
+
+/* =====================================================
+   IMAGENS
+===================================================== */
+
+.galeria{
+
+  width:100%;
+  height:100%;
+
+  position:relative;
+
+}
+
+
+.galeria img{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+
+  padding:7px;
+
+  opacity:0;
+
+  transition:opacity .2s ease;
+
+}
+
+
+.galeria img.active{
+
+  opacity:1;
+
+}
+
+
+/* =====================================================
+   SETAS
+===================================================== */
+
+.seta{
+
+  position:absolute;
+
+  top:50%;
+
+  transform:
+    translateY(-50%);
+
+  width:30px;
+  height:30px;
+
+  border:0;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.90);
+
+  color:#176b3a;
+
+  font-size:17px;
+
+  font-weight:900;
+
+  box-shadow:
+    0 2px 8px
+    rgba(0,0,0,.15);
+
+  z-index:3;
+
+}
+
+
+.seta.esquerda{
+
+  left:7px;
+
+}
+
+
+.seta.direita{
+
+  right:7px;
+
+}
+
+
+.indicadores{
+
+  position:absolute;
+
+  bottom:8px;
+
+  left:50%;
+
+  transform:
+    translateX(-50%);
+
+  display:flex;
+
+  gap:4px;
+
+  z-index:4;
+
+}
+
+
+.indicador{
+
+  width:6px;
+  height:6px;
+
+  border-radius:50%;
+
+  background:
+    rgba(20,50,30,.25);
+
+}
+
+
+.indicador.active{
+
+  background:#176b3a;
+
+}
+
+
+/* =====================================================
+   ETIQUETA
+===================================================== */
+
+.tag{
+
+  position:absolute;
+
+  top:9px;
+  left:9px;
+
+  background:#176b3a;
+
+  color:white;
+
+  padding:
+    5px
+    8px;
+
+  border-radius:8px;
+
+  font-size:9px;
+
+  font-weight:900;
+
+  z-index:5;
+
+}
+
+
+/* =====================================================
+   INFORMAÇÕES
+===================================================== */
+
+.produto-info{
+
+  padding:
+    12px;
+
+}
+
+
+.produto-tipo{
+
+  color:#7b877e;
+
+  font-size:9px;
+
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:.4px;
+
+}
+
+
+.produto-nome{
+
+  margin-top:3px;
+
+  color:#183c25;
+
+  font-size:15px;
+
+  font-weight:900;
+
+  line-height:1.2;
+
+}
+
+
+.produto-preco{
+
+  margin-top:9px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:6px;
+
+}
+
+
+.preco{
+
+  color:#a97911;
+
+  font-size:15px;
+
+  font-weight:900;
+
+}
+
+
+.preco span{
+
+  font-size:9px;
+
+  color:#8a8a80;
+
+  font-weight:700;
+
+}
+
+
+.resgatar{
+
+  border:0;
+
+  background:#176b3a;
+
+  color:white;
+
+  padding:
+    9px
+    11px;
+
+  border-radius:10px;
+
+  font-size:10px;
+
+  font-weight:900;
+
+}
+
+
+.resgatar:active{
+
+  transform:scale(.96);
+
+}
+
+
+/* =====================================================
+   RODAPÉ
+===================================================== */
+
+.footer{
+
+  text-align:center;
+
+  color:#879189;
+
+  font-size:10px;
+
+  line-height:1.5;
+
+  padding:
+    22px
+    10px
+    5px;
+
+}
+
+
+.footer strong{
+
+  color:#176b3a;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:100;
+
+  background:
+    rgba(4,20,10,.65);
+
+  display:none;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:20px;
+
+}
+
+
+.modal.show{
+
+  display:flex;
+
+}
+
+
+.modal-card{
+
+  width:
+    min(
+      390px,
+      100%
+    );
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:23px;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0,0,0,.35);
+
+}
+
+
+.modal-icon{
+
+  width:52px;
+  height:52px;
+
+  margin:
+    0 auto
+    12px;
+
+  border-radius:16px;
+
+  background:#eaf4ed;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:27px;
+
+}
+
+
+.modal-card h3{
+
+  text-align:center;
+
+  color:#173d24;
+
+  font-size:20px;
+
+}
+
+
+.modal-card p{
+
+  text-align:center;
+
+  color:#6e786f;
+
+  font-size:13px;
+
+  line-height:1.45;
+
+  margin-top:7px;
+
+}
+
+
+.modal-produto{
+
+  margin:
+    18px
+    0;
+
+  background:#f4f7f4;
+
+  border-radius:15px;
+
+  padding:13px;
+
+  text-align:center;
+
+}
+
+
+.modal-produto strong{
+
+  display:block;
+
+  color:#183c25;
+
+  font-size:15px;
+
+}
+
+
+.modal-preco{
+
+  margin-top:4px;
+
+  color:#a97911;
+
+  font-weight:900;
+
+}
+
+
+.modal-botoes{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:9px;
+
+}
+
+
+.modal-botoes button{
+
+  min-height:46px;
+
+  border:0;
+
+  border-radius:13px;
+
+  font-weight:900;
+
+}
+
+
+.cancelar{
+
+  background:#edf0ed;
+
+  color:#536158;
+
+}
+
+
+.confirmar{
+
+  background:#176b3a;
+
+  color:white;
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast{
+
+  position:fixed;
+
+  left:50%;
+
+  bottom:25px;
+
+  transform:
+    translate(-50%,20px);
+
+  z-index:200;
+
+  background:#173d24;
+
+  color:white;
+
+  padding:
+    12px
+    17px;
+
+  border-radius:13px;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:
+    opacity .2s,
+    transform .2s;
+
+  white-space:nowrap;
+
+}
+
+
+.toast.show{
+
+  opacity:1;
+
+  transform:
+    translate(-50%,0);
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+  <div class="header-top">
+
+    <div class="logo-area">
+
+      <div class="logo-circle">
+
+        <!--
+          Se o logo da sua Central tiver outro nome,
+          troque somente esta linha.
+        -->
+
+        <img
+          src="logo.png"
+          alt="Santa Luzia"
+          onerror="this.style.display='none'"
+        >
+
+      </div>
+
+      <div class="logo-text">
+
+        <h1>SANTA LUZIA SHOP</h1>
+
+        <span>Loja oficial da Santa Luzia</span>
+
+      </div>
+
+    </div>
+
+
+    <div class="saldo">
+
+      <div class="saldo-moeda">
+
+        <img
+          src="stacoin.png"
+          alt="STACOIN"
+        >
+
+      </div>
+
+      <div class="saldo-info">
+
+        <small>SEU SALDO</small>
+
+        <strong id="saldoTexto">
+          16.240 STC
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     CONTEÚDO
+===================================================== -->
+
+<main class="container">
+
+
+  <section class="intro">
+
+    <h2>🛒 Loja Santa Luzia</h2>
+
+    <p>
+      Resgate skins exclusivas usando seus STACOIN.
+    </p>
+
+  </section>
+
+
+
+  <!-- CATEGORIAS -->
+
+  <div class="categorias">
+
+    <button
+      class="categoria active"
+      data-filter="todos"
+    >
+      🚛 Todas
+    </button>
+
+    <button
+      class="categoria"
+      data-filter="scania"
+    >
+      Scania
+    </button>
+
+    <button
+      class="categoria"
+      data-filter="bob"
+    >
+      BOB
+    </button>
+
+    <button
+      class="categoria"
+      data-filter="volvo"
+    >
+      Volvo
+    </button>
+
+    <button
+      class="categoria"
+      data-filter="iveco"
+    >
+      Iveco
+    </button>
+
+  </div>
+
+
+
+  <!-- =================================================
+       PRODUTOS
+  ================================================== -->
+
+  <section
+    class="produtos"
+    id="produtos"
+  >
+
+
+    <!-- ===============================================
+         IVECO
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="iveco"
+    >
+
+      <div class="produto-img">
+
+        <span class="tag">
+          NOVO
+        </span>
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="iveco.PNG"
+            alt="Iveco S-Way Vermelha"
+            class="active"
+          >
+
+          <img
+            src="iveco2.PNG"
+            alt="Iveco S-Way Vermelha"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          IVECO
+        </div>
+
+        <div class="produto-nome">
+          S-Way Vermelha
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            8.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Iveco S-Way Vermelha"
+            data-preco="8000"
+            data-codigo="9MuRDvF.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         BOB LARANJA
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="bob"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="bob.laranja.PNG"
+            alt="BOB Laranja"
+            class="active"
+          >
+
+          <img
+            src="bob.laranja2.PNG"
+            alt="BOB Laranja"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          BOB • CONSTELLATION
+        </div>
+
+        <div class="produto-nome">
+          BOB Laranja
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            8.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="BOB Laranja"
+            data-preco="8000"
+            data-codigo="tTuD4KI.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         BOB AMARELO
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="bob"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="bob.amarelo.PNG"
+            alt="BOB Amarelo"
+            class="active"
+          >
+
+          <img
+            src="bob.amarelo2.PNG"
+            alt="BOB Amarelo"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          BOB • CONSTELLATION
+        </div>
+
+        <div class="produto-nome">
+          BOB Amarelo
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            8.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="BOB Amarelo"
+            data-preco="8000"
+            data-codigo="gGlnvjT.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         R440 PRETA
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="scania"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="440.preta.PNG"
+            alt="Scania R440 Preta e Dourada"
+            class="active"
+          >
+
+          <img
+            src="440.preta2.PNG"
+            alt="Scania R440 Preta e Dourada"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          SCANIA R440
+        </div>
+
+        <div class="produto-nome">
+          Preta e Dourada
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            10.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Scania R440 Preta e Dourada"
+            data-preco="10000"
+            data-codigo="l3OArhI.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         R440 AZUL
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="scania"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="440.azul.PNG"
+            alt="Scania R440 Azul"
+            class="active"
+          >
+
+          <img
+            src="440.azul2.PNG"
+            alt="Scania R440 Azul"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          SCANIA R440
+        </div>
+
+        <div class="produto-nome">
+          Azul
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            8.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Scania R440 Azul"
+            data-preco="8000"
+            data-codigo="UEb84SW.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         FH PRETA
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="volvo"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="fh.preta.PNG"
+            alt="Volvo FH Preta e Dourada"
+            class="active"
+          >
+
+          <img
+            src="fh.preta2.PNG"
+            alt="Volvo FH Preta e Dourada"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          VOLVO FH
+        </div>
+
+        <div class="produto-nome">
+          Preta e Dourada
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            10.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Volvo FH Preta e Dourada"
+            data-preco="10000"
+            data-codigo="2RbSBCZ.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         FH VERMELHA
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="volvo"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="fh.vermelha.PNG"
+            alt="Volvo FH Vermelha"
+            class="active"
+          >
+
+          <img
+            src="fh.vermelha2.PNG"
+            alt="Volvo FH Vermelha"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          VOLVO FH
+        </div>
+
+        <div class="produto-nome">
+          Vermelha
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            8.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Volvo FH Vermelha"
+            data-preco="8000"
+            data-codigo="rUdEXul.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         P320 CINZA
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="scania"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="320cinza.PNG"
+            alt="Scania P320 Cinza"
+            class="active"
+          >
+
+          <img
+            src="320cinza2.PNG"
+            alt="Scania P320 Cinza"
+          >
+
+          <img
+            src="320cinza3.PNG"
+            alt="Scania P320 Cinza"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          SCANIA P320
+        </div>
+
+        <div class="produto-nome">
+          Cinza
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            10.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Scania P320 Cinza"
+            data-preco="10000"
+            data-codigo="BCotT9q.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+
+    <!-- ===============================================
+         P320 BRANCA
+    ================================================ -->
+
+    <article
+      class="produto"
+      data-categoria="scania"
+    >
+
+      <div class="produto-img">
+
+        <div
+          class="galeria"
+          data-gallery
+        >
+
+          <img
+            src="320branca.PNG"
+            alt="Scania P320 Branca"
+            class="active"
+          >
+
+          <img
+            src="320branca2.PNG"
+            alt="Scania P320 Branca"
+            onerror="this.style.display='none'"
+          >
+
+        </div>
+
+        <button
+          class="seta esquerda"
+          data-prev
+          type="button"
+        >
+          ‹
+        </button>
+
+        <button
+          class="seta direita"
+          data-next
+          type="button"
+        >
+          ›
+        </button>
+
+        <div
+          class="indicadores"
+          data-dots
+        ></div>
+
+      </div>
+
+
+      <div class="produto-info">
+
+        <div class="produto-tipo">
+          SCANIA P320
+        </div>
+
+        <div class="produto-nome">
+          Branca
+        </div>
+
+        <div class="produto-preco">
+
+          <div class="preco">
+            10.000
+            <span>STACOIN</span>
+          </div>
+
+          <button
+            class="resgatar"
+            data-nome="Scania P320 Branca"
+            data-preco="10000"
+            data-codigo="GpcyGWA.jpeg"
+            type="button"
+          >
+            RESGATAR
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+  </section>
+
+
+
+  <div class="footer">
+
+    <strong>Santa Luzia Tomates</strong><br>
+
+    Loja oficial • STACOIN
+
+  </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     MODAL RESGATE
+===================================================== -->
+
+<div
+  class="modal"
+  id="modal"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-icon">
+      🛒
+    </div>
+
+    <h3>
+      Confirmar resgate?
+    </h3>
+
+    <p>
+      Você está prestes a resgatar esta skin.
+    </p>
+
+
+    <div class="modal-produto">
+
+      <strong id="modalNome">
+        Skin
+      </strong>
+
+      <div
+        class="modal-preco"
+        id="modalPreco"
+      >
+        0 STACOIN
+      </div>
+
+    </div>
+
+
+    <div class="modal-botoes">
+
+      <button
+        class="cancelar"
+        id="cancelar"
+        type="button"
+      >
+        CANCELAR
+      </button>
+
+      <button
+        class="confirmar"
+        id="confirmar"
+        type="button"
+      >
+        CONFIRMAR
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+
+<script>
+
+/* =====================================================
+   CATÁLOGO
+===================================================== */
+
+const produtos =
+  document.querySelectorAll(
+    ".produto"
+  );
+
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+const categorias =
+  document.querySelectorAll(
+    ".categoria"
+  );
+
+
+categorias.forEach(
+  botao => {
+
+    botao.addEventListener(
+      "click",
+      () => {
+
+        categorias.forEach(
+          item =>
+            item.classList.remove(
+              "active"
+            )
+        );
+
+        botao.classList.add(
+          "active"
+        );
+
+        const filtro =
+          botao.dataset.filter;
+
+
+        produtos.forEach(
+          produto => {
+
+            const categoria =
+              produto.dataset.categoria;
+
+
+            if(
+              filtro === "todos" ||
+              categoria === filtro
+            ){
+
+              produto.style.display =
+                "";
+
+            }else{
+
+              produto.style.display =
+                "none";
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   CARROSSÉIS
+===================================================== */
+
+document
+  .querySelectorAll(
+    "[data-gallery]"
+  )
+  .forEach(
+    gallery => {
+
+      const imagens =
+        Array.from(
+          gallery.querySelectorAll(
+            "img"
+          )
+        );
+
+
+      const container =
+        gallery.closest(
+          ".produto-img"
+        );
+
+
+      const prev =
+        container.querySelector(
+          "[data-prev]"
+        );
+
+
+      const next =
+        container.querySelector(
+          "[data-next]"
+        );
+
+
+      const dots =
+        container.querySelector(
+          "[data-dots]"
+        );
+
+
+      let atual=0;
+
+
+      /* remove imagens inexistentes */
+
+      imagens.forEach(
+        img => {
+
+          img.addEventListener(
+            "error",
+            () => {
+
+              img.dataset.erro =
+                "true";
+
+              atualizar();
+
+            }
+          );
+
+        }
+      );
+
+
+      function imagensValidas(){
+
+        return imagens.filter(
+          img =>
+            img.dataset.erro !==
+            "true"
+        );
+
+      }
+
+
+      function atualizar(){
+
+        const validas =
+          imagensValidas();
+
+
+        if(
+          validas.length===0
+        ){
+
+          return;
+
+        }
+
+
+        if(
+          atual>=validas.length
+        ){
+
+          atual=0;
+
+        }
+
+
+        imagens.forEach(
+          img =>
+            img.classList.remove(
+              "active"
+            )
+        );
+
+
+        validas[atual]
+          .classList.add(
+            "active"
+          );
+
+
+        dots.innerHTML="";
+
+
+        validas.forEach(
+          (img,index)=>{
+
+            const dot =
+              document.createElement(
+                "span"
+              );
+
+            dot.className =
+              "indicador" +
+              (
+                index===atual
+                  ? " active"
+                  : ""
+              );
+
+
+            dot.addEventListener(
+              "click",
+              ()=>{
+                atual=index;
+                atualizar();
+              }
+            );
+
+
+            dots.appendChild(
+              dot
+            );
+
+          }
+        );
+
+
+        if(
+          validas.length<=1
+        ){
+
+          prev.style.display =
+            "none";
+
+          next.style.display =
+            "none";
+
+          dots.style.display =
+            "none";
+
+        }else{
+
+          prev.style.display =
+            "flex";
+
+          next.style.display =
+            "flex";
+
+          dots.style.display =
+            "flex";
+
+        }
+
+      }
+
+
+      prev.addEventListener(
+        "click",
+        ()=>{
+
+          const total =
+            imagensValidas()
+              .length;
+
+          if(!total) return;
+
+          atual =
+            (
+              atual-1+total
+            )%total;
+
+          atualizar();
+
+        }
+      );
+
+
+      next.addEventListener(
+        "click",
+        ()=>{
+
+          const total =
+            imagensValidas()
+              .length;
+
+          if(!total) return;
+
+          atual =
+            (
+              atual+1
+            )%total;
+
+          atualizar();
+
+        }
+      );
+
+
+      atualizar();
+
+    }
+  );
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+const modal =
+  document.getElementById(
+    "modal"
+  );
+
+
+const modalNome =
+  document.getElementById(
+    "modalNome"
+  );
+
+
+const modalPreco =
+  document.getElementById(
+    "modalPreco"
+  );
+
+
+const confirmar =
+  document.getElementById(
+    "confirmar"
+  );
+
+
+const cancelar =
+  document.getElementById(
+    "cancelar"
+  );
+
+
+let produtoSelecionado =
+  null;
+
+
+document
+  .querySelectorAll(
+    ".resgatar"
+  )
+  .forEach(
+    botao => {
+
+      botao.addEventListener(
+        "click",
+        () => {
+
+          produtoSelecionado = {
+            nome:
+              botao.dataset.nome,
+
+            preco:
+              Number(
+                botao.dataset.preco
+              ),
+
+            codigo:
+              botao.dataset.codigo
+          };
+
+
+          modalNome.textContent =
+            produtoSelecionado.nome;
+
+
+          modalPreco.textContent =
+            produtoSelecionado.preco
+              .toLocaleString(
+                "pt-BR"
+              ) +
+            " STACOIN";
+
+
+          modal.classList.add(
+            "show"
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+function fecharModal(){
+
+  modal.classList.remove(
+    "show"
+  );
+
+  produtoSelecionado=null;
+
+}
+
+
+cancelar.addEventListener(
+  "click",
+  fecharModal
+);
+
+
+modal.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target === modal
+    ){
+
+      fecharModal();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   RESGATE — TEMPORÁRIO
+===================================================== */
+
+confirmar.addEventListener(
+  "click",
+  () => {
+
+    if(
+      !produtoSelecionado
+    ){
+
+      return;
+
+    }
+
+
+    /*
+      POR ENQUANTO NÃO DESCONTA STACOIN.
+
+      Aqui vamos colocar depois
+      a chamada segura para o Supabase.
+
+      O código da skin já está
+      guardado em:
+
+      produtoSelecionado.codigo
+    */
+
+
+    const nome =
+      produtoSelecionado.nome;
+
+
+    fecharModal();
+
+
+    mostrarToast(
+      "🛒 " +
+      nome +
+      " selecionada!"
+    );
+
+  }
+);
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+
+let toastTimer;
+
+
+function mostrarToast(
+  texto
+){
+
+  toast.textContent =
+    texto;
+
+  toast.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toastTimer =
+    setTimeout(
+      ()=>{
+        toast.classList.remove(
+          "show"
+        );
+      },
+      2200
+    );
+
+}
+
+
+/* =====================================================
+   SALDO VISUAL
+===================================================== */
+
+/*
+  Este 16.240 é apenas temporário
+  para a primeira versão visual.
+
+  Na próxima etapa vamos puxar
+  o saldo real do Supabase.
+*/
+
+</script>
+
+</body>
+</html>
