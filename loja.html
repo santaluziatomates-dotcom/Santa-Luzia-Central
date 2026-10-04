@@ -105,6 +105,14 @@ header{
     color:#ffe39a;
 }
 
+#descontoSaldo{
+    display:none;
+    font-size:10px;
+    font-weight:900;
+    color:#ff5b67;
+    margin-top:2px;
+}
+
 .container{
     width:min(1100px,94%);
     margin:0 auto;
@@ -702,6 +710,10 @@ footer{
         font-size:12px;
     }
 
+    #descontoSaldo{
+        font-size:9px;
+    }
+
     .container{
         width:94%;
         padding-top:16px;
@@ -832,6 +844,10 @@ footer{
 
             <span id="saldo">
                 Carregando...
+            </span>
+
+            <span id="descontoSaldo">
+                -8.000 STC
             </span>
 
         </div>
@@ -1002,9 +1018,7 @@ footer{
 </footer>
 
 
-<!-- =====================================================
-     MODAL COMPRA
-===================================================== -->
+<!-- MODAL COMPRA -->
 
 <div
     class="modal-bg"
@@ -1089,9 +1103,7 @@ footer{
 </div>
 
 
-<!-- =====================================================
-     MODAL RESULTADO
-===================================================== -->
+<!-- MODAL RESULTADO -->
 
 <div
     class="modal-bg"
@@ -1160,9 +1172,7 @@ footer{
 </div>
 
 
-<!-- =====================================================
-     MODAL CÓDIGO DE SKIN ADQUIRIDA
-===================================================== -->
+<!-- MODAL CÓDIGO DE SKIN ADQUIRIDA -->
 
 <div
     class="modal-bg"
@@ -1249,9 +1259,7 @@ footer{
 </div>
 
 
-<!-- =====================================================
-     MODAL CAIXA
-===================================================== -->
+<!-- MODAL CAIXA -->
 
 <div
     class="modal-bg"
@@ -1528,6 +1536,9 @@ const productsEl =
 
 const saldoEl =
     document.getElementById("saldo");
+
+const descontoSaldoEl =
+    document.getElementById("descontoSaldo");
 
 const contadorEl =
     document.getElementById("contador");
@@ -2411,6 +2422,10 @@ document
                 }
 
 
+                /* =========================================
+                   ATUALIZAR SALDO REAL
+                ========================================= */
+
                 saldoAtual =
                     Number(
                         data.novo_saldo || 0
@@ -2421,6 +2436,28 @@ document
                     formatarStacoin(
                         saldoAtual
                     );
+
+
+                /* =========================================
+                   MOSTRAR DESCONTO EM VERMELHO
+                ========================================= */
+
+                descontoSaldoEl.textContent =
+                    `-${produto.preco.toLocaleString("pt-BR")} STC`;
+
+                descontoSaldoEl.style.display =
+                    "block";
+
+
+                setTimeout(
+                    () => {
+
+                        descontoSaldoEl.style.display =
+                            "none";
+
+                    },
+                    3000
+                );
 
 
                 await carregarCompras();
