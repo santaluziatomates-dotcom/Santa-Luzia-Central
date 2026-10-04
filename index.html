@@ -290,6 +290,323 @@
 
 
     /* =========================
+       CADASTRO AUTOMÁTICO
+    ========================= */
+
+    .cadastro-overlay {
+      position: fixed;
+      inset: 0;
+
+      background: rgba(20, 35, 25, 0.48);
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 18px;
+
+      z-index: 9999;
+    }
+
+    .cadastro-overlay.aberto {
+      display: flex;
+    }
+
+    .cadastro-card {
+      width: 100%;
+      max-width: 430px;
+
+      background: #ffffff;
+
+      border-radius: 22px;
+
+      padding: 24px 21px 21px;
+
+      box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .cadastro-topo {
+      text-align: center;
+
+      margin-bottom: 20px;
+    }
+
+    .cadastro-logo {
+      width: 58px;
+      height: 58px;
+
+      object-fit: contain;
+
+      margin-bottom: 8px;
+    }
+
+    .cadastro-topo h2 {
+      color: #17351f;
+
+      font-size: 21px;
+
+      margin-bottom: 6px;
+    }
+
+    .cadastro-topo p {
+      color: #777;
+
+      font-size: 12px;
+
+      line-height: 1.45;
+    }
+
+    .cadastro-id-info {
+      display: none;
+
+      background: #e9f3ec;
+
+      border: 1px solid #cce2d2;
+
+      border-radius: 15px;
+
+      padding: 13px;
+
+      text-align: center;
+
+      margin-bottom: 17px;
+    }
+
+    .cadastro-id-info strong {
+      display: block;
+
+      color: #176b3a;
+
+      font-size: 10px;
+
+      margin-bottom: 5px;
+
+      letter-spacing: 0.4px;
+    }
+
+    .cadastro-id-info span {
+      color: #176b3a;
+
+      font-size: 24px;
+
+      font-weight: bold;
+
+      letter-spacing: 1px;
+    }
+
+    .cadastro-form {
+      display: flex;
+      flex-direction: column;
+
+      gap: 12px;
+    }
+
+    .campo {
+      display: flex;
+      flex-direction: column;
+
+      gap: 5px;
+    }
+
+    .campo label {
+      color: #333;
+
+      font-size: 11px;
+
+      font-weight: bold;
+    }
+
+    .campo input,
+    .campo select {
+      width: 100%;
+
+      border: 1px solid #d9ded9;
+
+      background: #f8faf8;
+
+      color: #222;
+
+      border-radius: 11px;
+
+      padding: 12px;
+
+      font-size: 14px;
+
+      outline: none;
+    }
+
+    .campo input:focus,
+    .campo select:focus {
+      border-color: #176b3a;
+
+      background: #ffffff;
+
+      box-shadow: 0 0 0 3px rgba(23,107,58,0.08);
+    }
+
+    .campo input[readonly] {
+      background: #f1f3f1;
+
+      color: #777;
+    }
+
+    .cadastro-email {
+      margin-bottom: 13px;
+
+      padding: 10px 12px;
+
+      background: #f5f6f5;
+
+      border-radius: 11px;
+
+      color: #666;
+
+      font-size: 10px;
+
+      word-break: break-word;
+    }
+
+    .cadastro-email strong {
+      color: #333;
+    }
+
+    .botao-cadastrar {
+      width: 100%;
+
+      border: none;
+
+      background: #176b3a;
+
+      color: #ffffff;
+
+      border-radius: 12px;
+
+      padding: 13px;
+
+      margin-top: 4px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .botao-cadastrar:hover {
+      opacity: 0.93;
+    }
+
+    .botao-cadastrar:disabled {
+      opacity: 0.55;
+
+      cursor: not-allowed;
+    }
+
+    .cadastro-erro {
+      display: none;
+
+      background: #fff0ef;
+
+      border: 1px solid #f1c4c0;
+
+      color: #a3231d;
+
+      border-radius: 11px;
+
+      padding: 10px;
+
+      font-size: 10px;
+
+      line-height: 1.4;
+
+      margin-bottom: 10px;
+    }
+
+    .cadastro-sucesso {
+      display: none;
+
+      text-align: center;
+    }
+
+    .cadastro-sucesso-icone {
+      font-size: 45px;
+
+      margin-bottom: 8px;
+    }
+
+    .cadastro-sucesso h3 {
+      color: #176b3a;
+
+      font-size: 21px;
+
+      margin-bottom: 7px;
+    }
+
+    .cadastro-sucesso p {
+      color: #666;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+      margin-bottom: 14px;
+    }
+
+    .cadastro-id-grande {
+      background: #f8f4e7;
+
+      border: 1px solid #d6b24c;
+
+      color: #176b3a;
+
+      border-radius: 15px;
+
+      padding: 14px;
+
+      margin-bottom: 15px;
+    }
+
+    .cadastro-id-grande small {
+      display: block;
+
+      color: #777;
+
+      font-size: 9px;
+
+      margin-bottom: 4px;
+    }
+
+    .cadastro-id-grande strong {
+      font-size: 27px;
+
+      letter-spacing: 1px;
+    }
+
+    .botao-continuar {
+      width: 100%;
+
+      border: none;
+
+      background: #176b3a;
+
+      color: white;
+
+      border-radius: 12px;
+
+      padding: 13px;
+
+      font-size: 13px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+
+    /* =========================
        CONTEÚDO
     ========================= */
 
@@ -941,6 +1258,21 @@
         font-size: 12px;
       }
 
+
+      .cadastro-card {
+        padding: 21px 16px 17px;
+
+        border-radius: 19px;
+      }
+
+      .cadastro-topo h2 {
+        font-size: 19px;
+      }
+
+      .cadastro-topo p {
+        font-size: 11px;
+      }
+
     }
 
 
@@ -1082,6 +1414,235 @@
   ></div>
 
 </section>
+
+
+
+<!-- =========================
+     CADASTRO AUTOMÁTICO
+========================= -->
+
+<div
+  class="cadastro-overlay"
+  id="cadastroOverlay"
+>
+
+  <div class="cadastro-card">
+
+
+    <div
+      class="cadastro-form-area"
+      id="cadastroFormArea"
+    >
+
+      <div class="cadastro-topo">
+
+        <img
+          src="IMG_6552.PNG"
+          alt="Santa Luzia"
+          class="cadastro-logo"
+        >
+
+        <h2>
+          🆔 Crie seu Santa Luzia ID
+        </h2>
+
+        <p>
+          Complete seu cadastro para receber sua identificação oficial dentro da Santa Luzia Central.
+        </p>
+
+      </div>
+
+
+      <div
+        class="cadastro-email"
+        id="cadastroEmail"
+      >
+        <strong>Conta Google:</strong>
+        carregando...
+      </div>
+
+
+      <div
+        class="cadastro-erro"
+        id="cadastroErro"
+      ></div>
+
+
+      <form
+        class="cadastro-form"
+        id="cadastroForm"
+      >
+
+
+        <div class="campo">
+
+          <label for="cadastroNome">
+            NOME
+          </label>
+
+          <input
+            type="text"
+            id="cadastroNome"
+            maxlength="100"
+            autocomplete="name"
+            placeholder="Seu nome completo"
+            required
+          >
+
+        </div>
+
+
+        <div class="campo">
+
+          <label for="cadastroApelido">
+            APELIDO
+          </label>
+
+          <input
+            type="text"
+            id="cadastroApelido"
+            maxlength="60"
+            placeholder="Seu apelido na Santa Luzia"
+            required
+          >
+
+        </div>
+
+
+        <div class="campo">
+
+          <label for="cadastroCargo">
+            CARGO
+          </label>
+
+          <input
+            type="text"
+            id="cadastroCargo"
+            maxlength="80"
+            placeholder="Ex.: Motorista"
+            required
+          >
+
+        </div>
+
+
+        <div class="campo">
+
+          <label for="cadastroCategoria">
+            CNH / CATEGORIA
+          </label>
+
+          <select
+            id="cadastroCategoria"
+            required
+          >
+
+            <option value="">
+              Selecione
+            </option>
+
+            <option value="A">
+              A
+            </option>
+
+            <option value="B">
+              B
+            </option>
+
+            <option value="C">
+              C
+            </option>
+
+            <option value="D">
+              D
+            </option>
+
+            <option value="E">
+              E
+            </option>
+
+            <option value="D/E">
+              D/E
+            </option>
+
+            <option value="AE">
+              AE
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="botao-cadastrar"
+          id="botaoCadastrar"
+        >
+          🪪 CRIAR MEU SANTA LUZIA ID
+        </button>
+
+
+      </form>
+
+    </div>
+
+
+
+    <!-- =========================
+         SUCESSO
+    ========================= -->
+
+    <div
+      class="cadastro-sucesso"
+      id="cadastroSucesso"
+    >
+
+      <div class="cadastro-sucesso-icone">
+        🎉
+      </div>
+
+      <h3>
+        Cadastro concluído!
+      </h3>
+
+      <p>
+        Seu Santa Luzia ID foi criado com sucesso.
+      </p>
+
+
+      <div class="cadastro-id-grande">
+
+        <small>
+          SEU SANTA LUZIA ID
+        </small>
+
+        <strong id="novoCodigo">
+          SL-0000
+        </strong>
+
+      </div>
+
+
+      <p>
+        Guarde esse número. Ele será usado para sua identificação dentro da empresa.
+      </p>
+
+
+      <button
+        type="button"
+        class="botao-continuar"
+        id="botaoContinuar"
+      >
+        ENTRAR NA CENTRAL →
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>
 
 
 
@@ -1254,33 +1815,33 @@
   <div class="cards-principais">
 
 
-   <!-- LOJA -->
+    <!-- LOJA -->
 
-<a
-  href="loja.html"
-  class="card-principal stacoin-card destaque"
->
+    <a
+      href="loja.html"
+      class="card-principal stacoin-card destaque"
+    >
 
-  <div class="icone-grande">
-    🛒
-  </div>
+      <div class="icone-grande">
+        🛒
+      </div>
 
-  <h3>
-    LOJA SANTA LUZIA
-  </h3>
+      <h3>
+        LOJA SANTA LUZIA
+      </h3>
 
-  <p>
-    Skins, baús, cabines, bandeiras e muito mais.
-  </p>
+      <p>
+        Skins, baús, cabines, bandeiras e muito mais.
+      </p>
 
-  <span class="badge-breve" style="
-    background:#e9f3ec;
-    color:#176b3a;
-  ">
-    ABRIR LOJA →
-  </span>
+      <span class="badge-breve" style="
+        background:#e9f3ec;
+        color:#176b3a;
+      ">
+        ABRIR LOJA →
+      </span>
 
-</a>
+    </a>
 
 
     <!-- GAMES -->
@@ -1683,6 +2244,64 @@ const stacoinValor =
 
 
 /* =========================
+   CADASTRO
+========================= */
+
+const cadastroOverlay =
+  document.getElementById(
+    "cadastroOverlay"
+  );
+
+
+const cadastroFormArea =
+  document.getElementById(
+    "cadastroFormArea"
+  );
+
+
+const cadastroSucesso =
+  document.getElementById(
+    "cadastroSucesso"
+  );
+
+
+const cadastroForm =
+  document.getElementById(
+    "cadastroForm"
+  );
+
+
+const cadastroEmail =
+  document.getElementById(
+    "cadastroEmail"
+  );
+
+
+const cadastroErro =
+  document.getElementById(
+    "cadastroErro"
+  );
+
+
+const botaoCadastrar =
+  document.getElementById(
+    "botaoCadastrar"
+  );
+
+
+const novoCodigo =
+  document.getElementById(
+    "novoCodigo"
+  );
+
+
+const botaoContinuar =
+  document.getElementById(
+    "botaoContinuar"
+  );
+
+
+/* =========================
    EMPRESA
 ========================= */
 
@@ -1704,6 +2323,434 @@ botaoEmpresa.addEventListener(
 
     empresaCaixa.classList.toggle(
       "aberta"
+    );
+
+  }
+);
+
+
+
+/* =========================
+   FUNÇÕES DE CADASTRO
+========================= */
+
+function mostrarErroCadastro(
+  mensagem
+) {
+
+  cadastroErro.textContent =
+    mensagem;
+
+  cadastroErro.style.display =
+    "block";
+
+}
+
+
+function esconderErroCadastro() {
+
+  cadastroErro.textContent =
+    "";
+
+  cadastroErro.style.display =
+    "none";
+
+}
+
+
+function abrirCadastro(
+  user
+) {
+
+  if (!user) {
+    return;
+  }
+
+
+  cadastroEmail.innerHTML =
+    "<strong>Conta Google:</strong> " +
+    (user.email || "Conta conectada");
+
+
+  cadastroFormArea.style.display =
+    "block";
+
+
+  cadastroSucesso.style.display =
+    "none";
+
+
+  esconderErroCadastro();
+
+
+  cadastroOverlay.classList.add(
+    "aberto"
+  );
+
+
+  const nomeGoogle =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    "";
+
+
+  const campoNome =
+    document.getElementById(
+      "cadastroNome"
+    );
+
+
+  if (
+    nomeGoogle &&
+    !campoNome.value
+  ) {
+
+    campoNome.value =
+      nomeGoogle;
+
+  }
+
+
+  setTimeout(
+    function() {
+
+      campoNome.focus();
+
+    },
+    100
+  );
+
+}
+
+
+function fecharCadastro() {
+
+  cadastroOverlay.classList.remove(
+    "aberto"
+  );
+
+}
+
+
+async function verificarCadastro(
+  user
+) {
+
+  if (!user) {
+    return null;
+  }
+
+
+  try {
+
+    const resultado =
+      await supabaseClient
+        .from("motoristas")
+        .select(
+          "id,codigo,nome,apelido,cargo,categoria,salario_ativo"
+        )
+        .eq(
+          "user_id",
+          user.id
+        )
+        .maybeSingle();
+
+
+    if (
+      resultado.error
+    ) {
+
+      console.error(
+        "Erro ao verificar cadastro:",
+        resultado.error
+      );
+
+      return null;
+
+    }
+
+
+    return resultado.data || null;
+
+  }
+
+  catch (erro) {
+
+    console.error(
+      "Erro ao verificar cadastro:",
+      erro
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================
+   CRIAR ID
+========================= */
+
+cadastroForm.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    esconderErroCadastro();
+
+
+    const nome =
+      document
+        .getElementById(
+          "cadastroNome"
+        )
+        .value
+        .trim();
+
+
+    const apelido =
+      document
+        .getElementById(
+          "cadastroApelido"
+        )
+        .value
+        .trim();
+
+
+    const cargo =
+      document
+        .getElementById(
+          "cadastroCargo"
+        )
+        .value
+        .trim();
+
+
+    const categoria =
+      document
+        .getElementById(
+          "cadastroCategoria"
+        )
+        .value
+        .trim();
+
+
+    if (
+      !nome ||
+      !apelido ||
+      !cargo ||
+      !categoria
+    ) {
+
+      mostrarErroCadastro(
+        "Preencha todos os campos para continuar."
+      );
+
+      return;
+
+    }
+
+
+    botaoCadastrar.disabled =
+      true;
+
+    botaoCadastrar.textContent =
+      "CRIANDO SEU ID...";
+
+
+    try {
+
+      const sessao =
+        await supabaseClient.auth.getSession();
+
+
+      const user =
+        sessao.data?.session?.user;
+
+
+      if (!user) {
+
+        mostrarErroCadastro(
+          "Sua sessão expirou. Entre novamente com o Google."
+        );
+
+        botaoCadastrar.disabled =
+          false;
+
+        botaoCadastrar.textContent =
+          "🪪 CRIAR MEU SANTA LUZIA ID";
+
+        return;
+
+      }
+
+
+      /* =====================================
+         CHAMA A FUNÇÃO SEGURA DO SUPABASE
+      ===================================== */
+
+      const resultado =
+        await supabaseClient.rpc(
+          "criar_meu_cadastro",
+          {
+            p_nome:
+              nome,
+
+            p_apelido:
+              apelido,
+
+            p_cargo:
+              cargo,
+
+            p_categoria:
+              categoria
+          }
+        );
+
+
+      if (
+        resultado.error
+      ) {
+
+        console.error(
+          "Erro RPC:",
+          resultado.error
+        );
+
+
+        mostrarErroCadastro(
+          "Não foi possível criar seu ID. " +
+          (resultado.error.message || "Tente novamente.")
+        );
+
+
+        botaoCadastrar.disabled =
+          false;
+
+        botaoCadastrar.textContent =
+          "🪪 CRIAR MEU SANTA LUZIA ID";
+
+        return;
+
+      }
+
+
+      const dados =
+        resultado.data;
+
+
+      if (
+        !dados ||
+        !dados.sucesso
+      ) {
+
+        mostrarErroCadastro(
+          "O cadastro não foi concluído. Tente novamente."
+        );
+
+
+        botaoCadastrar.disabled =
+          false;
+
+        botaoCadastrar.textContent =
+          "🪪 CRIAR MEU SANTA LUZIA ID";
+
+        return;
+
+      }
+
+
+      /* =====================================
+         MOSTRA O ID GERADO
+      ===================================== */
+
+      novoCodigo.textContent =
+        dados.codigo || "SL-0000";
+
+
+      cadastroFormArea.style.display =
+        "none";
+
+
+      cadastroSucesso.style.display =
+        "block";
+
+
+      loginStatus.textContent =
+        "✓ Santa Luzia ID criado com sucesso!";
+
+
+      loginStatus.className =
+        "login-status login-ok";
+
+
+      botaoCadastrar.disabled =
+        false;
+
+      botaoCadastrar.textContent =
+        "🪪 CRIAR MEU SANTA LUZIA ID";
+
+    }
+
+    catch (erro) {
+
+      console.error(
+        "Erro inesperado:",
+        erro
+      );
+
+
+      mostrarErroCadastro(
+        "Ocorreu um erro ao criar seu ID. Tente novamente."
+      );
+
+
+      botaoCadastrar.disabled =
+        false;
+
+      botaoCadastrar.textContent =
+        "🪪 CRIAR MEU SANTA LUZIA ID";
+
+    }
+
+  }
+);
+
+
+
+/* =========================
+   CONTINUAR APÓS CADASTRO
+========================= */
+
+botaoContinuar.addEventListener(
+  "click",
+  function() {
+
+    fecharCadastro();
+
+
+    const sessao =
+      supabaseClient.auth.getSession();
+
+
+    sessao.then(
+      function(resultado) {
+
+        const user =
+          resultado.data?.session?.user;
+
+        if (user) {
+
+          mostrarUsuario(
+            user
+          );
+
+        }
+
+      }
     );
 
   }
@@ -1827,7 +2874,7 @@ async function carregarStacoin(
    MOSTRAR USUÁRIO
 ========================= */
 
-function mostrarUsuario(
+async function mostrarUsuario(
   user
 ) {
 
@@ -1918,14 +2965,59 @@ function mostrarUsuario(
 
 
   loginStatus.textContent =
-    "✓ Conta conectada à Santa Luzia Central";
+    "Verificando seu cadastro...";
+
+
+  loginStatus.className =
+    "login-status";
+
+
+  /* =====================================
+     VERIFICA SE JÁ POSSUI SANTA LUZIA ID
+  ===================================== */
+
+  const motorista =
+    await verificarCadastro(
+      user
+    );
+
+
+  if (!motorista) {
+
+    loginStatus.textContent =
+      "🆔 Complete seu cadastro para criar seu Santa Luzia ID.";
+
+
+    loginStatus.className =
+      "login-status";
+
+
+    abrirCadastro(
+      user
+    );
+
+
+    return;
+
+  }
+
+
+  /* =====================================
+     JÁ POSSUI ID
+  ===================================== */
+
+  loginStatus.textContent =
+    "✓ Conta conectada • " +
+    motorista.codigo;
 
 
   loginStatus.className =
     "login-status login-ok";
 
 
-  carregarStacoin(user);
+  carregarStacoin(
+    user
+  );
 
 }
 
@@ -2040,7 +3132,7 @@ async function processarRetornoGoogle() {
       resultado.data?.session?.user
     ) {
 
-      mostrarUsuario(
+      await mostrarUsuario(
         resultado.data.session.user
       );
 
@@ -2102,7 +3194,7 @@ async function verificarSessao() {
       resultado.data?.session?.user
     ) {
 
-      mostrarUsuario(
+      await mostrarUsuario(
         resultado.data.session.user
       );
 
@@ -2246,7 +3338,7 @@ botaoGoogle.addEventListener(
 ========================= */
 
 supabaseClient.auth.onAuthStateChange(
-  function(
+  async function(
     event,
     session
   ) {
@@ -2263,7 +3355,7 @@ supabaseClient.auth.onAuthStateChange(
       session?.user
     ) {
 
-      mostrarUsuario(
+      await mostrarUsuario(
         session.user
       );
 
