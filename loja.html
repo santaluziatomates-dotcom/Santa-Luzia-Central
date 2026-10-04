@@ -1079,11 +1079,49 @@ footer{
     .image-box{
         height:190px;
     }
+
+   .botao-voltar-central {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin: 14px 18px 0;
+  padding: 9px 13px;
+
+  background: #ffffff;
+  color: #176b3a;
+
+  border: 1px solid #dfe5df;
+  border-radius: 11px;
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: bold;
+
+  transition: 0.2s;
+}
+
+.botao-voltar-central:hover {
+  background: #eef4ef;
+  transform: translateX(-1px);
+}
+
+@media (max-width: 600px) {
+  .botao-voltar-central {
+    margin: 10px 14px 0;
+    padding: 8px 11px;
+    font-size: 10px;
+  } 
 }
 </style>
 </head>
 
 <body>
+
+<a href="index.html" class="botao-voltar-central">
+  ← VOLTAR PARA A CENTRAL
+</a>
 
 <header>
 
