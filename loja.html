@@ -403,93 +403,9 @@ header{
     margin-top:18px;
 }
 
-/* MEUS PRÊMIOS */
-
-.my-prizes-section{
-    display:none;
-    margin-top:28px;
-}
-
-.my-prizes-section.show{
-    display:block;
-}
-
-.my-prizes-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.my-prize{
-    background:white;
-    border:1px solid #efd0d5;
-    border-radius:16px;
-    padding:14px;
-    box-shadow:0 3px 12px rgba(181,38,58,.05);
-}
-
-.prize-icon{
-    width:48px;
-    height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#fff0f2;
-    border-radius:13px;
-    font-size:24px;
-}
-
-.my-prize h3{
-    font-size:13px;
-    margin-top:10px;
-    color:#173b29;
-}
-
-.my-prize p{
-    color:#718079;
-    font-size:10px;
-    margin-top:4px;
-    line-height:1.4;
-}
-
-.prize-code{
-    margin-top:9px;
-    padding:8px;
-    background:#eef6f0;
-    border:1px dashed #8cb49a;
-    border-radius:9px;
-    color:#176b3a;
-    font-size:10px;
-    font-weight:900;
-    word-break:break-all;
-}
-
-.empty-prizes{
-    background:white;
-    border:1px dashed #cbd9cf;
-    border-radius:15px;
-    padding:18px;
-    text-align:center;
-    color:#718079;
-    font-size:11px;
-}
-
-.my-prize-money{
-    border-color:#dfe9e2;
-}
-
-.my-prize-money .prize-icon{
-    background:#eaf4ed;
-}
-
-footer{
-    text-align:center;
-    color:#839189;
-    font-size:10px;
-    padding:25px 10px;
-}
-
-/* MINHAS SKINS */
+/* =========================================================
+   MINHAS SKINS
+========================================================= */
 
 .my-skins-section{
     display:none;
@@ -568,7 +484,111 @@ footer{
     font-size:11px;
 }
 
-/* MODAL */
+/* =========================================================
+   MEUS PRÊMIOS
+========================================================= */
+
+.my-prizes-section{
+    display:none;
+    margin-top:28px;
+}
+
+.my-prizes-section.show{
+    display:block;
+}
+
+.my-prizes-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.my-prize{
+    background:white;
+    border:1px solid #efd0d5;
+    border-radius:16px;
+    padding:10px;
+    box-shadow:0 3px 12px rgba(181,38,58,.05);
+    cursor:pointer;
+    transition:.2s;
+    overflow:hidden;
+}
+
+.my-prize:hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 20px rgba(181,38,58,.10);
+}
+
+.prize-photo{
+    width:100%;
+    height:150px;
+    object-fit:contain;
+    background:#f4f5f4;
+    border-radius:12px;
+    display:block;
+}
+
+.prize-icon{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff0f2;
+    border-radius:13px;
+    font-size:24px;
+}
+
+.my-prize h3{
+    font-size:13px;
+    margin-top:10px;
+    color:#173b29;
+}
+
+.my-prize p{
+    color:#718079;
+    font-size:10px;
+    margin-top:4px;
+    line-height:1.4;
+}
+
+.prize-hidden-code{
+    margin-top:9px;
+    padding:8px;
+    background:#f5f7f5;
+    border-radius:9px;
+    color:#839189;
+    font-size:9px;
+    font-weight:800;
+    text-align:center;
+}
+
+.my-prize-money{
+    border-color:#dfe9e2;
+}
+
+.my-prize-money .prize-photo{
+    background:#eaf4ed;
+}
+
+.my-prize-money .prize-hidden-code{
+    background:#eaf4ed;
+    color:#176b3a;
+}
+
+.empty-prizes{
+    background:white;
+    border:1px dashed #cbd9cf;
+    border-radius:15px;
+    padding:18px;
+    text-align:center;
+    color:#718079;
+    font-size:11px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal-bg{
     display:none;
@@ -587,6 +607,8 @@ footer{
 
 .modal{
     width:min(430px,100%);
+    max-height:92vh;
+    overflow-y:auto;
     background:white;
     border-radius:22px;
     padding:21px;
@@ -599,6 +621,7 @@ footer{
         opacity:0;
         transform:scale(.96) translateY(8px);
     }
+
     to{
         opacity:1;
         transform:scale(1) translateY(0);
@@ -764,6 +787,126 @@ footer{
     margin-top:3px;
 }
 
+/* =========================================================
+   MODAL MEU PRÊMIO
+========================================================= */
+
+.prize-resgatado{
+    text-align:center;
+}
+
+.prize-modal-photo-wrap{
+    margin-top:14px;
+    background:#f3f6f4;
+    border-radius:16px;
+    padding:10px;
+    position:relative;
+}
+
+.prize-modal-photo{
+    width:100%;
+    height:245px;
+    object-fit:contain;
+    display:block;
+    border-radius:12px;
+}
+
+.prize-photo-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-top:9px;
+}
+
+.prize-nav-btn{
+    border:none;
+    background:#176b3a;
+    color:white;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    font-size:18px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.prize-nav-btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+.prize-photo-counter{
+    color:#718079;
+    font-size:10px;
+    font-weight:900;
+}
+
+.prize-modal-name{
+    font-size:17px;
+    font-weight:900;
+    color:#173b29;
+    margin-top:12px;
+}
+
+.prize-modal-subtitle{
+    color:#718079;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.prize-modal-code{
+    background:#eef6f0;
+    border:1px dashed #8cb49a;
+    border-radius:12px;
+    padding:12px;
+    margin-top:13px;
+}
+
+.prize-modal-code .code{
+    font-size:18px;
+}
+
+.prize-money{
+    background:#eaf4ed;
+    border:1px solid #cfe2d5;
+    border-radius:13px;
+    padding:14px;
+    margin-top:13px;
+    color:#176b3a;
+    font-weight:800;
+}
+
+.prize-money strong{
+    display:block;
+    font-size:24px;
+    margin-top:3px;
+}
+
+/* =========================================================
+   RESULTADO
+========================================================= */
+
+.result{
+    text-align:center;
+}
+
+.result-icon{
+    font-size:45px;
+    margin-bottom:7px;
+}
+
+.result h2{
+    color:#176b3a;
+}
+
+.result p{
+    color:#637168;
+    font-size:12px;
+    line-height:1.5;
+    margin-top:7px;
+}
+
 .loading{
     text-align:center;
     padding:18px;
@@ -780,6 +923,13 @@ footer{
     margin-top:10px;
     font-size:11px;
     display:none;
+}
+
+footer{
+    text-align:center;
+    color:#839189;
+    font-size:10px;
+    padding:25px 10px;
 }
 
 @media(max-width:800px){
@@ -873,6 +1023,10 @@ footer{
         height:105px;
     }
 
+    .prize-photo{
+        height:115px;
+    }
+
     .card-body{
         padding:10px;
     }
@@ -911,6 +1065,10 @@ footer{
 
     .box-info p{
         font-size:10px;
+    }
+
+    .prize-modal-photo{
+        height:205px;
     }
 }
 
@@ -959,7 +1117,6 @@ footer{
 
     </div>
 
-
     <div class="balance">
 
         <img
@@ -979,7 +1136,7 @@ footer{
             </span>
 
             <span id="descontoSaldo">
-                -8.000 STC
+                -100 STC
             </span>
 
         </div>
@@ -1201,7 +1358,9 @@ footer{
 </footer>
 
 
-<!-- MODAL COMPRA -->
+<!-- =========================================================
+     MODAL COMPRA
+========================================================= -->
 
 <div
     class="modal-bg"
@@ -1225,7 +1384,6 @@ footer{
 
         </div>
 
-
         <div class="modal-product">
 
             <img
@@ -1247,7 +1405,6 @@ footer{
 
         </div>
 
-
         <div class="modal-info">
 
             O valor será descontado automaticamente
@@ -1256,12 +1413,10 @@ footer{
 
         </div>
 
-
         <div
             class="error"
             id="purchaseError"
         ></div>
-
 
         <div class="modal-actions">
 
@@ -1286,7 +1441,9 @@ footer{
 </div>
 
 
-<!-- MODAL RESULTADO -->
+<!-- =========================================================
+     MODAL RESULTADO
+========================================================= -->
 
 <div
     class="modal-bg"
@@ -1309,7 +1466,6 @@ footer{
         <p id="resultName">
             —
         </p>
-
 
         <div
             class="code-box"
@@ -1336,7 +1492,6 @@ footer{
 
         </div>
 
-
         <div
             class="money-result"
             id="moneyResult"
@@ -1351,7 +1506,6 @@ footer{
 
         </div>
 
-
         <div class="modal-info">
 
             <span id="resultInfo">
@@ -1359,7 +1513,6 @@ footer{
             </span>
 
         </div>
-
 
         <div class="modal-actions">
 
@@ -1377,7 +1530,9 @@ footer{
 </div>
 
 
-<!-- MODAL CÓDIGO DE SKIN ADQUIRIDA -->
+<!-- =========================================================
+     MODAL CÓDIGO DE SKIN ADQUIRIDA
+========================================================= -->
 
 <div
     class="modal-bg"
@@ -1401,7 +1556,6 @@ footer{
 
         </div>
 
-
         <div class="modal-product">
 
             <img
@@ -1415,7 +1569,6 @@ footer{
             </h3>
 
         </div>
-
 
         <div class="code-box">
 
@@ -1439,14 +1592,12 @@ footer{
 
         </div>
 
-
         <div class="modal-info">
 
             Esta skin já pertence a você.
             O código fica salvo na sua conta e pode ser consultado novamente.
 
         </div>
-
 
         <div class="modal-actions">
 
@@ -1464,7 +1615,9 @@ footer{
 </div>
 
 
-<!-- MODAL CAIXA -->
+<!-- =========================================================
+     MODAL CAIXA
+========================================================= -->
 
 <div
     class="modal-bg"
@@ -1488,7 +1641,6 @@ footer{
 
         </div>
 
-
         <div class="modal-product">
 
             <img
@@ -1506,7 +1658,6 @@ footer{
             </div>
 
         </div>
-
 
         <div class="modal-info">
 
@@ -1539,12 +1690,10 @@ footer{
 
         </div>
 
-
         <div
             class="error"
             id="boxError"
         ></div>
-
 
         <div class="modal-actions">
 
@@ -1560,6 +1709,154 @@ footer{
                 id="confirmBox"
             >
                 ABRIR POR 100 STC
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL MEU PRÊMIO RESGATADO
+========================================================= -->
+
+<div
+    class="modal-bg"
+    id="prizeModal"
+>
+
+    <div class="modal prize-resgatado">
+
+        <div class="modal-top">
+
+            <h2>
+                🎁 Meu prêmio
+            </h2>
+
+            <button
+                class="close"
+                id="closePrize"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="prize-modal-photo-wrap">
+
+            <img
+                id="prizeProductImage"
+                class="prize-modal-photo"
+                src=""
+                alt="Prêmio conquistado"
+            >
+
+        </div>
+
+
+        <div
+            class="prize-photo-nav"
+            id="prizePhotoNav"
+        >
+
+            <button
+                type="button"
+                class="prize-nav-btn"
+                id="prizePrev"
+            >
+                ‹
+            </button>
+
+            <span
+                class="prize-photo-counter"
+                id="prizePhotoCounter"
+            >
+                1 / 1
+            </span>
+
+            <button
+                type="button"
+                class="prize-nav-btn"
+                id="prizeNext"
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="prize-modal-name"
+            id="prizeProductName"
+        >
+            Prêmio
+        </div>
+
+        <div class="prize-modal-subtitle">
+            🎀 Prêmio da Caixa Outubro Rosa
+        </div>
+
+
+        <div
+            class="prize-modal-code"
+            id="prizeCodeBox"
+        >
+
+            <div class="code-label">
+                Código do prêmio
+            </div>
+
+            <div
+                class="code"
+                id="prizeCode"
+            >
+                —
+            </div>
+
+            <button
+                class="copy-code"
+                id="copyPrizeCode"
+            >
+                COPIAR CÓDIGO
+            </button>
+
+        </div>
+
+
+        <div
+            class="prize-money"
+            id="prizeMoneyBox"
+            style="display:none;"
+        >
+
+            💰 Prêmio em STACOIN
+
+            <strong>
+                +100 STACOIN
+            </strong>
+
+        </div>
+
+
+        <div class="modal-info">
+
+            <span id="prizeInfo">
+                Este prêmio está salvo na sua conta.
+            </span>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="confirm"
+                id="closePrizeBottom"
+            >
+                FECHAR
             </button>
 
         </div>
@@ -1724,6 +2021,35 @@ const produtos = [
 
 
 /* =========================================================
+   FOTOS DOS PRÊMIOS
+========================================================= */
+
+const fotosPremios = {
+
+    "bitruck tomate":[
+        "crt.tom.JPEG",
+        "crt.tom2.JPEG"
+    ],
+
+    "bitruck batata":[
+        "crt.bat.JPEG",
+        "crt.bat2.JPEG"
+    ],
+
+    "carreta batata":[
+        "bau.bat.JPEG",
+        "bau.bat2.JPEG"
+    ],
+
+    "carreta tomate":[
+        "bau.tom.JPEG",
+        "bau.tom2.JPEG"
+    ]
+
+};
+
+
+/* =========================================================
    ESTADO
 ========================================================= */
 
@@ -1738,6 +2064,12 @@ let motoristaAtual = null;
 let comprasRealizadas = [];
 
 let premiosRealizados = [];
+
+let premioSelecionado = null;
+
+let premioFotosAtuais = [];
+
+let premioFotoAtual = 0;
 
 
 /* =========================================================
@@ -1770,6 +2102,9 @@ const ownedModal =
 
 const boxModal =
     document.getElementById("boxModal");
+
+const prizeModal =
+    document.getElementById("prizeModal");
 
 const boxArea =
     document.getElementById("boxArea");
@@ -1821,7 +2156,76 @@ function formatarStacoin(valor){
 
 
 /* =========================================================
-   VERIFICAR SE POSSUI SKIN
+   NORMALIZAR NOME DO PRÊMIO
+========================================================= */
+
+function normalizarNomePremio(nome){
+
+    return String(nome || "")
+        .replace(
+            /^Caixa Outubro Rosa\s*[—-]\s*/i,
+            ""
+        )
+        .trim();
+
+}
+
+
+/* =========================================================
+   IDENTIFICAR PRÊMIO DE 100 STACOIN
+========================================================= */
+
+function premioEhStacoin(premio){
+
+    const codigo =
+        String(premio?.codigo || "")
+            .trim()
+            .toUpperCase();
+
+    const nome =
+        String(premio?.produto_nome || "")
+            .toLowerCase();
+
+    return (
+        codigo === "STACOIN-100" ||
+        nome.includes("100 stacoin") ||
+        nome.includes("stacoin")
+    );
+
+}
+
+
+/* =========================================================
+   FOTOS DO PRÊMIO
+========================================================= */
+
+function obterFotosPremio(nome){
+
+    const nomeNormalizado =
+        normalizarNomePremio(nome)
+            .toLowerCase();
+
+    for(
+        const chave of Object.keys(fotosPremios)
+    ){
+
+        if(
+            nomeNormalizado.includes(chave)
+        ){
+
+            return fotosPremios[chave];
+
+        }
+
+    }
+
+    return [];
+
+}
+
+
+/* =========================================================
+   POSSUI SKIN
 ========================================================= */
 
 function possuiSkin(codigo){
@@ -1918,7 +2322,7 @@ async function carregarCompras(){
 
 
 /* =========================================================
-   CARREGAR PRÊMIOS DA CAIXA
+   CARREGAR PRÊMIOS
 ========================================================= */
 
 async function carregarPremios(){
@@ -1933,11 +2337,6 @@ async function carregarPremios(){
 
     }
 
-
-    /*
-       Usamos stacoin_compras porque cada prêmio físico
-       fica registrado no banco junto ao motorista.
-    */
 
     const {
         data,
@@ -1981,15 +2380,14 @@ async function carregarPremios(){
 
 
     /*
-       Só mostramos como prêmio físico aquilo que
-       possui código diferente de STACOIN-100.
+       IMPORTANTE:
+       Agora NÃO filtramos mais STACOIN-100.
+       O prêmio de 100 STACOIN também aparece
+       em "Meus prêmios".
     */
 
     premiosRealizados =
-        (data || []).filter(
-            premio =>
-                premio.codigo !== "STACOIN-100"
-        );
+        data || [];
 
 
     renderMeusPremios();
@@ -2134,59 +2532,96 @@ function renderMeusPremios(){
             const card =
                 document.createElement("div");
 
+
+            const ganhouStacoin =
+                premioEhStacoin(premio);
+
+
             card.className =
-                "my-prize";
+                ganhouStacoin
+                    ? "my-prize my-prize-money"
+                    : "my-prize";
 
 
-            let icone = "🎁";
+            const nomePremio =
+                normalizarNomePremio(
+                    premio.produto_nome
+                );
 
 
-            if(
-                premio.produto_nome
-                    .toLowerCase()
-                    .includes("bitruck")
-            ){
+            if(ganhouStacoin){
 
-                icone = "🚛";
+                card.innerHTML = `
+
+                    <img
+                        class="prize-photo"
+                        src="stacoin.png"
+                        alt="100 STACOIN"
+                    >
+
+                    <h3>
+                        💰 100 STACOIN
+                    </h3>
+
+                    <p>
+                        🎀 Prêmio da Caixa Outubro Rosa
+                    </p>
+
+                    <div class="prize-hidden-code">
+                        💰 VALOR CREDITADO
+                    </div>
+
+                `;
+
+            }else{
+
+                const fotos =
+                    obterFotosPremio(
+                        premio.produto_nome
+                    );
+
+
+                const foto =
+                    fotos.length
+                        ? fotos[0]
+                        : "cx.out.rosa.jpeg";
+
+
+                card.innerHTML = `
+
+                    <img
+                        class="prize-photo"
+                        src="${foto}"
+                        alt="${nomePremio}"
+                    >
+
+                    <h3>
+                        ${nomePremio}
+                    </h3>
+
+                    <p>
+                        🎀 Prêmio da Caixa Outubro Rosa
+                    </p>
+
+                    <div class="prize-hidden-code">
+                        👆 TOQUE PARA VER O CÓDIGO
+                    </div>
+
+                `;
 
             }
 
 
-            if(
-                premio.produto_nome
-                    .toLowerCase()
-                    .includes("carreta")
-            ){
+            card.addEventListener(
+                "click",
+                () => {
 
-                icone = "🚚";
+                    abrirPremioResgatado(
+                        premio
+                    );
 
-            }
-
-
-            card.innerHTML = `
-
-                <div class="prize-icon">
-                    ${icone}
-                </div>
-
-                <h3>
-                    ${premio.produto_nome
-                        .replace(
-                            "Caixa Outubro Rosa — ",
-                            ""
-                        )
-                    }
-                </h3>
-
-                <p>
-                    🎀 Prêmio da Caixa Outubro Rosa
-                </p>
-
-                <div class="prize-code">
-                    ${premio.codigo}
-                </div>
-
-            `;
+                }
+            );
 
 
             myPrizesEl.appendChild(card);
@@ -2198,7 +2633,7 @@ function renderMeusPremios(){
 
 
 /* =========================================================
-   ABRIR CÓDIGO DE SKIN ADQUIRIDA
+   ABRIR CÓDIGO DE SKIN
 ========================================================= */
 
 function abrirCodigoAdquirido(
@@ -2230,6 +2665,289 @@ function abrirCodigoAdquirido(
 
 
 /* =========================================================
+   ABRIR MEU PRÊMIO
+========================================================= */
+
+function abrirPremioResgatado(premio){
+
+    premioSelecionado =
+        premio;
+
+
+    const ganhouStacoin =
+        premioEhStacoin(premio);
+
+
+    const nomePremio =
+        normalizarNomePremio(
+            premio.produto_nome
+        );
+
+
+    const imagem =
+        document.getElementById(
+            "prizeProductImage"
+        );
+
+
+    const codeBox =
+        document.getElementById(
+            "prizeCodeBox"
+        );
+
+
+    const moneyBox =
+        document.getElementById(
+            "prizeMoneyBox"
+        );
+
+
+    const nav =
+        document.getElementById(
+            "prizePhotoNav"
+        );
+
+
+    document
+        .getElementById(
+            "prizeProductName"
+        )
+        .textContent =
+            ganhouStacoin
+                ? "💰 100 STACOIN"
+                : nomePremio;
+
+
+    if(ganhouStacoin){
+
+        imagem.src =
+            "stacoin.png";
+
+        imagem.alt =
+            "100 STACOIN";
+
+        premioFotosAtuais =
+            ["stacoin.png"];
+
+        premioFotoAtual =
+            0;
+
+        codeBox.style.display =
+            "none";
+
+        moneyBox.style.display =
+            "block";
+
+        nav.style.display =
+            "none";
+
+        document
+            .getElementById(
+                "prizeInfo"
+            )
+            .textContent =
+                "Você ganhou 100 STACOIN. O prêmio e a movimentação estão registrados na sua conta.";
+
+    }else{
+
+        premioFotosAtuais =
+            obterFotosPremio(
+                premio.produto_nome
+            );
+
+
+        if(!premioFotosAtuais.length){
+
+            premioFotosAtuais =
+                ["cx.out.rosa.jpeg"];
+
+        }
+
+
+        premioFotoAtual =
+            0;
+
+
+        atualizarFotoPremio();
+
+
+        codeBox.style.display =
+            "block";
+
+        moneyBox.style.display =
+            "none";
+
+        nav.style.display =
+            premioFotosAtuais.length > 0
+                ? "flex"
+                : "none";
+
+
+        document
+            .getElementById(
+                "prizeCode"
+            )
+            .textContent =
+                premio.codigo || "—";
+
+
+        document
+            .getElementById(
+                "prizeInfo"
+            )
+            .textContent =
+                "Seu prêmio está salvo na sua conta. Toque nas setas para visualizar as fotos.";
+
+    }
+
+
+    prizeModal.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   ATUALIZAR FOTO DO PRÊMIO
+========================================================= */
+
+function atualizarFotoPremio(){
+
+    const imagem =
+        document.getElementById(
+            "prizeProductImage"
+        );
+
+
+    const total =
+        premioFotosAtuais.length;
+
+
+    if(!total){
+
+        return;
+
+    }
+
+
+    if(
+        premioFotoAtual < 0
+    ){
+
+        premioFotoAtual =
+            total - 1;
+
+    }
+
+
+    if(
+        premioFotoAtual >= total
+    ){
+
+        premioFotoAtual =
+            0;
+
+    }
+
+
+    imagem.src =
+        premioFotosAtuais[
+            premioFotoAtual
+        ];
+
+
+    document
+        .getElementById(
+            "prizePhotoCounter"
+        )
+        .textContent =
+            `${premioFotoAtual + 1} / ${total}`;
+
+
+    document
+        .getElementById(
+            "prizePrev"
+        )
+        .disabled =
+            total <= 1;
+
+
+    document
+        .getElementById(
+            "prizeNext"
+        )
+        .disabled =
+            total <= 1;
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO DAS FOTOS
+========================================================= */
+
+document
+    .getElementById("prizePrev")
+    .addEventListener(
+        "click",
+        () => {
+
+            premioFotoAtual--;
+
+            atualizarFotoPremio();
+
+        }
+    );
+
+
+document
+    .getElementById("prizeNext")
+    .addEventListener(
+        "click",
+        () => {
+
+            premioFotoAtual++;
+
+            atualizarFotoPremio();
+
+        }
+    );
+
+
+/* =========================================================
+   FECHAR MODAL PRÊMIO
+========================================================= */
+
+function fecharPremio(){
+
+    prizeModal.classList.remove(
+        "show"
+    );
+
+    premioSelecionado =
+        null;
+
+}
+
+
+document
+    .getElementById("closePrize")
+    .addEventListener(
+        "click",
+        fecharPremio
+    );
+
+
+document
+    .getElementById("closePrizeBottom")
+    .addEventListener(
+        "click",
+        fecharPremio
+    );
+
+
+/* =========================================================
    RENDER PRODUTOS
 ========================================================= */
 
@@ -2237,11 +2955,6 @@ function renderProdutos(){
 
     productsEl.innerHTML = "";
 
-
-    /*
-       BAÚS não possui produtos no grid.
-       Ele mostra a caixa especial logo abaixo.
-    */
 
     if(categoriaAtual === "baus"){
 
@@ -2258,27 +2971,37 @@ function renderProdutos(){
 
         `;
 
+
         contadorEl.textContent =
             "1 produto";
+
 
         catalogTitle.textContent =
             "📦 Baús e caixas";
 
-        boxArea.classList.remove("hidden");
+
+        boxArea.classList.remove(
+            "hidden"
+        );
+
 
         return;
 
     }
 
 
-    boxArea.classList.add("hidden");
+    boxArea.classList.add(
+        "hidden"
+    );
 
 
     const lista =
         categoriaAtual === "todos"
             ? produtos
             : produtos.filter(
-                p => p.categoria === categoriaAtual
+                p =>
+                    p.categoria ===
+                    categoriaAtual
             );
 
 
@@ -2302,8 +3025,11 @@ function renderProdutos(){
 
             let imagemAtual = 0;
 
+
             const jaPossui =
-                possuiSkin(produto.codigo);
+                possuiSkin(
+                    produto.codigo
+                );
 
 
             card.innerHTML = `
@@ -2348,16 +3074,11 @@ function renderProdutos(){
                         ${produto.descricao}
                     </div>
 
-
                     <div class="price-row">
 
                         <div class="price">
-                            ${
-                                produto.preco
-                                    .toLocaleString("pt-BR")
-                            } STC
+                            ${produto.preco.toLocaleString("pt-BR")} STC
                         </div>
-
 
                         <button
                             class="buy ${jaPossui ? "owned" : ""}"
@@ -2379,23 +3100,34 @@ function renderProdutos(){
 
 
             const img =
-                card.querySelector(".product-img");
+                card.querySelector(
+                    ".product-img"
+                );
+
 
             const dots =
-                card.querySelectorAll(".dot");
+                card.querySelectorAll(
+                    ".dot"
+                );
 
 
-            if(produto.imagens.length > 1){
+            if(
+                produto.imagens.length > 1
+            ){
 
                 const intervalo =
                     setInterval(
                         () => {
 
                             if(
-                                !document.body.contains(card)
+                                !document.body.contains(
+                                    card
+                                )
                             ){
 
-                                clearInterval(intervalo);
+                                clearInterval(
+                                    intervalo
+                                );
 
                                 return;
 
@@ -2431,7 +3163,9 @@ function renderProdutos(){
                 card.addEventListener(
                     "mouseenter",
                     () =>
-                        clearInterval(intervalo)
+                        clearInterval(
+                            intervalo
+                        )
                 );
 
             }
@@ -2465,13 +3199,17 @@ function renderProdutos(){
                         }
 
 
-                        abrirCompra(produto);
+                        abrirCompra(
+                            produto
+                        );
 
                     }
                 );
 
 
-            productsEl.appendChild(card);
+            productsEl.appendChild(
+                card
+            );
 
         }
     );
@@ -2560,7 +3298,9 @@ async function carregarMotorista(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         saldoEl.textContent =
             "ERRO";
@@ -2687,11 +3427,6 @@ function abrirCompra(produto){
 
     }
 
-
-    /*
-       Verificação visual antes do RPC.
-       O RPC continua sendo a proteção verdadeira.
-    */
 
     if(saldoAtual < produto.preco){
 
@@ -2935,7 +3670,9 @@ document
 
 
                 if(
-                    mensagemLower.includes("saldo")
+                    mensagemLower.includes(
+                        "saldo"
+                    )
                 ){
 
                     mensagem =
@@ -2945,9 +3682,15 @@ document
 
 
                 if(
-                    mensagemLower.includes("já possui") ||
-                    mensagemLower.includes("já comprou") ||
-                    mensagemLower.includes("adquirida")
+                    mensagemLower.includes(
+                        "já possui"
+                    ) ||
+                    mensagemLower.includes(
+                        "já comprou"
+                    ) ||
+                    mensagemLower.includes(
+                        "adquirida"
+                    )
                 ){
 
                     mensagem =
@@ -3010,7 +3753,7 @@ function mostrarDesconto(valor){
 
 
 /* =========================================================
-   RESULTADO DE SKIN
+   RESULTADO SKIN
 ========================================================= */
 
 function mostrarResultadoSkin(
@@ -3074,7 +3817,7 @@ function mostrarResultadoSkin(
 
 
 /* =========================================================
-   RESULTADO DA CAIXA
+   RESULTADO CAIXA
 ========================================================= */
 
 function mostrarResultadoCaixa(
@@ -3083,14 +3826,25 @@ function mostrarResultadoCaixa(
     novoSaldo
 ){
 
-    const ganhouDinheiro =
-        codigo === "STACOIN-100";
+    const premioTemDinheiro =
+        (
+            String(codigo || "")
+                .trim()
+                .toUpperCase()
+                === "STACOIN-100"
+        ) ||
+        String(nome || "")
+            .toLowerCase()
+            .includes("100 stacoin") ||
+        String(nome || "")
+            .toLowerCase()
+            .includes("stacoin");
 
 
     document
         .getElementById("resultIcon")
         .textContent =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "💰"
                 : "🎁";
 
@@ -3098,7 +3852,7 @@ function mostrarResultadoCaixa(
     document
         .getElementById("resultTitle")
         .textContent =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "Você ganhou!"
                 : "Prêmio conquistado!";
 
@@ -3106,15 +3860,15 @@ function mostrarResultadoCaixa(
     document
         .getElementById("resultName")
         .textContent =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "A Caixa Outubro Rosa devolveu seu valor em STACOIN."
-                : `${nome} foi conquistado por você!`;
+                : `${normalizarNomePremio(nome)} foi conquistado por você!`;
 
 
     document
         .getElementById("resultCodeBox")
         .style.display =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "none"
                 : "block";
 
@@ -3128,7 +3882,7 @@ function mostrarResultadoCaixa(
     document
         .getElementById("moneyResult")
         .style.display =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "block"
                 : "none";
 
@@ -3136,7 +3890,7 @@ function mostrarResultadoCaixa(
     document
         .getElementById("copyCode")
         .style.display =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "none"
                 : "inline-block";
 
@@ -3144,7 +3898,7 @@ function mostrarResultadoCaixa(
     document
         .getElementById("resultInfo")
         .textContent =
-            ganhouDinheiro
+            premioTemDinheiro
                 ? "Os 100 STACOIN foram devolvidos ao seu saldo e a movimentação ficou registrada no extrato."
                 : "Seu prêmio foi salvo na conta e pode ser consultado novamente em Meus prêmios.";
 
@@ -3157,7 +3911,7 @@ function mostrarResultadoCaixa(
 
 
 /* =========================================================
-   COPIAR CÓDIGO
+   COPIAR TEXTO
 ========================================================= */
 
 async function copiarTexto(
@@ -3197,6 +3951,10 @@ async function copiarTexto(
 }
 
 
+/* =========================================================
+   COPIAR RESULTADO
+========================================================= */
+
 document
     .getElementById("copyCode")
     .addEventListener(
@@ -3219,6 +3977,10 @@ document
         }
     );
 
+
+/* =========================================================
+   FECHAR RESULTADO
+========================================================= */
 
 document
     .getElementById("closeResult")
@@ -3284,6 +4046,43 @@ document
 
 
 /* =========================================================
+   COPIAR CÓDIGO DO PRÊMIO
+========================================================= */
+
+document
+    .getElementById("copyPrizeCode")
+    .addEventListener(
+        "click",
+        function(){
+
+            if(!premioSelecionado){
+
+                return;
+
+            }
+
+
+            const codigo =
+                premioSelecionado.codigo;
+
+
+            if(!codigo){
+
+                return;
+
+            }
+
+
+            copiarTexto(
+                codigo,
+                this
+            );
+
+        }
+    );
+
+
+/* =========================================================
    CAIXA OUTUBRO ROSA
 ========================================================= */
 
@@ -3315,9 +4114,66 @@ document
 
 
             /*
-               Verificação visual.
-               O RPC também confere o saldo no servidor.
+               Verificação visual de data.
+               O RPC continua sendo a proteção principal.
             */
+
+            const hoje =
+                new Date();
+
+
+            const ano =
+                hoje.getFullYear();
+
+            const mes =
+                hoje.getMonth();
+
+            const dia =
+                hoje.getDate();
+
+
+            const dataAtual =
+                new Date(
+                    ano,
+                    mes,
+                    dia
+                );
+
+
+            const inicio =
+                new Date(
+                    2026,
+                    9,
+                    1
+                );
+
+
+            const fim =
+                new Date(
+                    2026,
+                    9,
+                    31,
+                    23,
+                    59,
+                    59
+                );
+
+
+            if(
+                dataAtual < inicio ||
+                dataAtual > fim
+            ){
+
+                boxError.textContent =
+                    "A Caixa Outubro Rosa está disponível somente durante outubro de 2026.";
+
+                boxError.style.display =
+                    "block";
+
+                return;
+
+            }
+
 
             if(saldoAtual < 100){
 
@@ -3456,10 +4312,6 @@ document
                 }
 
 
-                /* =========================================
-                   SALDO REAL RETORNADO PELO SUPABASE
-                ========================================= */
-
                 saldoAtual =
                     Number(
                         data.novo_saldo || 0
@@ -3471,12 +4323,6 @@ document
                         saldoAtual
                     );
 
-
-                /*
-                   Mostra o gasto real de 100 STACOIN.
-                   Mesmo quando o prêmio é 100 STACOIN,
-                   o extrato terá a saída e a entrada.
-                */
 
                 mostrarDesconto(
                     100
@@ -3525,8 +4371,12 @@ document
 
 
                 if(
-                    mensagemLower.includes("não está mais disponível") ||
-                    mensagemLower.includes("31/10/2026")
+                    mensagemLower.includes(
+                        "não está mais disponível"
+                    ) ||
+                    mensagemLower.includes(
+                        "31/10/2026"
+                    )
                 ){
 
                     mensagem =
@@ -3536,7 +4386,9 @@ document
 
 
                 if(
-                    mensagemLower.includes("motorista")
+                    mensagemLower.includes(
+                        "motorista"
+                    )
                 ){
 
                     mensagem =
@@ -3566,6 +4418,74 @@ document
 
         }
     );
+
+
+/* =========================================================
+   FECHAR MODAIS AO CLICAR FORA
+========================================================= */
+
+[
+    purchaseModal,
+    resultModal,
+    ownedModal,
+    boxModal,
+    prizeModal
+].forEach(
+    modal => {
+
+        modal.addEventListener(
+            "click",
+            event => {
+
+                if(
+                    event.target === modal
+                ){
+
+                    modal.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   ESC FECHA MODAIS
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key !== "Escape"
+        ){
+
+            return;
+
+        }
+
+
+        [
+            purchaseModal,
+            resultModal,
+            ownedModal,
+            boxModal,
+            prizeModal
+        ].forEach(
+            modal =>
+                modal.classList.remove(
+                    "show"
+                )
+        );
+
+    }
+);
 
 
 /* =========================================================
