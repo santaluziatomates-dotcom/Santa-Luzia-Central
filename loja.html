@@ -403,9 +403,7 @@ header{
     margin-top:18px;
 }
 
-/* =========================================================
-   MINHAS SKINS
-========================================================= */
+/* MINHAS SKINS */
 
 .my-skins-section{
     display:none;
@@ -484,9 +482,7 @@ header{
     font-size:11px;
 }
 
-/* =========================================================
-   MEUS PRÊMIOS
-========================================================= */
+/* MEUS PRÊMIOS */
 
 .my-prizes-section{
     display:none;
@@ -586,9 +582,7 @@ header{
     font-size:11px;
 }
 
-/* =========================================================
-   MODAL
-========================================================= */
+/* MODAL */
 
 .modal-bg{
     display:none;
@@ -787,9 +781,7 @@ header{
     margin-top:3px;
 }
 
-/* =========================================================
-   MODAL MEU PRÊMIO
-========================================================= */
+/* MODAL MEU PRÊMIO */
 
 .prize-resgatado{
     text-align:center;
@@ -883,9 +875,7 @@ header{
     margin-top:3px;
 }
 
-/* =========================================================
-   RESULTADO
-========================================================= */
+/* RESULTADO */
 
 .result{
     text-align:center;
@@ -1358,9 +1348,7 @@ footer{
 </footer>
 
 
-<!-- =========================================================
-     MODAL COMPRA
-========================================================= -->
+<!-- MODAL COMPRA -->
 
 <div
     class="modal-bg"
@@ -1441,9 +1429,7 @@ footer{
 </div>
 
 
-<!-- =========================================================
-     MODAL RESULTADO
-========================================================= -->
+<!-- MODAL RESULTADO -->
 
 <div
     class="modal-bg"
@@ -1530,9 +1516,7 @@ footer{
 </div>
 
 
-<!-- =========================================================
-     MODAL CÓDIGO DE SKIN ADQUIRIDA
-========================================================= -->
+<!-- MODAL CÓDIGO DE SKIN ADQUIRIDA -->
 
 <div
     class="modal-bg"
@@ -1615,9 +1599,7 @@ footer{
 </div>
 
 
-<!-- =========================================================
-     MODAL CAIXA
-========================================================= -->
+<!-- MODAL CAIXA -->
 
 <div
     class="modal-bg"
@@ -1718,9 +1700,7 @@ footer{
 </div>
 
 
-<!-- =========================================================
-     MODAL MEU PRÊMIO RESGATADO
-========================================================= -->
+<!-- MODAL MEU PRÊMIO RESGATADO -->
 
 <div
     class="modal-bg"
@@ -1744,7 +1724,6 @@ footer{
 
         </div>
 
-
         <div class="prize-modal-photo-wrap">
 
             <img
@@ -1755,7 +1734,6 @@ footer{
             >
 
         </div>
-
 
         <div
             class="prize-photo-nav"
@@ -1787,7 +1765,6 @@ footer{
 
         </div>
 
-
         <div
             class="prize-modal-name"
             id="prizeProductName"
@@ -1798,7 +1775,6 @@ footer{
         <div class="prize-modal-subtitle">
             🎀 Prêmio da Caixa Outubro Rosa
         </div>
-
 
         <div
             class="prize-modal-code"
@@ -1825,7 +1801,6 @@ footer{
 
         </div>
 
-
         <div
             class="prize-money"
             id="prizeMoneyBox"
@@ -1840,7 +1815,6 @@ footer{
 
         </div>
 
-
         <div class="modal-info">
 
             <span id="prizeInfo">
@@ -1848,7 +1822,6 @@ footer{
             </span>
 
         </div>
-
 
         <div class="modal-actions">
 
@@ -1868,16 +1841,13 @@ footer{
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+/* SUPABASE */
 
 const SUPABASE_URL =
     "https://cckypvqophyviphqhich.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1894,9 +1864,7 @@ const supabaseClient =
     );
 
 
-/* =========================================================
-   PRODUTOS
-========================================================= */
+/* PRODUTOS */
 
 const produtos = [
 
@@ -2021,60 +1989,48 @@ const produtos = [
 
 
 /* =========================================================
-   FOTOS DOS PRÊMIOS
+   FOTOS DOS PRÊMIOS — CORRIGIDO
 ========================================================= */
 
 const fotosPremios = {
 
     "bitruck tomate":[
-        "crt.tom.JPEG",
-        "crt.tom2.JPEG"
+        "bau.tom.JPEG",
+        "bau.tom2.JPEG"
     ],
 
     "bitruck batata":[
-        "crt.bat.JPEG",
-        "crt.bat2.JPEG"
-    ],
-
-    "carreta batata":[
         "bau.bat.JPEG",
         "bau.bat2.JPEG"
     ],
 
+    "carreta batata":[
+        "crt.bat.JPEG",
+        "crt.bat2.JPEG"
+    ],
+
     "carreta tomate":[
-        "bau.tom.JPEG",
-        "bau.tom2.JPEG"
+        "crt.tom.JPEG",
+        "crt.tom2.JPEG"
     ]
 
 };
 
 
-/* =========================================================
-   ESTADO
-========================================================= */
+/* ESTADO */
 
 let categoriaAtual = "todos";
-
 let produtoSelecionado = null;
-
 let saldoAtual = 0;
-
 let motoristaAtual = null;
-
 let comprasRealizadas = [];
-
 let premiosRealizados = [];
-
 let premioSelecionado = null;
-
 let premioFotosAtuais = [];
-
 let premioFotoAtual = 0;
 
 
-/* =========================================================
-   ELEMENTOS
-========================================================= */
+/* ELEMENTOS */
 
 const productsEl =
     document.getElementById("products");
@@ -2143,9 +2099,7 @@ const myPrizesCount =
     document.getElementById("myPrizesCount");
 
 
-/* =========================================================
-   FORMATAR STACOIN
-========================================================= */
+/* FORMATAR STACOIN */
 
 function formatarStacoin(valor){
 
@@ -2155,9 +2109,7 @@ function formatarStacoin(valor){
 }
 
 
-/* =========================================================
-   NORMALIZAR NOME DO PRÊMIO
-========================================================= */
+/* NORMALIZAR NOME */
 
 function normalizarNomePremio(nome){
 
@@ -2171,9 +2123,7 @@ function normalizarNomePremio(nome){
 }
 
 
-/* =========================================================
-   IDENTIFICAR PRÊMIO DE 100 STACOIN
-========================================================= */
+/* IDENTIFICAR STACOIN */
 
 function premioEhStacoin(premio){
 
@@ -2195,9 +2145,7 @@ function premioEhStacoin(premio){
 }
 
 
-/* =========================================================
-   FOTOS DO PRÊMIO
-========================================================= */
+/* FOTOS */
 
 function obterFotosPremio(nome){
 
@@ -2224,9 +2172,7 @@ function obterFotosPremio(nome){
 }
 
 
-/* =========================================================
-   POSSUI SKIN
-========================================================= */
+/* POSSUI SKIN */
 
 function possuiSkin(codigo){
 
@@ -2239,9 +2185,7 @@ function possuiSkin(codigo){
 }
 
 
-/* =========================================================
-   ENCONTRAR COMPRA
-========================================================= */
+/* ENCONTRAR COMPRA */
 
 function encontrarCompra(codigo){
 
@@ -2254,22 +2198,17 @@ function encontrarCompra(codigo){
 }
 
 
-/* =========================================================
-   CARREGAR COMPRAS
-========================================================= */
+/* CARREGAR COMPRAS */
 
 async function carregarCompras(){
 
     if(!motoristaAtual){
 
         comprasRealizadas = [];
-
         renderMinhasSkins();
-
         return;
 
     }
-
 
     const {
         data,
@@ -2295,7 +2234,6 @@ async function carregarCompras(){
                 }
             );
 
-
     if(error){
 
         console.error(
@@ -2304,39 +2242,30 @@ async function carregarCompras(){
         );
 
         comprasRealizadas = [];
-
         renderMinhasSkins();
-
         return;
 
     }
 
-
     comprasRealizadas =
         data || [];
-
 
     renderMinhasSkins();
 
 }
 
 
-/* =========================================================
-   CARREGAR PRÊMIOS
-========================================================= */
+/* CARREGAR PRÊMIOS */
 
 async function carregarPremios(){
 
     if(!motoristaAtual){
 
         premiosRealizados = [];
-
         renderMeusPremios();
-
         return;
 
     }
-
 
     const {
         data,
@@ -2362,7 +2291,6 @@ async function carregarPremios(){
                 }
             );
 
-
     if(error){
 
         console.error(
@@ -2371,38 +2299,24 @@ async function carregarPremios(){
         );
 
         premiosRealizados = [];
-
         renderMeusPremios();
-
         return;
 
     }
 
-
-    /*
-       IMPORTANTE:
-       Agora NÃO filtramos mais STACOIN-100.
-       O prêmio de 100 STACOIN também aparece
-       em "Meus prêmios".
-    */
-
     premiosRealizados =
         data || [];
-
 
     renderMeusPremios();
 
 }
 
 
-/* =========================================================
-   RENDER MINHAS SKINS
-========================================================= */
+/* RENDER SKINS */
 
 function renderMinhasSkins(){
 
     mySkinsEl.innerHTML = "";
-
 
     if(!comprasRealizadas.length){
 
@@ -2415,13 +2329,10 @@ function renderMinhasSkins(){
 
     }
 
-
     mySkinsSection.classList.add("show");
-
 
     mySkinsCount.textContent =
         `${comprasRealizadas.length} adquirida${comprasRealizadas.length !== 1 ? "s" : ""}`;
-
 
     comprasRealizadas.forEach(
         compra => {
@@ -2431,20 +2342,15 @@ function renderMinhasSkins(){
                     p => p.codigo === compra.codigo
                 );
 
-
             if(!produto){
-
                 return;
-
             }
-
 
             const card =
                 document.createElement("div");
 
             card.className =
                 "my-skin";
-
 
             card.innerHTML = `
 
@@ -2474,7 +2380,6 @@ function renderMinhasSkins(){
 
             `;
 
-
             card
                 .querySelector(".view-code")
                 .addEventListener(
@@ -2489,7 +2394,6 @@ function renderMinhasSkins(){
                     }
                 );
 
-
             mySkinsEl.appendChild(card);
 
         }
@@ -2498,14 +2402,11 @@ function renderMinhasSkins(){
 }
 
 
-/* =========================================================
-   RENDER MEUS PRÊMIOS
-========================================================= */
+/* RENDER PRÊMIOS */
 
 function renderMeusPremios(){
 
     myPrizesEl.innerHTML = "";
-
 
     if(!premiosRealizados.length){
 
@@ -2518,13 +2419,10 @@ function renderMeusPremios(){
 
     }
 
-
     myPrizesSection.classList.add("show");
-
 
     myPrizesCount.textContent =
         `${premiosRealizados.length} ganho${premiosRealizados.length !== 1 ? "s" : ""}`;
-
 
     premiosRealizados.forEach(
         premio => {
@@ -2532,22 +2430,18 @@ function renderMeusPremios(){
             const card =
                 document.createElement("div");
 
-
             const ganhouStacoin =
                 premioEhStacoin(premio);
-
 
             card.className =
                 ganhouStacoin
                     ? "my-prize my-prize-money"
                     : "my-prize";
 
-
             const nomePremio =
                 normalizarNomePremio(
                     premio.produto_nome
                 );
-
 
             if(ganhouStacoin){
 
@@ -2580,12 +2474,10 @@ function renderMeusPremios(){
                         premio.produto_nome
                     );
 
-
                 const foto =
                     fotos.length
                         ? fotos[0]
                         : "cx.out.rosa.jpeg";
-
 
                 card.innerHTML = `
 
@@ -2611,7 +2503,6 @@ function renderMeusPremios(){
 
             }
 
-
             card.addEventListener(
                 "click",
                 () => {
@@ -2623,7 +2514,6 @@ function renderMeusPremios(){
                 }
             );
 
-
             myPrizesEl.appendChild(card);
 
         }
@@ -2632,9 +2522,7 @@ function renderMeusPremios(){
 }
 
 
-/* =========================================================
-   ABRIR CÓDIGO DE SKIN
-========================================================= */
+/* ABRIR CÓDIGO SKIN */
 
 function abrirCodigoAdquirido(
     produto,
@@ -2646,67 +2534,55 @@ function abrirCodigoAdquirido(
         .src =
             produto.imagens[0];
 
-
     document
         .getElementById("ownedProductName")
         .textContent =
             `${produto.nome} — ${produto.descricao}`;
-
 
     document
         .getElementById("ownedCode")
         .textContent =
             codigo;
 
-
     ownedModal.classList.add("show");
 
 }
 
 
-/* =========================================================
-   ABRIR MEU PRÊMIO
-========================================================= */
+/* ABRIR PRÊMIO */
 
 function abrirPremioResgatado(premio){
 
     premioSelecionado =
         premio;
 
-
     const ganhouStacoin =
         premioEhStacoin(premio);
-
 
     const nomePremio =
         normalizarNomePremio(
             premio.produto_nome
         );
 
-
     const imagem =
         document.getElementById(
             "prizeProductImage"
         );
-
 
     const codeBox =
         document.getElementById(
             "prizeCodeBox"
         );
 
-
     const moneyBox =
         document.getElementById(
             "prizeMoneyBox"
         );
 
-
     const nav =
         document.getElementById(
             "prizePhotoNav"
         );
-
 
     document
         .getElementById(
@@ -2716,7 +2592,6 @@ function abrirPremioResgatado(premio){
             ganhouStacoin
                 ? "💰 100 STACOIN"
                 : nomePremio;
-
 
     if(ganhouStacoin){
 
@@ -2755,7 +2630,6 @@ function abrirPremioResgatado(premio){
                 premio.produto_nome
             );
 
-
         if(!premioFotosAtuais.length){
 
             premioFotosAtuais =
@@ -2763,13 +2637,10 @@ function abrirPremioResgatado(premio){
 
         }
 
-
         premioFotoAtual =
             0;
 
-
         atualizarFotoPremio();
-
 
         codeBox.style.display =
             "block";
@@ -2782,14 +2653,12 @@ function abrirPremioResgatado(premio){
                 ? "flex"
                 : "none";
 
-
         document
             .getElementById(
                 "prizeCode"
             )
             .textContent =
                 premio.codigo || "—";
-
 
         document
             .getElementById(
@@ -2800,7 +2669,6 @@ function abrirPremioResgatado(premio){
 
     }
 
-
     prizeModal.classList.add(
         "show"
     );
@@ -2808,9 +2676,7 @@ function abrirPremioResgatado(premio){
 }
 
 
-/* =========================================================
-   ATUALIZAR FOTO DO PRÊMIO
-========================================================= */
+/* ATUALIZAR FOTO */
 
 function atualizarFotoPremio(){
 
@@ -2819,17 +2685,12 @@ function atualizarFotoPremio(){
             "prizeProductImage"
         );
 
-
     const total =
         premioFotosAtuais.length;
 
-
     if(!total){
-
         return;
-
     }
-
 
     if(
         premioFotoAtual < 0
@@ -2840,7 +2701,6 @@ function atualizarFotoPremio(){
 
     }
 
-
     if(
         premioFotoAtual >= total
     ){
@@ -2850,12 +2710,10 @@ function atualizarFotoPremio(){
 
     }
 
-
     imagem.src =
         premioFotosAtuais[
             premioFotoAtual
         ];
-
 
     document
         .getElementById(
@@ -2864,14 +2722,12 @@ function atualizarFotoPremio(){
         .textContent =
             `${premioFotoAtual + 1} / ${total}`;
 
-
     document
         .getElementById(
             "prizePrev"
         )
         .disabled =
             total <= 1;
-
 
     document
         .getElementById(
@@ -2883,9 +2739,7 @@ function atualizarFotoPremio(){
 }
 
 
-/* =========================================================
-   NAVEGAÇÃO DAS FOTOS
-========================================================= */
+/* NAVEGAÇÃO */
 
 document
     .getElementById("prizePrev")
@@ -2899,7 +2753,6 @@ document
 
         }
     );
-
 
 document
     .getElementById("prizeNext")
@@ -2915,9 +2768,7 @@ document
     );
 
 
-/* =========================================================
-   FECHAR MODAL PRÊMIO
-========================================================= */
+/* FECHAR PRÊMIO */
 
 function fecharPremio(){
 
@@ -2930,14 +2781,12 @@ function fecharPremio(){
 
 }
 
-
 document
     .getElementById("closePrize")
     .addEventListener(
         "click",
         fecharPremio
     );
-
 
 document
     .getElementById("closePrizeBottom")
@@ -2947,14 +2796,11 @@ document
     );
 
 
-/* =========================================================
-   RENDER PRODUTOS
-========================================================= */
+/* RENDER PRODUTOS */
 
 function renderProdutos(){
 
     productsEl.innerHTML = "";
-
 
     if(categoriaAtual === "baus"){
 
@@ -2971,29 +2817,23 @@ function renderProdutos(){
 
         `;
 
-
         contadorEl.textContent =
             "1 produto";
 
-
         catalogTitle.textContent =
             "📦 Baús e caixas";
-
 
         boxArea.classList.remove(
             "hidden"
         );
 
-
         return;
 
     }
 
-
     boxArea.classList.add(
         "hidden"
     );
-
 
     const lista =
         categoriaAtual === "todos"
@@ -3004,14 +2844,11 @@ function renderProdutos(){
                     categoriaAtual
             );
 
-
     contadorEl.textContent =
         `${lista.length} produto${lista.length !== 1 ? "s" : ""}`;
 
-
     catalogTitle.textContent =
         "Skins oficiais";
-
 
     lista.forEach(
         produto => {
@@ -3022,15 +2859,12 @@ function renderProdutos(){
             card.className =
                 "card";
 
-
             let imagemAtual = 0;
-
 
             const jaPossui =
                 possuiSkin(
                     produto.codigo
                 );
-
 
             card.innerHTML = `
 
@@ -3058,7 +2892,6 @@ function renderProdutos(){
                     }
 
                 </div>
-
 
                 <div class="card-body">
 
@@ -3098,18 +2931,15 @@ function renderProdutos(){
 
             `;
 
-
             const img =
                 card.querySelector(
                     ".product-img"
                 );
 
-
             const dots =
                 card.querySelectorAll(
                     ".dot"
                 );
-
 
             if(
                 produto.imagens.length > 1
@@ -3133,19 +2963,16 @@ function renderProdutos(){
 
                             }
 
-
                             imagemAtual =
                                 (
                                     imagemAtual + 1
                                 ) %
                                 produto.imagens.length;
 
-
                             img.src =
                                 produto.imagens[
                                     imagemAtual
                                 ];
-
 
                             dots.forEach(
                                 (dot,i) =>
@@ -3159,7 +2986,6 @@ function renderProdutos(){
                         3500
                     );
 
-
                 card.addEventListener(
                     "mouseenter",
                     () =>
@@ -3169,7 +2995,6 @@ function renderProdutos(){
                 );
 
             }
-
 
             card
                 .querySelector(".buy")
@@ -3184,7 +3009,6 @@ function renderProdutos(){
                                     produto.codigo
                                 );
 
-
                             if(compra){
 
                                 abrirCodigoAdquirido(
@@ -3198,14 +3022,12 @@ function renderProdutos(){
 
                         }
 
-
                         abrirCompra(
                             produto
                         );
 
                     }
                 );
-
 
             productsEl.appendChild(
                 card
@@ -3217,9 +3039,7 @@ function renderProdutos(){
 }
 
 
-/* =========================================================
-   CATEGORIAS
-========================================================= */
+/* CATEGORIAS */
 
 document
     .querySelectorAll(".cat")
@@ -3239,15 +3059,12 @@ document
                                 )
                         );
 
-
                     button.classList.add(
                         "active"
                     );
 
-
                     categoriaAtual =
                         button.dataset.cat;
-
 
                     renderProdutos();
 
@@ -3258,9 +3075,7 @@ document
     );
 
 
-/* =========================================================
-   BUSCAR MOTORISTA
-========================================================= */
+/* BUSCAR MOTORISTA */
 
 async function carregarMotorista(){
 
@@ -3271,7 +3086,6 @@ async function carregarMotorista(){
     } =
         await supabaseClient.auth.getSession();
 
-
     if(!session){
 
         saldoEl.textContent =
@@ -3280,7 +3094,6 @@ async function carregarMotorista(){
         return null;
 
     }
-
 
     const {
         data,
@@ -3295,7 +3108,6 @@ async function carregarMotorista(){
             )
             .maybeSingle();
 
-
     if(error){
 
         console.error(
@@ -3309,7 +3121,6 @@ async function carregarMotorista(){
 
     }
 
-
     if(!data){
 
         saldoEl.textContent =
@@ -3319,32 +3130,24 @@ async function carregarMotorista(){
 
     }
 
-
     motoristaAtual =
         data;
-
 
     return data;
 
 }
 
 
-/* =========================================================
-   CARREGAR SALDO
-========================================================= */
+/* CARREGAR SALDO */
 
 async function carregarSaldo(){
 
     const motorista =
         await carregarMotorista();
 
-
     if(!motorista){
-
         return;
-
     }
-
 
     const {
         data,
@@ -3359,7 +3162,6 @@ async function carregarSaldo(){
             )
             .maybeSingle();
 
-
     if(error){
 
         console.error(
@@ -3367,41 +3169,33 @@ async function carregarSaldo(){
             error
         );
 
-
         saldoEl.textContent =
             "ERRO";
-
 
         return;
 
     }
-
 
     saldoAtual =
         Number(
             data?.saldo || 0
         );
 
-
     saldoEl.textContent =
         formatarStacoin(
             saldoAtual
         );
 
-
     await carregarCompras();
 
     await carregarPremios();
-
 
     renderProdutos();
 
 }
 
 
-/* =========================================================
-   ABRIR MODAL DE COMPRA
-========================================================= */
+/* ABRIR COMPRA */
 
 function abrirCompra(produto){
 
@@ -3412,7 +3206,6 @@ function abrirCompra(produto){
                 produto.codigo
             );
 
-
         if(compra){
 
             abrirCodigoAdquirido(
@@ -3422,11 +3215,9 @@ function abrirCompra(produto){
 
         }
 
-
         return;
 
     }
-
 
     if(saldoAtual < produto.preco){
 
@@ -3446,22 +3237,17 @@ function abrirCompra(produto){
 
     }
 
-
     produtoSelecionado =
         produto;
-
 
     modalProductImage.src =
         produto.imagens[0];
 
-
     modalProductName.textContent =
         `${produto.nome} — ${produto.descricao}`;
 
-
     modalProductPrice.textContent =
         `${produto.preco.toLocaleString("pt-BR")} STACOIN`;
-
 
     purchaseModal.classList.add(
         "show"
@@ -3470,9 +3256,7 @@ function abrirCompra(produto){
 }
 
 
-/* =========================================================
-   FECHAR MODAL COMPRA
-========================================================= */
+/* FECHAR COMPRA */
 
 function fecharCompra(){
 
@@ -3480,12 +3264,10 @@ function fecharCompra(){
         "show"
     );
 
-
     produtoSelecionado =
         null;
 
 }
-
 
 document
     .getElementById("closePurchase")
@@ -3493,7 +3275,6 @@ document
         "click",
         fecharCompra
     );
-
 
 document
     .getElementById("cancelPurchase")
@@ -3503,9 +3284,7 @@ document
     );
 
 
-/* =========================================================
-   COMPRA REAL DAS SKINS
-========================================================= */
+/* COMPRA SKINS */
 
 document
     .getElementById("confirmPurchase")
@@ -3514,15 +3293,11 @@ document
         async function(){
 
             if(!produtoSelecionado){
-
                 return;
-
             }
-
 
             const produto =
                 produtoSelecionado;
-
 
             if(possuiSkin(produto.codigo)){
 
@@ -3531,9 +3306,7 @@ document
                         produto.codigo
                     );
 
-
                 fecharCompra();
-
 
                 if(compra){
 
@@ -3544,27 +3317,21 @@ document
 
                 }
 
-
                 return;
 
             }
 
-
             const button =
                 this;
-
 
             button.disabled =
                 true;
 
-
             button.textContent =
                 "PROCESSANDO...";
 
-
             purchaseError.style.display =
                 "none";
-
 
             try{
 
@@ -3575,7 +3342,6 @@ document
                 } =
                     await supabaseClient.auth.getSession();
 
-
                 if(!session){
 
                     throw new Error(
@@ -3583,7 +3349,6 @@ document
                     );
 
                 }
-
 
                 const {
                     data,
@@ -3600,13 +3365,9 @@ document
                         }
                     );
 
-
                 if(error){
-
                     throw error;
-
                 }
-
 
                 if(
                     !data ||
@@ -3619,38 +3380,30 @@ document
 
                 }
 
-
                 saldoAtual =
                     Number(
                         data.novo_saldo || 0
                     );
-
 
                 saldoEl.textContent =
                     formatarStacoin(
                         saldoAtual
                     );
 
-
                 mostrarDesconto(
                     produto.preco
                 );
 
-
                 await carregarCompras();
 
-
                 renderProdutos();
-
 
                 mostrarResultadoSkin(
                     data.nome,
                     data.codigo
                 );
 
-
                 fecharCompra();
-
 
             }catch(error){
 
@@ -3659,15 +3412,12 @@ document
                     error
                 );
 
-
                 let mensagem =
                     error.message ||
                     "Não foi possível realizar a compra.";
 
-
                 const mensagemLower =
                     mensagem.toLowerCase();
-
 
                 if(
                     mensagemLower.includes(
@@ -3679,7 +3429,6 @@ document
                         "Você não possui STACOIN suficiente para comprar esta skin.";
 
                 }
-
 
                 if(
                     mensagemLower.includes(
@@ -3702,20 +3451,16 @@ document
 
                 }
 
-
                 purchaseError.textContent =
                     mensagem;
 
-
                 purchaseError.style.display =
                     "block";
-
 
             }finally{
 
                 button.disabled =
                     false;
-
 
                 button.textContent =
                     "CONFIRMAR";
@@ -3726,9 +3471,7 @@ document
     );
 
 
-/* =========================================================
-   MOSTRAR DESCONTO
-========================================================= */
+/* DESCONTO */
 
 function mostrarDesconto(valor){
 
@@ -3737,7 +3480,6 @@ function mostrarDesconto(valor){
 
     descontoSaldoEl.style.display =
         "block";
-
 
     setTimeout(
         () => {
@@ -3752,9 +3494,7 @@ function mostrarDesconto(valor){
 }
 
 
-/* =========================================================
-   RESULTADO SKIN
-========================================================= */
+/* RESULTADO SKIN */
 
 function mostrarResultadoSkin(
     nome,
@@ -3766,48 +3506,40 @@ function mostrarResultadoSkin(
         .textContent =
             "🍅";
 
-
     document
         .getElementById("resultTitle")
         .textContent =
             "Compra realizada!";
-
 
     document
         .getElementById("resultName")
         .textContent =
             `${nome} foi liberada para você!`;
 
-
     document
         .getElementById("resultCodeBox")
         .style.display =
             "block";
-
 
     document
         .getElementById("resultCode")
         .textContent =
             codigo;
 
-
     document
         .getElementById("moneyResult")
         .style.display =
             "none";
-
 
     document
         .getElementById("copyCode")
         .style.display =
             "inline-block";
 
-
     document
         .getElementById("resultInfo")
         .textContent =
             "O valor já foi descontado do seu saldo STACOIN e a compra foi registrada no extrato.";
-
 
     resultModal.classList.add(
         "show"
@@ -3816,9 +3548,7 @@ function mostrarResultadoSkin(
 }
 
 
-/* =========================================================
-   RESULTADO CAIXA
-========================================================= */
+/* RESULTADO CAIXA */
 
 function mostrarResultadoCaixa(
     nome,
@@ -3840,14 +3570,12 @@ function mostrarResultadoCaixa(
             .toLowerCase()
             .includes("stacoin");
 
-
     document
         .getElementById("resultIcon")
         .textContent =
             premioTemDinheiro
                 ? "💰"
                 : "🎁";
-
 
     document
         .getElementById("resultTitle")
@@ -3856,14 +3584,12 @@ function mostrarResultadoCaixa(
                 ? "Você ganhou!"
                 : "Prêmio conquistado!";
 
-
     document
         .getElementById("resultName")
         .textContent =
             premioTemDinheiro
                 ? "A Caixa Outubro Rosa devolveu seu valor em STACOIN."
                 : `${normalizarNomePremio(nome)} foi conquistado por você!`;
-
 
     document
         .getElementById("resultCodeBox")
@@ -3872,12 +3598,10 @@ function mostrarResultadoCaixa(
                 ? "none"
                 : "block";
 
-
     document
         .getElementById("resultCode")
         .textContent =
             codigo || "—";
-
 
     document
         .getElementById("moneyResult")
@@ -3886,14 +3610,12 @@ function mostrarResultadoCaixa(
                 ? "block"
                 : "none";
 
-
     document
         .getElementById("copyCode")
         .style.display =
             premioTemDinheiro
                 ? "none"
                 : "inline-block";
-
 
     document
         .getElementById("resultInfo")
@@ -3902,7 +3624,6 @@ function mostrarResultadoCaixa(
                 ? "Os 100 STACOIN foram devolvidos ao seu saldo e a movimentação ficou registrada no extrato."
                 : "Seu prêmio foi salvo na conta e pode ser consultado novamente em Meus prêmios.";
 
-
     resultModal.classList.add(
         "show"
     );
@@ -3910,9 +3631,7 @@ function mostrarResultadoCaixa(
 }
 
 
-/* =========================================================
-   COPIAR TEXTO
-========================================================= */
+/* COPIAR */
 
 async function copiarTexto(
     codigo,
@@ -3925,10 +3644,8 @@ async function copiarTexto(
             codigo
         );
 
-
         botao.textContent =
             "✓ COPIADO!";
-
 
         setTimeout(
             () => {
@@ -3951,9 +3668,7 @@ async function copiarTexto(
 }
 
 
-/* =========================================================
-   COPIAR RESULTADO
-========================================================= */
+/* COPIAR RESULTADO */
 
 document
     .getElementById("copyCode")
@@ -3968,7 +3683,6 @@ document
                     )
                     .textContent;
 
-
             copiarTexto(
                 codigo,
                 this
@@ -3978,9 +3692,7 @@ document
     );
 
 
-/* =========================================================
-   FECHAR RESULTADO
-========================================================= */
+/* FECHAR RESULTADO */
 
 document
     .getElementById("closeResult")
@@ -3993,9 +3705,7 @@ document
     );
 
 
-/* =========================================================
-   MODAL MINHAS SKINS
-========================================================= */
+/* MODAL SKINS */
 
 function fecharOwned(){
 
@@ -4005,7 +3715,6 @@ function fecharOwned(){
 
 }
 
-
 document
     .getElementById("closeOwned")
     .addEventListener(
@@ -4013,14 +3722,12 @@ document
         fecharOwned
     );
 
-
 document
     .getElementById("closeOwnedBottom")
     .addEventListener(
         "click",
         fecharOwned
     );
-
 
 document
     .getElementById("copyOwnedCode")
@@ -4035,7 +3742,6 @@ document
                     )
                     .textContent;
 
-
             copiarTexto(
                 codigo,
                 this
@@ -4045,9 +3751,7 @@ document
     );
 
 
-/* =========================================================
-   COPIAR CÓDIGO DO PRÊMIO
-========================================================= */
+/* COPIAR PRÊMIO */
 
 document
     .getElementById("copyPrizeCode")
@@ -4056,22 +3760,15 @@ document
         function(){
 
             if(!premioSelecionado){
-
                 return;
-
             }
-
 
             const codigo =
                 premioSelecionado.codigo;
 
-
             if(!codigo){
-
                 return;
-
             }
-
 
             copiarTexto(
                 codigo,
@@ -4082,9 +3779,7 @@ document
     );
 
 
-/* =========================================================
-   CAIXA OUTUBRO ROSA
-========================================================= */
+/* CAIXA */
 
 document
     .getElementById("openBox")
@@ -4095,10 +3790,8 @@ document
             boxError.style.display =
                 "none";
 
-
             boxError.textContent =
                 "";
-
 
             if(!motoristaAtual){
 
@@ -4112,15 +3805,8 @@ document
 
             }
 
-
-            /*
-               Verificação visual de data.
-               O RPC continua sendo a proteção principal.
-            */
-
             const hoje =
                 new Date();
-
 
             const ano =
                 hoje.getFullYear();
@@ -4131,7 +3817,6 @@ document
             const dia =
                 hoje.getDate();
 
-
             const dataAtual =
                 new Date(
                     ano,
@@ -4139,14 +3824,12 @@ document
                     dia
                 );
 
-
             const inicio =
                 new Date(
                     2026,
                     9,
                     1
                 );
-
 
             const fim =
                 new Date(
@@ -4157,7 +3840,6 @@ document
                     59,
                     59
                 );
-
 
             if(
                 dataAtual < inicio ||
@@ -4174,7 +3856,6 @@ document
 
             }
 
-
             if(saldoAtual < 100){
 
                 boxError.textContent =
@@ -4186,7 +3867,6 @@ document
                 return;
 
             }
-
 
             boxModal.classList.add(
                 "show"
@@ -4204,14 +3884,12 @@ function fecharBox(){
 
 }
 
-
 document
     .getElementById("closeBox")
     .addEventListener(
         "click",
         fecharBox
     );
-
 
 document
     .getElementById("cancelBox")
@@ -4221,9 +3899,7 @@ document
     );
 
 
-/* =========================================================
-   ABRIR CAIXA REAL
-========================================================= */
+/* ABRIR CAIXA REAL */
 
 document
     .getElementById("confirmBox")
@@ -4234,22 +3910,17 @@ document
             const button =
                 this;
 
-
             button.disabled =
                 true;
-
 
             button.textContent =
                 "SORTEANDO...";
 
-
             boxError.style.display =
                 "none";
 
-
             boxError.textContent =
                 "";
-
 
             try{
 
@@ -4260,7 +3931,6 @@ document
                 } =
                     await supabaseClient.auth.getSession();
 
-
                 if(!session){
 
                     throw new Error(
@@ -4268,21 +3938,6 @@ document
                     );
 
                 }
-
-
-                /*
-                   O RPC faz todo o trabalho real:
-
-                   - confere motorista
-                   - confere data
-                   - bloqueia carteira
-                   - confere saldo
-                   - sorteia prêmio
-                   - desconta 100
-                   - devolve 100 se for o prêmio
-                   - salva prêmio físico
-                   - registra compra
-                */
 
                 const {
                     data,
@@ -4292,13 +3947,11 @@ document
                         "comprar_caixa_outubro_rosa"
                     );
 
-
                 if(error){
 
                     throw error;
 
                 }
-
 
                 if(
                     !data ||
@@ -4311,36 +3964,29 @@ document
 
                 }
 
-
                 saldoAtual =
                     Number(
                         data.novo_saldo || 0
                     );
-
 
                 saldoEl.textContent =
                     formatarStacoin(
                         saldoAtual
                     );
 
-
                 mostrarDesconto(
                     100
                 );
 
-
                 await carregarPremios();
 
-
                 fecharBox();
-
 
                 mostrarResultadoCaixa(
                     data.premio_nome,
                     data.codigo,
                     saldoAtual
                 );
-
 
             }catch(error){
 
@@ -4349,15 +3995,12 @@ document
                     error
                 );
 
-
                 let mensagem =
                     error.message ||
                     "Não foi possível abrir a caixa.";
 
-
                 const mensagemLower =
                     mensagem.toLowerCase();
-
 
                 if(
                     mensagemLower.includes("saldo") ||
@@ -4368,7 +4011,6 @@ document
                         "Você não possui 100 STACOIN suficientes para abrir a caixa.";
 
                 }
-
 
                 if(
                     mensagemLower.includes(
@@ -4384,7 +4026,6 @@ document
 
                 }
 
-
                 if(
                     mensagemLower.includes(
                         "motorista"
@@ -4396,20 +4037,16 @@ document
 
                 }
 
-
                 boxError.textContent =
                     mensagem;
 
-
                 boxError.style.display =
                     "block";
-
 
             }finally{
 
                 button.disabled =
                     false;
-
 
                 button.textContent =
                     "ABRIR POR 100 STC";
@@ -4420,9 +4057,7 @@ document
     );
 
 
-/* =========================================================
-   FECHAR MODAIS AO CLICAR FORA
-========================================================= */
+/* FECHAR MODAIS FORA */
 
 [
     purchaseModal,
@@ -4454,9 +4089,7 @@ document
 );
 
 
-/* =========================================================
-   ESC FECHA MODAIS
-========================================================= */
+/* ESC */
 
 document.addEventListener(
     "keydown",
@@ -4469,7 +4102,6 @@ document.addEventListener(
             return;
 
         }
-
 
         [
             purchaseModal,
@@ -4488,18 +4120,14 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   INICIALIZAÇÃO
-========================================================= */
+/* INICIALIZAÇÃO */
 
 renderProdutos();
 
 carregarSaldo();
 
 
-/* =========================================================
-   ATUALIZAR QUANDO VOLTAR PARA A LOJA
-========================================================= */
+/* ATUALIZAR AO VOLTAR */
 
 document.addEventListener(
     "visibilitychange",
