@@ -2,3837 +2,1857 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Santa Luzia Shop</title>
 
+<link rel="icon" href="logo.sta.PNG">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html,
 body{
-  width:100%;
-  min-height:100%;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-  background:#f4f6f4;
-  color:#183c25;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f7f4;
+    color:#173b29;
+    min-height:100vh;
 }
 
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.header{
-
-  background:
-    linear-gradient(
-      135deg,
-      #176b3a,
-      #0e4e29
-    );
-
-  color:white;
-
-  padding:
-    18px
-    16px
-    22px;
-
-  border-radius:
-    0
-    0
-    24px
-    24px;
-
-  box-shadow:
-    0 5px 20px
-    rgba(0,0,0,.14);
-
+header{
+    background:#176b3a;
+    color:white;
+    padding:15px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+    position:sticky;
+    top:0;
+    z-index:20;
 }
 
-
-.header-top{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:12px;
-
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    min-width:0;
 }
 
-
-.logo-area{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
+.logo{
+    width:48px;
+    height:48px;
+    object-fit:contain;
+    background:white;
+    border-radius:50%;
+    padding:3px;
 }
 
-
-.logo-circle{
-
-  width:46px;
-  height:46px;
-
-  border-radius:50%;
-
-  background:white;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  overflow:hidden;
-
-  flex-shrink:0;
-
+.header-title{
+    min-width:0;
 }
 
-
-.logo-circle img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-
+.header-title h1{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:.5px;
 }
 
-
-.logo-text h1{
-
-  font-size:20px;
-
-  font-weight:900;
-
-  letter-spacing:.3px;
-
+.header-title p{
+    font-size:11px;
+    opacity:.85;
+    margin-top:2px;
 }
 
-
-.logo-text span{
-
-  display:block;
-
-  font-size:11px;
-
-  opacity:.78;
-
-  margin-top:2px;
-
+.balance{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.2);
+    padding:7px 10px;
+    border-radius:13px;
+    white-space:nowrap;
 }
 
-
-.saldo{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:7px;
-
-  background:
-    rgba(255,255,255,.13);
-
-  border:
-    1px solid
-    rgba(255,255,255,.18);
-
-  padding:
-    8px
-    11px;
-
-  border-radius:14px;
-
-  white-space:nowrap;
-
+.coin{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    object-fit:cover;
 }
 
-
-.saldo-moeda{
-
-  width:27px;
-  height:27px;
-
-  border-radius:50%;
-
-  overflow:hidden;
-
-  flex-shrink:0;
-
+.balance-text{
+    text-align:right;
 }
 
-
-.saldo-moeda img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:cover;
-
-  display:block;
-
+.balance-label{
+    display:block;
+    font-size:9px;
+    opacity:.8;
 }
 
-
-.saldo-info small{
-
-  display:block;
-
-  font-size:9px;
-
-  opacity:.72;
-
+#saldo{
+    display:block;
+    font-size:14px;
+    font-weight:900;
+    color:#ffe39a;
 }
-
-
-.saldo-info strong{
-
-  display:block;
-
-  font-size:13px;
-
-}
-
-
-/* =====================================================
-   CONTEÚDO
-===================================================== */
 
 .container{
-
-  width:
-    min(
-      100%,
-      760px
-    );
-
-  margin:
-    0 auto;
-
-  padding:
-    18px
-    15px
-    35px;
-
+    width:min(1100px,94%);
+    margin:0 auto;
+    padding:22px 0 40px;
 }
 
-
-/* =====================================================
-   TÍTULO
-===================================================== */
-
-.intro{
-
-  margin:
-    4px
-    0
-    18px;
-
+.hero{
+    background:linear-gradient(135deg,#176b3a,#0f542d);
+    color:white;
+    border-radius:22px;
+    padding:25px 20px;
+    margin-bottom:20px;
+    position:relative;
+    overflow:hidden;
 }
 
-
-.intro h2{
-
-  font-size:24px;
-
-  font-weight:900;
-
-  color:#174c2a;
-
+.hero:after{
+    content:"🍅";
+    position:absolute;
+    right:-5px;
+    bottom:-28px;
+    font-size:115px;
+    opacity:.08;
 }
 
-
-.intro p{
-
-  margin-top:5px;
-
-  color:#6b776e;
-
-  font-size:13px;
-
-  line-height:1.4;
-
+.hero h2{
+    font-size:25px;
+    font-weight:900;
 }
 
-
-/* =====================================================
-   CATEGORIAS
-===================================================== */
-
-.categorias{
-
-  display:flex;
-
-  gap:8px;
-
-  overflow-x:auto;
-
-  padding:
-    2px
-    0
-    12px;
-
-  scrollbar-width:none;
-
+.hero p{
+    margin-top:7px;
+    font-size:13px;
+    opacity:.88;
 }
 
-
-.categorias::-webkit-scrollbar{
-
-  display:none;
-
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin:22px 2px 12px;
 }
 
-
-.categoria{
-
-  border:0;
-
-  background:white;
-
-  color:#52705b;
-
-  padding:
-    10px
-    14px;
-
-  border-radius:13px;
-
-  font-size:12px;
-
-  font-weight:800;
-
-  white-space:nowrap;
-
-  box-shadow:
-    0 2px 9px
-    rgba(0,0,0,.06);
-
+.section-title h2{
+    font-size:18px;
+    font-weight:900;
 }
 
-
-.categoria.active{
-
-  background:#176b3a;
-
-  color:white;
-
+.section-title span{
+    font-size:11px;
+    color:#718079;
 }
 
-
-/* =====================================================
-   GRID
-===================================================== */
-
-.produtos{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
-
-  gap:13px;
-
+.categories{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:3px 2px 9px;
+    scrollbar-width:none;
 }
 
-
-/* =====================================================
-   CARD
-===================================================== */
-
-.produto{
-
-  background:white;
-
-  border-radius:19px;
-
-  overflow:hidden;
-
-  box-shadow:
-    0 4px 15px
-    rgba(20,60,30,.08);
-
-  border:
-    1px solid
-    rgba(25,80,40,.06);
-
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease;
-
+.categories::-webkit-scrollbar{
+    display:none;
 }
 
-
-.produto:active{
-
-  transform:scale(.985);
-
+.cat{
+    border:none;
+    background:white;
+    color:#356047;
+    border:1px solid #dce8df;
+    border-radius:999px;
+    padding:9px 15px;
+    font-weight:800;
+    font-size:12px;
+    white-space:nowrap;
+    cursor:pointer;
 }
 
-
-/* =====================================================
-   IMAGEM
-===================================================== */
-
-.produto-img{
-
-  position:relative;
-
-  width:100%;
-
-  aspect-ratio:1.25 / 1;
-
-  background:
-    linear-gradient(
-      145deg,
-      #eef2ee,
-      #dfe6e0
-    );
-
-  overflow:hidden;
-
+.cat.active{
+    background:#176b3a;
+    color:white;
+    border-color:#176b3a;
 }
 
-
-.galeria{
-
-  width:100%;
-  height:100%;
-
-  position:relative;
-
+.products{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
 }
 
-
-.galeria img{
-
-  position:absolute;
-
-  inset:0;
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-
-  padding:7px;
-
-  opacity:0;
-
-  transition:opacity .2s ease;
-
+.card{
+    background:white;
+    border:1px solid #dfe9e2;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(23,107,58,.06);
+    transition:.2s;
 }
 
-
-.galeria img.active{
-
-  opacity:1;
-
+.card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 20px rgba(23,107,58,.12);
 }
 
-
-/* =====================================================
-   SETAS
-===================================================== */
-
-.seta{
-
-  position:absolute;
-
-  top:50%;
-
-  transform:
-    translateY(-50%);
-
-  width:30px;
-  height:30px;
-
-  border:0;
-
-  border-radius:50%;
-
-  background:
-    rgba(255,255,255,.90);
-
-  color:#176b3a;
-
-  font-size:17px;
-
-  font-weight:900;
-
-  box-shadow:
-    0 2px 8px
-    rgba(0,0,0,.15);
-
-  z-index:3;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
+.image-box{
+    height:210px;
+    background:#f0f3f1;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
 }
 
-
-.seta.esquerda{
-
-  left:7px;
-
+.product-img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    padding:8px;
 }
 
-
-.seta.direita{
-
-  right:7px;
-
+.image-nav{
+    position:absolute;
+    bottom:8px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:5px;
 }
 
-
-.indicadores{
-
-  position:absolute;
-
-  bottom:8px;
-
-  left:50%;
-
-  transform:
-    translateX(-50%);
-
-  display:flex;
-
-  gap:4px;
-
-  z-index:4;
-
+.dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#b8c7bd;
 }
 
-
-.indicador{
-
-  width:6px;
-  height:6px;
-
-  border-radius:50%;
-
-  background:
-    rgba(20,50,30,.25);
-
+.dot.active{
+    background:#176b3a;
 }
 
-
-.indicador.active{
-
-  background:#176b3a;
-
+.card-body{
+    padding:14px;
 }
 
-
-/* =====================================================
-   ETIQUETAS
-===================================================== */
-
-.tag{
-
-  position:absolute;
-
-  top:9px;
-  left:9px;
-
-  background:#176b3a;
-
-  color:white;
-
-  padding:
-    5px
-    8px;
-
-  border-radius:8px;
-
-  font-size:9px;
-
-  font-weight:900;
-
-  z-index:5;
-
+.category-label{
+    color:#719080;
+    font-size:9px;
+    text-transform:uppercase;
+    font-weight:900;
+    letter-spacing:.5px;
 }
 
-
-.tag-rosa{
-
-  background:
-    linear-gradient(
-      135deg,
-      #d85b83,
-      #a9365d
-    );
-
+.card h3{
+    font-size:15px;
+    margin-top:4px;
+    color:#173b29;
 }
 
-
-/* =====================================================
-   INFORMAÇÕES
-===================================================== */
-
-.produto-info{
-
-  padding:
-    12px;
-
+.card-name{
+    color:#64766c;
+    font-size:12px;
+    margin-top:3px;
+    min-height:30px;
 }
 
-
-.produto-tipo{
-
-  color:#7b877e;
-
-  font-size:9px;
-
-  font-weight:800;
-
-  text-transform:uppercase;
-
-  letter-spacing:.4px;
-
+.price-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:13px;
+    gap:8px;
 }
 
-
-.produto-nome{
-
-  margin-top:3px;
-
-  color:#183c25;
-
-  font-size:15px;
-
-  font-weight:900;
-
-  line-height:1.2;
-
+.price{
+    font-size:17px;
+    color:#176b3a;
+    font-weight:900;
 }
 
-
-.produto-preco{
-
-  margin-top:9px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:6px;
-
+.buy{
+    border:none;
+    background:#176b3a;
+    color:white;
+    padding:10px 13px;
+    border-radius:11px;
+    font-weight:900;
+    font-size:11px;
+    cursor:pointer;
 }
 
-
-.preco{
-
-  color:#a97911;
-
-  font-size:15px;
-
-  font-weight:900;
-
+.buy:hover{
+    background:#0f542d;
 }
 
-
-.preco span{
-
-  font-size:9px;
-
-  color:#8a8a80;
-
-  font-weight:700;
-
+.box-card{
+    margin-top:24px;
+    background:linear-gradient(135deg,#fff,#fff8f9);
+    border:2px solid #f2cbd1;
+    border-radius:20px;
+    padding:15px;
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:17px;
+    align-items:center;
 }
 
-
-.resgatar{
-
-  border:0;
-
-  background:#176b3a;
-
-  color:white;
-
-  padding:
-    9px
-    11px;
-
-  border-radius:10px;
-
-  font-size:10px;
-
-  font-weight:900;
-
+.box-image{
+    width:140px;
+    height:140px;
+    object-fit:contain;
+    border-radius:16px;
 }
 
-
-.resgatar:active{
-
-  transform:scale(.96);
-
+.box-info h2{
+    color:#b5263a;
+    font-size:20px;
 }
 
-
-.abrir-caixa{
-
-  background:
-    linear-gradient(
-      135deg,
-      #d85b83,
-      #b33d65
-    );
-
+.box-info p{
+    color:#65736c;
+    font-size:12px;
+    line-height:1.5;
+    margin-top:6px;
 }
 
-
-/* =====================================================
-   RODAPÉ
-===================================================== */
-
-.footer{
-
-  text-align:center;
-
-  color:#879189;
-
-  font-size:10px;
-
-  line-height:1.5;
-
-  padding:
-    22px
-    10px
-    5px;
-
+.box-price{
+    color:#176b3a;
+    font-weight:900;
+    margin-top:8px;
 }
 
-
-.footer strong{
-
-  color:#176b3a;
-
+.box-button{
+    border:none;
+    background:#b5263a;
+    color:white;
+    padding:11px 16px;
+    border-radius:11px;
+    font-weight:900;
+    cursor:pointer;
+    margin-top:10px;
 }
 
+.notice{
+    background:#eaf4ed;
+    border:1px solid #cfe2d5;
+    color:#356047;
+    border-radius:14px;
+    padding:12px;
+    font-size:11px;
+    line-height:1.5;
+    margin-top:18px;
+}
 
-/* =====================================================
-   MODAIS
-===================================================== */
+footer{
+    text-align:center;
+    color:#839189;
+    font-size:10px;
+    padding:25px 10px;
+}
+
+/* MODAL */
+
+.modal-bg{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+}
+
+.modal-bg.show{
+    display:flex;
+}
 
 .modal{
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:100;
-
-  background:
-    rgba(4,20,10,.65);
-
-  display:none;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:20px;
-
+    width:min(430px,100%);
+    background:white;
+    border-radius:22px;
+    padding:21px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    animation:entrada .2s ease;
 }
 
-
-.modal.show{
-
-  display:flex;
-
+@keyframes entrada{
+    from{
+        opacity:0;
+        transform:scale(.96) translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
 }
 
-
-.modal-card{
-
-  width:
-    min(
-      390px,
-      100%
-    );
-
-  max-height:90vh;
-
-  overflow-y:auto;
-
-  background:white;
-
-  border-radius:24px;
-
-  padding:23px;
-
-  box-shadow:
-    0 20px 60px
-    rgba(0,0,0,.35);
-
+.modal-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
 }
 
-
-.modal-icon{
-
-  width:52px;
-  height:52px;
-
-  margin:
-    0 auto
-    12px;
-
-  border-radius:16px;
-
-  background:#eaf4ed;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  font-size:27px;
-
-  overflow:hidden;
-
+.modal h2{
+    font-size:19px;
+    color:#173b29;
 }
 
-
-.modal-icon img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-
+.close{
+    border:none;
+    background:#edf2ee;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
 }
 
-
-.modal-card h3{
-
-  text-align:center;
-
-  color:#173d24;
-
-  font-size:20px;
-
+.modal-product{
+    background:#f3f6f4;
+    border-radius:15px;
+    margin-top:14px;
+    padding:12px;
+    text-align:center;
 }
 
-
-.modal-card p{
-
-  text-align:center;
-
-  color:#6e786f;
-
-  font-size:13px;
-
-  line-height:1.45;
-
-  margin-top:7px;
-
+.modal-product img{
+    width:170px;
+    height:150px;
+    object-fit:contain;
 }
 
-
-.modal-produto{
-
-  margin:
-    18px
-    0;
-
-  background:#f4f7f4;
-
-  border-radius:15px;
-
-  padding:13px;
-
-  text-align:center;
-
+.modal-product h3{
+    font-size:15px;
+    margin-top:5px;
 }
 
-
-.modal-produto strong{
-
-  display:block;
-
-  color:#183c25;
-
-  font-size:15px;
-
+.modal-price{
+    color:#176b3a;
+    font-size:20px;
+    font-weight:900;
+    margin-top:6px;
 }
 
-
-.modal-preco{
-
-  margin-top:4px;
-
-  color:#a97911;
-
-  font-weight:900;
-
+.modal-info{
+    background:#f8faf8;
+    border-radius:13px;
+    padding:11px;
+    margin-top:12px;
+    font-size:11px;
+    line-height:1.5;
+    color:#637168;
 }
 
-
-.modal-botoes{
-
-  display:grid;
-
-  grid-template-columns:1fr 1fr;
-
-  gap:9px;
-
+.modal-actions{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
 }
 
-
-.modal-botoes button{
-
-  min-height:46px;
-
-  border:0;
-
-  border-radius:13px;
-
-  font-weight:900;
-
+.cancel{
+    flex:1;
+    border:none;
+    background:#edf1ee;
+    color:#526158;
+    padding:12px;
+    border-radius:11px;
+    font-weight:800;
+    cursor:pointer;
 }
 
-
-.cancelar{
-
-  background:#edf0ed;
-
-  color:#536158;
-
+.confirm{
+    flex:1;
+    border:none;
+    background:#176b3a;
+    color:white;
+    padding:12px;
+    border-radius:11px;
+    font-weight:900;
+    cursor:pointer;
 }
 
-
-.confirmar{
-
-  background:#176b3a;
-
-  color:white;
-
+.confirm:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
-
-/* =====================================================
-   PRÊMIOS
-===================================================== */
-
-.premios-lista{
-
-  display:grid;
-
-  gap:9px;
-
-  margin:
-    17px
-    0;
-
+.result{
+    text-align:center;
 }
 
-
-.premio{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  background:#f4f7f4;
-
-  border-radius:14px;
-
-  padding:9px;
-
+.result-icon{
+    font-size:45px;
+    margin-bottom:7px;
 }
 
-
-.premio-imagem{
-
-  width:58px;
-  height:48px;
-
-  border-radius:10px;
-
-  background:#e8eee9;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  overflow:hidden;
-
-  flex-shrink:0;
-
+.result h2{
+    color:#176b3a;
 }
 
-
-.premio-imagem img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-
+.result p{
+    color:#637168;
+    font-size:12px;
+    line-height:1.5;
+    margin-top:7px;
 }
 
-
-.premio-info{
-
-  min-width:0;
-
+.code-box{
+    background:#eef6f0;
+    border:1px dashed #8cb49a;
+    border-radius:12px;
+    padding:12px;
+    margin-top:13px;
 }
 
-
-.premio-info strong{
-
-  display:block;
-
-  color:#183c25;
-
-  font-size:12px;
-
-  line-height:1.25;
-
+.code-label{
+    font-size:9px;
+    color:#708078;
+    text-transform:uppercase;
 }
 
-
-.premio-info span{
-
-  display:block;
-
-  color:#879189;
-
-  font-size:9px;
-
-  margin-top:2px;
-
+.code{
+    font-size:20px;
+    font-weight:900;
+    color:#176b3a;
+    margin-top:3px;
+    word-break:break-all;
 }
 
-
-.premio-stacoin{
-
-  background:
-    linear-gradient(
-      135deg,
-      #fff9e7,
-      #f3e2aa
-    );
-
+.copy-code{
+    border:none;
+    background:#176b3a;
+    color:white;
+    padding:10px 15px;
+    border-radius:10px;
+    font-weight:900;
+    margin-top:9px;
+    cursor:pointer;
 }
 
-
-/* =====================================================
-   VER PRÊMIOS
-===================================================== */
-
-.ver-premios{
-
-  width:100%;
-
-  margin-top:8px;
-
-  border:1px solid #d9b96b;
-
-  background:#fffaf0;
-
-  color:#8c6917;
-
-  padding:10px;
-
-  border-radius:11px;
-
-  font-size:10px;
-
-  font-weight:900;
-
+.loading{
+    text-align:center;
+    padding:18px;
+    color:#64736b;
+    font-size:12px;
 }
 
-
-/* =====================================================
-   RESULTADO
-===================================================== */
-
-.resultado-premio{
-
-  text-align:center;
-
+.error{
+    background:#fff0f1;
+    color:#a32636;
+    border:1px solid #efc7cc;
+    border-radius:12px;
+    padding:11px;
+    margin-top:10px;
+    font-size:11px;
+    display:none;
 }
 
+@media(max-width:800px){
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-.resultado-imagem{
-
-  width:130px;
-  height:105px;
-
-  margin:
-    0 auto
-    14px;
-
-  border-radius:18px;
-
-  background:#f0f4f0;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  overflow:hidden;
-
+    .image-box{
+        height:190px;
+    }
 }
 
+@media(max-width:520px){
+    header{
+        padding:12px;
+    }
 
-.resultado-imagem img{
+    .logo{
+        width:42px;
+        height:42px;
+    }
 
-  width:100%;
-  height:100%;
+    .header-title h1{
+        font-size:15px;
+    }
 
-  object-fit:contain;
+    .header-title p{
+        font-size:9px;
+    }
 
+    .balance{
+        padding:5px 7px;
+    }
+
+    .coin{
+        width:25px;
+        height:25px;
+    }
+
+    #saldo{
+        font-size:12px;
+    }
+
+    .container{
+        width:94%;
+        padding-top:16px;
+    }
+
+    .hero{
+        padding:20px 17px;
+    }
+
+    .hero h2{
+        font-size:21px;
+    }
+
+    .products{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
+    .image-box{
+        height:145px;
+    }
+
+    .card-body{
+        padding:10px;
+    }
+
+    .card h3{
+        font-size:13px;
+    }
+
+    .card-name{
+        font-size:10px;
+    }
+
+    .price{
+        font-size:14px;
+    }
+
+    .buy{
+        padding:8px 9px;
+        font-size:9px;
+    }
+
+    .box-card{
+        grid-template-columns:100px 1fr;
+        gap:12px;
+        padding:11px;
+    }
+
+    .box-image{
+        width:100px;
+        height:100px;
+    }
+
+    .box-info h2{
+        font-size:16px;
+    }
+
+    .box-info p{
+        font-size:10px;
+    }
 }
 
+@media(max-width:360px){
+    .products{
+        grid-template-columns:1fr;
+    }
 
-.resultado-premio h3{
-
-  font-size:23px;
-
-  color:#176b3a;
-
+    .image-box{
+        height:190px;
+    }
 }
-
-
-.codigo-box{
-
-  margin-top:13px;
-
-  background:#f2f5f2;
-
-  border-radius:13px;
-
-  padding:11px;
-
-}
-
-
-.codigo-box small{
-
-  display:block;
-
-  color:#7d877f;
-
-  font-size:9px;
-
-  margin-bottom:4px;
-
-}
-
-
-.codigo-box strong{
-
-  display:block;
-
-  color:#173d24;
-
-  font-size:14px;
-
-  word-break:break-all;
-
-}
-
-
-.copiar-codigo{
-
-  width:100%;
-
-  margin-top:9px;
-
-  border:0;
-
-  border-radius:11px;
-
-  background:#176b3a;
-
-  color:white;
-
-  padding:11px;
-
-  font-size:11px;
-
-  font-weight:900;
-
-}
-
-
-.fechar-resultado{
-
-  width:100%;
-
-  margin-top:10px;
-
-  border:0;
-
-  border-radius:11px;
-
-  background:#edf0ed;
-
-  color:#536158;
-
-  padding:11px;
-
-  font-size:11px;
-
-  font-weight:900;
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-.toast{
-
-  position:fixed;
-
-  left:50%;
-
-  bottom:25px;
-
-  transform:
-    translate(-50%,20px);
-
-  z-index:200;
-
-  background:#173d24;
-
-  color:white;
-
-  padding:
-    12px
-    17px;
-
-  border-radius:13px;
-
-  font-size:12px;
-
-  font-weight:800;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:
-    opacity .2s,
-    transform .2s;
-
-  white-space:nowrap;
-
-}
-
-
-.toast.show{
-
-  opacity:1;
-
-  transform:
-    translate(-50%,0);
-
-}
-
-
-@media(max-width:600px){
-
-  .header{
-
-    padding-top:15px;
-
-  }
-
-  .logo-circle{
-
-    width:42px;
-    height:42px;
-
-  }
-
-  .logo-text h1{
-
-    font-size:17px;
-
-  }
-
-  .saldo{
-
-    padding:7px 9px;
-
-  }
-
-  .saldo-moeda{
-
-    width:25px;
-    height:25px;
-
-  }
-
-}
-
-
-@media(max-width:430px){
-
-  .produtos{
-
-    grid-template-columns:1fr;
-
-  }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
+<header>
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="header">
-
-  <div class="header-top">
-
-    <div class="logo-area">
-
-      <div class="logo-circle">
-
-        <img
-          src="logo.sta.PNG"
-          alt="Santa Luzia"
-          onerror="this.style.display='none'"
-        >
-
-      </div>
-
-      <div class="logo-text">
-
-        <h1>SANTA LUZIA SHOP</h1>
-
-        <span>Loja oficial da Santa Luzia</span>
-
-      </div>
-
+    <div class="header-left">
+        <img src="logo.sta.PNG" class="logo" alt="Santa Luzia">
+        <div class="header-title">
+            <h1>SANTA LUZIA SHOP</h1>
+            <p>Loja oficial da Santa Luzia</p>
+        </div>
     </div>
 
-
-    <div class="saldo">
-
-      <div class="saldo-moeda">
-
-        <img
-          src="stacoin.png"
-          alt="STACOIN"
-        >
-
-      </div>
-
-      <div class="saldo-info">
-
-        <small>SEU SALDO</small>
-
-        <strong id="saldoTexto">
-          16.240 STC
-        </strong>
-
-      </div>
-
+    <div class="balance">
+        <img src="stacoin.png" class="coin" alt="STACOIN">
+        <div class="balance-text">
+            <span class="balance-label">MEU SALDO</span>
+            <span id="saldo">Carregando...</span>
+        </div>
     </div>
-
-  </div>
 
 </header>
 
 
-
-<!-- =====================================================
-     CONTEÚDO
-===================================================== -->
-
 <main class="container">
 
-
-  <section class="intro">
-
-    <h2>🛒 Loja Santa Luzia</h2>
-
-    <p>
-      Resgate skins exclusivas usando seus STACOIN.
-    </p>
-
-  </section>
+    <section class="hero">
+        <h2>🍅 Santa Luzia Shop</h2>
+        <p>Troque seus STACOIN por skins oficiais da nossa empresa.</p>
+    </section>
 
 
-
-  <!-- =================================================
-       CATEGORIAS
-  ================================================== -->
-
-  <div class="categorias">
-
-    <button
-      class="categoria active"
-      data-filter="todos"
-    >
-      🚛 Todas
-    </button>
-
-    <button
-      class="categoria"
-      data-filter="scania"
-    >
-      Scania
-    </button>
-
-    <button
-      class="categoria"
-      data-filter="bob"
-    >
-      BOB
-    </button>
-
-    <button
-      class="categoria"
-      data-filter="volvo"
-    >
-      Volvo
-    </button>
-
-    <button
-      class="categoria"
-      data-filter="iveco"
-    >
-      Iveco
-    </button>
-
-    <button
-      class="categoria"
-      data-filter="baus"
-    >
-      📦 Baús
-    </button>
-
-  </div>
+    <div class="section-title">
+        <h2>Skins oficiais</h2>
+        <span id="contador">9 produtos</span>
+    </div>
 
 
+    <div class="categories">
 
-  <!-- =================================================
-       PRODUTOS
-  ================================================== -->
-
-  <section
-    class="produtos"
-    id="produtos"
-  >
-
-
-    <!-- IVECO -->
-
-    <article
-      class="produto"
-      data-categoria="iveco"
-    >
-
-      <div class="produto-img">
-
-        <span class="tag">
-          NOVO
-        </span>
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="iveco.PNG"
-            alt="Iveco S-Way Vermelha"
-            class="active"
-          >
-
-          <img
-            src="iveco2.PNG"
-            alt="Iveco S-Way Vermelha"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
+        <button class="cat active" data-cat="todos">
+            Todas
         </button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
+        <button class="cat" data-cat="scania">
+            Scania
         </button>
 
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          IVECO
-        </div>
-
-        <div class="produto-nome">
-          S-Way Vermelha
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            8.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Iveco S-Way Vermelha"
-            data-preco="8000"
-            data-codigo="9MuRDvF.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- BOB LARANJA -->
-
-    <article
-      class="produto"
-      data-categoria="bob"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="bob.laranja.PNG"
-            alt="BOB Laranja"
-            class="active"
-          >
-
-          <img
-            src="bob.laranja2.PNG"
-            alt="BOB Laranja"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
+        <button class="cat" data-cat="bob">
+            BOB
         </button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
+        <button class="cat" data-cat="volvo">
+            Volvo
         </button>
 
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          BOB • CONSTELLATION
-        </div>
-
-        <div class="produto-nome">
-          BOB Laranja
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            8.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="BOB Laranja"
-            data-preco="8000"
-            data-codigo="tTuD4KI.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- BOB AMARELO -->
-
-    <article
-      class="produto"
-      data-categoria="bob"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="bob.amarelo.PNG"
-            alt="BOB Amarelo"
-            class="active"
-          >
-
-          <img
-            src="bob.amarelo2.PNG"
-            alt="BOB Amarelo"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
+        <button class="cat" data-cat="iveco">
+            Iveco
         </button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
+    </div>
 
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
 
-      </div>
+    <div class="products" id="products"></div>
 
 
-      <div class="produto-info">
+    <section class="box-card">
 
-        <div class="produto-tipo">
-          BOB • CONSTELLATION
-        </div>
-
-        <div class="produto-nome">
-          BOB Amarelo
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            8.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="BOB Amarelo"
-            data-preco="8000"
-            data-codigo="gGlnvjT.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- R440 PRETA -->
-
-    <article
-      class="produto"
-      data-categoria="scania"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="440.preta.PNG"
-            alt="Scania R440 Preta e Dourada"
-            class="active"
-          >
-
-          <img
-            src="440.preta2.PNG"
-            alt="Scania R440 Preta e Dourada"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
-
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          SCANIA R440
-        </div>
-
-        <div class="produto-nome">
-          Preta e Dourada
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            10.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Scania R440 Preta e Dourada"
-            data-preco="10000"
-            data-codigo="l3OArhI.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- R440 AZUL -->
-
-    <article
-      class="produto"
-      data-categoria="scania"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="440.azul.PNG"
-            alt="Scania R440 Azul"
-            class="active"
-          >
-
-          <img
-            src="440.azul2.PNG"
-            alt="Scania R440 Azul"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
-
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          SCANIA R440
-        </div>
-
-        <div class="produto-nome">
-          Azul
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            8.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Scania R440 Azul"
-            data-preco="8000"
-            data-codigo="UEb84SW.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- FH PRETA -->
-
-    <article
-      class="produto"
-      data-categoria="volvo"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="fh.preta.PNG"
-            alt="Volvo FH Preta e Dourada"
-            class="active"
-          >
-
-          <img
-            src="fh.preta2.PNG"
-            alt="Volvo FH Preta e Dourada"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
-
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          VOLVO FH
-        </div>
-
-        <div class="produto-nome">
-          Preta e Dourada
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            10.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Volvo FH Preta e Dourada"
-            data-preco="10000"
-            data-codigo="2RbSBCZ.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- FH VERMELHA -->
-
-    <article
-      class="produto"
-      data-categoria="volvo"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="fh.vermelha.PNG"
-            alt="Volvo FH Vermelha"
-            class="active"
-          >
-
-          <img
-            src="fh.vermelha2.PNG"
-            alt="Volvo FH Vermelha"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
-
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          VOLVO FH
-        </div>
-
-        <div class="produto-nome">
-          Vermelha
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            8.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Volvo FH Vermelha"
-            data-preco="8000"
-            data-codigo="rUdEXul.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- P320 CINZA -->
-
-    <article
-      class="produto"
-      data-categoria="scania"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="320cinza.PNG"
-            alt="Scania P320 Cinza"
-            class="active"
-          >
-
-          <img
-            src="320cinza2.PNG"
-            alt="Scania P320 Cinza"
-          >
-
-          <img
-            src="320cinza3.PNG"
-            alt="Scania P320 Cinza"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
-
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          SCANIA P320
-        </div>
-
-        <div class="produto-nome">
-          Cinza
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            10.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Scania P320 Cinza"
-            data-preco="10000"
-            data-codigo="BCotT9q.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- P320 BRANCA -->
-
-    <article
-      class="produto"
-      data-categoria="scania"
-    >
-
-      <div class="produto-img">
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <img
-            src="320branca.PNG"
-            alt="Scania P320 Branca"
-            class="active"
-          >
-
-          <img
-            src="320branca2.PNG"
-            alt="Scania P320 Branca"
-            onerror="this.style.display='none'"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
-        >
-          ‹
-        </button>
-
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
-
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
-
-      </div>
-
-
-      <div class="produto-info">
-
-        <div class="produto-tipo">
-          SCANIA P320
-        </div>
-
-        <div class="produto-nome">
-          Branca
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            10.000
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar"
-            data-nome="Scania P320 Branca"
-            data-preco="10000"
-            data-codigo="GpcyGWA.jpeg"
-            type="button"
-          >
-            RESGATAR
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- =================================================
-         CAIXA OUTUBRO ROSA
-    ================================================== -->
-
-    <article
-      class="produto"
-      data-categoria="baus"
-    >
-
-      <div class="produto-img">
-
-        <span class="tag tag-rosa">
-          EDIÇÃO LIMITADA
-        </span>
-
-        <div
-          class="galeria"
-          data-gallery
-        >
-
-          <!-- BAÚ NOVO -->
-          <img
+        <img
             src="cx.out.rosa.jpeg"
+            class="box-image"
             alt="Caixa Outubro Rosa"
-            class="active"
-          >
-
-          <!-- SKINS DO BAÚ -->
-          <img
-            src="bau.tom.JPEG"
-            alt="Bitruck Tomate"
-          >
-
-          <img
-            src="bau.tom2.JPEG"
-            alt="Bitruck Tomate"
-          >
-
-          <img
-            src="bau.bat.JPEG"
-            alt="Bitruck Batata"
-          >
-
-          <img
-            src="bau.bat2.JPEG"
-            alt="Bitruck Batata"
-          >
-
-          <img
-            src="crt.bat.JPEG"
-            alt="Carreta Batata"
-          >
-
-          <img
-            src="crt.bat2.JPEG"
-            alt="Carreta Batata"
-          >
-
-          <img
-            src="crt.tom.JPEG"
-            alt="Carreta Tomate"
-          >
-
-          <img
-            src="crt.tom2.JPEG"
-            alt="Carreta Tomate"
-          >
-
-        </div>
-
-        <button
-          class="seta esquerda"
-          data-prev
-          type="button"
         >
-          ‹
-        </button>
 
-        <button
-          class="seta direita"
-          data-next
-          type="button"
-        >
-          ›
-        </button>
+        <div class="box-info">
 
-        <div
-          class="indicadores"
-          data-dots
-        ></div>
+            <h2>🎀 Caixa Outubro Rosa</h2>
 
-      </div>
+            <p>
+                Uma caixa especial da Santa Luzia.
+                São 5 possíveis prêmios, com chances iguais.
+            </p>
 
+            <p>
+                Disponível até <strong>31/10/2026</strong>.
+            </p>
 
-      <div class="produto-info">
+            <div class="box-price">
+                100 STACOIN
+            </div>
 
-        <div class="produto-tipo">
-          🌸 EDIÇÃO ESPECIAL
-        </div>
-
-        <div class="produto-nome">
-          Caixa Outubro Rosa
-        </div>
-
-        <div class="produto-preco">
-
-          <div class="preco">
-            100
-            <span>STACOIN</span>
-          </div>
-
-          <button
-            class="resgatar abrir-caixa"
-            id="abrirCaixa"
-            type="button"
-          >
-            ABRIR CAIXA
-          </button>
+            <button class="box-button" id="openBox">
+                ABRIR CAIXA
+            </button>
 
         </div>
 
-        <button
-          class="ver-premios"
-          id="verPremios"
-          type="button"
-        >
-          👀 VER POSSÍVEIS PRÊMIOS
-        </button>
-
-      </div>
-
-    </article>
+    </section>
 
 
-  </section>
-
-
-
-  <div class="footer">
-
-    <strong>Santa Luzia Tomates</strong><br>
-
-    Loja oficial • STACOIN
-
-  </div>
+    <div class="notice">
+        💰 <strong>STACOIN</strong> é a moeda interna da Santa Luzia.
+        Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
+    </div>
 
 </main>
 
 
-
-<!-- =====================================================
-     MODAL RESGATE SKIN
-===================================================== -->
-
-<div
-  class="modal"
-  id="modal"
->
-
-  <div class="modal-card">
-
-    <div class="modal-icon">
-      🛒
-    </div>
-
-    <h3>
-      Confirmar resgate?
-    </h3>
-
-    <p>
-      Você está prestes a resgatar esta skin.
-    </p>
+<footer>
+    SANTA LUZIA TOMATES • SANTA LUZIA BATATAS<br>
+    Juntos fazemos mais 🍅
+</footer>
 
 
-    <div class="modal-produto">
+<!-- MODAL COMPRA -->
 
-      <strong id="modalNome">
-        Skin
-      </strong>
+<div class="modal-bg" id="purchaseModal">
 
-      <div
-        class="modal-preco"
-        id="modalPreco"
-      >
-        0 STACOIN
-      </div>
+    <div class="modal">
 
-    </div>
+        <div class="modal-top">
+            <h2>Confirmar compra</h2>
 
+            <button class="close" id="closePurchase">
+                ×
+            </button>
+        </div>
 
-    <div class="modal-botoes">
+        <div class="modal-product">
 
-      <button
-        class="cancelar"
-        id="cancelar"
-        type="button"
-      >
-        CANCELAR
-      </button>
+            <img id="modalProductImage" src="" alt="Produto">
 
-      <button
-        class="confirmar"
-        id="confirmar"
-        type="button"
-      >
-        CONFIRMAR
-      </button>
+            <h3 id="modalProductName">
+                Produto
+            </h3>
+
+            <div class="modal-price" id="modalProductPrice">
+                0 STACOIN
+            </div>
+
+        </div>
+
+        <div class="modal-info">
+
+            O valor será descontado automaticamente
+            do seu saldo STACOIN e a compra ficará
+            registrada no seu extrato.
+
+        </div>
+
+        <div class="error" id="purchaseError"></div>
+
+        <div class="modal-actions">
+
+            <button class="cancel" id="cancelPurchase">
+                CANCELAR
+            </button>
+
+            <button class="confirm" id="confirmPurchase">
+                CONFIRMAR
+            </button>
+
+        </div>
 
     </div>
-
-  </div>
 
 </div>
 
 
+<!-- MODAL RESULTADO -->
 
-<!-- =====================================================
-     MODAL POSSÍVEIS PRÊMIOS
-===================================================== -->
+<div class="modal-bg" id="resultModal">
 
-<div
-  class="modal"
-  id="modalPremios"
->
+    <div class="modal result">
 
-  <div class="modal-card">
+        <div class="result-icon">
+            🍅
+        </div>
 
-    <div class="modal-icon">
+        <h2>Compra realizada!</h2>
 
-      <img
-        src="cx.out.rosa.jpeg"
-        alt="Caixa Outubro Rosa"
-      >
+        <p id="resultName">
+            Skin liberada com sucesso.
+        </p>
+
+        <div class="code-box">
+
+            <div class="code-label">
+                Código da skin
+            </div>
+
+            <div class="code" id="resultCode">
+                —
+            </div>
+
+            <button class="copy-code" id="copyCode">
+                COPIAR CÓDIGO
+            </button>
+
+        </div>
+
+        <div class="modal-info">
+            O valor já foi descontado do seu saldo STACOIN
+            e a compra foi registrada no extrato.
+        </div>
+
+        <div class="modal-actions">
+
+            <button class="confirm" id="closeResult">
+                FECHAR
+            </button>
+
+        </div>
 
     </div>
-
-    <h3>
-      🎁 Possíveis prêmios
-    </h3>
-
-    <p>
-      A Caixa Outubro Rosa possui 5 resultados possíveis.
-      Cada prêmio tem a mesma chance.
-    </p>
-
-
-    <div class="premios-lista">
-
-
-      <div class="premio">
-
-        <div class="premio-imagem">
-
-          <img
-            src="bau.tom.JPEG"
-            alt="Bitruck Tomate"
-          >
-
-        </div>
-
-        <div class="premio-info">
-
-          <strong>
-            🚛 Bitruck Tomate
-          </strong>
-
-          <span>
-            20% de chance
-          </span>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="premio">
-
-        <div class="premio-imagem">
-
-          <img
-            src="bau.bat.JPEG"
-            alt="Bitruck Batata"
-          >
-
-        </div>
-
-        <div class="premio-info">
-
-          <strong>
-            🚛 Bitruck Batata
-          </strong>
-
-          <span>
-            20% de chance
-          </span>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="premio">
-
-        <div class="premio-imagem">
-
-          <img
-            src="crt.bat.JPEG"
-            alt="Carreta Batata"
-          >
-
-        </div>
-
-        <div class="premio-info">
-
-          <strong>
-            🚚 Carreta Batata
-          </strong>
-
-          <span>
-            20% de chance
-          </span>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="premio">
-
-        <div class="premio-imagem">
-
-          <img
-            src="crt.tom.JPEG"
-            alt="Carreta Tomate"
-          >
-
-        </div>
-
-        <div class="premio-info">
-
-          <strong>
-            🚚 Carreta Tomate
-          </strong>
-
-          <span>
-            20% de chance
-          </span>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="premio premio-stacoin">
-
-        <div class="premio-imagem">
-
-          <img
-            src="stacoin.png"
-            alt="100 STACOIN"
-          >
-
-        </div>
-
-        <div class="premio-info">
-
-          <strong>
-            🪙 100 STACOIN
-          </strong>
-
-          <span>
-            20% de chance
-          </span>
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-
-    <button
-      class="fechar-resultado"
-      id="fecharPremios"
-      type="button"
-    >
-      FECHAR
-    </button>
-
-  </div>
 
 </div>
 
 
+<!-- MODAL CAIXA -->
 
-<!-- =====================================================
-     MODAL ABRIR CAIXA
-===================================================== -->
+<div class="modal-bg" id="boxModal">
 
-<div
-  class="modal"
-  id="modalCaixa"
->
+    <div class="modal">
 
-  <div class="modal-card">
+        <div class="modal-top">
 
-    <div class="modal-icon">
+            <h2>🎀 Caixa Outubro Rosa</h2>
 
-      <img
-        src="cx.out.rosa.jpeg"
-        alt="Caixa Outubro Rosa"
-      >
+            <button class="close" id="closeBox">
+                ×
+            </button>
 
-    </div>
+        </div>
 
-    <h3>
-      🌸 Abrir Caixa Outubro Rosa?
-    </h3>
+        <div class="modal-product">
 
-    <p>
-      Esta edição limitada custa
-      <strong>100 STACOIN</strong>.
-    </p>
+            <img
+                src="cx.out.rosa.jpeg"
+                alt="Caixa Outubro Rosa"
+                style="width:160px;height:140px;object-fit:contain;"
+            >
 
+            <h3>1 caixa especial</h3>
 
-    <div class="modal-produto">
+            <div class="modal-price">
+                100 STACOIN
+            </div>
 
-      <strong>
-        🌸 Caixa Outubro Rosa
-      </strong>
+        </div>
 
-      <div class="modal-preco">
-        100 STACOIN
-      </div>
+        <div class="modal-info">
 
-      <p style="margin-top:8px;font-size:11px;">
-        Disponível até 31/10/2026.
-      </p>
+            <strong>Possíveis prêmios:</strong><br><br>
 
-    </div>
+            🚛 Bitruck Tomate<br>
+            🚛 Bitruck Batata<br>
+            🚚 Carreta Batata<br>
+            🚚 Carreta Tomate<br>
+            🎁 Prêmio especial
 
+            <br><br>
 
-    <div class="modal-botoes">
+            Cada resultado possui a mesma chance.
 
-      <button
-        class="cancelar"
-        id="cancelarCaixa"
-        type="button"
-      >
-        CANCELAR
-      </button>
+        </div>
 
-      <button
-        class="confirmar"
-        id="confirmarCaixa"
-        type="button"
-      >
-        ABRIR
-      </button>
+        <div class="error" id="boxError"></div>
+
+        <div class="modal-actions">
+
+            <button class="cancel" id="cancelBox">
+                CANCELAR
+            </button>
+
+            <button class="confirm" id="confirmBox">
+                ABRIR POR 100 STC
+            </button>
+
+        </div>
 
     </div>
-
-  </div>
 
 </div>
-
-
-
-<!-- =====================================================
-     MODAL RESULTADO
-===================================================== -->
-
-<div
-  class="modal"
-  id="modalResultado"
->
-
-  <div class="modal-card resultado-premio">
-
-    <div
-      class="resultado-imagem"
-      id="resultadoImagem"
-    >
-
-      <img
-        id="imagemPremio"
-        src="stacoin.png"
-        alt="Prêmio"
-      >
-
-    </div>
-
-
-    <h3 id="tituloPremio">
-      🎉 Parabéns!
-    </h3>
-
-
-    <p id="textoPremio">
-      Você ganhou um prêmio!
-    </p>
-
-
-    <div
-      class="codigo-box"
-      id="codigoPremioBox"
-      style="display:none;"
-    >
-
-      <small>
-        CÓDIGO DA SKIN
-      </small>
-
-      <strong id="codigoPremio">
-        -
-      </strong>
-
-      <button
-        class="copiar-codigo"
-        id="copiarCodigo"
-        type="button"
-      >
-        📋 COPIAR CÓDIGO
-      </button>
-
-    </div>
-
-
-    <button
-      class="fechar-resultado"
-      id="fecharResultado"
-      type="button"
-    >
-      CONTINUAR NA LOJA
-    </button>
-
-  </div>
-
-</div>
-
-
-
-<div
-  class="toast"
-  id="toast"
-></div>
-
 
 
 <script>
 
-/* =====================================================
-   CATÁLOGO
-===================================================== */
+/* =========================================================
+   SUPABASE
+   ========================================================= */
 
-const produtos =
-  document.querySelectorAll(
-    ".produto"
-  );
+const SUPABASE_URL =
+    "https://cckypvqophyviphqhich.supabase.co";
 
 
-/* =====================================================
-   FILTROS
-===================================================== */
-
-const categorias =
-  document.querySelectorAll(
-    ".categoria"
-  );
+/*
+   COLE AQUI A MESMA PUBLISHABLE KEY
+   QUE VOCÊ JÁ USA NO SEU SANTA LUZIA CENTRAL.
+*/
+const SUPABASE_KEY =
+    "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
 
-categorias.forEach(
-  botao => {
-
-    botao.addEventListener(
-      "click",
-      () => {
-
-        categorias.forEach(
-          item =>
-            item.classList.remove(
-              "active"
-            )
-        );
-
-        botao.classList.add(
-          "active"
-        );
-
-        const filtro =
-          botao.dataset.filter;
-
-
-        produtos.forEach(
-          produto => {
-
-            const categoria =
-              produto.dataset.categoria;
-
-
-            if(
-              filtro === "todos" ||
-              categoria === filtro
-            ){
-
-              produto.style.display =
-                "";
-
-            }else{
-
-              produto.style.display =
-                "none";
-
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+            auth:{
+                persistSession:true,
+                autoRefreshToken:true,
+                detectSessionInUrl:false,
+                flowType:"implicit"
             }
-
-          }
-        );
-
-      }
+        }
     );
 
-  }
-);
 
-
-/* =====================================================
-   CARROSSÉIS
-===================================================== */
-
-document
-  .querySelectorAll(
-    "[data-gallery]"
-  )
-  .forEach(
-    gallery => {
-
-      const imagens =
-        Array.from(
-          gallery.querySelectorAll(
-            "img"
-          )
-        );
-
-
-      const container =
-        gallery.closest(
-          ".produto-img"
-        );
-
-
-      const prev =
-        container.querySelector(
-          "[data-prev]"
-        );
-
-
-      const next =
-        container.querySelector(
-          "[data-next]"
-        );
-
-
-      const dots =
-        container.querySelector(
-          "[data-dots]"
-        );
-
-
-      let atual=0;
-
-
-      imagens.forEach(
-        img => {
-
-          img.addEventListener(
-            "error",
-            () => {
-
-              img.dataset.erro =
-                "true";
-
-              atualizar();
-
-            }
-          );
-
-        }
-      );
-
-
-      function imagensValidas(){
-
-        return imagens.filter(
-          img =>
-            img.dataset.erro !==
-            "true"
-        );
-
-      }
-
-
-      function atualizar(){
-
-        const validas =
-          imagensValidas();
-
-
-        if(
-          validas.length===0
-        ){
-
-          return;
-
-        }
-
-
-        if(
-          atual>=validas.length
-        ){
-
-          atual=0;
-
-        }
-
-
-        imagens.forEach(
-          img =>
-            img.classList.remove(
-              "active"
-            )
-        );
-
-
-        validas[atual]
-          .classList.add(
-            "active"
-          );
-
-
-        dots.innerHTML="";
-
-
-        validas.forEach(
-          (img,index)=>{
-
-            const dot =
-              document.createElement(
-                "span"
-              );
-
-            dot.className =
-              "indicador" +
-              (
-                index===atual
-                  ? " active"
-                  : ""
-              );
-
-
-            dot.addEventListener(
-              "click",
-              ()=>{
-                atual=index;
-                atualizar();
-              }
-            );
-
-
-            dots.appendChild(
-              dot
-            );
-
-          }
-        );
-
-
-        if(
-          validas.length<=1
-        ){
-
-          prev.style.display =
-            "none";
-
-          next.style.display =
-            "none";
-
-          dots.style.display =
-            "none";
-
-        }else{
-
-          prev.style.display =
-            "flex";
-
-          next.style.display =
-            "flex";
-
-          dots.style.display =
-            "flex";
-
-        }
-
-      }
-
-
-      prev.addEventListener(
-        "click",
-        ()=>{
-
-          const total =
-            imagensValidas()
-              .length;
-
-          if(!total) return;
-
-          atual =
-            (
-              atual-1+total
-            )%total;
-
-          atualizar();
-
-        }
-      );
-
-
-      next.addEventListener(
-        "click",
-        ()=>{
-
-          const total =
-            imagensValidas()
-              .length;
-
-          if(!total) return;
-
-          atual =
-            (
-              atual+1
-            )%total;
-
-          atualizar();
-
-        }
-      );
-
-
-      atualizar();
-
+/* =========================================================
+   PRODUTOS
+   ========================================================= */
+
+const produtos = [
+
+    {
+        id:"iveco",
+        categoria:"iveco",
+        nome:"Iveco S-Way",
+        descricao:"Vermelha",
+        preco:8000,
+        codigo:"9MuRDvF.jpeg",
+        imagens:[
+            "iveco.PNG",
+            "iveco2.PNG"
+        ]
+    },
+
+    {
+        id:"bob-laranja",
+        categoria:"bob",
+        nome:"BOB",
+        descricao:"Constellation Laranja",
+        preco:8000,
+        codigo:"tTuD4KI.jpeg",
+        imagens:[
+            "bob.laranja.PNG",
+            "bob.laranja2.PNG"
+        ]
+    },
+
+    {
+        id:"bob-amarelo",
+        categoria:"bob",
+        nome:"BOB",
+        descricao:"Constellation Amarelo",
+        preco:8000,
+        codigo:"gGlnvjT.jpeg",
+        imagens:[
+            "bob.amarelo.PNG",
+            "bob.amarelo2.PNG"
+        ]
+    },
+
+    {
+        id:"r440-preta",
+        categoria:"scania",
+        nome:"Scania R440",
+        descricao:"Preta e dourada",
+        preco:10000,
+        codigo:"l3OArhI.jpeg",
+        imagens:[
+            "440.preta.PNG",
+            "440.preta2.PNG"
+        ]
+    },
+
+    {
+        id:"r440-azul",
+        categoria:"scania",
+        nome:"Scania R440",
+        descricao:"Azul",
+        preco:8000,
+        codigo:"UEb84SW.jpeg",
+        imagens:[
+            "440.azul.PNG",
+            "440.azul2.PNG"
+        ]
+    },
+
+    {
+        id:"fh-preta",
+        categoria:"volvo",
+        nome:"Volvo FH",
+        descricao:"Preta e dourada",
+        preco:10000,
+        codigo:"2RbSBCZ.jpeg",
+        imagens:[
+            "fh.preta2.PNG",
+            "fh.preta.PNG"
+        ]
+    },
+
+    {
+        id:"fh-vermelha",
+        categoria:"volvo",
+        nome:"Volvo FH",
+        descricao:"Vermelha",
+        preco:8000,
+        codigo:"rUdEXul.jpeg",
+        imagens:[
+            "fh.vermelha.PNG",
+            "fh.vermelha2.PNG"
+        ]
+    },
+
+    {
+        id:"p320-cinza",
+        categoria:"scania",
+        nome:"Scania P320",
+        descricao:"Cinza",
+        preco:10000,
+        codigo:"BCotT9q.jpeg",
+        imagens:[
+            "320cinza.PNG",
+            "320cinza2.PNG",
+            "320cinza3.PNG"
+        ]
+    },
+
+    {
+        id:"p320-branca",
+        categoria:"scania",
+        nome:"Scania P320",
+        descricao:"Branca",
+        preco:10000,
+        codigo:"GpcyGWA.jpeg",
+        imagens:[
+            "320branca.PNG"
+        ]
     }
-  );
-
-
-/* =====================================================
-   MODAL SKINS
-===================================================== */
-
-const modal =
-  document.getElementById(
-    "modal"
-  );
-
-
-const modalNome =
-  document.getElementById(
-    "modalNome"
-  );
-
-
-const modalPreco =
-  document.getElementById(
-    "modalPreco"
-  );
-
-
-const confirmar =
-  document.getElementById(
-    "confirmar"
-  );
-
-
-const cancelar =
-  document.getElementById(
-    "cancelar"
-  );
-
-
-let produtoSelecionado =
-  null;
-
-
-/* =====================================================
-   ABRIR MODAL DA SKIN
-===================================================== */
-
-document
-  .querySelectorAll(
-    ".resgatar:not(.abrir-caixa)"
-  )
-  .forEach(
-    botao => {
-
-      botao.addEventListener(
-        "click",
-        () => {
-
-          produtoSelecionado = {
-
-            nome:
-              botao.dataset.nome,
-
-            preco:
-              Number(
-                botao.dataset.preco
-              ),
-
-            codigo:
-              botao.dataset.codigo,
-
-            imagem:
-              null
-
-          };
-
-
-          const card =
-            botao.closest(
-              ".produto"
-            );
-
-
-          if(card){
-
-            const imagem =
-              card.querySelector(
-                ".galeria img"
-              );
-
-
-            if(imagem){
-
-              produtoSelecionado.imagem =
-                imagem.src;
-
-            }
-
-          }
-
-
-          modalNome.textContent =
-            produtoSelecionado.nome;
-
-
-          modalPreco.textContent =
-            produtoSelecionado.preco
-              .toLocaleString(
-                "pt-BR"
-              ) +
-            " STACOIN";
-
-
-          modal.classList.add(
-            "show"
-          );
-
-        }
-      );
-
-    }
-  );
-
-
-/* =====================================================
-   FECHAR MODAL SKIN
-===================================================== */
-
-function fecharModal(){
-
-  modal.classList.remove(
-    "show"
-  );
-
-}
-
-
-cancelar.addEventListener(
-  "click",
-  () => {
-
-    fecharModal();
-
-    produtoSelecionado =
-      null;
-
-  }
-);
-
-
-modal.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target === modal
-    ){
-
-      fecharModal();
-
-      produtoSelecionado =
-        null;
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   RESGATE SKIN
-===================================================== */
-
-confirmar.addEventListener(
-  "click",
-  () => {
-
-    if(
-      !produtoSelecionado
-    ){
-
-      return;
-
-    }
-
-
-    const produto =
-      {
-        ...produtoSelecionado
-      };
-
-
-    fecharModal();
-
-
-    produtoSelecionado =
-      null;
-
-
-    mostrarResultadoPremio({
-
-      nome:
-        produto.nome,
-
-      codigo:
-        produto.codigo,
-
-      imagem:
-        produto.imagem ||
-        "stacoin.png",
-
-      tipo:
-        "skin"
-
-    });
-
-  }
-);
-
-
-/* =====================================================
-   MODAL PRÊMIOS
-===================================================== */
-
-const modalPremios =
-  document.getElementById(
-    "modalPremios"
-  );
-
-
-document
-  .getElementById(
-    "verPremios"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      modalPremios.classList.add(
-        "show"
-      );
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "fecharPremios"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      modalPremios.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-modalPremios.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target === modalPremios
-    ){
-
-      modalPremios.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   CAIXA OUTUBRO ROSA
-===================================================== */
-
-const modalCaixa =
-  document.getElementById(
-    "modalCaixa"
-  );
-
-
-const abrirCaixa =
-  document.getElementById(
-    "abrirCaixa"
-  );
-
-
-const cancelarCaixa =
-  document.getElementById(
-    "cancelarCaixa"
-  );
-
-
-const confirmarCaixa =
-  document.getElementById(
-    "confirmarCaixa"
-  );
-
-
-abrirCaixa.addEventListener(
-  "click",
-  () => {
-
-    const hoje =
-      new Date();
-
-    const fim =
-      new Date(
-        "2026-10-31T23:59:59"
-      );
-
-
-    if(
-      hoje > fim
-    ){
-
-      mostrarToast(
-        "🌸 Esta edição já terminou."
-      );
-
-      return;
-
-    }
-
-
-    modalCaixa.classList.add(
-      "show"
-    );
-
-  }
-);
-
-
-function fecharModalCaixa(){
-
-  modalCaixa.classList.remove(
-    "show"
-  );
-
-}
-
-
-cancelarCaixa.addEventListener(
-  "click",
-  fecharModalCaixa
-);
-
-
-modalCaixa.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target === modalCaixa
-    ){
-
-      fecharModalCaixa();
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   PRÊMIOS DA CAIXA
-===================================================== */
-
-const premiosCaixa = [
-
-  {
-    nome:
-      "Bitruck Tomate",
-
-    codigo:
-      "fNsm5qn.jpeg",
-
-    imagem:
-      "bau.tom.JPEG",
-
-    tipo:
-      "skin"
-
-  },
-
-  {
-    nome:
-      "Bitruck Batata",
-
-    codigo:
-      "SxNcP1C.jpeg",
-
-    imagem:
-      "bau.bat.JPEG",
-
-    tipo:
-      "skin"
-
-  },
-
-  {
-    nome:
-      "Carreta Batata",
-
-    codigo:
-      "2zaR70q.jpeg",
-
-    imagem:
-      "crt.bat.JPEG",
-
-    tipo:
-      "skin"
-
-  },
-
-  {
-    nome:
-      "Carreta Tomate",
-
-    codigo:
-      "low6uci.jpeg",
-
-    imagem:
-      "crt.tom.JPEG",
-
-    tipo:
-      "skin"
-
-  },
-
-  {
-    nome:
-      "100 STACOIN",
-
-    codigo:
-      null,
-
-    imagem:
-      "stacoin.png",
-
-    tipo:
-      "stacoin"
-
-  }
 
 ];
 
 
-/* =====================================================
-   ABRIR CAIXA — TESTE
-===================================================== */
+/* =========================================================
+   ESTADO
+   ========================================================= */
 
-confirmarCaixa.addEventListener(
-  "click",
-  () => {
+let categoriaAtual = "todos";
 
-    fecharModalCaixa();
+let produtoSelecionado = null;
 
+let saldoAtual = 0;
 
-    /*
-      VERSÃO VISUAL / TESTE
-
-      Cada prêmio possui 20% de chance.
-
-      Depois vamos trocar esta parte
-      por uma função segura no Supabase,
-      que irá:
-
-      1. conferir o saldo;
-      2. descontar 100 STACOIN;
-      3. sortear o prêmio;
-      4. registrar a abertura;
-      5. entregar o código;
-      6. registrar tudo no histórico.
-    */
+let motoristaAtual = null;
 
 
-    const indice =
-      Math.floor(
-        Math.random() *
-        premiosCaixa.length
-      );
+/* =========================================================
+   ELEMENTOS
+   ========================================================= */
+
+const productsEl =
+    document.getElementById("products");
+
+const saldoEl =
+    document.getElementById("saldo");
+
+const contadorEl =
+    document.getElementById("contador");
+
+const purchaseModal =
+    document.getElementById("purchaseModal");
+
+const resultModal =
+    document.getElementById("resultModal");
+
+const boxModal =
+    document.getElementById("boxModal");
+
+const modalProductImage =
+    document.getElementById("modalProductImage");
+
+const modalProductName =
+    document.getElementById("modalProductName");
+
+const modalProductPrice =
+    document.getElementById("modalProductPrice");
+
+const purchaseError =
+    document.getElementById("purchaseError");
+
+const boxError =
+    document.getElementById("boxError");
 
 
-    const premio =
-      premiosCaixa[indice];
+/* =========================================================
+   FORMATAR STACOIN
+   ========================================================= */
+
+function formatarStacoin(valor){
+
+    return Number(valor || 0)
+        .toLocaleString("pt-BR") + " STC";
+
+}
 
 
-    mostrarResultadoPremio(
-      premio
+/* =========================================================
+   RENDER PRODUTOS
+   ========================================================= */
+
+function renderProdutos(){
+
+    productsEl.innerHTML = "";
+
+    const lista =
+        categoriaAtual === "todos"
+            ? produtos
+            : produtos.filter(
+                p => p.categoria === categoriaAtual
+              );
+
+    contadorEl.textContent =
+        `${lista.length} produto${lista.length !== 1 ? "s" : ""}`;
+
+
+    lista.forEach(produto => {
+
+        const card =
+            document.createElement("article");
+
+        card.className = "card";
+
+        let imagemAtual = 0;
+
+
+        card.innerHTML = `
+
+            <div class="image-box">
+
+                <img
+                    class="product-img"
+                    src="${produto.imagens[0]}"
+                    alt="${produto.nome} ${produto.descricao}"
+                >
+
+                ${
+                    produto.imagens.length > 1
+                    ?
+                    `<div class="image-nav">
+                        ${produto.imagens.map((_,i)=>
+                            `<span class="dot ${i===0 ? "active":""}"></span>`
+                        ).join("")}
+                    </div>`
+                    :
+                    ""
+                }
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="category-label">
+                    ${produto.categoria}
+                </div>
+
+                <h3>
+                    ${produto.nome}
+                </h3>
+
+                <div class="card-name">
+                    ${produto.descricao}
+                </div>
+
+                <div class="price-row">
+
+                    <div class="price">
+                        ${produto.preco.toLocaleString("pt-BR")} STC
+                    </div>
+
+                    <button class="buy">
+                        COMPRAR
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        const img =
+            card.querySelector(".product-img");
+
+        const dots =
+            card.querySelectorAll(".dot");
+
+
+        if(produto.imagens.length > 1){
+
+            let intervalo =
+                setInterval(() => {
+
+                    imagemAtual =
+                        (imagemAtual + 1) %
+                        produto.imagens.length;
+
+                    img.src =
+                        produto.imagens[imagemAtual];
+
+                    dots.forEach(
+                        (dot,i) =>
+                            dot.classList.toggle(
+                                "active",
+                                i === imagemAtual
+                            )
+                    );
+
+                },3500);
+
+
+            card.addEventListener(
+                "mouseenter",
+                () => clearInterval(intervalo)
+            );
+
+        }
+
+
+        card.querySelector(".buy")
+            .addEventListener(
+                "click",
+                () => abrirCompra(produto)
+            );
+
+
+        productsEl.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   CATEGORIAS
+   ========================================================= */
+
+document.querySelectorAll(".cat")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".cat")
+                    .forEach(
+                        b => b.classList.remove("active")
+                    );
+
+                button.classList.add("active");
+
+                categoriaAtual =
+                    button.dataset.cat;
+
+                renderProdutos();
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   BUSCAR USUÁRIO
+   ========================================================= */
+
+async function carregarMotorista(){
+
+    const {
+        data:{
+            session
+        }
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if(!session){
+
+        saldoEl.textContent =
+            "LOGIN NECESSÁRIO";
+
+        return null;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("motoristas")
+            .select("*")
+            .eq("user_id",session.user.id)
+            .maybeSingle();
+
+
+    if(error){
+
+        console.error(error);
+
+        saldoEl.textContent =
+            "ERRO";
+
+        return null;
+
+    }
+
+
+    if(!data){
+
+        saldoEl.textContent =
+            "SEM ID";
+
+        return null;
+
+    }
+
+
+    motoristaAtual = data;
+
+    return data;
+
+}
+
+
+/* =========================================================
+   CARREGAR SALDO
+   ========================================================= */
+
+async function carregarSaldo(){
+
+    const motorista =
+        await carregarMotorista();
+
+
+    if(!motorista){
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("stacoin_carteiras")
+            .select("saldo")
+            .eq("motorista_id",motorista.id)
+            .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Erro ao carregar carteira:",
+            error
+        );
+
+        saldoEl.textContent =
+            "ERRO";
+
+        return;
+
+    }
+
+
+    saldoAtual =
+        Number(data?.saldo || 0);
+
+
+    saldoEl.textContent =
+        formatarStacoin(saldoAtual);
+
+}
+
+
+/* =========================================================
+   ABRIR MODAL DE COMPRA
+   ========================================================= */
+
+function abrirCompra(produto){
+
+    produtoSelecionado =
+        produto;
+
+    purchaseError.style.display =
+        "none";
+
+    purchaseError.textContent =
+        "";
+
+
+    modalProductImage.src =
+        produto.imagens[0];
+
+    modalProductName.textContent =
+        `${produto.nome} — ${produto.descricao}`;
+
+    modalProductPrice.textContent =
+        `${produto.preco.toLocaleString("pt-BR")} STACOIN`;
+
+
+    purchaseModal.classList.add("show");
+
+}
+
+
+/* =========================================================
+   FECHAR MODAL
+   ========================================================= */
+
+function fecharCompra(){
+
+    purchaseModal.classList.remove("show");
+
+    produtoSelecionado =
+        null;
+
+}
+
+
+document
+    .getElementById("closePurchase")
+    .addEventListener(
+        "click",
+        fecharCompra
     );
 
-  }
-);
+
+document
+    .getElementById("cancelPurchase")
+    .addEventListener(
+        "click",
+        fecharCompra
+    );
 
 
-/* =====================================================
+/* =========================================================
+   COMPRA REAL
+   ========================================================= */
+
+document
+    .getElementById("confirmPurchase")
+    .addEventListener(
+        "click",
+        async function(){
+
+            if(!produtoSelecionado){
+
+                return;
+
+            }
+
+
+            const button =
+                this;
+
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "PROCESSANDO...";
+
+
+            purchaseError.style.display =
+                "none";
+
+
+            try{
+
+                const {
+                    data:{
+                        session
+                    }
+                } =
+                    await supabaseClient.auth.getSession();
+
+
+                if(!session){
+
+                    throw new Error(
+                        "Você precisa estar logado para comprar."
+                    );
+
+                }
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient.rpc(
+                        "comprar_skin_stacoin",
+                        {
+                            p_codigo:
+                                produtoSelecionado.codigo,
+
+                            p_nome:
+                                `${produtoSelecionado.nome} — ${produtoSelecionado.descricao}`
+                        }
+                    );
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                if(!data || data.sucesso !== true){
+
+                    throw new Error(
+                        "Não foi possível concluir a compra."
+                    );
+
+                }
+
+
+                saldoAtual =
+                    Number(data.novo_saldo || 0);
+
+
+                saldoEl.textContent =
+                    formatarStacoin(saldoAtual);
+
+
+                mostrarResultadoPremio(
+                    data.nome,
+                    data.codigo,
+                    produtoSelecionado.imagens[0]
+                );
+
+
+                fecharCompra();
+
+
+            }catch(error){
+
+                console.error(
+                    "Erro na compra:",
+                    error
+                );
+
+
+                let mensagem =
+                    error.message ||
+                    "Não foi possível realizar a compra.";
+
+
+                if(
+                    mensagem
+                        .toLowerCase()
+                        .includes("saldo")
+                ){
+
+                    mensagem =
+                        "Você não possui STACOIN suficiente para comprar esta skin.";
+
+                }
+
+
+                purchaseError.textContent =
+                    mensagem;
+
+                purchaseError.style.display =
+                    "block";
+
+
+            }finally{
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "CONFIRMAR";
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
    RESULTADO
-===================================================== */
-
-const modalResultado =
-  document.getElementById(
-    "modalResultado"
-  );
-
-
-const imagemPremio =
-  document.getElementById(
-    "imagemPremio"
-  );
-
-
-const tituloPremio =
-  document.getElementById(
-    "tituloPremio"
-  );
-
-
-const textoPremio =
-  document.getElementById(
-    "textoPremio"
-  );
-
-
-const codigoPremioBox =
-  document.getElementById(
-    "codigoPremioBox"
-  );
-
-
-const codigoPremio =
-  document.getElementById(
-    "codigoPremio"
-  );
-
+   ========================================================= */
 
 function mostrarResultadoPremio(
-  premio
+    nome,
+    codigo,
+    imagem
 ){
 
-  imagemPremio.src =
-    premio.imagem ||
-    "stacoin.png";
+    document
+        .getElementById("resultName")
+        .textContent =
+            `${nome} foi liberada para você!`;
 
 
-  codigoPremioBox.style.display =
-    "none";
+    document
+        .getElementById("resultCode")
+        .textContent =
+            codigo;
 
 
-  if(
-    premio.tipo ===
-    "stacoin"
-  ){
-
-    tituloPremio.textContent =
-      "🪙 Você ganhou STACOIN!";
-
-
-    textoPremio.textContent =
-      "Parabéns! Você ganhou 100 STACOIN.";
-
-
-  }else{
-
-    tituloPremio.textContent =
-      "🎉 Parabéns!";
-
-
-    textoPremio.textContent =
-      "Você ganhou a skin " +
-      premio.nome +
-      "!";
-
-
-    codigoPremio.textContent =
-      premio.codigo ||
-      "-";
-
-
-    codigoPremioBox.style.display =
-      "block";
-
-  }
-
-
-  modalResultado.classList.add(
-    "show"
-  );
+    resultModal.classList.add("show");
 
 }
 
 
-/* =====================================================
-   FECHAR RESULTADO
-===================================================== */
-
-document
-  .getElementById(
-    "fecharResultado"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      modalResultado.classList.remove(
-        "show"
-      );
-
-    }
-  );
-
-
-modalResultado.addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target ===
-      modalResultado
-    ){
-
-      modalResultado.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
+/* =========================================================
    COPIAR CÓDIGO
-===================================================== */
+   ========================================================= */
 
 document
-  .getElementById(
-    "copiarCodigo"
-  )
-  .addEventListener(
-    "click",
-    async () => {
+    .getElementById("copyCode")
+    .addEventListener(
+        "click",
+        async function(){
 
-      const codigo =
-        codigoPremio.textContent;
-
-
-      try{
-
-        await navigator
-          .clipboard
-          .writeText(
-            codigo
-          );
+            const codigo =
+                document
+                    .getElementById("resultCode")
+                    .textContent;
 
 
-        mostrarToast(
-          "📋 Código copiado!"
-        );
+            try{
+
+                await navigator.clipboard.writeText(
+                    codigo
+                );
+
+                this.textContent =
+                    "✓ COPIADO!";
 
 
-      }catch(error){
+                setTimeout(
+                    () => {
+                        this.textContent =
+                            "COPIAR CÓDIGO";
+                    },
+                    1800
+                );
 
-        mostrarToast(
-          "Código: " +
-          codigo
-        );
+            }catch{
 
-      }
+                alert(
+                    "Código: " + codigo
+                );
 
-    }
-  );
+            }
 
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-const toast =
-  document.getElementById(
-    "toast"
-  );
-
-
-let toastTimer;
-
-
-function mostrarToast(
-  texto
-){
-
-  toast.textContent =
-    texto;
-
-  toast.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      ()=>{
-        toast.classList.remove(
-          "show"
-        );
-      },
-      2200
+        }
     );
 
+
+document
+    .getElementById("closeResult")
+    .addEventListener(
+        "click",
+        () => resultModal.classList.remove("show")
+    );
+
+
+/* =========================================================
+   CAIXA OUTUBRO ROSA
+   ========================================================= */
+
+document
+    .getElementById("openBox")
+    .addEventListener(
+        "click",
+        () => {
+
+            boxError.style.display =
+                "none";
+
+            boxModal.classList.add("show");
+
+        }
+    );
+
+
+function fecharBox(){
+
+    boxModal.classList.remove("show");
+
 }
+
+
+document
+    .getElementById("closeBox")
+    .addEventListener(
+        "click",
+        fecharBox
+    );
+
+
+document
+    .getElementById("cancelBox")
+    .addEventListener(
+        "click",
+        fecharBox
+    );
+
+
+/*
+   IMPORTANTE:
+   A caixa continua apenas visual/teste nesta versão.
+   A compra real das skins já está ligada ao STACOIN.
+*/
+
+document
+    .getElementById("confirmBox")
+    .addEventListener(
+        "click",
+        () => {
+
+            boxError.textContent =
+                "A Caixa Outubro Rosa ainda está em preparação. A compra real será liberada em breve.";
+
+            boxError.style.display =
+                "block";
+
+        }
+    );
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+   ========================================================= */
+
+renderProdutos();
+
+carregarSaldo();
+
+
+/* =========================================================
+   ATUALIZAR SALDO QUANDO VOLTAR PARA A LOJA
+   ========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if(
+            document.visibilityState ===
+            "visible"
+        ){
+
+            carregarSaldo();
+
+        }
+
+    }
+);
 
 </script>
 
