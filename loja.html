@@ -301,6 +301,16 @@ header{
     background:#0f542d;
 }
 
+.buy.owned{
+    background:#e8f3eb;
+    color:#176b3a;
+    border:1px solid #c8dfce;
+}
+
+.buy.owned:hover{
+    background:#dceee1;
+}
+
 .box-card{
     margin-top:24px;
     background:linear-gradient(135deg,#fff,#fff8f9);
@@ -358,6 +368,85 @@ header{
     font-size:11px;
     line-height:1.5;
     margin-top:18px;
+}
+
+/* MINHAS SKINS */
+
+.my-skins-section{
+    display:none;
+    margin-top:28px;
+}
+
+.my-skins-section.show{
+    display:block;
+}
+
+.my-skins-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.my-skin{
+    background:white;
+    border:1px solid #dfe9e2;
+    border-radius:16px;
+    padding:12px;
+    box-shadow:0 3px 12px rgba(23,107,58,.05);
+}
+
+.my-skin-image{
+    width:100%;
+    height:130px;
+    object-fit:contain;
+    background:#f0f3f1;
+    border-radius:12px;
+}
+
+.my-skin h3{
+    font-size:13px;
+    margin-top:10px;
+    color:#173b29;
+}
+
+.my-skin p{
+    color:#718079;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.owned-badge{
+    display:inline-block;
+    margin-top:8px;
+    padding:5px 8px;
+    border-radius:999px;
+    background:#e8f3eb;
+    color:#176b3a;
+    font-size:9px;
+    font-weight:900;
+}
+
+.view-code{
+    width:100%;
+    border:none;
+    background:#176b3a;
+    color:white;
+    padding:9px;
+    border-radius:10px;
+    margin-top:9px;
+    font-size:10px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.empty-skins{
+    background:white;
+    border:1px dashed #cbd9cf;
+    border-radius:15px;
+    padding:18px;
+    text-align:center;
+    color:#718079;
+    font-size:11px;
 }
 
 footer{
@@ -567,7 +656,12 @@ footer{
 }
 
 @media(max-width:800px){
+
     .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .my-skins-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
@@ -577,6 +671,7 @@ footer{
 }
 
 @media(max-width:520px){
+
     header{
         padding:12px;
     }
@@ -625,8 +720,17 @@ footer{
         gap:9px;
     }
 
+    .my-skins-grid{
+        grid-template-columns:1fr 1fr;
+        gap:9px;
+    }
+
     .image-box{
         height:145px;
+    }
+
+    .my-skin-image{
+        height:105px;
     }
 
     .card-body{
@@ -671,7 +775,12 @@ footer{
 }
 
 @media(max-width:360px){
+
     .products{
+        grid-template-columns:1fr;
+    }
+
+    .my-skins-grid{
         grid-template-columns:1fr;
     }
 
@@ -687,19 +796,46 @@ footer{
 <header>
 
     <div class="header-left">
-        <img src="logo.sta.PNG" class="logo" alt="Santa Luzia">
+
+        <img
+            src="logo.sta.PNG"
+            class="logo"
+            alt="Santa Luzia"
+        >
+
         <div class="header-title">
+
             <h1>SANTA LUZIA SHOP</h1>
-            <p>Loja oficial da Santa Luzia</p>
+
+            <p>
+                Loja oficial da Santa Luzia
+            </p>
+
         </div>
+
     </div>
 
+
     <div class="balance">
-        <img src="stacoin.png" class="coin" alt="STACOIN">
+
+        <img
+            src="stacoin.png"
+            class="coin"
+            alt="STACOIN"
+        >
+
         <div class="balance-text">
-            <span class="balance-label">MEU SALDO</span>
-            <span id="saldo">Carregando...</span>
+
+            <span class="balance-label">
+                MEU SALDO
+            </span>
+
+            <span id="saldo">
+                Carregando...
+            </span>
+
         </div>
+
     </div>
 
 </header>
@@ -708,44 +844,105 @@ footer{
 <main class="container">
 
     <section class="hero">
-        <h2>🍅 Santa Luzia Shop</h2>
-        <p>Troque seus STACOIN por skins oficiais da nossa empresa.</p>
+
+        <h2>
+            🍅 Santa Luzia Shop
+        </h2>
+
+        <p>
+            Troque seus STACOIN por skins oficiais da nossa empresa.
+        </p>
+
+    </section>
+
+
+    <!-- MINHAS SKINS -->
+
+    <section
+        class="my-skins-section"
+        id="mySkinsSection"
+    >
+
+        <div class="section-title">
+
+            <h2>
+                🎟️ Minhas skins
+            </h2>
+
+            <span id="mySkinsCount">
+                0 adquiridas
+            </span>
+
+        </div>
+
+        <div
+            class="my-skins-grid"
+            id="mySkins"
+        ></div>
+
     </section>
 
 
     <div class="section-title">
-        <h2>Skins oficiais</h2>
-        <span id="contador">9 produtos</span>
+
+        <h2>
+            Skins oficiais
+        </h2>
+
+        <span id="contador">
+            9 produtos
+        </span>
+
     </div>
 
 
     <div class="categories">
 
-        <button class="cat active" data-cat="todos">
+        <button
+            class="cat active"
+            data-cat="todos"
+        >
             Todas
         </button>
 
-        <button class="cat" data-cat="scania">
+        <button
+            class="cat"
+            data-cat="scania"
+        >
             Scania
         </button>
 
-        <button class="cat" data-cat="bob">
+        <button
+            class="cat"
+            data-cat="bob"
+        >
             BOB
         </button>
 
-        <button class="cat" data-cat="volvo">
+        <button
+            class="cat"
+            data-cat="volvo"
+        >
             Volvo
         </button>
 
-        <button class="cat" data-cat="iveco">
+        <button
+            class="cat"
+            data-cat="iveco"
+        >
             Iveco
         </button>
 
     </div>
 
 
-    <div class="products" id="products"></div>
+    <div
+        class="products"
+        id="products"
+    ></div>
 
+
+    <!-- CAIXA OUTUBRO ROSA -->
 
     <section class="box-card">
 
@@ -757,7 +954,9 @@ footer{
 
         <div class="box-info">
 
-            <h2>🎀 Caixa Outubro Rosa</h2>
+            <h2>
+                🎀 Caixa Outubro Rosa
+            </h2>
 
             <p>
                 Uma caixa especial da Santa Luzia.
@@ -772,7 +971,10 @@ footer{
                 100 STACOIN
             </div>
 
-            <button class="box-button" id="openBox">
+            <button
+                class="box-button"
+                id="openBox"
+            >
                 ABRIR CAIXA
             </button>
 
@@ -782,46 +984,72 @@ footer{
 
 
     <div class="notice">
+
         💰 <strong>STACOIN</strong> é a moeda interna da Santa Luzia.
         Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
+
     </div>
 
 </main>
 
 
 <footer>
+
     SANTA LUZIA TOMATES • SANTA LUZIA BATATAS<br>
+
     Juntos fazemos mais 🍅
+
 </footer>
 
 
-<!-- MODAL COMPRA -->
+<!-- =====================================================
+     MODAL COMPRA
+===================================================== -->
 
-<div class="modal-bg" id="purchaseModal">
+<div
+    class="modal-bg"
+    id="purchaseModal"
+>
 
     <div class="modal">
 
         <div class="modal-top">
-            <h2>Confirmar compra</h2>
 
-            <button class="close" id="closePurchase">
+            <h2>
+                Confirmar compra
+            </h2>
+
+            <button
+                class="close"
+                id="closePurchase"
+            >
                 ×
             </button>
+
         </div>
+
 
         <div class="modal-product">
 
-            <img id="modalProductImage" src="" alt="Produto">
+            <img
+                id="modalProductImage"
+                src=""
+                alt="Produto"
+            >
 
             <h3 id="modalProductName">
                 Produto
             </h3>
 
-            <div class="modal-price" id="modalProductPrice">
+            <div
+                class="modal-price"
+                id="modalProductPrice"
+            >
                 0 STACOIN
             </div>
 
         </div>
+
 
         <div class="modal-info">
 
@@ -831,15 +1059,26 @@ footer{
 
         </div>
 
-        <div class="error" id="purchaseError"></div>
+
+        <div
+            class="error"
+            id="purchaseError"
+        ></div>
+
 
         <div class="modal-actions">
 
-            <button class="cancel" id="cancelPurchase">
+            <button
+                class="cancel"
+                id="cancelPurchase"
+            >
                 CANCELAR
             </button>
 
-            <button class="confirm" id="confirmPurchase">
+            <button
+                class="confirm"
+                id="confirmPurchase"
+            >
                 CONFIRMAR
             </button>
 
@@ -850,9 +1089,14 @@ footer{
 </div>
 
 
-<!-- MODAL RESULTADO -->
+<!-- =====================================================
+     MODAL RESULTADO
+===================================================== -->
 
-<div class="modal-bg" id="resultModal">
+<div
+    class="modal-bg"
+    id="resultModal"
+>
 
     <div class="modal result">
 
@@ -860,11 +1104,14 @@ footer{
             🍅
         </div>
 
-        <h2>Compra realizada!</h2>
+        <h2>
+            Compra realizada!
+        </h2>
 
         <p id="resultName">
             Skin liberada com sucesso.
         </p>
+
 
         <div class="code-box">
 
@@ -872,24 +1119,37 @@ footer{
                 Código da skin
             </div>
 
-            <div class="code" id="resultCode">
+            <div
+                class="code"
+                id="resultCode"
+            >
                 —
             </div>
 
-            <button class="copy-code" id="copyCode">
+            <button
+                class="copy-code"
+                id="copyCode"
+            >
                 COPIAR CÓDIGO
             </button>
 
         </div>
 
+
         <div class="modal-info">
+
             O valor já foi descontado do seu saldo STACOIN
             e a compra foi registrada no extrato.
+
         </div>
+
 
         <div class="modal-actions">
 
-            <button class="confirm" id="closeResult">
+            <button
+                class="confirm"
+                id="closeResult"
+            >
                 FECHAR
             </button>
 
@@ -900,21 +1160,121 @@ footer{
 </div>
 
 
-<!-- MODAL CAIXA -->
+<!-- =====================================================
+     MODAL CÓDIGO DE SKIN ADQUIRIDA
+===================================================== -->
 
-<div class="modal-bg" id="boxModal">
+<div
+    class="modal-bg"
+    id="ownedModal"
+>
+
+    <div class="modal result">
+
+        <div class="modal-top">
+
+            <h2>
+                🎟️ Minha skin
+            </h2>
+
+            <button
+                class="close"
+                id="closeOwned"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-product">
+
+            <img
+                id="ownedProductImage"
+                src=""
+                alt="Skin adquirida"
+            >
+
+            <h3 id="ownedProductName">
+                Skin
+            </h3>
+
+        </div>
+
+
+        <div class="code-box">
+
+            <div class="code-label">
+                Código da skin
+            </div>
+
+            <div
+                class="code"
+                id="ownedCode"
+            >
+                —
+            </div>
+
+            <button
+                class="copy-code"
+                id="copyOwnedCode"
+            >
+                COPIAR CÓDIGO
+            </button>
+
+        </div>
+
+
+        <div class="modal-info">
+
+            Esta skin já pertence a você.
+            O código fica salvo na sua conta e pode ser consultado novamente.
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="confirm"
+                id="closeOwnedBottom"
+            >
+                FECHAR
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL CAIXA
+===================================================== -->
+
+<div
+    class="modal-bg"
+    id="boxModal"
+>
 
     <div class="modal">
 
         <div class="modal-top">
 
-            <h2>🎀 Caixa Outubro Rosa</h2>
+            <h2>
+                🎀 Caixa Outubro Rosa
+            </h2>
 
-            <button class="close" id="closeBox">
+            <button
+                class="close"
+                id="closeBox"
+            >
                 ×
             </button>
 
         </div>
+
 
         <div class="modal-product">
 
@@ -924,7 +1284,9 @@ footer{
                 style="width:160px;height:140px;object-fit:contain;"
             >
 
-            <h3>1 caixa especial</h3>
+            <h3>
+                1 caixa especial
+            </h3>
 
             <div class="modal-price">
                 100 STACOIN
@@ -932,14 +1294,24 @@ footer{
 
         </div>
 
+
         <div class="modal-info">
 
-            <strong>Possíveis prêmios:</strong><br><br>
+            <strong>Possíveis prêmios:</strong>
+            <br><br>
 
-            🚛 Bitruck Tomate<br>
-            🚛 Bitruck Batata<br>
-            🚚 Carreta Batata<br>
-            🚚 Carreta Tomate<br>
+            🚛 Bitruck Tomate
+            <br>
+
+            🚛 Bitruck Batata
+            <br>
+
+            🚚 Carreta Batata
+            <br>
+
+            🚚 Carreta Tomate
+            <br>
+
             🎁 Prêmio especial
 
             <br><br>
@@ -948,15 +1320,26 @@ footer{
 
         </div>
 
-        <div class="error" id="boxError"></div>
+
+        <div
+            class="error"
+            id="boxError"
+        ></div>
+
 
         <div class="modal-actions">
 
-            <button class="cancel" id="cancelBox">
+            <button
+                class="cancel"
+                id="cancelBox"
+            >
                 CANCELAR
             </button>
 
-            <button class="confirm" id="confirmBox">
+            <button
+                class="confirm"
+                id="confirmBox"
+            >
                 ABRIR POR 100 STC
             </button>
 
@@ -971,16 +1354,11 @@ footer{
 
 /* =========================================================
    SUPABASE
-   ========================================================= */
+========================================================= */
 
 const SUPABASE_URL =
     "https://cckypvqophyviphqhich.supabase.co";
 
-
-/*
-   COLE AQUI A MESMA PUBLISHABLE KEY
-   QUE VOCÊ JÁ USA NO SEU SANTA LUZIA CENTRAL.
-*/
 const SUPABASE_KEY =
     "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
@@ -1002,7 +1380,7 @@ const supabaseClient =
 
 /* =========================================================
    PRODUTOS
-   ========================================================= */
+========================================================= */
 
 const produtos = [
 
@@ -1128,7 +1506,7 @@ const produtos = [
 
 /* =========================================================
    ESTADO
-   ========================================================= */
+========================================================= */
 
 let categoriaAtual = "todos";
 
@@ -1138,10 +1516,12 @@ let saldoAtual = 0;
 
 let motoristaAtual = null;
 
+let comprasRealizadas = [];
+
 
 /* =========================================================
    ELEMENTOS
-   ========================================================= */
+========================================================= */
 
 const productsEl =
     document.getElementById("products");
@@ -1157,6 +1537,9 @@ const purchaseModal =
 
 const resultModal =
     document.getElementById("resultModal");
+
+const ownedModal =
+    document.getElementById("ownedModal");
 
 const boxModal =
     document.getElementById("boxModal");
@@ -1176,10 +1559,19 @@ const purchaseError =
 const boxError =
     document.getElementById("boxError");
 
+const mySkinsSection =
+    document.getElementById("mySkinsSection");
+
+const mySkinsEl =
+    document.getElementById("mySkins");
+
+const mySkinsCount =
+    document.getElementById("mySkinsCount");
+
 
 /* =========================================================
    FORMATAR STACOIN
-   ========================================================= */
+========================================================= */
 
 function formatarStacoin(valor){
 
@@ -1190,174 +1582,491 @@ function formatarStacoin(valor){
 
 
 /* =========================================================
+   VERIFICAR SE POSSUI SKIN
+========================================================= */
+
+function possuiSkin(codigo){
+
+    return comprasRealizadas.some(
+        compra =>
+            compra.tipo === "skin" &&
+            compra.codigo === codigo
+    );
+
+}
+
+
+/* =========================================================
+   ENCONTRAR COMPRA
+========================================================= */
+
+function encontrarCompra(codigo){
+
+    return comprasRealizadas.find(
+        compra =>
+            compra.tipo === "skin" &&
+            compra.codigo === codigo
+    );
+
+}
+
+
+/* =========================================================
+   CARREGAR COMPRAS
+========================================================= */
+
+async function carregarCompras(){
+
+    if(!motoristaAtual){
+
+        comprasRealizadas = [];
+
+        renderMinhasSkins();
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("stacoin_compras")
+            .select(
+                "id,tipo,produto_nome,codigo,valor,created_at"
+            )
+            .eq(
+                "motorista_id",
+                motoristaAtual.id
+            )
+            .eq(
+                "tipo",
+                "skin"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+    if(error){
+
+        console.error(
+            "Erro ao carregar compras:",
+            error
+        );
+
+        comprasRealizadas = [];
+
+        renderMinhasSkins();
+
+        return;
+
+    }
+
+
+    comprasRealizadas =
+        data || [];
+
+
+    renderMinhasSkins();
+
+}
+
+
+/* =========================================================
+   RENDER MINHAS SKINS
+========================================================= */
+
+function renderMinhasSkins(){
+
+    mySkinsEl.innerHTML = "";
+
+
+    if(!comprasRealizadas.length){
+
+        mySkinsSection.classList.remove("show");
+
+        mySkinsCount.textContent =
+            "0 adquiridas";
+
+        return;
+
+    }
+
+
+    mySkinsSection.classList.add("show");
+
+
+    mySkinsCount.textContent =
+        `${comprasRealizadas.length} adquirida${comprasRealizadas.length !== 1 ? "s" : ""}`;
+
+
+    comprasRealizadas.forEach(
+        compra => {
+
+            const produto =
+                produtos.find(
+                    p => p.codigo === compra.codigo
+                );
+
+
+            if(!produto){
+
+                return;
+
+            }
+
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "my-skin";
+
+
+            card.innerHTML = `
+
+                <img
+                    class="my-skin-image"
+                    src="${produto.imagens[0]}"
+                    alt="${produto.nome} ${produto.descricao}"
+                >
+
+                <h3>
+                    ${produto.nome}
+                </h3>
+
+                <p>
+                    ${produto.descricao}
+                </p>
+
+                <span class="owned-badge">
+                    ✓ ADQUIRIDA
+                </span>
+
+                <button
+                    class="view-code"
+                >
+                    VER MEU CÓDIGO
+                </button>
+
+            `;
+
+
+            card
+                .querySelector(".view-code")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        abrirCodigoAdquirido(
+                            produto,
+                            compra.codigo
+                        );
+
+                    }
+                );
+
+
+            mySkinsEl.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ABRIR CÓDIGO DE SKIN ADQUIRIDA
+========================================================= */
+
+function abrirCodigoAdquirido(
+    produto,
+    codigo
+){
+
+    document
+        .getElementById("ownedProductImage")
+        .src =
+            produto.imagens[0];
+
+
+    document
+        .getElementById("ownedProductName")
+        .textContent =
+            `${produto.nome} — ${produto.descricao}`;
+
+
+    document
+        .getElementById("ownedCode")
+        .textContent =
+            codigo;
+
+
+    ownedModal.classList.add("show");
+
+}
+
+
+/* =========================================================
    RENDER PRODUTOS
-   ========================================================= */
+========================================================= */
 
 function renderProdutos(){
 
     productsEl.innerHTML = "";
+
 
     const lista =
         categoriaAtual === "todos"
             ? produtos
             : produtos.filter(
                 p => p.categoria === categoriaAtual
-              );
+            );
+
 
     contadorEl.textContent =
         `${lista.length} produto${lista.length !== 1 ? "s" : ""}`;
 
 
-    lista.forEach(produto => {
+    lista.forEach(
+        produto => {
 
-        const card =
-            document.createElement("article");
+            const card =
+                document.createElement("article");
 
-        card.className = "card";
+            card.className =
+                "card";
 
-        let imagemAtual = 0;
+
+            let imagemAtual = 0;
+
+            const jaPossui =
+                possuiSkin(produto.codigo);
 
 
-        card.innerHTML = `
+            card.innerHTML = `
 
-            <div class="image-box">
+                <div class="image-box">
 
-                <img
-                    class="product-img"
-                    src="${produto.imagens[0]}"
-                    alt="${produto.nome} ${produto.descricao}"
-                >
+                    <img
+                        class="product-img"
+                        src="${produto.imagens[0]}"
+                        alt="${produto.nome} ${produto.descricao}"
+                    >
 
-                ${
-                    produto.imagens.length > 1
-                    ?
-                    `<div class="image-nav">
-                        ${produto.imagens.map((_,i)=>
-                            `<span class="dot ${i===0 ? "active":""}"></span>`
-                        ).join("")}
-                    </div>`
-                    :
-                    ""
-                }
+                    ${
+                        produto.imagens.length > 1
+                        ?
+                        `<div class="image-nav">
 
-            </div>
+                            ${produto.imagens.map(
+                                (_,i) =>
+                                    `<span class="dot ${i===0 ? "active":""}"></span>`
+                            ).join("")}
 
-            <div class="card-body">
+                        </div>`
+                        :
+                        ""
+                    }
 
-                <div class="category-label">
-                    ${produto.categoria}
                 </div>
 
-                <h3>
-                    ${produto.nome}
-                </h3>
 
-                <div class="card-name">
-                    ${produto.descricao}
-                </div>
+                <div class="card-body">
 
-                <div class="price-row">
-
-                    <div class="price">
-                        ${produto.preco.toLocaleString("pt-BR")} STC
+                    <div class="category-label">
+                        ${produto.categoria}
                     </div>
 
-                    <button class="buy">
-                        COMPRAR
-                    </button>
+                    <h3>
+                        ${produto.nome}
+                    </h3>
+
+                    <div class="card-name">
+                        ${produto.descricao}
+                    </div>
+
+
+                    <div class="price-row">
+
+                        <div class="price">
+                            ${
+                                produto.preco
+                                    .toLocaleString("pt-BR")
+                            } STC
+                        </div>
+
+
+                        <button
+                            class="buy ${jaPossui ? "owned" : ""}"
+                        >
+
+                            ${
+                                jaPossui
+                                    ? "✓ ADQUIRIDA"
+                                    : "COMPRAR"
+                            }
+
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </div>
-
-        `;
+            `;
 
 
-        const img =
-            card.querySelector(".product-img");
+            const img =
+                card.querySelector(".product-img");
 
-        const dots =
-            card.querySelectorAll(".dot");
+            const dots =
+                card.querySelectorAll(".dot");
 
 
-        if(produto.imagens.length > 1){
+            if(produto.imagens.length > 1){
 
-            let intervalo =
-                setInterval(() => {
+                const intervalo =
+                    setInterval(
+                        () => {
 
-                    imagemAtual =
-                        (imagemAtual + 1) %
-                        produto.imagens.length;
+                            if(
+                                !document.body.contains(card)
+                            ){
 
-                    img.src =
-                        produto.imagens[imagemAtual];
+                                clearInterval(intervalo);
 
-                    dots.forEach(
-                        (dot,i) =>
-                            dot.classList.toggle(
-                                "active",
-                                i === imagemAtual
-                            )
+                                return;
+
+                            }
+
+
+                            imagemAtual =
+                                (
+                                    imagemAtual + 1
+                                ) %
+                                produto.imagens.length;
+
+
+                            img.src =
+                                produto.imagens[
+                                    imagemAtual
+                                ];
+
+
+                            dots.forEach(
+                                (dot,i) =>
+                                    dot.classList.toggle(
+                                        "active",
+                                        i === imagemAtual
+                                    )
+                            );
+
+                        },
+                        3500
                     );
 
-                },3500);
+
+                card.addEventListener(
+                    "mouseenter",
+                    () =>
+                        clearInterval(intervalo)
+                );
+
+            }
 
 
-            card.addEventListener(
-                "mouseenter",
-                () => clearInterval(intervalo)
-            );
+            card
+                .querySelector(".buy")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        if(jaPossui){
+
+                            const compra =
+                                encontrarCompra(
+                                    produto.codigo
+                                );
+
+
+                            if(compra){
+
+                                abrirCodigoAdquirido(
+                                    produto,
+                                    compra.codigo
+                                );
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        abrirCompra(produto);
+
+                    }
+                );
+
+
+            productsEl.appendChild(card);
 
         }
-
-
-        card.querySelector(".buy")
-            .addEventListener(
-                "click",
-                () => abrirCompra(produto)
-            );
-
-
-        productsEl.appendChild(card);
-
-    });
+    );
 
 }
 
 
 /* =========================================================
    CATEGORIAS
-   ========================================================= */
+========================================================= */
 
-document.querySelectorAll(".cat")
-    .forEach(button => {
+document
+    .querySelectorAll(".cat")
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                document
-                    .querySelectorAll(".cat")
-                    .forEach(
-                        b => b.classList.remove("active")
+                    document
+                        .querySelectorAll(".cat")
+                        .forEach(
+                            b =>
+                                b.classList.remove(
+                                    "active"
+                                )
+                        );
+
+
+                    button.classList.add(
+                        "active"
                     );
 
-                button.classList.add("active");
 
-                categoriaAtual =
-                    button.dataset.cat;
+                    categoriaAtual =
+                        button.dataset.cat;
 
-                renderProdutos();
 
-            }
-        );
+                    renderProdutos();
 
-    });
+                }
+            );
+
+        }
+    );
 
 
 /* =========================================================
-   BUSCAR USUÁRIO
-   ========================================================= */
+   BUSCAR MOTORISTA
+========================================================= */
 
 async function carregarMotorista(){
 
@@ -1386,7 +2095,10 @@ async function carregarMotorista(){
         await supabaseClient
             .from("motoristas")
             .select("*")
-            .eq("user_id",session.user.id)
+            .eq(
+                "user_id",
+                session.user.id
+            )
             .maybeSingle();
 
 
@@ -1412,7 +2124,9 @@ async function carregarMotorista(){
     }
 
 
-    motoristaAtual = data;
+    motoristaAtual =
+        data;
+
 
     return data;
 
@@ -1421,7 +2135,7 @@ async function carregarMotorista(){
 
 /* =========================================================
    CARREGAR SALDO
-   ========================================================= */
+========================================================= */
 
 async function carregarSaldo(){
 
@@ -1443,7 +2157,10 @@ async function carregarSaldo(){
         await supabaseClient
             .from("stacoin_carteiras")
             .select("saldo")
-            .eq("motorista_id",motorista.id)
+            .eq(
+                "motorista_id",
+                motorista.id
+            )
             .maybeSingle();
 
 
@@ -1454,8 +2171,10 @@ async function carregarSaldo(){
             error
         );
 
+
         saldoEl.textContent =
             "ERRO";
+
 
         return;
 
@@ -1463,26 +2182,61 @@ async function carregarSaldo(){
 
 
     saldoAtual =
-        Number(data?.saldo || 0);
+        Number(
+            data?.saldo || 0
+        );
 
 
     saldoEl.textContent =
-        formatarStacoin(saldoAtual);
+        formatarStacoin(
+            saldoAtual
+        );
+
+
+    await carregarCompras();
+
+
+    renderProdutos();
 
 }
 
 
 /* =========================================================
    ABRIR MODAL DE COMPRA
-   ========================================================= */
+========================================================= */
 
 function abrirCompra(produto){
+
+    if(possuiSkin(produto.codigo)){
+
+        const compra =
+            encontrarCompra(
+                produto.codigo
+            );
+
+
+        if(compra){
+
+            abrirCodigoAdquirido(
+                produto,
+                compra.codigo
+            );
+
+        }
+
+
+        return;
+
+    }
+
 
     produtoSelecionado =
         produto;
 
+
     purchaseError.style.display =
         "none";
+
 
     purchaseError.textContent =
         "";
@@ -1491,25 +2245,32 @@ function abrirCompra(produto){
     modalProductImage.src =
         produto.imagens[0];
 
+
     modalProductName.textContent =
         `${produto.nome} — ${produto.descricao}`;
+
 
     modalProductPrice.textContent =
         `${produto.preco.toLocaleString("pt-BR")} STACOIN`;
 
 
-    purchaseModal.classList.add("show");
+    purchaseModal.classList.add(
+        "show"
+    );
 
 }
 
 
 /* =========================================================
-   FECHAR MODAL
-   ========================================================= */
+   FECHAR MODAL COMPRA
+========================================================= */
 
 function fecharCompra(){
 
-    purchaseModal.classList.remove("show");
+    purchaseModal.classList.remove(
+        "show"
+    );
+
 
     produtoSelecionado =
         null;
@@ -1535,7 +2296,7 @@ document
 
 /* =========================================================
    COMPRA REAL
-   ========================================================= */
+========================================================= */
 
 document
     .getElementById("confirmPurchase")
@@ -1550,12 +2311,43 @@ document
             }
 
 
+            const produto =
+                produtoSelecionado;
+
+
+            if(possuiSkin(produto.codigo)){
+
+                const compra =
+                    encontrarCompra(
+                        produto.codigo
+                    );
+
+
+                fecharCompra();
+
+
+                if(compra){
+
+                    abrirCodigoAdquirido(
+                        produto,
+                        compra.codigo
+                    );
+
+                }
+
+
+                return;
+
+            }
+
+
             const button =
                 this;
 
 
             button.disabled =
                 true;
+
 
             button.textContent =
                 "PROCESSANDO...";
@@ -1592,10 +2384,10 @@ document
                         "comprar_skin_stacoin",
                         {
                             p_codigo:
-                                produtoSelecionado.codigo,
+                                produto.codigo,
 
                             p_nome:
-                                `${produtoSelecionado.nome} — ${produtoSelecionado.descricao}`
+                                `${produto.nome} — ${produto.descricao}`
                         }
                     );
 
@@ -1607,7 +2399,10 @@ document
                 }
 
 
-                if(!data || data.sucesso !== true){
+                if(
+                    !data ||
+                    data.sucesso !== true
+                ){
 
                     throw new Error(
                         "Não foi possível concluir a compra."
@@ -1617,17 +2412,27 @@ document
 
 
                 saldoAtual =
-                    Number(data.novo_saldo || 0);
+                    Number(
+                        data.novo_saldo || 0
+                    );
 
 
                 saldoEl.textContent =
-                    formatarStacoin(saldoAtual);
+                    formatarStacoin(
+                        saldoAtual
+                    );
+
+
+                await carregarCompras();
+
+
+                renderProdutos();
 
 
                 mostrarResultadoPremio(
                     data.nome,
                     data.codigo,
-                    produtoSelecionado.imagens[0]
+                    produto.imagens[0]
                 );
 
 
@@ -1647,10 +2452,12 @@ document
                     "Não foi possível realizar a compra.";
 
 
+                const mensagemLower =
+                    mensagem.toLowerCase();
+
+
                 if(
-                    mensagem
-                        .toLowerCase()
-                        .includes("saldo")
+                    mensagemLower.includes("saldo")
                 ){
 
                     mensagem =
@@ -1659,8 +2466,25 @@ document
                 }
 
 
+                if(
+                    mensagemLower.includes("já possui") ||
+                    mensagemLower.includes("já comprou") ||
+                    mensagemLower.includes("adquirida")
+                ){
+
+                    mensagem =
+                        "Você já possui esta skin.";
+
+                    await carregarCompras();
+
+                    renderProdutos();
+
+                }
+
+
                 purchaseError.textContent =
                     mensagem;
+
 
                 purchaseError.style.display =
                     "block";
@@ -1670,6 +2494,7 @@ document
 
                 button.disabled =
                     false;
+
 
                 button.textContent =
                     "CONFIRMAR";
@@ -1682,7 +2507,7 @@ document
 
 /* =========================================================
    RESULTADO
-   ========================================================= */
+========================================================= */
 
 function mostrarResultadoPremio(
     nome,
@@ -1702,52 +2527,72 @@ function mostrarResultadoPremio(
             codigo;
 
 
-    resultModal.classList.add("show");
+    resultModal.classList.add(
+        "show"
+    );
 
 }
 
 
 /* =========================================================
    COPIAR CÓDIGO
-   ========================================================= */
+========================================================= */
+
+async function copiarTexto(
+    codigo,
+    botao
+){
+
+    try{
+
+        await navigator.clipboard.writeText(
+            codigo
+        );
+
+
+        botao.textContent =
+            "✓ COPIADO!";
+
+
+        setTimeout(
+            () => {
+
+                botao.textContent =
+                    "COPIAR CÓDIGO";
+
+            },
+            1800
+        );
+
+    }catch{
+
+        alert(
+            "Código: " + codigo
+        );
+
+    }
+
+}
+
 
 document
     .getElementById("copyCode")
     .addEventListener(
         "click",
-        async function(){
+        function(){
 
             const codigo =
                 document
-                    .getElementById("resultCode")
+                    .getElementById(
+                        "resultCode"
+                    )
                     .textContent;
 
 
-            try{
-
-                await navigator.clipboard.writeText(
-                    codigo
-                );
-
-                this.textContent =
-                    "✓ COPIADO!";
-
-
-                setTimeout(
-                    () => {
-                        this.textContent =
-                            "COPIAR CÓDIGO";
-                    },
-                    1800
-                );
-
-            }catch{
-
-                alert(
-                    "Código: " + codigo
-                );
-
-            }
+            copiarTexto(
+                codigo,
+                this
+            );
 
         }
     );
@@ -1757,13 +2602,68 @@ document
     .getElementById("closeResult")
     .addEventListener(
         "click",
-        () => resultModal.classList.remove("show")
+        () =>
+            resultModal.classList.remove(
+                "show"
+            )
+    );
+
+
+/* =========================================================
+   MODAL MINHAS SKINS
+========================================================= */
+
+function fecharOwned(){
+
+    ownedModal.classList.remove(
+        "show"
+    );
+
+}
+
+
+document
+    .getElementById("closeOwned")
+    .addEventListener(
+        "click",
+        fecharOwned
+    );
+
+
+document
+    .getElementById("closeOwnedBottom")
+    .addEventListener(
+        "click",
+        fecharOwned
+    );
+
+
+document
+    .getElementById("copyOwnedCode")
+    .addEventListener(
+        "click",
+        function(){
+
+            const codigo =
+                document
+                    .getElementById(
+                        "ownedCode"
+                    )
+                    .textContent;
+
+
+            copiarTexto(
+                codigo,
+                this
+            );
+
+        }
     );
 
 
 /* =========================================================
    CAIXA OUTUBRO ROSA
-   ========================================================= */
+========================================================= */
 
 document
     .getElementById("openBox")
@@ -1774,7 +2674,14 @@ document
             boxError.style.display =
                 "none";
 
-            boxModal.classList.add("show");
+
+            boxError.textContent =
+                "";
+
+
+            boxModal.classList.add(
+                "show"
+            );
 
         }
     );
@@ -1782,7 +2689,9 @@ document
 
 function fecharBox(){
 
-    boxModal.classList.remove("show");
+    boxModal.classList.remove(
+        "show"
+    );
 
 }
 
@@ -1804,9 +2713,8 @@ document
 
 
 /*
-   IMPORTANTE:
-   A caixa continua apenas visual/teste nesta versão.
-   A compra real das skins já está ligada ao STACOIN.
+   A CAIXA CONTINUA VISUAL/TESTE.
+   A COMPRA REAL SERÁ FEITA DEPOIS.
 */
 
 document
@@ -1818,6 +2726,7 @@ document
             boxError.textContent =
                 "A Caixa Outubro Rosa ainda está em preparação. A compra real será liberada em breve.";
 
+
             boxError.style.display =
                 "block";
 
@@ -1827,7 +2736,7 @@ document
 
 /* =========================================================
    INICIALIZAÇÃO
-   ========================================================= */
+========================================================= */
 
 renderProdutos();
 
@@ -1835,8 +2744,8 @@ carregarSaldo();
 
 
 /* =========================================================
-   ATUALIZAR SALDO QUANDO VOLTAR PARA A LOJA
-   ========================================================= */
+   ATUALIZAR QUANDO VOLTAR PARA A LOJA
+========================================================= */
 
 document.addEventListener(
     "visibilitychange",
