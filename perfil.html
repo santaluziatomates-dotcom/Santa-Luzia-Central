@@ -245,10 +245,17 @@
     }
 
     .mov-valor {
-      color: #23813a;
       font-weight: bold;
       white-space: nowrap;
       font-size: 14px;
+    }
+
+    .mov-valor.entrada {
+      color: #23813a;
+    }
+
+    .mov-valor.saida {
+      color: #d62828;
     }
 
     .vazio {
@@ -469,11 +476,6 @@
     const SUPABASE_URL =
       "https://cckypvqophyviphqhich.supabase.co";
 
-    /*
-      COLOQUE AQUI A MESMA PUBLISHABLE KEY
-      QUE JÁ ESTÁ FUNCIONANDO NO SEU index.html
-    */
-
     const SUPABASE_KEY =
       "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
@@ -570,13 +572,14 @@
           nome.textContent = "Não conectado";
           apelido.textContent = "";
           status.textContent = "Faça login";
+
           return;
 
         }
 
 
         /*
-          Primeiro pegamos o e-mail da conta Google.
+          Pegamos o e-mail da conta Google.
         */
 
         const email =
@@ -584,24 +587,17 @@
 
 
         /*
-          Procuramos o motorista pelo e-mail.
-
-          IMPORTANTE:
-          Esta parte pressupõe que a tabela
-          public.motoristas tenha uma coluna "email".
-
-          Se ainda não tiver, na próxima etapa
-          vamos fazer essa ligação corretamente.
+          Procuramos o motorista pelo user_id.
         */
 
-       const {
-  data: motorista,
-  error: motoristaError
-} = await supabaseClient
-  .from("motoristas")
-  .select("*")
-  .eq("user_id", session.user.id)
-  .maybeSingle();
+        const {
+          data: motorista,
+          error: motoristaError
+        } = await supabaseClient
+          .from("motoristas")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .maybeSingle();
 
 
         if (motoristaError) {
@@ -613,7 +609,7 @@
 
         /*
           Caso ainda não exista motorista ligado
-          ao e-mail.
+          à conta.
         */
 
         if (!motorista) {
@@ -703,8 +699,7 @@
 
 
         /*
-          Inicialmente usamos uma barra simples
-          baseada no XP atual.
+          Barra baseada no XP atual.
         */
 
         let porcentagem =
@@ -721,7 +716,7 @@
 
 
         /*
-          Iniciais do motorista
+          Iniciais do motorista.
         */
 
         const nomeBase =
@@ -748,8 +743,7 @@
 
 
         /*
-          Depois de carregar o motorista,
-          carregamos a carteira.
+          Carregar STACOIN.
         */
 
         await carregarStacoin(
@@ -780,10 +774,6 @@
     ) {
 
       try {
-
-        /*
-          Busca a carteira do motorista.
-        */
 
         const {
           data: carteira,
@@ -819,7 +809,7 @@
 
 
         /*
-          Mostra o saldo.
+          Mostra o saldo real.
         */
 
         saldo.textContent =
@@ -884,8 +874,10 @@
       }
 
 
-      if (!movimentos ||
-          movimentos.length === 0) {
+      if (
+        !movimentos ||
+        movimentos.length === 0
+      ) {
 
         extrato.innerHTML = `
           <div class="vazio">
@@ -933,10 +925,28 @@
               : "—";
 
 
+          /*
+            O banco salva o valor positivo.
+            Quem define se é entrada ou saída
+            é o campo "tipo".
+          */
+
+          const ehSaida =
+            String(
+              movimento.tipo || ""
+            ).toLowerCase() === "saida";
+
+
           const sinal =
-            valor >= 0
-              ? "+"
-              : "";
+            ehSaida
+              ? "-"
+              : "+";
+
+
+          const classeMovimento =
+            ehSaida
+              ? "saida"
+              : "entrada";
 
 
           div.innerHTML = `
@@ -953,7 +963,7 @@
 
             </div>
 
-            <div class="mov-valor">
+            <div class="mov-valor ${classeMovimento}">
               ${sinal}${formatarStacoin(valor)}
             </div>
 
