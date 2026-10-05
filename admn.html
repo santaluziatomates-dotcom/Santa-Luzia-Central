@@ -165,6 +165,11 @@
       font-weight: bold;
     }
 
+    .btn-atualizar:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .info {
       background: #edf7f0;
       border: 1px solid #cfe4d5;
@@ -316,6 +321,11 @@
       border: 1px solid #dce2dd;
     }
 
+    .btn-salario:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
     .vazio {
       background: white;
       border: 1px solid #e0e7e1;
@@ -339,6 +349,7 @@
       align-items: center;
       justify-content: center;
       padding: 25px;
+      background: #f3f6f3;
     }
 
     .bloqueio-card {
@@ -349,6 +360,7 @@
       max-width: 390px;
       width: 100%;
       text-align: center;
+      box-shadow: 0 8px 30px rgba(23,50,31,.07);
     }
 
     .bloqueio-icone {
@@ -378,6 +390,49 @@
       border-radius: 10px;
       font-size: 11px;
       font-weight: bold;
+      margin: 4px;
+    }
+
+    .btn-secundario {
+      display: inline-block;
+      text-decoration: none;
+      background: white;
+      color: #176b3a;
+      border: 1px solid #d7e0d9;
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+      margin: 4px;
+    }
+
+    .login-email {
+      margin-top: 16px;
+      background: #f7f9f7;
+      border: 1px solid #e1e7e2;
+      border-radius: 13px;
+      padding: 12px;
+      font-size: 10px;
+      color: #68766d;
+      line-height: 1.5;
+    }
+
+    .usuario-logado {
+      margin-bottom: 15px;
+      background: white;
+      border: 1px solid #e0e7e1;
+      border-radius: 13px;
+      padding: 11px 13px;
+      color: #68766d;
+      font-size: 10px;
+    }
+
+    .usuario-logado strong {
+      color: #176b3a;
+    }
+
+    .acoes-login {
+      margin-top: 8px;
     }
 
     .toast {
@@ -437,6 +492,7 @@
   <div id="toast" class="toast"></div>
 
   <script>
+
     /* =====================================================
        CONFIGURAÇÃO SUPABASE
        ===================================================== */
@@ -444,17 +500,21 @@
     const SUPABASE_URL =
       "https://cckypvqophyviphqhich.supabase.co";
 
-    /*
-      COLE A MESMA PUBLISHABLE KEY QUE JÁ ESTÁ
-      FUNCIONANDO NO SEU index.html
-    */
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
     const supabaseClient =
       window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+            flowType: "implicit"
+          }
+        }
       );
 
 
@@ -462,8 +522,11 @@
        ELEMENTOS
        ===================================================== */
 
-    const app = document.getElementById("app");
-    const toast = document.getElementById("toast");
+    const app =
+      document.getElementById("app");
+
+    const toast =
+      document.getElementById("toast");
 
     let motoristas = [];
 
@@ -472,9 +535,16 @@
        TOAST
        ===================================================== */
 
-    function mostrarToast(mensagem, erro = false) {
+    function mostrarToast(
+      mensagem,
+      erro = false
+    ) {
+
       toast.textContent = mensagem;
-      toast.className = "toast" + (erro ? " erro" : "");
+
+      toast.className =
+        "toast" + (erro ? " erro" : "");
+
       toast.style.display = "block";
 
       setTimeout(() => {
@@ -484,27 +554,121 @@
 
 
     /* =====================================================
+       ESCAPE HTML
+       ===================================================== */
+
+    function escapeHtml(valor) {
+
+      return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* =====================================================
+       FORMATAÇÃO
+       ===================================================== */
+
+    function formatarNumero(valor) {
+
+      return Number(valor || 0)
+        .toLocaleString("pt-BR");
+    }
+
+
+    /* =====================================================
        TELA DE BLOQUEIO
        ===================================================== */
 
-    function mostrarBloqueio(titulo, mensagem) {
+    function mostrarBloqueio(
+      titulo,
+      mensagem,
+      mostrarLogin = false
+    ) {
+
       app.innerHTML = `
         <div class="bloqueio">
+
           <div class="bloqueio-card">
 
-            <div class="bloqueio-icone">🔐</div>
+            <div class="bloqueio-icone">
+              ${mostrarLogin ? "🔐" : "⛔"}
+            </div>
 
-            <h2>${titulo}</h2>
+            <h2>
+              ${escapeHtml(titulo)}
+            </h2>
 
-            <p>${mensagem}</p>
+            <p>
+              ${escapeHtml(mensagem)}
+            </p>
 
-            <a href="index.html" class="btn-central">
-              ← VOLTAR PARA A CENTRAL
-            </a>
+            <div class="acoes-login">
+
+              ${
+                mostrarLogin
+                  ? `
+                    <a
+                      href="index.html"
+                      class="btn-central"
+                    >
+                      🔐 ENTRAR PELA CENTRAL
+                    </a>
+                  `
+                  : ""
+              }
+
+              <a
+                href="index.html"
+                class="btn-secundario"
+              >
+                ← VOLTAR PARA A CENTRAL
+              </a>
+
+            </div>
 
           </div>
+
         </div>
       `;
+    }
+
+
+    /* =====================================================
+       MOSTRA USUÁRIO LOGADO
+       ===================================================== */
+
+    async function mostrarUsuarioLogado(session) {
+
+      const email =
+        session?.user?.email || "";
+
+      const nome =
+        session?.user?.user_metadata?.full_name ||
+        session?.user?.user_metadata?.name ||
+        "";
+
+      const identificacao =
+        nome
+          ? `${nome} • ${email}`
+          : email;
+
+      const existente =
+        document.getElementById(
+          "usuarioLogado"
+        );
+
+      if (existente) {
+        existente.innerHTML = `
+          🔐 Conta conectada:
+          <strong>
+            ${escapeHtml(identificacao)}
+          </strong>
+        `;
+      }
     }
 
 
@@ -514,43 +678,63 @@
 
     async function iniciar() {
 
-      if (
-        SUPABASE_PUBLISHABLE_KEY ===
-        "COLE_AQUI_A_MESMA_CHAVE_DO_INDEX"
-      ) {
-        mostrarBloqueio(
-          "Configuração necessária",
-          "Cole neste arquivo a mesma Publishable Key usada no index.html."
-        );
-        return;
-      }
-
       app.innerHTML = `
         <div class="carregando">
-          🔐 Verificando acesso ADM...
+          🔐 Verificando sua sessão...
         </div>
       `;
+
+
+      /*
+        Primeiro tenta recuperar a sessão
+        já existente no navegador.
+      */
 
       const {
         data: { session },
         error
-      } = await supabaseClient.auth.getSession();
+      } =
+        await supabaseClient.auth.getSession();
+
 
       if (error) {
+
+        console.error(error);
+
         mostrarBloqueio(
           "Erro de autenticação",
-          error.message
+          error.message,
+          false
         );
+
         return;
       }
 
+
+      /*
+        Se não estiver logado, não pedimos
+        e-mail e senha aqui.
+
+        O login oficial acontece pela
+        Santa Luzia Central.
+      */
+
       if (!session) {
+
         mostrarBloqueio(
           "Login necessário",
-          "Entre com sua conta Google na Santa Luzia Central para acessar o Painel ADM."
+          "Entre primeiro na sua conta pela Santa Luzia Central. Depois volte ao Painel ADM.",
+          true
         );
+
         return;
       }
+
+
+      await mostrarUsuarioLogado(
+        session
+      );
+
 
       await verificarADM();
     }
@@ -562,29 +746,50 @@
 
     async function verificarADM() {
 
-      const { data, error } =
-        await supabaseClient.rpc("sou_adm");
+      /*
+        A segurança real não fica no HTML.
+
+        O Supabase verifica no banco se
+        a conta autenticada possui autorização ADM.
+      */
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.rpc(
+          "sou_adm"
+        );
+
 
       if (error) {
-        console.error(error);
+
+        console.error(
+          "Erro sou_adm:",
+          error
+        );
 
         mostrarBloqueio(
           "Não foi possível verificar",
-          "O sistema não conseguiu confirmar sua autorização de administrador."
+          "O sistema não conseguiu confirmar sua autorização de administrador. Verifique se a função sou_adm está configurada no Supabase.",
+          false
         );
 
         return;
       }
+
 
       if (data !== true) {
 
         mostrarBloqueio(
           "Acesso restrito",
-          "Esta área é exclusiva para administradores autorizados da Santa Luzia."
+          "Sua conta está conectada, mas não possui autorização de administrador.",
+          false
         );
 
         return;
       }
+
 
       montarPainel();
 
@@ -593,7 +798,7 @@
 
 
     /* =====================================================
-       PAINEL
+       MONTAR PAINEL
        ===================================================== */
 
     function montarPainel() {
@@ -612,11 +817,19 @@
               >
 
               <div>
-                <h1>Painel ADM</h1>
-                <p>Gestão Santa Luzia Central</p>
+
+                <h1>
+                  Painel ADM
+                </h1>
+
+                <p>
+                  Gestão Santa Luzia Central
+                </p>
+
               </div>
 
             </div>
+
 
             <div class="status-adm">
               👑 ADM AUTORIZADO
@@ -629,7 +842,18 @@
 
         <main>
 
-          <a href="index.html" class="voltar">
+          <div
+            id="usuarioLogado"
+            class="usuario-logado"
+          >
+            🔐 Conta conectada
+          </div>
+
+
+          <a
+            href="index.html"
+            class="voltar"
+          >
             ← VOLTAR PARA A CENTRAL
           </a>
 
@@ -637,28 +861,61 @@
           <section class="resumo">
 
             <div class="card-resumo">
-              <span>MOTORISTAS</span>
-              <strong id="totalMotoristas">0</strong>
+
+              <span>
+                MOTORISTAS
+              </span>
+
+              <strong id="totalMotoristas">
+                0
+              </strong>
+
             </div>
 
-            <div class="card-resumo">
-              <span>SALÁRIO ATIVO</span>
-              <strong id="totalSalario">0</strong>
-            </div>
 
             <div class="card-resumo">
-              <span>SALÁRIO INATIVO</span>
-              <strong id="totalSemSalario">0</strong>
+
+              <span>
+                SALÁRIO ATIVO
+              </span>
+
+              <strong id="totalSalario">
+                0
+              </strong>
+
+            </div>
+
+
+            <div class="card-resumo">
+
+              <span>
+                SALÁRIO INATIVO
+              </span>
+
+              <strong id="totalSemSalario">
+                0
+              </strong>
+
             </div>
 
           </section>
 
 
           <div class="info">
-            💰 <strong>Controle de salário</strong><br>
-            Motoristas com salário ativo participarão automaticamente
-            dos pagamentos quinzenais da Santa Luzia nos dias 5 e 20,
-            desde que também estejam com status ativo/oficial.
+
+            💰 <strong>
+              Controle de salário
+            </strong>
+
+            <br>
+
+            Motoristas com salário ativo
+            participarão automaticamente
+            dos pagamentos quinzenais da
+            Santa Luzia nos dias 5 e 20,
+            desde que também estejam com
+            status ativo/oficial.
+
           </div>
 
 
@@ -672,6 +929,7 @@
               autocomplete="off"
             >
 
+
             <button
               class="btn-atualizar"
               id="btnAtualizar"
@@ -683,10 +941,15 @@
           </div>
 
 
-          <div id="lista" class="lista">
+          <div
+            id="lista"
+            class="lista"
+          >
+
             <div class="carregando">
               Carregando motoristas...
             </div>
+
           </div>
 
         </main>
@@ -695,11 +958,18 @@
 
       document
         .getElementById("busca")
-        .addEventListener("input", renderizarMotoristas);
+        .addEventListener(
+          "input",
+          renderizarMotoristas
+        );
+
 
       document
         .getElementById("btnAtualizar")
-        .addEventListener("click", carregarMotoristas);
+        .addEventListener(
+          "click",
+          carregarMotoristas
+        );
     }
 
 
@@ -709,9 +979,19 @@
 
     async function carregarMotoristas() {
 
-      const lista = document.getElementById("lista");
+      const lista =
+        document.getElementById(
+          "lista"
+        );
+
+      const atualizar =
+        document.getElementById(
+          "btnAtualizar"
+        );
+
 
       if (lista) {
+
         lista.innerHTML = `
           <div class="carregando">
             🔄 Atualizando motoristas...
@@ -719,18 +999,52 @@
         `;
       }
 
-      const { data, error } =
-        await supabaseClient.rpc("listar_motoristas_adm");
+
+      if (atualizar) {
+        atualizar.disabled = true;
+        atualizar.textContent =
+          "ATUALIZANDO...";
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.rpc(
+          "listar_motoristas_adm"
+        );
+
+
+      if (atualizar) {
+        atualizar.disabled = false;
+        atualizar.textContent =
+          "↻ ATUALIZAR";
+      }
+
 
       if (error) {
 
-        console.error(error);
+        console.error(
+          "Erro listar_motoristas_adm:",
+          error
+        );
+
 
         if (lista) {
+
           lista.innerHTML = `
             <div class="vazio">
-              ❌ Não foi possível carregar os motoristas.<br><br>
-              ${escapeHtml(error.message)}
+
+              ❌ Não foi possível
+              carregar os motoristas.
+
+              <br><br>
+
+              ${escapeHtml(
+                error.message
+              )}
+
             </div>
           `;
         }
@@ -738,7 +1052,12 @@
         return;
       }
 
-      motoristas = data || [];
+
+      motoristas =
+        Array.isArray(data)
+          ? data
+          : [];
+
 
       atualizarResumo();
 
@@ -752,65 +1071,108 @@
 
     function atualizarResumo() {
 
-      const total = motoristas.length;
+      const total =
+        motoristas.length;
+
 
       const ativos =
         motoristas.filter(
-          m => m.salario_ativo === true
+          m =>
+            m.salario_ativo === true
         ).length;
 
-      const inativos = total - ativos;
+
+      const inativos =
+        total - ativos;
+
 
       const totalEl =
-        document.getElementById("totalMotoristas");
+        document.getElementById(
+          "totalMotoristas"
+        );
+
 
       const salarioEl =
-        document.getElementById("totalSalario");
+        document.getElementById(
+          "totalSalario"
+        );
+
 
       const semSalarioEl =
-        document.getElementById("totalSemSalario");
+        document.getElementById(
+          "totalSemSalario"
+        );
 
-      if (totalEl) totalEl.textContent = total;
-      if (salarioEl) salarioEl.textContent = ativos;
-      if (semSalarioEl) semSalarioEl.textContent = inativos;
+
+      if (totalEl) {
+        totalEl.textContent =
+          total;
+      }
+
+
+      if (salarioEl) {
+        salarioEl.textContent =
+          ativos;
+      }
+
+
+      if (semSalarioEl) {
+        semSalarioEl.textContent =
+          inativos;
+      }
     }
 
 
     /* =====================================================
-       RENDERIZAÇÃO
+       RENDERIZAR MOTORISTAS
        ===================================================== */
 
     function renderizarMotoristas() {
 
       const lista =
-        document.getElementById("lista");
+        document.getElementById(
+          "lista"
+        );
+
 
       if (!lista) return;
 
+
       const campo =
-        document.getElementById("busca");
+        document.getElementById(
+          "busca"
+        );
+
 
       const busca =
         (campo?.value || "")
           .trim()
           .toLowerCase();
 
+
       const filtrados =
-        motoristas.filter(m => {
+        motoristas.filter(
+          m => {
 
-          const texto = [
-            m.codigo,
-            m.nome,
-            m.apelido,
-            m.cargo,
-            m.categoria
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
+            const texto = [
 
-          return texto.includes(busca);
-        });
+              m.codigo,
+              m.nome,
+              m.apelido,
+              m.cargo,
+              m.categoria
+
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+
+
+            return texto.includes(
+              busca
+            );
+          }
+        );
 
 
       if (!filtrados.length) {
@@ -827,54 +1189,71 @@
 
       lista.innerHTML =
         filtrados
-          .map(criarCardMotorista)
+          .map(
+            criarCardMotorista
+          )
           .join("");
 
 
-      filtrados.forEach(m => {
+      filtrados.forEach(
+        m => {
 
-        const botao =
-          document.getElementById(
-            `salario-${m.id}`
-          );
+          const botao =
+            document.getElementById(
+              `salario-${m.id}`
+            );
 
-        if (botao) {
 
-          botao.addEventListener(
-            "click",
-            () => alterarSalario(
-              m.id,
-              !m.salario_ativo
-            )
-          );
+          if (botao) {
+
+            botao.addEventListener(
+              "click",
+              () =>
+                alterarSalario(
+                  m.id,
+                  !m.salario_ativo
+                )
+            );
+          }
+
         }
-
-      });
+      );
     }
 
 
     /* =====================================================
-       CARD DO MOTORISTA
+       CARD MOTORISTA
        ===================================================== */
 
     function criarCardMotorista(m) {
 
       const status =
-        String(m.status || "")
-          .toLowerCase();
+        String(
+          m.status || ""
+        ).toLowerCase();
 
-      let classeStatus = "outro";
+
+      let classeStatus =
+        "outro";
+
 
       if (
         status === "ativo" ||
         status === "oficial" ||
         status === "active"
       ) {
-        classeStatus = "ativo";
+
+        classeStatus =
+          "ativo";
       }
 
-      if (status === "pendente") {
-        classeStatus = "pendente";
+
+      if (
+        status === "pendente"
+      ) {
+
+        classeStatus =
+          "pendente";
       }
 
 
@@ -891,23 +1270,50 @@
             <div class="identidade">
 
               <span class="codigo">
-                ${escapeHtml(m.codigo || "SEM ID")}
+
+                ${escapeHtml(
+                  m.codigo ||
+                  "SEM ID"
+                )}
+
               </span>
 
+
               <div class="nome">
-                ${escapeHtml(m.nome || "Sem nome")}
+
+                ${escapeHtml(
+                  m.nome ||
+                  "Sem nome"
+                )}
+
               </div>
 
+
               <div class="apelido">
-                ${m.apelido
-                  ? "@" + escapeHtml(m.apelido)
-                  : "Sem apelido"}
+
+                ${
+                  m.apelido
+                    ? "@" +
+                      escapeHtml(
+                        m.apelido
+                      )
+                    : "Sem apelido"
+                }
+
               </div>
 
             </div>
 
-            <span class="status ${classeStatus}">
-              ${escapeHtml(m.status || "Sem status")}
+
+            <span
+              class="status ${classeStatus}"
+            >
+
+              ${escapeHtml(
+                m.status ||
+                "Sem status"
+              )}
+
             </span>
 
           </div>
@@ -916,31 +1322,63 @@
           <div class="dados">
 
             <div class="dado">
-              <span>Cargo</span>
+
+              <span>
+                Cargo
+              </span>
+
               <strong>
-                ${escapeHtml(m.cargo || "-")}
+                ${escapeHtml(
+                  m.cargo || "-"
+                )}
               </strong>
+
             </div>
 
-            <div class="dado">
-              <span>Categoria</span>
-              <strong>
-                ${escapeHtml(m.categoria || "-")}
-              </strong>
-            </div>
 
             <div class="dado">
-              <span>Nível</span>
+
+              <span>
+                Categoria
+              </span>
+
               <strong>
-                ${escapeHtml(m.nivel || "-")}
+                ${escapeHtml(
+                  m.categoria || "-"
+                )}
               </strong>
+
             </div>
 
+
             <div class="dado">
-              <span>STACOIN</span>
+
+              <span>
+                Nível
+              </span>
+
               <strong>
-                ${formatarNumero(m.saldo_stacoin || 0)}
+                ${escapeHtml(
+                  m.nivel || "-"
+                )}
               </strong>
+
+            </div>
+
+
+            <div class="dado">
+
+              <span>
+                STACOIN
+              </span>
+
+              <strong>
+                ${formatarNumero(
+                  m.saldo_stacoin ||
+                  0
+                )}
+              </strong>
+
             </div>
 
           </div>
@@ -955,9 +1393,13 @@
               </strong>
 
               <small>
-                ${salarioAtivo
-                  ? "Este motorista está habilitado para receber."
-                  : "Este motorista não está habilitado para receber."}
+
+                ${
+                  salarioAtivo
+                    ? "Este motorista está habilitado para receber."
+                    : "Este motorista não está habilitado para receber."
+                }
+
               </small>
 
             </div>
@@ -966,11 +1408,19 @@
             <button
               id="salario-${m.id}"
               type="button"
-              class="btn-salario ${salarioAtivo ? "ativo" : "inativo"}"
+              class="btn-salario ${
+                salarioAtivo
+                  ? "ativo"
+                  : "inativo"
+              }"
             >
-              ${salarioAtivo
-                ? "✓ SALÁRIO ATIVO"
-                : "ATIVAR SALÁRIO"}
+
+              ${
+                salarioAtivo
+                  ? "✓ SALÁRIO ATIVO"
+                  : "ATIVAR SALÁRIO"
+              }
+
             </button>
 
           </div>
@@ -991,8 +1441,11 @@
 
       const motorista =
         motoristas.find(
-          m => Number(m.id) === Number(motoristaId)
+          m =>
+            Number(m.id) ===
+            Number(motoristaId)
         );
+
 
       if (!motorista) return;
 
@@ -1003,7 +1456,9 @@
           : `Desativar salário de ${motorista.nome}?`;
 
 
-      if (!confirm(mensagem)) {
+      if (!confirm(
+        mensagem
+      )) {
         return;
       }
 
@@ -1013,34 +1468,45 @@
           `salario-${motoristaId}`
         );
 
+
       if (botao) {
+
         botao.disabled = true;
-        botao.textContent = "SALVANDO...";
+
+        botao.textContent =
+          "SALVANDO...";
       }
 
 
-      const { data, error } =
+      const {
+        data,
+        error
+      } =
         await supabaseClient.rpc(
           "definir_salario_ativo",
           {
-            p_motorista_id: motoristaId,
-            p_ativo: novoStatus
+            p_motorista_id:
+              motoristaId,
+
+            p_ativo:
+              novoStatus
           }
         );
 
 
       if (error) {
 
-        console.error(error);
+        console.error(
+          "Erro definir_salario_ativo:",
+          error
+        );
+
 
         mostrarToast(
           "Não foi possível alterar o salário.",
           true
         );
 
-        if (botao) {
-          botao.disabled = false;
-        }
 
         renderizarMotoristas();
 
@@ -1048,12 +1514,16 @@
       }
 
 
-      if (!data || data.sucesso !== true) {
+      if (
+        !data ||
+        data.sucesso !== true
+      ) {
 
         mostrarToast(
           "O Supabase não confirmou a alteração.",
           true
         );
+
 
         renderizarMotoristas();
 
@@ -1063,11 +1533,16 @@
 
       const encontrado =
         motoristas.find(
-          m => Number(m.id) === Number(motoristaId)
+          m =>
+            Number(m.id) ===
+            Number(motoristaId)
         );
 
+
       if (encontrado) {
-        encontrado.salario_ativo = novoStatus;
+
+        encontrado.salario_ativo =
+          novoStatus;
       }
 
 
@@ -1077,50 +1552,53 @@
 
 
       mostrarToast(
+
         novoStatus
           ? `${motorista.nome} agora está com salário ATIVO.`
           : `${motorista.nome} agora está com salário INATIVO.`
+
       );
     }
 
 
     /* =====================================================
-       SEGURANÇA / HTML
-       ===================================================== */
-
-    function escapeHtml(valor) {
-
-      return String(valor ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-
-    function formatarNumero(valor) {
-
-      return Number(valor || 0)
-        .toLocaleString("pt-BR");
-    }
-
-
-    /* =====================================================
-       LOGOUT / ALTERAÇÃO DE LOGIN
+       ALTERAÇÃO DE SESSÃO
        ===================================================== */
 
     supabaseClient.auth.onAuthStateChange(
-      (event, session) => {
+      async (
+        event,
+        session
+      ) => {
+
+        console.log(
+          "Auth:",
+          event
+        );
+
 
         if (
-          event === "SIGNED_OUT" ||
-          !session
+          event ===
+          "SIGNED_OUT"
         ) {
+
           mostrarBloqueio(
             "Sessão encerrada",
-            "Faça login novamente pela Santa Luzia Central."
+            "Faça login novamente pela Santa Luzia Central.",
+            true
           );
+
+          return;
+        }
+
+
+        if (
+          event ===
+          "SIGNED_IN" &&
+          session
+        ) {
+
+          await verificarADM();
         }
 
       }
