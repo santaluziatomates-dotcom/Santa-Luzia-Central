@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Painel ADM • Santa Luzia Central</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f6f3;
+      color: #17321f;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #176b3a;
+      color: white;
+      padding: 18px 16px 22px;
+      border-radius: 0 0 22px 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.10);
+    }
+
+    .topo {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .marca {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .marca img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      padding: 4px;
+    }
+
+    .marca h1 {
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .marca p {
+      font-size: 11px;
+      opacity: .85;
+      margin-top: 4px;
+    }
+
+    .status-adm {
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
+      padding: 8px 11px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    main {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .voltar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 15px;
+      padding: 9px 13px;
+      background: white;
+      color: #176b3a;
+      border: 1px solid #dfe5df;
+      border-radius: 11px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .resumo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .card-resumo {
+      background: white;
+      border: 1px solid #e0e7e1;
+      border-radius: 15px;
+      padding: 15px;
+    }
+
+    .card-resumo span {
+      display: block;
+      font-size: 10px;
+      color: #708078;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .card-resumo strong {
+      font-size: 22px;
+      color: #176b3a;
+    }
+
+    .barra {
+      background: white;
+      border: 1px solid #e0e7e1;
+      border-radius: 15px;
+      padding: 13px;
+      margin-bottom: 15px;
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .busca {
+      flex: 1;
+      min-width: 180px;
+      border: 1px solid #d9e1db;
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .busca:focus {
+      border-color: #176b3a;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-atualizar {
+      background: #176b3a;
+      color: white;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .info {
+      background: #edf7f0;
+      border: 1px solid #cfe4d5;
+      color: #176b3a;
+      border-radius: 13px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .lista {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .motorista {
+      background: white;
+      border: 1px solid #e0e7e1;
+      border-radius: 17px;
+      padding: 15px;
+    }
+
+    .motorista-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .identidade {
+      min-width: 0;
+    }
+
+    .codigo {
+      display: inline-block;
+      color: #176b3a;
+      background: #edf7f0;
+      border: 1px solid #d2e7d8;
+      padding: 4px 7px;
+      border-radius: 7px;
+      font-size: 10px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .nome {
+      font-size: 16px;
+      font-weight: bold;
+      color: #17321f;
+    }
+
+    .apelido {
+      color: #6f7b73;
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    .status {
+      font-size: 9px;
+      font-weight: bold;
+      padding: 6px 8px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    .status.ativo {
+      background: #e7f6eb;
+      color: #17723b;
+    }
+
+    .status.pendente {
+      background: #fff5df;
+      color: #9a6a00;
+    }
+
+    .status.outro {
+      background: #f0f2f1;
+      color: #66716a;
+    }
+
+    .dados {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .dado {
+      background: #f7f9f7;
+      border-radius: 10px;
+      padding: 9px;
+    }
+
+    .dado span {
+      display: block;
+      color: #7b877f;
+      font-size: 8px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .dado strong {
+      font-size: 11px;
+      color: #25392c;
+      word-break: break-word;
+    }
+
+    .salario-box {
+      margin-top: 12px;
+      border-top: 1px solid #edf0ed;
+      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .salario-info strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .salario-info small {
+      display: block;
+      color: #7b877f;
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    .btn-salario {
+      min-width: 115px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .btn-salario.ativo {
+      background: #176b3a;
+      color: white;
+    }
+
+    .btn-salario.inativo {
+      background: #eef1ef;
+      color: #58645c;
+      border: 1px solid #dce2dd;
+    }
+
+    .vazio {
+      background: white;
+      border: 1px solid #e0e7e1;
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      color: #738078;
+      font-size: 12px;
+    }
+
+    .carregando {
+      text-align: center;
+      padding: 30px;
+      color: #68766d;
+      font-size: 12px;
+    }
+
+    .bloqueio {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+    }
+
+    .bloqueio-card {
+      background: white;
+      border: 1px solid #e0e7e1;
+      border-radius: 20px;
+      padding: 28px 22px;
+      max-width: 390px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .bloqueio-icone {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .bloqueio-card h2 {
+      font-size: 19px;
+      margin-bottom: 8px;
+      color: #17321f;
+    }
+
+    .bloqueio-card p {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #68766d;
+      margin-bottom: 17px;
+    }
+
+    .btn-central {
+      display: inline-block;
+      text-decoration: none;
+      background: #176b3a;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: #17321f;
+      color: white;
+      padding: 12px 15px;
+      border-radius: 11px;
+      font-size: 11px;
+      font-weight: bold;
+      display: none;
+      z-index: 1000;
+      max-width: calc(100% - 30px);
+      text-align: center;
+    }
+
+    .toast.erro {
+      background: #a52a2a;
+    }
+
+    @media (max-width: 600px) {
+      .resumo {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .resumo .card-resumo:last-child {
+        grid-column: span 2;
+      }
+
+      .dados {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .salario-box {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .btn-salario {
+        width: 100%;
+      }
+
+      .status-adm {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app"></div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    /* =====================================================
+       CONFIGURAÇÃO SUPABASE
+       ===================================================== */
+
+    const SUPABASE_URL =
+      "https://cckypvqophyviphqhich.supabase.co";
+
+    /*
+      COLE A MESMA PUBLISHABLE KEY QUE JÁ ESTÁ
+      FUNCIONANDO NO SEU index.html
+    */
+    const SUPABASE_PUBLISHABLE_KEY =
+      "COLE_AQUI_A_MESMA_CHAVE_DO_INDEX";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* =====================================================
+       ELEMENTOS
+       ===================================================== */
+
+    const app = document.getElementById("app");
+    const toast = document.getElementById("toast");
+
+    let motoristas = [];
+
+
+    /* =====================================================
+       TOAST
+       ===================================================== */
+
+    function mostrarToast(mensagem, erro = false) {
+      toast.textContent = mensagem;
+      toast.className = "toast" + (erro ? " erro" : "");
+      toast.style.display = "block";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
+
+
+    /* =====================================================
+       TELA DE BLOQUEIO
+       ===================================================== */
+
+    function mostrarBloqueio(titulo, mensagem) {
+      app.innerHTML = `
+        <div class="bloqueio">
+          <div class="bloqueio-card">
+
+            <div class="bloqueio-icone">🔐</div>
+
+            <h2>${titulo}</h2>
+
+            <p>${mensagem}</p>
+
+            <a href="index.html" class="btn-central">
+              ← VOLTAR PARA A CENTRAL
+            </a>
+
+          </div>
+        </div>
+      `;
+    }
+
+
+    /* =====================================================
+       CARREGAMENTO INICIAL
+       ===================================================== */
+
+    async function iniciar() {
+
+      if (
+        SUPABASE_PUBLISHABLE_KEY ===
+        "COLE_AQUI_A_MESMA_CHAVE_DO_INDEX"
+      ) {
+        mostrarBloqueio(
+          "Configuração necessária",
+          "Cole neste arquivo a mesma Publishable Key usada no index.html."
+        );
+        return;
+      }
+
+      app.innerHTML = `
+        <div class="carregando">
+          🔐 Verificando acesso ADM...
+        </div>
+      `;
+
+      const {
+        data: { session },
+        error
+      } = await supabaseClient.auth.getSession();
+
+      if (error) {
+        mostrarBloqueio(
+          "Erro de autenticação",
+          error.message
+        );
+        return;
+      }
+
+      if (!session) {
+        mostrarBloqueio(
+          "Login necessário",
+          "Entre com sua conta Google na Santa Luzia Central para acessar o Painel ADM."
+        );
+        return;
+      }
+
+      await verificarADM();
+    }
+
+
+    /* =====================================================
+       VERIFICA ADM
+       ===================================================== */
+
+    async function verificarADM() {
+
+      const { data, error } =
+        await supabaseClient.rpc("sou_adm");
+
+      if (error) {
+        console.error(error);
+
+        mostrarBloqueio(
+          "Não foi possível verificar",
+          "O sistema não conseguiu confirmar sua autorização de administrador."
+        );
+
+        return;
+      }
+
+      if (data !== true) {
+
+        mostrarBloqueio(
+          "Acesso restrito",
+          "Esta área é exclusiva para administradores autorizados da Santa Luzia."
+        );
+
+        return;
+      }
+
+      montarPainel();
+
+      await carregarMotoristas();
+    }
+
+
+    /* =====================================================
+       PAINEL
+       ===================================================== */
+
+    function montarPainel() {
+
+      app.innerHTML = `
+
+        <header>
+
+          <div class="topo">
+
+            <div class="marca">
+
+              <img
+                src="logo.sta.PNG"
+                alt="Santa Luzia"
+              >
+
+              <div>
+                <h1>Painel ADM</h1>
+                <p>Gestão Santa Luzia Central</p>
+              </div>
+
+            </div>
+
+            <div class="status-adm">
+              👑 ADM AUTORIZADO
+            </div>
+
+          </div>
+
+        </header>
+
+
+        <main>
+
+          <a href="index.html" class="voltar">
+            ← VOLTAR PARA A CENTRAL
+          </a>
+
+
+          <section class="resumo">
+
+            <div class="card-resumo">
+              <span>MOTORISTAS</span>
+              <strong id="totalMotoristas">0</strong>
+            </div>
+
+            <div class="card-resumo">
+              <span>SALÁRIO ATIVO</span>
+              <strong id="totalSalario">0</strong>
+            </div>
+
+            <div class="card-resumo">
+              <span>SALÁRIO INATIVO</span>
+              <strong id="totalSemSalario">0</strong>
+            </div>
+
+          </section>
+
+
+          <div class="info">
+            💰 <strong>Controle de salário</strong><br>
+            Motoristas com salário ativo participarão automaticamente
+            dos pagamentos quinzenais da Santa Luzia nos dias 5 e 20,
+            desde que também estejam com status ativo/oficial.
+          </div>
+
+
+          <div class="barra">
+
+            <input
+              id="busca"
+              class="busca"
+              type="search"
+              placeholder="Pesquisar por nome, apelido ou ID..."
+              autocomplete="off"
+            >
+
+            <button
+              class="btn-atualizar"
+              id="btnAtualizar"
+              type="button"
+            >
+              ↻ ATUALIZAR
+            </button>
+
+          </div>
+
+
+          <div id="lista" class="lista">
+            <div class="carregando">
+              Carregando motoristas...
+            </div>
+          </div>
+
+        </main>
+      `;
+
+
+      document
+        .getElementById("busca")
+        .addEventListener("input", renderizarMotoristas);
+
+      document
+        .getElementById("btnAtualizar")
+        .addEventListener("click", carregarMotoristas);
+    }
+
+
+    /* =====================================================
+       CARREGAR MOTORISTAS
+       ===================================================== */
+
+    async function carregarMotoristas() {
+
+      const lista = document.getElementById("lista");
+
+      if (lista) {
+        lista.innerHTML = `
+          <div class="carregando">
+            🔄 Atualizando motoristas...
+          </div>
+        `;
+      }
+
+      const { data, error } =
+        await supabaseClient.rpc("listar_motoristas_adm");
+
+      if (error) {
+
+        console.error(error);
+
+        if (lista) {
+          lista.innerHTML = `
+            <div class="vazio">
+              ❌ Não foi possível carregar os motoristas.<br><br>
+              ${escapeHtml(error.message)}
+            </div>
+          `;
+        }
+
+        return;
+      }
+
+      motoristas = data || [];
+
+      atualizarResumo();
+
+      renderizarMotoristas();
+    }
+
+
+    /* =====================================================
+       RESUMO
+       ===================================================== */
+
+    function atualizarResumo() {
+
+      const total = motoristas.length;
+
+      const ativos =
+        motoristas.filter(
+          m => m.salario_ativo === true
+        ).length;
+
+      const inativos = total - ativos;
+
+      const totalEl =
+        document.getElementById("totalMotoristas");
+
+      const salarioEl =
+        document.getElementById("totalSalario");
+
+      const semSalarioEl =
+        document.getElementById("totalSemSalario");
+
+      if (totalEl) totalEl.textContent = total;
+      if (salarioEl) salarioEl.textContent = ativos;
+      if (semSalarioEl) semSalarioEl.textContent = inativos;
+    }
+
+
+    /* =====================================================
+       RENDERIZAÇÃO
+       ===================================================== */
+
+    function renderizarMotoristas() {
+
+      const lista =
+        document.getElementById("lista");
+
+      if (!lista) return;
+
+      const campo =
+        document.getElementById("busca");
+
+      const busca =
+        (campo?.value || "")
+          .trim()
+          .toLowerCase();
+
+      const filtrados =
+        motoristas.filter(m => {
+
+          const texto = [
+            m.codigo,
+            m.nome,
+            m.apelido,
+            m.cargo,
+            m.categoria
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+
+          return texto.includes(busca);
+        });
+
+
+      if (!filtrados.length) {
+
+        lista.innerHTML = `
+          <div class="vazio">
+            Nenhum motorista encontrado.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      lista.innerHTML =
+        filtrados
+          .map(criarCardMotorista)
+          .join("");
+
+
+      filtrados.forEach(m => {
+
+        const botao =
+          document.getElementById(
+            `salario-${m.id}`
+          );
+
+        if (botao) {
+
+          botao.addEventListener(
+            "click",
+            () => alterarSalario(
+              m.id,
+              !m.salario_ativo
+            )
+          );
+        }
+
+      });
+    }
+
+
+    /* =====================================================
+       CARD DO MOTORISTA
+       ===================================================== */
+
+    function criarCardMotorista(m) {
+
+      const status =
+        String(m.status || "")
+          .toLowerCase();
+
+      let classeStatus = "outro";
+
+      if (
+        status === "ativo" ||
+        status === "oficial" ||
+        status === "active"
+      ) {
+        classeStatus = "ativo";
+      }
+
+      if (status === "pendente") {
+        classeStatus = "pendente";
+      }
+
+
+      const salarioAtivo =
+        m.salario_ativo === true;
+
+
+      return `
+
+        <article class="motorista">
+
+          <div class="motorista-topo">
+
+            <div class="identidade">
+
+              <span class="codigo">
+                ${escapeHtml(m.codigo || "SEM ID")}
+              </span>
+
+              <div class="nome">
+                ${escapeHtml(m.nome || "Sem nome")}
+              </div>
+
+              <div class="apelido">
+                ${m.apelido
+                  ? "@" + escapeHtml(m.apelido)
+                  : "Sem apelido"}
+              </div>
+
+            </div>
+
+            <span class="status ${classeStatus}">
+              ${escapeHtml(m.status || "Sem status")}
+            </span>
+
+          </div>
+
+
+          <div class="dados">
+
+            <div class="dado">
+              <span>Cargo</span>
+              <strong>
+                ${escapeHtml(m.cargo || "-")}
+              </strong>
+            </div>
+
+            <div class="dado">
+              <span>Categoria</span>
+              <strong>
+                ${escapeHtml(m.categoria || "-")}
+              </strong>
+            </div>
+
+            <div class="dado">
+              <span>Nível</span>
+              <strong>
+                ${escapeHtml(m.nivel || "-")}
+              </strong>
+            </div>
+
+            <div class="dado">
+              <span>STACOIN</span>
+              <strong>
+                ${formatarNumero(m.saldo_stacoin || 0)}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div class="salario-box">
+
+            <div class="salario-info">
+
+              <strong>
+                💰 Salário quinzenal
+              </strong>
+
+              <small>
+                ${salarioAtivo
+                  ? "Este motorista está habilitado para receber."
+                  : "Este motorista não está habilitado para receber."}
+              </small>
+
+            </div>
+
+
+            <button
+              id="salario-${m.id}"
+              type="button"
+              class="btn-salario ${salarioAtivo ? "ativo" : "inativo"}"
+            >
+              ${salarioAtivo
+                ? "✓ SALÁRIO ATIVO"
+                : "ATIVAR SALÁRIO"}
+            </button>
+
+          </div>
+
+        </article>
+      `;
+    }
+
+
+    /* =====================================================
+       ALTERAR SALÁRIO
+       ===================================================== */
+
+    async function alterarSalario(
+      motoristaId,
+      novoStatus
+    ) {
+
+      const motorista =
+        motoristas.find(
+          m => Number(m.id) === Number(motoristaId)
+        );
+
+      if (!motorista) return;
+
+
+      const mensagem =
+        novoStatus
+          ? `Ativar salário para ${motorista.nome}?`
+          : `Desativar salário de ${motorista.nome}?`;
+
+
+      if (!confirm(mensagem)) {
+        return;
+      }
+
+
+      const botao =
+        document.getElementById(
+          `salario-${motoristaId}`
+        );
+
+      if (botao) {
+        botao.disabled = true;
+        botao.textContent = "SALVANDO...";
+      }
+
+
+      const { data, error } =
+        await supabaseClient.rpc(
+          "definir_salario_ativo",
+          {
+            p_motorista_id: motoristaId,
+            p_ativo: novoStatus
+          }
+        );
+
+
+      if (error) {
+
+        console.error(error);
+
+        mostrarToast(
+          "Não foi possível alterar o salário.",
+          true
+        );
+
+        if (botao) {
+          botao.disabled = false;
+        }
+
+        renderizarMotoristas();
+
+        return;
+      }
+
+
+      if (!data || data.sucesso !== true) {
+
+        mostrarToast(
+          "O Supabase não confirmou a alteração.",
+          true
+        );
+
+        renderizarMotoristas();
+
+        return;
+      }
+
+
+      const encontrado =
+        motoristas.find(
+          m => Number(m.id) === Number(motoristaId)
+        );
+
+      if (encontrado) {
+        encontrado.salario_ativo = novoStatus;
+      }
+
+
+      atualizarResumo();
+
+      renderizarMotoristas();
+
+
+      mostrarToast(
+        novoStatus
+          ? `${motorista.nome} agora está com salário ATIVO.`
+          : `${motorista.nome} agora está com salário INATIVO.`
+      );
+    }
+
+
+    /* =====================================================
+       SEGURANÇA / HTML
+       ===================================================== */
+
+    function escapeHtml(valor) {
+
+      return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    function formatarNumero(valor) {
+
+      return Number(valor || 0)
+        .toLocaleString("pt-BR");
+    }
+
+
+    /* =====================================================
+       LOGOUT / ALTERAÇÃO DE LOGIN
+       ===================================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      (event, session) => {
+
+        if (
+          event === "SIGNED_OUT" ||
+          !session
+        ) {
+          mostrarBloqueio(
+            "Sessão encerrada",
+            "Faça login novamente pela Santa Luzia Central."
+          );
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       INICIAR
+       ===================================================== */
+
+    iniciar();
+
+  </script>
+
+</body>
+</html>
