@@ -25,10 +25,6 @@
       color: #222;
     }
 
-    /* =========================
-       CABEÇALHO
-    ========================= */
-
     .cabecalho {
       position: relative;
       background: #ffffff;
@@ -67,33 +63,21 @@
       letter-spacing: 0.5px;
     }
 
-
-    /* =========================
-       STACOIN NO TOPO
-    ========================= */
-
     .stacoin-topo {
       position: absolute;
       top: 16px;
       right: 16px;
-
       display: none;
       align-items: center;
       gap: 7px;
-
       background: #f8f4e7;
       border: 1px solid #d6b24c;
       border-radius: 14px;
-
       padding: 7px 10px;
-
       text-decoration: none;
       color: #1f3d25;
-
       box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-
       transition: 0.2s;
-
       z-index: 10;
     }
 
@@ -105,13 +89,10 @@
     .stacoin-moeda {
       width: 32px;
       height: 32px;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       flex-shrink: 0;
-
       overflow: hidden;
       border-radius: 50%;
     }
@@ -119,12 +100,9 @@
     .stacoin-imagem {
       width: 32px;
       height: 32px;
-
       object-fit: contain;
       display: block;
-
       border-radius: 50%;
-
       mix-blend-mode: multiply;
     }
 
@@ -135,90 +113,64 @@
 
     .stacoin-valor {
       display: block;
-
       font-size: 13px;
       font-weight: bold;
-
       color: #1f3d25;
     }
 
     .stacoin-label {
       display: block;
-
       font-size: 8px;
       color: #777;
-
       margin-top: 3px;
-
       letter-spacing: 0.4px;
     }
-
-
-    /* =========================
-       LOGIN
-    ========================= */
 
     .area-login {
       max-width: 850px;
       margin: 0 auto;
-
       padding: 15px 18px 0;
     }
 
     .login-card {
       background: #ffffff;
-
       border: 1px solid #ddd;
       border-radius: 17px;
-
       padding: 13px 15px;
-
       display: flex;
       align-items: center;
       gap: 12px;
-
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
 
     .login-icone {
       width: 42px;
       height: 42px;
-
       border-radius: 13px;
-
       background: #f3f4f3;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       font-size: 21px;
-
       flex-shrink: 0;
     }
 
     .login-info {
       flex: 1;
       min-width: 0;
-
       text-align: left;
     }
 
     .login-info strong {
       display: block;
-
       font-size: 14px;
-
       margin-bottom: 3px;
     }
 
     .login-info span {
       display: block;
-
       color: #777;
-
       font-size: 11px;
-
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -226,19 +178,13 @@
 
     .botao-google {
       border: none;
-
       background: #176b3a;
       color: white;
-
       border-radius: 11px;
-
       padding: 11px 14px;
-
       font-size: 12px;
       font-weight: bold;
-
       cursor: pointer;
-
       white-space: nowrap;
     }
 
@@ -248,19 +194,13 @@
 
     .botao-sair {
       border: 1px solid #ddd;
-
       background: white;
       color: #555;
-
       border-radius: 11px;
-
       padding: 10px 13px;
-
       font-size: 12px;
       font-weight: bold;
-
       cursor: pointer;
-
       white-space: nowrap;
     }
 
@@ -270,11 +210,8 @@
 
     .login-status {
       font-size: 10px;
-
       color: #888;
-
       margin-top: 7px;
-
       text-align: center;
     }
 
@@ -288,23 +225,14 @@
       font-weight: bold;
     }
 
-
-    /* =========================
-       CADASTRO AUTOMÁTICO
-    ========================= */
-
     .cadastro-overlay {
       position: fixed;
       inset: 0;
-
       background: rgba(20, 35, 25, 0.48);
-
       display: none;
       align-items: center;
       justify-content: center;
-
       padding: 18px;
-
       z-index: 9999;
     }
 
@@ -315,157 +243,112 @@
     .cadastro-card {
       width: 100%;
       max-width: 430px;
-
       background: #ffffff;
-
       border-radius: 22px;
-
       padding: 24px 21px 21px;
-
       box-shadow: 0 18px 50px rgba(0,0,0,0.20);
-
       max-height: 92vh;
       overflow-y: auto;
     }
 
     .cadastro-topo {
       text-align: center;
-
       margin-bottom: 20px;
     }
 
     .cadastro-logo {
       width: 58px;
       height: 58px;
-
       object-fit: contain;
-
       margin-bottom: 8px;
     }
 
     .cadastro-topo h2 {
       color: #17351f;
-
       font-size: 21px;
-
       margin-bottom: 6px;
     }
 
     .cadastro-topo p {
       color: #777;
-
       font-size: 12px;
-
       line-height: 1.45;
     }
 
     .cadastro-id-info {
       display: none;
-
       background: #e9f3ec;
-
       border: 1px solid #cce2d2;
-
       border-radius: 15px;
-
       padding: 13px;
-
       text-align: center;
-
       margin-bottom: 17px;
     }
 
     .cadastro-id-info strong {
       display: block;
-
       color: #176b3a;
-
       font-size: 10px;
-
       margin-bottom: 5px;
-
       letter-spacing: 0.4px;
     }
 
     .cadastro-id-info span {
       color: #176b3a;
-
       font-size: 24px;
-
       font-weight: bold;
-
       letter-spacing: 1px;
     }
 
     .cadastro-form {
       display: flex;
       flex-direction: column;
-
       gap: 12px;
     }
 
     .campo {
       display: flex;
       flex-direction: column;
-
       gap: 5px;
     }
 
     .campo label {
       color: #333;
-
       font-size: 11px;
-
       font-weight: bold;
     }
 
     .campo input,
     .campo select {
       width: 100%;
-
       border: 1px solid #d9ded9;
-
       background: #f8faf8;
-
       color: #222;
-
       border-radius: 11px;
-
       padding: 12px;
-
       font-size: 14px;
-
       outline: none;
     }
 
     .campo input:focus,
     .campo select:focus {
       border-color: #176b3a;
-
       background: #ffffff;
-
       box-shadow: 0 0 0 3px rgba(23,107,58,0.08);
     }
 
     .campo input[readonly] {
       background: #f1f3f1;
-
       color: #777;
     }
 
     .cadastro-email {
       margin-bottom: 13px;
-
       padding: 10px 12px;
-
       background: #f5f6f5;
-
       border-radius: 11px;
-
       color: #666;
-
       font-size: 10px;
-
       word-break: break-word;
     }
 
@@ -475,23 +358,14 @@
 
     .botao-cadastrar {
       width: 100%;
-
       border: none;
-
       background: #176b3a;
-
       color: #ffffff;
-
       border-radius: 12px;
-
       padding: 13px;
-
       margin-top: 4px;
-
       font-size: 13px;
-
       font-weight: bold;
-
       cursor: pointer;
     }
 
@@ -501,166 +375,107 @@
 
     .botao-cadastrar:disabled {
       opacity: 0.55;
-
       cursor: not-allowed;
     }
 
     .cadastro-erro {
       display: none;
-
       background: #fff0ef;
-
       border: 1px solid #f1c4c0;
-
       color: #a3231d;
-
       border-radius: 11px;
-
       padding: 10px;
-
       font-size: 10px;
-
       line-height: 1.4;
-
       margin-bottom: 10px;
     }
 
     .cadastro-sucesso {
       display: none;
-
       text-align: center;
     }
 
     .cadastro-sucesso-icone {
       font-size: 45px;
-
       margin-bottom: 8px;
     }
 
     .cadastro-sucesso h3 {
       color: #176b3a;
-
       font-size: 21px;
-
       margin-bottom: 7px;
     }
 
     .cadastro-sucesso p {
       color: #666;
-
       font-size: 12px;
-
       line-height: 1.5;
-
       margin-bottom: 14px;
     }
 
     .cadastro-id-grande {
       background: #f8f4e7;
-
       border: 1px solid #d6b24c;
-
       color: #176b3a;
-
       border-radius: 15px;
-
       padding: 14px;
-
       margin-bottom: 15px;
     }
 
     .cadastro-id-grande small {
       display: block;
-
       color: #777;
-
       font-size: 9px;
-
       margin-bottom: 4px;
     }
 
     .cadastro-id-grande strong {
       font-size: 27px;
-
       letter-spacing: 1px;
     }
 
     .botao-continuar {
       width: 100%;
-
       border: none;
-
       background: #176b3a;
-
       color: white;
-
       border-radius: 12px;
-
       padding: 13px;
-
       font-size: 13px;
-
       font-weight: bold;
-
       cursor: pointer;
     }
 
-
-    /* =========================
-       CONTEÚDO
-    ========================= */
-
     .conteudo {
       max-width: 850px;
-
       margin: auto;
-
       padding: 20px 18px 40px;
     }
-
-
-    /* =========================
-       BOAS-VINDAS
-    ========================= */
 
     .boas-vindas {
       background: #176b3a;
       color: white;
-
       border-radius: 20px;
-
       padding: 22px 21px;
-
       margin-bottom: 22px;
-
       box-shadow: 0 5px 15px rgba(0,0,0,0.10);
     }
 
     .boas-vindas h2 {
       font-size: 20px;
-
       margin-bottom: 6px;
     }
 
     .boas-vindas p {
       font-size: 13px;
-
       line-height: 1.5;
-
       opacity: 0.92;
     }
-
-
-    /* =========================
-       TITULO DAS ÁREAS
-    ========================= */
 
     .titulo-secao {
       display: flex;
       align-items: center;
-
       gap: 9px;
-
       margin: 23px 3px 11px;
     }
 
@@ -670,52 +485,34 @@
 
     .linha {
       flex: 1;
-
       height: 1px;
-
       background: #ddd;
     }
 
-
-    /* =========================
-       MEU ESPAÇO
-    ========================= */
-
     .espaco-principal {
       background: #ffffff;
-
       border: 1px solid #ddd;
-
       border-radius: 19px;
-
       padding: 17px;
-
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
 
     .espaco-cabecalho {
       display: flex;
       align-items: center;
-
       gap: 12px;
-
       margin-bottom: 14px;
     }
 
     .espaco-icone {
       width: 46px;
       height: 46px;
-
       border-radius: 14px;
-
       background: #e9f3ec;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       font-size: 24px;
-
       flex-shrink: 0;
     }
 
@@ -725,143 +522,96 @@
 
     .espaco-texto h2 {
       font-size: 18px;
-
       color: #17351f;
-
       margin-bottom: 3px;
     }
 
     .espaco-texto p {
       color: #777;
-
       font-size: 12px;
     }
 
-
-    /* =========================
-       BOTÕES PEQUENOS
-    ========================= */
-
     .mini-grade {
       display: grid;
-
       grid-template-columns: repeat(2, 1fr);
-
       gap: 10px;
     }
 
     .mini-botao {
       background: #f7f8f7;
-
       border: 1px solid #e1e4e1;
-
       border-radius: 14px;
-
       padding: 14px 10px;
-
       text-decoration: none;
-
       color: #222;
-
       text-align: center;
-
       transition: 0.2s;
     }
 
     .mini-botao:hover {
       background: #eef4ef;
-
       transform: translateY(-1px);
     }
 
     .mini-icone {
       font-size: 23px;
-
       margin-bottom: 6px;
     }
 
     .mini-botao strong {
       display: block;
-
       font-size: 13px;
-
       margin-bottom: 3px;
     }
 
     .mini-botao span {
       display: block;
-
       color: #777;
-
       font-size: 10px;
-
       line-height: 1.3;
     }
 
-
-    /* =========================
-       CARDS PRINCIPAIS
-    ========================= */
-
     .cards-principais {
       display: grid;
-
       grid-template-columns: repeat(2, 1fr);
-
       gap: 12px;
     }
 
     .card-principal {
       min-height: 145px;
-
       background: #ffffff;
-
       border: 1px solid #ddd;
-
       border-radius: 18px;
-
       padding: 18px 15px;
-
       text-decoration: none;
-
       color: #222;
-
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-
       display: flex;
       flex-direction: column;
-
       justify-content: center;
-
       transition: 0.2s;
-
       position: relative;
       overflow: hidden;
     }
 
     .card-principal:hover {
       transform: translateY(-2px);
-
       box-shadow: 0 7px 16px rgba(0,0,0,0.09);
     }
 
     .card-principal .icone-grande {
       font-size: 31px;
-
       margin-bottom: 9px;
     }
 
     .card-principal h3 {
       font-size: 16px;
-
       margin-bottom: 5px;
     }
 
     .card-principal p {
       font-size: 11px;
-
       color: #777;
-
       line-height: 1.35;
     }
 
@@ -876,67 +626,40 @@
 
     .card-principal.em-breve {
       opacity: 0.68;
-
       cursor: default;
     }
 
     .badge-breve {
       display: inline-block;
-
       width: fit-content;
-
       margin-top: 9px;
-
       padding: 4px 8px;
-
       border-radius: 20px;
-
       background: #f1f2f1;
-
       color: #777;
-
       font-size: 9px;
-
       font-weight: bold;
-
       letter-spacing: 0.4px;
     }
 
-
-    /* =========================
-       EMPRESA
-    ========================= */
-
     .empresa-caixa {
       background: #ffffff;
-
       border: 1px solid #ddd;
-
       border-radius: 18px;
-
       overflow: hidden;
-
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
 
     .empresa-topo {
       width: 100%;
-
       border: none;
-
       background: white;
-
       padding: 17px;
-
       display: flex;
       align-items: center;
-
       gap: 12px;
-
       text-align: left;
-
       cursor: pointer;
-
       color: #222;
     }
 
@@ -947,17 +670,12 @@
     .empresa-icone {
       width: 45px;
       height: 45px;
-
       border-radius: 13px;
-
       background: #f1f3f1;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       font-size: 23px;
-
       flex-shrink: 0;
     }
 
@@ -967,23 +685,18 @@
 
     .empresa-texto strong {
       display: block;
-
       font-size: 17px;
-
       margin-bottom: 3px;
     }
 
     .empresa-texto span {
       color: #777;
-
       font-size: 11px;
     }
 
     .empresa-seta {
       color: #176b3a;
-
       font-size: 21px;
-
       transition: 0.2s;
     }
 
@@ -993,7 +706,6 @@
 
     .empresa-conteudo {
       display: none;
-
       padding: 0 13px 13px;
     }
 
@@ -1003,85 +715,55 @@
 
     .empresa-grade {
       display: grid;
-
       grid-template-columns: repeat(2, 1fr);
-
       gap: 10px;
     }
 
     .empresa-botao {
       background: #f7f8f7;
-
       border: 1px solid #e1e4e1;
-
       border-radius: 14px;
-
       padding: 14px 10px;
-
       text-decoration: none;
-
       color: #222;
-
       text-align: center;
-
       transition: 0.2s;
     }
 
     .empresa-botao:hover {
       background: #eef4ef;
-
       transform: translateY(-1px);
     }
 
     .empresa-botao .icone {
       display: block;
-
       font-size: 22px;
-
       margin-bottom: 6px;
     }
 
     .empresa-botao strong {
       display: block;
-
       font-size: 13px;
-
       margin-bottom: 3px;
     }
 
     .empresa-botao span {
       display: block;
-
       font-size: 10px;
-
       color: #777;
-
       line-height: 1.3;
     }
 
-
-    /* =========================
-       RODAPÉ
-    ========================= */
-
     .rodape {
       text-align: center;
-
       padding: 20px 20px 35px;
-
       color: #888;
-
       font-size: 11px;
     }
 
     .rodape strong {
       color: #176b3a;
     }
-
-
-    /* =========================
-       MOBILE
-    ========================= */
 
     @media (max-width: 600px) {
 
@@ -1102,13 +784,10 @@
         font-size: 14px;
       }
 
-
       .stacoin-topo {
         top: 10px;
         right: 10px;
-
         padding: 6px 8px;
-
         border-radius: 12px;
       }
 
@@ -1130,7 +809,6 @@
         font-size: 7px;
       }
 
-
       .area-login {
         padding: 12px 15px 0;
       }
@@ -1142,7 +820,6 @@
       .login-icone {
         width: 38px;
         height: 38px;
-
         font-size: 19px;
       }
 
@@ -1157,21 +834,16 @@
       .botao-google,
       .botao-sair {
         padding: 10px 11px;
-
         font-size: 11px;
       }
-
 
       .conteudo {
         padding: 18px 15px 30px;
       }
 
-
       .boas-vindas {
         padding: 19px 18px;
-
         border-radius: 18px;
-
         margin-bottom: 19px;
       }
 
@@ -1183,11 +855,9 @@
         font-size: 12px;
       }
 
-
       .titulo-secao {
         margin-top: 21px;
       }
-
 
       .espaco-principal {
         padding: 14px;
@@ -1200,7 +870,6 @@
       .espaco-texto h2 {
         font-size: 17px;
       }
-
 
       .mini-grade {
         gap: 8px;
@@ -1218,14 +887,12 @@
         font-size: 12px;
       }
 
-
       .cards-principais {
         gap: 10px;
       }
 
       .card-principal {
         min-height: 140px;
-
         padding: 15px 12px;
       }
 
@@ -1240,7 +907,6 @@
       .card-principal p {
         font-size: 10px;
       }
-
 
       .empresa-grade {
         gap: 8px;
@@ -1258,10 +924,8 @@
         font-size: 12px;
       }
 
-
       .cadastro-card {
         padding: 21px 16px 17px;
-
         border-radius: 19px;
       }
 
@@ -1274,7 +938,6 @@
       }
 
     }
-
 
     @media (max-width: 360px) {
 
@@ -1291,18 +954,9 @@
   </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================
-     CABEÇALHO
-========================= -->
-
 <header class="cabecalho">
-
-
-  <!-- STACOIN -->
 
   <a
     href="perfil.html"
@@ -1319,7 +973,6 @@
       >
 
     </div>
-
 
     <div class="stacoin-info">
 
@@ -1338,25 +991,19 @@
 
   </a>
 
-
-  <!-- LOGO -->
-
   <img
     class="logo"
     src="IMG_6552.PNG"
     alt="Santa Luzia Tomates"
   >
 
-
   <h1>
     SANTA LUZIA CENTRAL
   </h1>
 
-
   <p class="subtitulo">
     Tudo da Santa Luzia em um só lugar.
   </p>
-
 
   <div class="selo">
     ✓ CENTRAL OFICIAL
@@ -1364,16 +1011,9 @@
 
 </header>
 
-
-
-<!-- =========================
-     LOGIN
-========================= -->
-
 <section class="area-login">
 
   <div class="login-card">
-
 
     <div
       class="login-icone"
@@ -1381,7 +1021,6 @@
     >
       👤
     </div>
-
 
     <div class="login-info">
 
@@ -1395,7 +1034,6 @@
 
     </div>
 
-
     <button
       type="button"
       class="botao-google"
@@ -1407,7 +1045,6 @@
 
   </div>
 
-
   <div
     class="login-status"
     id="loginStatus"
@@ -1415,19 +1052,12 @@
 
 </section>
 
-
-
-<!-- =========================
-     CADASTRO AUTOMÁTICO
-========================= -->
-
 <div
   class="cadastro-overlay"
   id="cadastroOverlay"
 >
 
   <div class="cadastro-card">
-
 
     <div
       class="cadastro-form-area"
@@ -1452,7 +1082,6 @@
 
       </div>
 
-
       <div
         class="cadastro-email"
         id="cadastroEmail"
@@ -1461,18 +1090,15 @@
         carregando...
       </div>
 
-
       <div
         class="cadastro-erro"
         id="cadastroErro"
       ></div>
 
-
       <form
         class="cadastro-form"
         id="cadastroForm"
       >
-
 
         <div class="campo">
 
@@ -1491,7 +1117,6 @@
 
         </div>
 
-
         <div class="campo">
 
           <label for="cadastroApelido">
@@ -1508,7 +1133,6 @@
 
         </div>
 
-
         <div class="campo">
 
           <label for="cadastroCargo">
@@ -1524,7 +1148,6 @@
           >
 
         </div>
-
 
         <div class="campo">
 
@@ -1573,7 +1196,6 @@
 
         </div>
 
-
         <button
           type="submit"
           class="botao-cadastrar"
@@ -1582,16 +1204,9 @@
           🪪 CRIAR MEU SANTA LUZIA ID
         </button>
 
-
       </form>
 
     </div>
-
-
-
-    <!-- =========================
-         SUCESSO
-    ========================= -->
 
     <div
       class="cadastro-sucesso"
@@ -1602,14 +1217,13 @@
         🎉
       </div>
 
-      <h3>
+      <h3 id="cadastroSucessoTitulo">
         Cadastro concluído!
       </h3>
 
-      <p>
+      <p id="cadastroSucessoTexto">
         Seu Santa Luzia ID foi criado com sucesso.
       </p>
-
 
       <div class="cadastro-id-grande">
 
@@ -1623,11 +1237,9 @@
 
       </div>
 
-
       <p>
         Guarde esse número. Ele será usado para sua identificação dentro da empresa.
       </p>
-
 
       <button
         type="button"
@@ -1639,19 +1251,11 @@
 
     </div>
 
-
   </div>
 
 </div>
 
-
-
 <main class="conteudo">
-
-
-  <!-- =========================
-       BOAS-VINDAS
-  ========================= -->
 
   <section class="boas-vindas">
 
@@ -1666,12 +1270,6 @@
 
   </section>
 
-
-
-  <!-- =========================
-       MEU ESPAÇO
-  ========================= -->
-
   <div class="titulo-secao">
 
     <h2>
@@ -1682,16 +1280,13 @@
 
   </div>
 
-
   <section class="espaco-principal">
-
 
     <div class="espaco-cabecalho">
 
       <div class="espaco-icone">
         👤
       </div>
-
 
       <div class="espaco-texto">
 
@@ -1707,9 +1302,7 @@
 
     </div>
 
-
     <div class="mini-grade">
-
 
       <a
         href="santaluziaid.html"
@@ -1730,7 +1323,6 @@
 
       </a>
 
-
       <a
         href="perfil.html"
         class="mini-botao"
@@ -1749,7 +1341,6 @@
         </span>
 
       </a>
-
 
       <a
         href="cnh.html"
@@ -1770,7 +1361,6 @@
 
       </a>
 
-
       <a
         href="skins.html"
         class="mini-botao"
@@ -1790,16 +1380,9 @@
 
       </a>
 
-
     </div>
 
   </section>
-
-
-
-  <!-- =========================
-       PRINCIPAIS
-  ========================= -->
 
   <div class="titulo-secao">
 
@@ -1811,11 +1394,7 @@
 
   </div>
 
-
   <div class="cards-principais">
-
-
-    <!-- LOJA -->
 
     <a
       href="loja.html"
@@ -1843,9 +1422,6 @@
 
     </a>
 
-
-    <!-- GAMES -->
-
     <div class="card-principal em-breve">
 
       <div class="icone-grande">
@@ -1865,9 +1441,6 @@
       </span>
 
     </div>
-
-
-    <!-- COMUNIDADE -->
 
     <div class="card-principal em-breve">
 
@@ -1889,9 +1462,6 @@
 
     </div>
 
-
-    <!-- STACOIN -->
-
     <a
       href="perfil.html"
       class="card-principal destaque"
@@ -1911,14 +1481,7 @@
 
     </a>
 
-
   </div>
-
-
-
-  <!-- =========================
-       EMPRESA
-  ========================= -->
 
   <div class="titulo-secao">
 
@@ -1930,12 +1493,10 @@
 
   </div>
 
-
   <section
     class="empresa-caixa"
     id="empresaCaixa"
   >
-
 
     <button
       type="button"
@@ -1943,11 +1504,9 @@
       id="botaoEmpresa"
     >
 
-
       <div class="empresa-icone">
         🏢
       </div>
-
 
       <div class="empresa-texto">
 
@@ -1961,21 +1520,15 @@
 
       </div>
 
-
       <div class="empresa-seta">
         →
       </div>
 
-
     </button>
-
-
 
     <div class="empresa-conteudo">
 
-
       <div class="empresa-grade">
-
 
         <a
           href="globaltruck.html"
@@ -1996,7 +1549,6 @@
 
         </a>
 
-
         <a
           href="truckers.html"
           class="empresa-botao"
@@ -2015,7 +1567,6 @@
           </span>
 
         </a>
-
 
         <a
           href="comoentrar.html"
@@ -2036,7 +1587,6 @@
 
         </a>
 
-
         <a
           href="noticias.html"
           class="empresa-botao"
@@ -2055,7 +1605,6 @@
           </span>
 
         </a>
-
 
         <a
           href="eventos.html"
@@ -2076,7 +1625,6 @@
 
         </a>
 
-
         <a
           href="notas.html"
           class="empresa-botao"
@@ -2095,7 +1643,6 @@
           </span>
 
         </a>
-
 
         <a
           href="links.html"
@@ -2116,7 +1663,6 @@
 
         </a>
 
-
         <a
           href="sobrenos.html"
           class="empresa-botao"
@@ -2135,11 +1681,6 @@
           </span>
 
         </a>
-
-
-        <!-- =========================
-             PAINEL ADM
-        ========================= -->
 
         <a
           href="admn.html"
@@ -2160,21 +1701,13 @@
 
         </a>
 
-
       </div>
 
     </div>
 
   </section>
 
-
 </main>
-
-
-
-<!-- =========================
-     RODAPÉ
-========================= -->
 
 <footer class="rodape">
 
@@ -2188,21 +1721,18 @@
 
 </footer>
 
-
-
-<!-- =========================
-     SUPABASE LOGIN
-========================= -->
-
 <script>
-
 
 const SUPABASE_URL =
   "https://cckypvqophyviphqhich.supabase.co";
 
 
+/*
+  TROQUE SOMENTE ESTA CHAVE
+  PELA SUA CHAVE PUBLICÁVEL ATUAL
+*/
 const SUPABASE_KEY =
-  "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+  "COLE_SUA_CHAVE_PUBLICAVEL_AQUI";
 
 
 const supabaseClient =
@@ -2220,7 +1750,6 @@ const supabaseClient =
   );
 
 
-
 /* =========================
    ELEMENTOS
 ========================= */
@@ -2230,36 +1759,30 @@ const botaoGoogle =
     "botaoGoogle"
   );
 
-
 const loginTitulo =
   document.getElementById(
     "loginTitulo"
   );
-
 
 const loginTexto =
   document.getElementById(
     "loginTexto"
   );
 
-
 const loginIcone =
   document.getElementById(
     "loginIcone"
   );
-
 
 const loginStatus =
   document.getElementById(
     "loginStatus"
   );
 
-
 const stacoinTopo =
   document.getElementById(
     "stacoinTopo"
   );
-
 
 const stacoinValor =
   document.getElementById(
@@ -2276,52 +1799,54 @@ const cadastroOverlay =
     "cadastroOverlay"
   );
 
-
 const cadastroFormArea =
   document.getElementById(
     "cadastroFormArea"
   );
-
 
 const cadastroSucesso =
   document.getElementById(
     "cadastroSucesso"
   );
 
-
 const cadastroForm =
   document.getElementById(
     "cadastroForm"
   );
-
 
 const cadastroEmail =
   document.getElementById(
     "cadastroEmail"
   );
 
-
 const cadastroErro =
   document.getElementById(
     "cadastroErro"
   );
-
 
 const botaoCadastrar =
   document.getElementById(
     "botaoCadastrar"
   );
 
-
 const novoCodigo =
   document.getElementById(
     "novoCodigo"
   );
 
-
 const botaoContinuar =
   document.getElementById(
     "botaoContinuar"
+  );
+
+const cadastroSucessoTitulo =
+  document.getElementById(
+    "cadastroSucessoTitulo"
+  );
+
+const cadastroSucessoTexto =
+  document.getElementById(
+    "cadastroSucessoTexto"
   );
 
 
@@ -2333,7 +1858,6 @@ const empresaCaixa =
   document.getElementById(
     "empresaCaixa"
   );
-
 
 const botaoEmpresa =
   document.getElementById(
@@ -2353,9 +1877,8 @@ botaoEmpresa.addEventListener(
 );
 
 
-
 /* =========================
-   FUNÇÕES DE CADASTRO
+   ERRO CADASTRO
 ========================= */
 
 function mostrarErroCadastro(
@@ -2381,6 +1904,10 @@ function esconderErroCadastro() {
 
 }
 
+
+/* =========================
+   ABRIR CADASTRO
+========================= */
 
 function abrirCadastro(
   user
@@ -2447,6 +1974,10 @@ function abrirCadastro(
 }
 
 
+/* =========================
+   FECHAR CADASTRO
+========================= */
+
 function fecharCadastro() {
 
   cadastroOverlay.classList.remove(
@@ -2455,6 +1986,10 @@ function fecharCadastro() {
 
 }
 
+
+/* =========================
+   VERIFICAR SANTA LUZIA ID
+========================= */
 
 async function verificarCadastro(
   user
@@ -2471,7 +2006,7 @@ async function verificarCadastro(
       await supabaseClient
         .from("motoristas")
         .select(
-          "id,codigo,nome,apelido,cargo,categoria,salario_ativo"
+          "id,codigo,nome,apelido,cargo,categoria,salario_ativo,status,user_id"
         )
         .eq(
           "user_id",
@@ -2513,7 +2048,7 @@ async function verificarCadastro(
 
 
 /* =========================
-   CRIAR ID
+   CRIAR / RECUPERAR ID
 ========================= */
 
 cadastroForm.addEventListener(
@@ -2582,7 +2117,7 @@ cadastroForm.addEventListener(
       true;
 
     botaoCadastrar.textContent =
-      "CRIANDO SEU ID...";
+      "VERIFICANDO SEU ID...";
 
 
     try {
@@ -2601,20 +2136,100 @@ cadastroForm.addEventListener(
           "Sua sessão expirou. Entre novamente com o Google."
         );
 
+
         botaoCadastrar.disabled =
           false;
 
+
         botaoCadastrar.textContent =
           "🪪 CRIAR MEU SANTA LUZIA ID";
+
 
         return;
 
       }
 
 
-      /* =====================================
-         CHAMA A FUNÇÃO SEGURA DO SUPABASE
-      ===================================== */
+      /*
+        PRIMEIRA PROTEÇÃO:
+
+        Antes de chamar o RPC,
+        verifica se esta conta Google
+        já possui um Santa Luzia ID.
+      */
+
+      const cadastroExistente =
+        await verificarCadastro(
+          user
+        );
+
+
+      if (cadastroExistente) {
+
+        /*
+          A conta já possui ID.
+
+          NÃO cria outro.
+
+          Apenas mostra o ID que
+          pertence a esta conta.
+        */
+
+        novoCodigo.textContent =
+          cadastroExistente.codigo ||
+          "SEM CÓDIGO";
+
+
+        cadastroSucessoTitulo.textContent =
+          "Você já possui um Santa Luzia ID!";
+
+
+        cadastroSucessoTexto.textContent =
+          "Este ID já está vinculado à sua conta Google. Nenhum novo ID foi criado.";
+
+
+        cadastroFormArea.style.display =
+          "none";
+
+
+        cadastroSucesso.style.display =
+          "block";
+
+
+        loginStatus.textContent =
+          "✓ ID já vinculado à sua conta • " +
+          cadastroExistente.codigo;
+
+
+        loginStatus.className =
+          "login-status login-ok";
+
+
+        botaoCadastrar.disabled =
+          false;
+
+
+        botaoCadastrar.textContent =
+          "🪪 CRIAR MEU SANTA LUZIA ID";
+
+
+        return;
+
+      }
+
+
+      /*
+        SEGUNDA PROTEÇÃO:
+
+        Se não encontrou ID no navegador,
+        chama a função segura do Supabase.
+
+        O banco também verifica o user_id.
+      */
+
+      botaoCadastrar.textContent =
+        "CRIANDO SEU ID...";
+
 
       const resultado =
         await supabaseClient.rpc(
@@ -2645,17 +2260,81 @@ cadastroForm.addEventListener(
         );
 
 
+        /*
+          Se o banco informar que já existe,
+          tentamos buscar novamente o ID
+          da conta antes de mostrar erro.
+        */
+
+        const cadastroDepoisDoErro =
+          await verificarCadastro(
+            user
+          );
+
+
+        if (
+          cadastroDepoisDoErro
+        ) {
+
+          novoCodigo.textContent =
+            cadastroDepoisDoErro.codigo ||
+            "SEM CÓDIGO";
+
+
+          cadastroSucessoTitulo.textContent =
+            "Você já possui um Santa Luzia ID!";
+
+
+          cadastroSucessoTexto.textContent =
+            "Seu ID já estava vinculado a esta conta. Nenhum novo ID foi criado.";
+
+
+          cadastroFormArea.style.display =
+            "none";
+
+
+          cadastroSucesso.style.display =
+            "block";
+
+
+          loginStatus.textContent =
+            "✓ ID já vinculado à sua conta • " +
+            cadastroDepoisDoErro.codigo;
+
+
+          loginStatus.className =
+            "login-status login-ok";
+
+
+          botaoCadastrar.disabled =
+            false;
+
+
+          botaoCadastrar.textContent =
+            "🪪 CRIAR MEU SANTA LUZIA ID";
+
+
+          return;
+
+        }
+
+
         mostrarErroCadastro(
           "Não foi possível criar seu ID. " +
-          (resultado.error.message || "Tente novamente.")
+          (
+            resultado.error.message ||
+            "Tente novamente."
+          )
         );
 
 
         botaoCadastrar.disabled =
           false;
 
+
         botaoCadastrar.textContent =
           "🪪 CRIAR MEU SANTA LUZIA ID";
+
 
         return;
 
@@ -2679,20 +2358,55 @@ cadastroForm.addEventListener(
         botaoCadastrar.disabled =
           false;
 
+
         botaoCadastrar.textContent =
           "🪪 CRIAR MEU SANTA LUZIA ID";
+
 
         return;
 
       }
 
 
-      /* =====================================
-         MOSTRA O ID GERADO
-      ===================================== */
+      /*
+        Se o RPC respondeu que já existia,
+        tratamos como ID existente.
+      */
 
-      novoCodigo.textContent =
-        dados.codigo || "SL-0000";
+      if (
+        dados.ja_existia === true ||
+        dados.novo === false
+      ) {
+
+        novoCodigo.textContent =
+          dados.codigo ||
+          "SEM CÓDIGO";
+
+
+        cadastroSucessoTitulo.textContent =
+          "Você já possui um Santa Luzia ID!";
+
+
+        cadastroSucessoTexto.textContent =
+          "Este ID já está vinculado à sua conta Google. Nenhum novo ID foi criado.";
+
+      }
+
+      else {
+
+        novoCodigo.textContent =
+          dados.codigo ||
+          "SL-0000";
+
+
+        cadastroSucessoTitulo.textContent =
+          "Cadastro concluído!";
+
+
+        cadastroSucessoTexto.textContent =
+          "Seu Santa Luzia ID foi criado com sucesso.";
+
+      }
 
 
       cadastroFormArea.style.display =
@@ -2704,7 +2418,11 @@ cadastroForm.addEventListener(
 
 
       loginStatus.textContent =
-        "✓ Santa Luzia ID criado com sucesso!";
+        "✓ Santa Luzia ID • " +
+        (
+          dados.codigo ||
+          "ID"
+        );
 
 
       loginStatus.className =
@@ -2713,6 +2431,7 @@ cadastroForm.addEventListener(
 
       botaoCadastrar.disabled =
         false;
+
 
       botaoCadastrar.textContent =
         "🪪 CRIAR MEU SANTA LUZIA ID";
@@ -2728,12 +2447,13 @@ cadastroForm.addEventListener(
 
 
       mostrarErroCadastro(
-        "Ocorreu um erro ao criar seu ID. Tente novamente."
+        "Ocorreu um erro ao verificar seu ID. Tente novamente."
       );
 
 
       botaoCadastrar.disabled =
         false;
+
 
       botaoCadastrar.textContent =
         "🪪 CRIAR MEU SANTA LUZIA ID";
@@ -2744,42 +2464,35 @@ cadastroForm.addEventListener(
 );
 
 
-
 /* =========================
-   CONTINUAR APÓS CADASTRO
+   CONTINUAR
 ========================= */
 
 botaoContinuar.addEventListener(
   "click",
-  function() {
+  async function() {
 
     fecharCadastro();
 
 
-    const sessao =
-      supabaseClient.auth.getSession();
+    const resultado =
+      await supabaseClient.auth.getSession();
 
 
-    sessao.then(
-      function(resultado) {
+    const user =
+      resultado.data?.session?.user;
 
-        const user =
-          resultado.data?.session?.user;
 
-        if (user) {
+    if (user) {
 
-          mostrarUsuario(
-            user
-          );
+      await mostrarUsuario(
+        user
+      );
 
-        }
-
-      }
-    );
+    }
 
   }
 );
-
 
 
 /* =========================
@@ -2822,8 +2535,10 @@ async function carregarStacoin(
         "Motorista não encontrado para esta conta."
       );
 
+
       stacoinTopo.style.display =
         "none";
+
 
       return;
 
@@ -2854,8 +2569,10 @@ async function carregarStacoin(
         carteiraResultado.error
       );
 
+
       stacoinTopo.style.display =
         "none";
+
 
       return;
 
@@ -2863,18 +2580,20 @@ async function carregarStacoin(
 
 
     const saldo =
-      carteiraResultado.data?.saldo || 0;
+      carteiraResultado.data?.saldo ||
+      0;
 
 
     stacoinValor.textContent =
-      Number(saldo).toLocaleString(
+      Number(
+        saldo
+      ).toLocaleString(
         "pt-BR"
       );
 
 
     stacoinTopo.style.display =
       "flex";
-
 
   }
 
@@ -2885,13 +2604,13 @@ async function carregarStacoin(
       erro
     );
 
+
     stacoinTopo.style.display =
       "none";
 
   }
 
 }
-
 
 
 /* =========================
@@ -2901,7 +2620,6 @@ async function carregarStacoin(
 async function mostrarUsuario(
   user
 ) {
-
 
   if (!user) {
 
@@ -2957,7 +2675,8 @@ async function mostrarUsuario(
 
 
   const email =
-    user.email || "";
+    user.email ||
+    "";
 
 
   loginIcone.textContent =
@@ -2989,16 +2708,21 @@ async function mostrarUsuario(
 
 
   loginStatus.textContent =
-    "Verificando seu cadastro...";
+    "Verificando seu Santa Luzia ID...";
 
 
   loginStatus.className =
     "login-status";
 
 
-  /* =====================================
-     VERIFICA SE JÁ POSSUI SANTA LUZIA ID
-  ===================================== */
+  /*
+    AQUI ESTÁ A PROTEÇÃO PRINCIPAL:
+
+    Procuramos o ID pelo user_id da
+    conta Google conectada.
+
+    Se encontrou, NÃO abre cadastro.
+  */
 
   const motorista =
     await verificarCadastro(
@@ -3026,9 +2750,11 @@ async function mostrarUsuario(
   }
 
 
-  /* =====================================
-     JÁ POSSUI ID
-  ===================================== */
+  /*
+    A CONTA JÁ POSSUI ID.
+
+    Portanto ela entra normalmente.
+  */
 
   loginStatus.textContent =
     "✓ Conta conectada • " +
@@ -3046,13 +2772,11 @@ async function mostrarUsuario(
 }
 
 
-
 /* =========================
-   PROCESSAR RETORNO GOOGLE
+   RETORNO GOOGLE
 ========================= */
 
 async function processarRetornoGoogle() {
-
 
   const hash =
     window.location.hash.substring(
@@ -3066,13 +2790,16 @@ async function processarRetornoGoogle() {
       "Nenhum retorno Google encontrado."
     );
 
+
     return false;
 
   }
 
 
   const parametros =
-    new URLSearchParams(hash);
+    new URLSearchParams(
+      hash
+    );
 
 
   const accessToken =
@@ -3095,6 +2822,7 @@ async function processarRetornoGoogle() {
     console.log(
       "Hash existe, mas não possui tokens de sessão."
     );
+
 
     return false;
 
@@ -3140,7 +2868,8 @@ async function processarRetornoGoogle() {
 
 
       loginStatus.textContent =
-        "❌ " + erroCompleto;
+        "❌ " +
+        erroCompleto;
 
 
       loginStatus.className =
@@ -3201,7 +2930,6 @@ async function processarRetornoGoogle() {
 }
 
 
-
 /* =========================
    VERIFICAR SESSÃO
 ========================= */
@@ -3256,13 +2984,11 @@ async function verificarSessao() {
 }
 
 
-
 /* =========================
    LOGIN GOOGLE
 ========================= */
 
 async function entrarGoogle() {
-
 
   botaoGoogle.disabled =
     true;
@@ -3322,7 +3048,6 @@ async function entrarGoogle() {
 }
 
 
-
 /* =========================
    BOTÃO LOGIN
 ========================= */
@@ -3330,7 +3055,6 @@ async function entrarGoogle() {
 botaoGoogle.addEventListener(
   "click",
   async function() {
-
 
     if (
       botaoGoogle.dataset.logado ===
@@ -3356,7 +3080,6 @@ botaoGoogle.addEventListener(
 );
 
 
-
 /* =========================
    AUTH STATE
 ========================= */
@@ -3366,7 +3089,6 @@ supabaseClient.auth.onAuthStateChange(
     event,
     session
   ) {
-
 
     console.log(
       "Auth:",
@@ -3389,13 +3111,11 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
-
 /* =========================
    INICIALIZAÇÃO
 ========================= */
 
 (async function() {
-
 
   const processou =
     await processarRetornoGoogle();
@@ -3407,11 +3127,9 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 
-
 })();
 
 </script>
-
 
 </body>
 </html>
