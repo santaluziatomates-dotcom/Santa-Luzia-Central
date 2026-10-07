@@ -4,91 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Painel ADM • Santa Luzia Central</title>
+  <title>Painel ADM • Santa Luzia</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f3f6f3;
-      color: #17321f;
-      min-height: 100vh;
-    }
-
-    header {
-      background: #176b3a;
-      color: white;
-      padding: 18px 16px 22px;
-      border-radius: 0 0 22px 22px;
-      box-shadow: 0 4px 16px rgba(0,0,0,.10);
+      background: #f4f7f4;
+      color: #183322;
     }
 
     .topo {
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      background: #176b3a;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
     }
 
-    .marca {
-      display: flex;
-      align-items: center;
-      gap: 11px;
+    .topo h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
     }
 
-    .marca img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      border-radius: 12px;
-      background: white;
-      padding: 4px;
-    }
-
-    .marca h1 {
-      font-size: 19px;
-      line-height: 1.1;
-    }
-
-    .marca p {
-      font-size: 11px;
-      opacity: .85;
-      margin-top: 4px;
-    }
-
-    .status-adm {
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.22);
-      padding: 8px 11px;
-      border-radius: 10px;
-      font-size: 10px;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    main {
-      width: 100%;
-      max-width: 900px;
-      margin: auto;
-      padding: 16px;
+    .topo p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: .9;
     }
 
     .voltar {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 15px;
+      margin: 12px 14px;
       padding: 9px 13px;
-      background: white;
+      background: #ffffff;
       color: #176b3a;
       border: 1px solid #dfe5df;
       border-radius: 11px;
@@ -97,123 +54,143 @@
       font-weight: bold;
     }
 
+    .container {
+      width: min(1100px, calc(100% - 28px));
+      margin: 0 auto 40px;
+    }
+
+    .bloqueio {
+      background: white;
+      border: 1px solid #e1e8e2;
+      border-radius: 18px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.04);
+    }
+
+    .bloqueio .icone {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .bloqueio h2 {
+      margin: 0 0 8px;
+      color: #176b3a;
+    }
+
+    .bloqueio p {
+      color: #68756d;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .bloqueio a {
+      display: inline-block;
+      margin-top: 12px;
+      background: #176b3a;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .conta {
+      background: white;
+      border: 1px solid #dfe7e1;
+      border-radius: 15px;
+      padding: 14px 16px;
+      margin-top: 5px;
+      margin-bottom: 18px;
+    }
+
+    .conta strong {
+      color: #176b3a;
+    }
+
+    .conta small {
+      display: block;
+      margin-top: 4px;
+      color: #68756d;
+    }
+
     .resumo {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
     .card-resumo {
       background: white;
-      border: 1px solid #e0e7e1;
+      border: 1px solid #dfe7e1;
       border-radius: 15px;
-      padding: 15px;
+      padding: 16px;
     }
 
     .card-resumo span {
       display: block;
-      font-size: 10px;
-      color: #708078;
+      font-size: 11px;
+      color: #718078;
       font-weight: bold;
-      margin-bottom: 7px;
+      text-transform: uppercase;
     }
 
     .card-resumo strong {
-      font-size: 22px;
+      display: block;
+      font-size: 25px;
+      margin-top: 5px;
       color: #176b3a;
     }
 
     .barra {
       background: white;
-      border: 1px solid #e0e7e1;
+      border: 1px solid #dfe7e1;
       border-radius: 15px;
-      padding: 13px;
-      margin-bottom: 15px;
-      display: flex;
-      gap: 9px;
-      align-items: center;
-      flex-wrap: wrap;
+      padding: 14px;
+      margin-bottom: 18px;
     }
 
-    .busca {
-      flex: 1;
-      min-width: 180px;
-      border: 1px solid #d9e1db;
+    .barra input {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid #d7e0d9;
       border-radius: 10px;
-      padding: 11px 12px;
       font-size: 14px;
       outline: none;
     }
 
-    .busca:focus {
+    .barra input:focus {
       border-color: #176b3a;
     }
 
-    button {
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
+    .titulo-secao {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0 12px;
     }
 
-    .btn-atualizar {
-      background: #176b3a;
-      color: white;
-      padding: 11px 14px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .btn-atualizar:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .info {
-      background: #edf7f0;
-      border: 1px solid #cfe4d5;
+    .titulo-secao h2 {
+      margin: 0;
+      font-size: 19px;
       color: #176b3a;
-      border-radius: 13px;
-      padding: 12px;
-      margin-bottom: 15px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    .info-status {
-      background: #fff8e8;
-      border: 1px solid #ead9a9;
-      color: #806000;
-      border-radius: 13px;
-      padding: 12px;
-      margin-bottom: 15px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    .info-stacoin {
-      background: #fffaf0;
-      border: 1px solid #ead8a8;
-      color: #765b08;
-      border-radius: 13px;
-      padding: 12px;
-      margin-bottom: 15px;
-      font-size: 11px;
-      line-height: 1.5;
     }
 
     .lista {
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
+      display: grid;
+      gap: 13px;
     }
 
     .motorista {
       background: white;
-      border: 1px solid #e0e7e1;
+      border: 1px solid #dfe7e1;
       border-radius: 17px;
-      padding: 15px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.035);
     }
 
     .motorista-topo {
@@ -223,243 +200,173 @@
       gap: 12px;
     }
 
-    .identidade {
+    .motorista-nome {
       min-width: 0;
+    }
+
+    .motorista-nome h3 {
+      margin: 0;
+      font-size: 17px;
+      color: #183322;
+    }
+
+    .motorista-nome p {
+      margin: 5px 0 0;
+      color: #6d7a72;
+      font-size: 12px;
     }
 
     .codigo {
       display: inline-block;
+      margin-top: 7px;
+      background: #edf7ef;
       color: #176b3a;
-      background: #edf7f0;
-      border: 1px solid #d2e7d8;
-      padding: 4px 7px;
+      padding: 5px 8px;
       border-radius: 7px;
-      font-size: 10px;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
-
-    .nome {
-      font-size: 16px;
-      font-weight: bold;
-      color: #17321f;
-    }
-
-    .apelido {
-      color: #6f7b73;
       font-size: 11px;
-      margin-top: 3px;
+      font-weight: 900;
     }
 
-    .status {
-      font-size: 9px;
-      font-weight: bold;
-      padding: 6px 8px;
-      border-radius: 8px;
+    .status-badge {
+      padding: 7px 9px;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: 900;
       white-space: nowrap;
-      text-transform: uppercase;
     }
 
-    .status.ativo {
-      background: #e7f6eb;
-      color: #17723b;
+    .status-ativo {
+      background: #e5f7ea;
+      color: #16833d;
     }
 
-    .status.pendente {
-      background: #fff5df;
-      color: #9a6a00;
+    .status-pendente {
+      background: #fff5d8;
+      color: #a36c00;
     }
 
-    .status.inativo {
-      background: #fdeaea;
-      color: #a52a2a;
+    .status-inativo {
+      background: #ffe7e7;
+      color: #b82d2d;
     }
 
-    .status.outro {
-      background: #f0f2f1;
-      color: #66716a;
-    }
-
-    .dados {
+    .info-linha {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-top: 14px;
     }
 
-    .dado {
+    .info {
       background: #f7f9f7;
       border-radius: 10px;
       padding: 9px;
     }
 
-    .dado span {
+    .info small {
       display: block;
-      color: #7b877f;
-      font-size: 8px;
-      font-weight: bold;
+      font-size: 9px;
+      color: #77837c;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      font-weight: bold;
     }
 
-    .dado strong {
-      font-size: 11px;
-      color: #25392c;
-      word-break: break-word;
-    }
-
-    /* STATUS */
-
-    .status-box {
-      margin-top: 12px;
-      border-top: 1px solid #edf0ed;
-      padding-top: 12px;
-    }
-
-    .status-box-titulo {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 9px;
-    }
-
-    .status-box-titulo strong {
+    .info strong {
+      display: block;
+      margin-top: 3px;
       font-size: 12px;
     }
 
-    .status-atual-texto {
-      font-size: 9px;
-      color: #7b877f;
+    .controle {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #edf0ed;
     }
 
-    .status-controles {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .controle-titulo {
+      font-size: 11px;
+      font-weight: 900;
+      color: #176b3a;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .botoes {
+      display: flex;
+      flex-wrap: wrap;
       gap: 7px;
     }
 
-    .btn-status {
-      min-height: 40px;
-      padding: 9px 8px;
-      border-radius: 10px;
-      font-size: 9px;
-      font-weight: bold;
-      border: 1px solid transparent;
-      transition: .15s ease;
+    button {
+      font-family: inherit;
     }
 
-    .btn-status.ativo {
-      background: #e7f6eb;
-      color: #17723b;
-      border-color: #c9e8d1;
-    }
-
-    .btn-status.pendente {
-      background: #fff5df;
-      color: #9a6a00;
-      border-color: #ead8a8;
-    }
-
-    .btn-status.inativo {
-      background: #fdeaea;
-      color: #a52a2a;
-      border-color: #efcaca;
-    }
-
-    .btn-status.selecionado {
-      box-shadow: inset 0 0 0 2px currentColor;
-    }
-
-    .btn-status:hover {
-      filter: brightness(.97);
-    }
-
-    .btn-status:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    /* SALÁRIO */
-
-    .salario-box {
-      margin-top: 12px;
-      border-top: 1px solid #edf0ed;
-      padding-top: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .salario-info strong {
-      display: block;
-      font-size: 12px;
-    }
-
-    .salario-info small {
-      display: block;
-      color: #7b877f;
-      font-size: 9px;
-      margin-top: 3px;
-    }
-
-    .btn-salario {
-      min-width: 115px;
-      padding: 10px 12px;
-      border-radius: 10px;
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 9px 11px;
+      cursor: pointer;
       font-size: 10px;
-      font-weight: bold;
+      font-weight: 900;
+      transition: .15s;
     }
 
-    .btn-salario.ativo {
+    .btn:active {
+      transform: scale(.97);
+    }
+
+    .btn-ativo {
+      background: #e2f5e8;
+      color: #16783a;
+    }
+
+    .btn-pendente {
+      background: #fff3cf;
+      color: #9a6800;
+    }
+
+    .btn-inativo {
+      background: #ffe4e4;
+      color: #a92b2b;
+    }
+
+    .btn-salario-on {
       background: #176b3a;
       color: white;
     }
 
-    .btn-salario.inativo {
-      background: #eef1ef;
-      color: #58645c;
-      border: 1px solid #dce2dd;
+    .btn-salario-off {
+      background: #edf0ed;
+      color: #58645d;
     }
-
-    .btn-salario:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    /* STACOIN */
 
     .stacoin-box {
-      margin-top: 12px;
-      border-top: 1px solid #edf0ed;
-      padding-top: 12px;
+      margin-top: 14px;
+      padding: 13px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #fffdf3, #f8f5e5);
+      border: 1px solid #eadf9f;
     }
 
-    .stacoin-cabecalho {
+    .stacoin-topo {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 10px;
-      margin-bottom: 9px;
+      margin-bottom: 10px;
     }
 
     .stacoin-titulo {
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 900;
+      color: #735800;
     }
 
     .stacoin-saldo {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      color: #a16b00;
-      background: #fff8e8;
-      border: 1px solid #ead9a9;
-      border-radius: 9px;
-      padding: 6px 9px;
-      font-size: 11px;
-      font-weight: bold;
+      font-size: 17px;
+      font-weight: 900;
+      color: #176b3a;
+      white-space: nowrap;
     }
 
     .stacoin-acoes {
@@ -469,11 +376,12 @@
     }
 
     .btn-stacoin {
-      min-height: 42px;
+      border: 0;
       border-radius: 10px;
-      padding: 9px;
+      padding: 11px 8px;
       font-size: 10px;
-      font-weight: bold;
+      font-weight: 900;
+      cursor: pointer;
     }
 
     .btn-adicionar {
@@ -482,392 +390,309 @@
     }
 
     .btn-retirar {
-      background: #fff0f0;
-      color: #a52a2a;
-      border: 1px solid #efcaca;
-    }
-
-    .btn-stacoin:disabled {
-      opacity: .55;
-      cursor: not-allowed;
+      background: #fff;
+      color: #a62b2b;
+      border: 1px solid #e6bcbc;
     }
 
     .vazio {
       background: white;
-      border: 1px solid #e0e7e1;
+      border: 1px solid #dfe7e1;
       border-radius: 15px;
       padding: 25px;
       text-align: center;
-      color: #738078;
-      font-size: 12px;
+      color: #718078;
     }
 
     .carregando {
-      text-align: center;
-      padding: 30px;
-      color: #68766d;
-      font-size: 12px;
-    }
-
-    /* BLOQUEIO */
-
-    .bloqueio {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 25px;
-      background: #f3f6f3;
-    }
-
-    .bloqueio-card {
-      background: white;
-      border: 1px solid #e0e7e1;
-      border-radius: 20px;
-      padding: 28px 22px;
-      max-width: 390px;
-      width: 100%;
       text-align: center;
-      box-shadow: 0 8px 30px rgba(23,50,31,.07);
+      color: #66746b;
     }
 
-    .bloqueio-icone {
-      font-size: 42px;
-      margin-bottom: 12px;
-    }
-
-    .bloqueio-card h2 {
-      font-size: 19px;
-      margin-bottom: 8px;
-      color: #17321f;
-    }
-
-    .bloqueio-card p {
-      font-size: 12px;
-      line-height: 1.5;
-      color: #68766d;
-      margin-bottom: 17px;
-    }
-
-    .btn-central {
-      display: inline-block;
-      text-decoration: none;
-      background: #176b3a;
-      color: white;
-      padding: 11px 15px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: bold;
-      margin: 4px;
-    }
-
-    .btn-secundario {
-      display: inline-block;
-      text-decoration: none;
-      background: white;
-      color: #176b3a;
-      border: 1px solid #d7e0d9;
-      padding: 11px 15px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: bold;
-      margin: 4px;
-    }
-
-    .usuario-logado {
-      margin-bottom: 15px;
-      background: white;
-      border: 1px solid #e0e7e1;
-      border-radius: 13px;
-      padding: 11px 13px;
-      color: #68766d;
-      font-size: 10px;
-    }
-
-    .usuario-logado strong {
-      color: #176b3a;
-    }
-
-    .acoes-login {
-      margin-top: 8px;
-    }
-
-    /* TOAST */
-
-    .toast {
+    .mensagem {
       position: fixed;
       left: 50%;
-      bottom: 18px;
+      bottom: 20px;
       transform: translateX(-50%);
-      background: #17321f;
+      background: #183322;
       color: white;
-      padding: 12px 15px;
-      border-radius: 11px;
-      font-size: 11px;
+      padding: 12px 17px;
+      border-radius: 12px;
+      font-size: 12px;
       font-weight: bold;
-      display: none;
-      z-index: 1000;
+      z-index: 9999;
       max-width: calc(100% - 30px);
       text-align: center;
-    }
-
-    .toast.erro {
-      background: #a52a2a;
+      box-shadow: 0 8px 25px rgba(0,0,0,.2);
+      display: none;
     }
 
     /* MODAL STACOIN */
 
-    .modal-overlay {
+    .modal-fundo {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.45);
+      background: rgba(10, 25, 15, .58);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 18px;
-      z-index: 2000;
-    }
-
-    .modal-overlay.aberto {
-      display: flex;
+      z-index: 5000;
     }
 
     .modal {
-      width: 100%;
-      max-width: 390px;
+      width: min(430px, 100%);
       background: white;
-      border-radius: 19px;
-      padding: 19px;
-      box-shadow: 0 15px 50px rgba(0,0,0,.18);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.25);
     }
 
     .modal h2 {
-      font-size: 17px;
-      color: #17321f;
-      margin-bottom: 5px;
+      margin: 0;
+      color: #176b3a;
+      font-size: 20px;
     }
 
     .modal-subtitulo {
-      font-size: 10px;
-      color: #758178;
-      margin-bottom: 15px;
-      line-height: 1.4;
+      margin: 5px 0 18px;
+      color: #6d7a72;
+      font-size: 12px;
     }
 
-    .campo-modal {
-      margin-bottom: 12px;
+    .tipo-operacao {
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 14px;
     }
 
-    .campo-modal label {
+    .tipo-entrada {
+      background: #e5f7ea;
+      color: #176b3a;
+    }
+
+    .tipo-saida {
+      background: #ffe8e8;
+      color: #a72d2d;
+    }
+
+    .campo {
+      margin-bottom: 13px;
+    }
+
+    .campo label {
       display: block;
-      font-size: 9px;
-      font-weight: bold;
-      color: #66736b;
-      margin-bottom: 5px;
+      font-size: 10px;
+      font-weight: 900;
+      color: #536158;
+      margin-bottom: 6px;
       text-transform: uppercase;
     }
 
-    .campo-modal input,
-    .campo-modal textarea {
+    .campo input {
       width: 100%;
-      border: 1px solid #d9e1db;
+      padding: 12px;
+      border: 1px solid #d6dfd8;
       border-radius: 10px;
-      padding: 11px;
-      font-family: inherit;
-      font-size: 14px;
       outline: none;
+      font-size: 14px;
     }
 
-    .campo-modal textarea {
-      min-height: 75px;
-      resize: vertical;
-    }
-
-    .campo-modal input:focus,
-    .campo-modal textarea:focus {
+    .campo input:focus {
       border-color: #176b3a;
     }
 
-    .modal-acoes {
+    .modal-botoes {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 14px;
+      gap: 9px;
+      margin-top: 17px;
     }
 
-    .btn-modal {
-      min-height: 42px;
+    .modal-botoes button {
+      padding: 12px;
       border-radius: 10px;
-      font-size: 10px;
-      font-weight: bold;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn-cancelar {
+      background: #eef1ee;
+      color: #526058;
+      border: 0;
     }
 
     .btn-confirmar {
       background: #176b3a;
       color: white;
+      border: 0;
     }
 
-    .btn-confirmar.retirar {
-      background: #a52a2a;
+    .btn-confirmar.saida {
+      background: #a72d2d;
     }
 
-    .btn-cancelar {
-      background: #eef1ef;
-      color: #58645c;
-    }
-
-    .btn-modal:disabled {
-      opacity: .55;
-      cursor: not-allowed;
-    }
-
-    .saldo-modal {
-      background: #fff8e8;
-      border: 1px solid #ead9a9;
-      color: #765b08;
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 11px;
-      font-weight: bold;
-      margin-bottom: 13px;
-      text-align: center;
-    }
-
-    @media (max-width: 600px) {
-
+    @media (max-width: 760px) {
       .resumo {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topo h1 {
+        font-size: 21px;
+      }
+
+      .info-linha {
         grid-template-columns: 1fr 1fr;
       }
 
-      .resumo .card-resumo:last-child {
-        grid-column: span 2;
-      }
-
-      .dados {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .status-controles {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .salario-box {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .btn-salario {
-        width: 100%;
-      }
-
-      .status-adm {
-        display: none;
-      }
-    }
-
-    @media (max-width: 380px) {
-
-      .status-controles {
-        grid-template-columns: 1fr;
-      }
-
       .motorista-topo {
+        align-items: flex-start;
+      }
+
+      .stacoin-topo {
+        align-items: flex-start;
         flex-direction: column;
-      }
-
-      .status {
-        align-self: flex-start;
-      }
-
-      .stacoin-acoes {
-        grid-template-columns: 1fr;
-      }
-
-      .modal-acoes {
-        grid-template-columns: 1fr;
+        gap: 4px;
       }
     }
-
   </style>
 </head>
 
 <body>
 
-  <div id="app"></div>
+  <div class="topo">
+    <h1>👑 PAINEL ADM</h1>
+    <p>Gestão interna • Santa Luzia Tomates</p>
+  </div>
 
-  <div id="toast" class="toast"></div>
+  <a href="index.html" class="voltar">
+    ← VOLTAR PARA A CENTRAL
+  </a>
+
+  <main class="container">
+
+    <div id="bloqueio" class="bloqueio" style="display:none;"></div>
+
+    <section id="painel" style="display:none;">
+
+      <div class="conta">
+        <strong>👤 Conta conectada</strong>
+        <small id="contaInfo">Carregando...</small>
+      </div>
+
+      <div class="resumo">
+        <div class="card-resumo">
+          <span>Total</span>
+          <strong id="totalMotoristas">0</strong>
+        </div>
+
+        <div class="card-resumo">
+          <span>Ativos</span>
+          <strong id="totalAtivos">0</strong>
+        </div>
+
+        <div class="card-resumo">
+          <span>Salário ativo</span>
+          <strong id="totalSalario">0</strong>
+        </div>
+
+        <div class="card-resumo">
+          <span>STACOIN</span>
+          <strong id="totalStacoin">0</strong>
+        </div>
+      </div>
+
+      <div class="barra">
+        <input
+          type="search"
+          id="busca"
+          placeholder="🔎 Buscar por nome, apelido, código ou cargo..."
+        >
+      </div>
+
+      <div class="titulo-secao">
+        <h2>🚛 Motoristas</h2>
+      </div>
+
+      <div id="listaMotoristas" class="lista">
+        <div class="carregando">
+          Carregando motoristas...
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div id="mensagem" class="mensagem"></div>
 
   <!-- MODAL STACOIN -->
 
-  <div
-    id="modalStacoin"
-    class="modal-overlay"
-  >
+  <div id="modalStacoin" class="modal-fundo">
 
     <div class="modal">
 
-      <h2 id="modalStacoinTitulo">
-        STACOIN
-      </h2>
+      <h2 id="modalStacoinTitulo">🪙 STACOIN</h2>
 
-      <div
-        id="modalStacoinSubtitulo"
-        class="modal-subtitulo"
-      >
-        Movimentação de STACOIN
+      <div id="modalStacoinSubtitulo" class="modal-subtitulo">
+        Alterar saldo do motorista
       </div>
 
-      <div
-        id="modalSaldo"
-        class="saldo-modal"
-      >
-        Saldo atual: 0 STACOIN
+      <div id="tipoOperacao" class="tipo-operacao tipo-entrada">
+        ➕ ADICIONAR STACOIN
       </div>
 
-      <div class="campo-modal">
-
-        <label>
-          Valor
-        </label>
-
+      <div class="campo">
+        <label>Motorista</label>
         <input
-          id="stacoinValor"
+          type="text"
+          id="stacoinMotorista"
+          readonly
+        >
+      </div>
+
+      <div class="campo">
+        <label>Valor</label>
+        <input
           type="number"
+          id="stacoinValor"
           min="1"
           step="1"
-          inputmode="numeric"
-          placeholder="Ex: 100"
+          placeholder="Ex.: 1000"
         >
-
       </div>
 
-      <div class="campo-modal">
-
-        <label>
-          Motivo
-        </label>
-
-        <textarea
+      <div class="campo">
+        <label>Motivo</label>
+        <input
+          type="text"
           id="stacoinMotivo"
-          placeholder="Ex: Bonificação por destaque"
-        ></textarea>
-
+          maxlength="150"
+          placeholder="Ex.: Bonificação ADM"
+        >
       </div>
 
-      <div class="modal-acoes">
+      <div class="modal-botoes">
 
         <button
-          id="btnCancelarStacoin"
           type="button"
-          class="btn-modal btn-cancelar"
+          class="btn-cancelar"
+          onclick="fecharModalStacoin()"
         >
           CANCELAR
         </button>
 
         <button
-          id="btnConfirmarStacoin"
           type="button"
-          class="btn-modal btn-confirmar"
+          id="btnConfirmarStacoin"
+          class="btn-confirmar"
+          onclick="confirmarStacoin()"
         >
           CONFIRMAR
         </button>
@@ -878,1675 +703,985 @@
 
   </div>
 
+<script>
+  /* =========================================================
+     SUPABASE
+  ========================================================= */
 
-  <script>
+  const SUPABASE_URL =
+    "https://cckypvqophyviphqhich.supabase.co";
 
-    /* =====================================================
-       CONFIGURAÇÃO SUPABASE
-       ===================================================== */
+  /*
+    COLOQUE AQUI A MESMA CHAVE PÚBLICA QUE JÁ ESTÁ FUNCIONANDO
+    NO SEU INDEX.HTML.
+  */
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
-    const SUPABASE_URL =
-      "https://cckypvqophyviphqhich.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_M_6iIpO4FNhxskWG0XXrA_Uwuw_bbP";
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY,
-        {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true,
-            flowType: "implicit"
-          }
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+          flowType: "implicit"
         }
-      );
-
-
-    /* =====================================================
-       ELEMENTOS
-       ===================================================== */
-
-    const app =
-      document.getElementById("app");
-
-    const toast =
-      document.getElementById("toast");
-
-    const modalStacoin =
-      document.getElementById(
-        "modalStacoin"
-      );
-
-    const stacoinValor =
-      document.getElementById(
-        "stacoinValor"
-      );
-
-    const stacoinMotivo =
-      document.getElementById(
-        "stacoinMotivo"
-      );
-
-    const modalSaldo =
-      document.getElementById(
-        "modalSaldo"
-      );
-
-    const modalTitulo =
-      document.getElementById(
-        "modalStacoinTitulo"
-      );
-
-    const modalSubtitulo =
-      document.getElementById(
-        "modalStacoinSubtitulo"
-      );
-
-    const btnConfirmarStacoin =
-      document.getElementById(
-        "btnConfirmarStacoin"
-      );
-
-    const btnCancelarStacoin =
-      document.getElementById(
-        "btnCancelarStacoin"
-      );
-
-    let motoristas = [];
-
-    let motoristaStacoinAtual = null;
-
-    let tipoStacoinAtual = null;
-
-
-    /* =====================================================
-       TOAST
-       ===================================================== */
-
-    function mostrarToast(
-      mensagem,
-      erro = false
-    ) {
-
-      toast.textContent = mensagem;
-
-      toast.className =
-        "toast" +
-        (erro ? " erro" : "");
-
-      toast.style.display =
-        "block";
-
-      setTimeout(() => {
-
-        toast.style.display =
-          "none";
-
-      }, 3000);
-    }
-
-
-    /* =====================================================
-       ESCAPE HTML
-       ===================================================== */
-
-    function escapeHtml(valor) {
-
-      return String(valor ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-
-    /* =====================================================
-       FORMATAÇÃO
-       ===================================================== */
-
-    function formatarNumero(valor) {
-
-      return Number(valor || 0)
-        .toLocaleString("pt-BR");
-    }
-
-
-    /* =====================================================
-       BLOQUEIO
-       ===================================================== */
-
-    function mostrarBloqueio(
-      titulo,
-      mensagem,
-      mostrarLogin = false
-    ) {
-
-      app.innerHTML = `
-        <div class="bloqueio">
-
-          <div class="bloqueio-card">
-
-            <div class="bloqueio-icone">
-              ${mostrarLogin ? "🔐" : "⛔"}
-            </div>
-
-            <h2>
-              ${escapeHtml(titulo)}
-            </h2>
-
-            <p>
-              ${escapeHtml(mensagem)}
-            </p>
-
-            <div class="acoes-login">
-
-              ${
-                mostrarLogin
-                  ? `
-                    <a
-                      href="index.html"
-                      class="btn-central"
-                    >
-                      🔐 ENTRAR PELA CENTRAL
-                    </a>
-                  `
-                  : ""
-              }
-
-              <a
-                href="index.html"
-                class="btn-secundario"
-              >
-                ← VOLTAR PARA A CENTRAL
-              </a>
-
-            </div>
-
-          </div>
-
-        </div>
-      `;
-    }
-
-
-    /* =====================================================
-       USUÁRIO LOGADO
-       ===================================================== */
-
-    async function mostrarUsuarioLogado(
-      session
-    ) {
-
-      const email =
-        session?.user?.email || "";
-
-      const nome =
-        session?.user?.user_metadata?.full_name ||
-        session?.user?.user_metadata?.name ||
-        "";
-
-      const identificacao =
-        nome
-          ? `${nome} • ${email}`
-          : email;
-
-      const existente =
-        document.getElementById(
-          "usuarioLogado"
-        );
-
-      if (existente) {
-
-        existente.innerHTML = `
-          🔐 Conta conectada:
-          <strong>
-            ${escapeHtml(
-              identificacao
-            )}
-          </strong>
-        `;
       }
-    }
+    );
 
 
-    /* =====================================================
-       INICIAR
-       ===================================================== */
+  /* =========================================================
+     ESTADO
+  ========================================================= */
 
-    async function iniciar() {
+  let motoristas = [];
 
-      app.innerHTML = `
-        <div class="carregando">
-          🔐 Verificando sua sessão...
-        </div>
-      `;
+  let motoristaStacoinSelecionado = null;
 
+  let tipoStacoinSelecionado = "entrada";
+
+
+  /* =========================================================
+     UTILIDADES
+  ========================================================= */
+
+  function escaparHTML(valor) {
+    return String(valor ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  function formatarNumero(valor) {
+    const numero = Number(valor || 0);
+
+    return numero.toLocaleString("pt-BR");
+  }
+
+
+  function mostrarMensagem(texto, tempo = 3200) {
+    const elemento = document.getElementById("mensagem");
+
+    elemento.textContent = texto;
+    elemento.style.display = "block";
+
+    clearTimeout(window.timerMensagem);
+
+    window.timerMensagem = setTimeout(() => {
+      elemento.style.display = "none";
+    }, tempo);
+  }
+
+
+  function mostrarBloqueio(titulo, texto, mostrarLink = false) {
+
+    const bloqueio =
+      document.getElementById("bloqueio");
+
+    bloqueio.innerHTML = `
+      <div class="icone">🔒</div>
+
+      <h2>${escaparHTML(titulo)}</h2>
+
+      <p>
+        ${escaparHTML(texto)}
+      </p>
+
+      ${
+        mostrarLink
+          ? `
+            <a href="index.html">
+              ← VOLTAR PARA A CENTRAL
+            </a>
+          `
+          : ""
+      }
+    `;
+
+    bloqueio.style.display = "block";
+
+    document.getElementById("painel").style.display = "none";
+  }
+
+
+  /* =========================================================
+     AUTENTICAÇÃO
+  ========================================================= */
+
+  async function iniciarPainel() {
+
+    try {
 
       const {
-        data: { session },
-        error
-      } =
-        await supabaseClient.auth.getSession();
+        data: sessionData,
+        error: sessionError
+      } = await supabaseClient.auth.getSession();
 
-
-    if (error) {
-
-  console.error(
-    "Erro sou_adm:",
-    error
-  );
-
-  mostrarBloqueio(
-    "Erro ao verificar ADM",
-    error.message ||
-    "O Supabase não conseguiu verificar sua autorização.",
-    false
-  );
-
-  return;
-}
-
-      await mostrarUsuarioLogado(
-        session
-      );
-
-      await verificarADM();
-    }
-
-
-    /* =====================================================
-       VERIFICAR ADM
-       ===================================================== */
-
-    async function verificarADM() {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.rpc(
-          "sou_adm"
-        );
-
-
-      if (error) {
-
-        console.error(
-          "Erro sou_adm:",
-          error
-        );
+      if (sessionError) {
+        console.error(sessionError);
 
         mostrarBloqueio(
           "Não foi possível verificar",
-          "O sistema não conseguiu confirmar sua autorização de administrador.",
-          false
+          sessionError.message || "Erro ao verificar sua sessão.",
+          true
         );
 
         return;
       }
 
+      const session = sessionData?.session;
 
-      if (data !== true) {
+      if (!session) {
+
+        mostrarBloqueio(
+          "Login necessário",
+          "Entre primeiro na sua conta Google pela Santa Luzia Central e depois volte para o Painel ADM.",
+          true
+        );
+
+        return;
+      }
+
+      const email =
+        session.user?.email ||
+        "Conta conectada";
+
+      document.getElementById("contaInfo").textContent =
+        email;
+
+      /* VERIFICA ADM */
+
+      const {
+        data: souAdm,
+        error: admError
+      } = await supabaseClient.rpc("sou_adm");
+
+      if (admError) {
+
+        console.error("Erro sou_adm:", admError);
+
+        mostrarBloqueio(
+          "Não foi possível verificar",
+          admError.message ||
+          "O sistema não conseguiu confirmar sua autorização de administrador.",
+          true
+        );
+
+        return;
+      }
+
+      if (!souAdm) {
 
         mostrarBloqueio(
           "Acesso restrito",
-          "Sua conta está conectada, mas não possui autorização de administrador.",
-          false
+          "Esta área é exclusiva para administradores da Santa Luzia.",
+          true
         );
 
         return;
       }
 
+      document.getElementById("bloqueio").style.display =
+        "none";
 
-      montarPainel();
+      document.getElementById("painel").style.display =
+        "block";
 
       await carregarMotoristas();
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mostrarBloqueio(
+        "Erro ao abrir o painel",
+        erro?.message ||
+        "Ocorreu um erro inesperado.",
+        true
+      );
     }
+  }
 
 
-    /* =====================================================
-       MONTAR PAINEL
-       ===================================================== */
+  /* =========================================================
+     CARREGAR MOTORISTAS
+  ========================================================= */
 
-    function montarPainel() {
+  async function carregarMotoristas() {
 
-      app.innerHTML = `
+    const lista =
+      document.getElementById("listaMotoristas");
 
-        <header>
+    lista.innerHTML = `
+      <div class="carregando">
+        Carregando motoristas...
+      </div>
+    `;
 
-          <div class="topo">
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "listar_motoristas_adm"
+    );
 
-            <div class="marca">
+    if (error) {
 
-              <img
-                src="logo.sta.PNG"
-                alt="Santa Luzia"
-              >
+      console.error(error);
 
-              <div>
-
-                <h1>
-                  Painel ADM
-                </h1>
-
-                <p>
-                  Gestão Santa Luzia Central
-                </p>
-
-              </div>
-
-            </div>
-
-            <div class="status-adm">
-              👑 ADM AUTORIZADO
-            </div>
-
-          </div>
-
-        </header>
-
-
-        <main>
-
-          <div
-            id="usuarioLogado"
-            class="usuario-logado"
-          >
-            🔐 Conta conectada
-          </div>
-
-
-          <a
-            href="index.html"
-            class="voltar"
-          >
-            ← VOLTAR PARA A CENTRAL
-          </a>
-
-
-          <section class="resumo">
-
-            <div class="card-resumo">
-
-              <span>
-                MOTORISTAS
-              </span>
-
-              <strong id="totalMotoristas">
-                0
-              </strong>
-
-            </div>
-
-
-            <div class="card-resumo">
-
-              <span>
-                SALÁRIO ATIVO
-              </span>
-
-              <strong id="totalSalario">
-                0
-              </strong>
-
-            </div>
-
-
-            <div class="card-resumo">
-
-              <span>
-                SALÁRIO INATIVO
-              </span>
-
-              <strong id="totalSemSalario">
-                0
-              </strong>
-
-            </div>
-
-          </section>
-
-
-          <div class="info">
-
-            💰 <strong>
-              Controle de salário
-            </strong>
-
-            <br>
-
-            Motoristas com salário ativo
-            participarão automaticamente
-            dos pagamentos quinzenais da
-            Santa Luzia nos dias 5 e 20,
-            desde que também estejam com
-            status ativo/oficial.
-
-          </div>
-
-
-          <div class="info-status">
-
-            👤 <strong>
-              Controle de status
-            </strong>
-
-            <br>
-
-            Use os botões de cada motorista
-            para definir se ele está
-            <strong>Ativo</strong>,
-            <strong>Pendente</strong> ou
-            <strong>Inativo</strong>.
-
-          </div>
-
-
-          <div class="info-stacoin">
-
-            🪙 <strong>
-              Controle de STACOIN
-            </strong>
-
-            <br>
-
-            O ADM pode adicionar ou retirar
-            STACOIN de qualquer motorista.
-            Toda movimentação fica registrada
-            automaticamente no extrato do motorista.
-
-          </div>
-
-
-          <div class="barra">
-
-            <input
-              id="busca"
-              class="busca"
-              type="search"
-              placeholder="Pesquisar por nome, apelido ou ID..."
-              autocomplete="off"
-            >
-
-
-            <button
-              class="btn-atualizar"
-              id="btnAtualizar"
-              type="button"
-            >
-              ↻ ATUALIZAR
-            </button>
-
-          </div>
-
-
-          <div
-            id="lista"
-            class="lista"
-          >
-
-            <div class="carregando">
-              Carregando motoristas...
-            </div>
-
-          </div>
-
-        </main>
+      lista.innerHTML = `
+        <div class="vazio">
+          ❌ Não foi possível carregar os motoristas.<br><br>
+          ${escaparHTML(error.message)}
+        </div>
       `;
 
-
-      document
-        .getElementById("busca")
-        .addEventListener(
-          "input",
-          renderizarMotoristas
-        );
-
-
-      document
-        .getElementById("btnAtualizar")
-        .addEventListener(
-          "click",
-          carregarMotoristas
-        );
+      return;
     }
 
+    motoristas = Array.isArray(data)
+      ? data
+      : [];
 
-    /* =====================================================
-       CARREGAR MOTORISTAS
-       ===================================================== */
+    atualizarResumo();
 
-    async function carregarMotoristas() {
-
-      const lista =
-        document.getElementById(
-          "lista"
-        );
-
-      const atualizar =
-        document.getElementById(
-          "btnAtualizar"
-        );
+    renderizarMotoristas();
+  }
 
 
-      if (lista) {
+  /* =========================================================
+     RESUMO
+  ========================================================= */
 
-        lista.innerHTML = `
-          <div class="carregando">
-            🔄 Atualizando motoristas...
-          </div>
-        `;
-      }
+  function atualizarResumo() {
 
+    const total =
+      motoristas.length;
 
-      if (atualizar) {
+    const ativos =
+      motoristas.filter(m =>
+        String(m.status || "").toLowerCase() === "ativo"
+      ).length;
 
-        atualizar.disabled = true;
+    const salario =
+      motoristas.filter(m =>
+        Boolean(m.salario_ativo)
+      ).length;
 
-        atualizar.textContent =
-          "ATUALIZANDO...";
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.rpc(
-          "listar_motoristas_adm"
-        );
-
-
-      if (atualizar) {
-
-        atualizar.disabled = false;
-
-        atualizar.textContent =
-          "↻ ATUALIZAR";
-      }
-
-
-      if (error) {
-
-        console.error(
-          "Erro listar_motoristas_adm:",
-          error
-        );
-
-
-        if (lista) {
-
-          lista.innerHTML = `
-            <div class="vazio">
-
-              ❌ Não foi possível
-              carregar os motoristas.
-
-              <br><br>
-
-              ${escapeHtml(
-                error.message
-              )}
-
-            </div>
-          `;
-        }
-
-        return;
-      }
-
-
-      motoristas =
-        Array.isArray(data)
-          ? data
-          : [];
-
-
-      /* Busca saldos separadamente */
-
-      const {
-        data: saldos,
-        error: erroSaldos
-      } =
-        await supabaseClient.rpc(
-          "listar_saldos_stacoin_adm"
-        );
-
-
-      if (
-        !erroSaldos &&
-        Array.isArray(saldos)
-      ) {
-
-        saldos.forEach(
-          saldo => {
-
-            const motorista =
-              motoristas.find(
-                m =>
-                  Number(m.id) ===
-                  Number(
-                    saldo.motorista_id
-                  )
-              );
-
-
-            if (motorista) {
-
-              motorista.saldo_stacoin =
-                Number(
-                  saldo.saldo || 0
-                );
-            }
-
-          }
-        );
-
-      }
-
-
-      /* Garante zero */
-
-      motoristas.forEach(
-        motorista => {
-
-          motorista.saldo_stacoin =
-            Number(
-              motorista.saldo_stacoin || 0
-            );
-
-        }
+    const stacoin =
+      motoristas.reduce(
+        (total, m) =>
+          total + Number(m.saldo_stacoin || 0),
+        0
       );
 
+    document.getElementById("totalMotoristas")
+      .textContent = total;
 
-      atualizarResumo();
+    document.getElementById("totalAtivos")
+      .textContent = ativos;
 
-      renderizarMotoristas();
-    }
+    document.getElementById("totalSalario")
+      .textContent = salario;
 
+    document.getElementById("totalStacoin")
+      .textContent = formatarNumero(stacoin);
+  }
 
-    /* =====================================================
-       RESUMO
-       ===================================================== */
 
-    function atualizarResumo() {
+  /* =========================================================
+     RENDERIZAR MOTORISTAS
+  ========================================================= */
 
-      const total =
-        motoristas.length;
+  function renderizarMotoristas() {
 
+    const lista =
+      document.getElementById("listaMotoristas");
 
-      const ativos =
-        motoristas.filter(
-          m =>
-            m.salario_ativo === true
-        ).length;
+    const busca =
+      document.getElementById("busca")
+        .value
+        .trim()
+        .toLowerCase();
 
+    const filtrados =
+      motoristas.filter(m => {
 
-      const inativos =
-        total - ativos;
-
-
-      const totalEl =
-        document.getElementById(
-          "totalMotoristas"
-        );
-
-
-      const salarioEl =
-        document.getElementById(
-          "totalSalario"
-        );
-
-
-      const semSalarioEl =
-        document.getElementById(
-          "totalSemSalario"
-        );
-
-
-      if (totalEl) {
-
-        totalEl.textContent =
-          total;
-      }
-
-
-      if (salarioEl) {
-
-        salarioEl.textContent =
-          ativos;
-      }
-
-
-      if (semSalarioEl) {
-
-        semSalarioEl.textContent =
-          inativos;
-      }
-    }
-
-
-    /* =====================================================
-       STATUS
-       ===================================================== */
-
-    function classeDoStatus(status) {
-
-      const valor =
-        String(status || "")
-          .trim()
-          .toLowerCase();
-
-
-      if (
-        valor === "ativo" ||
-        valor === "oficial" ||
-        valor === "active"
-      ) {
-        return "ativo";
-      }
-
-
-      if (
-        valor === "pendente"
-      ) {
-        return "pendente";
-      }
-
-
-      if (
-        valor === "inativo"
-      ) {
-        return "inativo";
-      }
-
-
-      return "outro";
-    }
-
-
-    /* =====================================================
-       RENDERIZAR
-       ===================================================== */
-
-    function renderizarMotoristas() {
-
-      const lista =
-        document.getElementById(
-          "lista"
-        );
-
-
-      if (!lista) return;
-
-
-      const campo =
-        document.getElementById(
-          "busca"
-        );
-
-
-      const busca =
-        (campo?.value || "")
-          .trim()
-          .toLowerCase();
-
-
-      const filtrados =
-        motoristas.filter(
-          m => {
-
-            const texto = [
-
-              m.codigo,
-              m.nome,
-              m.apelido,
-              m.cargo,
-              m.categoria
-
-            ]
-              .filter(Boolean)
-              .join(" ")
-              .toLowerCase();
-
-
-            return texto.includes(
-              busca
-            );
-          }
-        );
-
-
-      if (!filtrados.length) {
-
-        lista.innerHTML = `
-          <div class="vazio">
-            Nenhum motorista encontrado.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      lista.innerHTML =
-        filtrados
-          .map(
-            criarCardMotorista
-          )
-          .join("");
-
-
-      filtrados.forEach(
-        m => {
-
-          const botaoSalario =
-            document.getElementById(
-              `salario-${m.id}`
-            );
-
-
-          if (botaoSalario) {
-
-            botaoSalario.addEventListener(
-              "click",
-              () =>
-                alterarSalario(
-                  m.id,
-                  !m.salario_ativo
-                )
-            );
-
-          }
-
-
-          const botaoAtivo =
-            document.getElementById(
-              `status-ativo-${m.id}`
-            );
-
-
-          const botaoPendente =
-            document.getElementById(
-              `status-pendente-${m.id}`
-            );
-
-
-          const botaoInativo =
-            document.getElementById(
-              `status-inativo-${m.id}`
-            );
-
-
-          if (botaoAtivo) {
-
-            botaoAtivo.addEventListener(
-              "click",
-              () =>
-                alterarStatus(
-                  m.id,
-                  "ativo"
-                )
-            );
-
-          }
-
-
-          if (botaoPendente) {
-
-            botaoPendente.addEventListener(
-              "click",
-              () =>
-                alterarStatus(
-                  m.id,
-                  "pendente"
-                )
-            );
-
-          }
-
-
-          if (botaoInativo) {
-
-            botaoInativo.addEventListener(
-              "click",
-              () =>
-                alterarStatus(
-                  m.id,
-                  "inativo"
-                )
-            );
-
-          }
-
-
-          const adicionar =
-            document.getElementById(
-              `stacoin-adicionar-${m.id}`
-            );
-
-
-          const retirar =
-            document.getElementById(
-              `stacoin-retirar-${m.id}`
-            );
-
-
-          if (adicionar) {
-
-            adicionar.addEventListener(
-              "click",
-              () =>
-                abrirModalStacoin(
-                  m.id,
-                  "entrada"
-                )
-            );
-
-          }
-
-
-          if (retirar) {
-
-            retirar.addEventListener(
-              "click",
-              () =>
-                abrirModalStacoin(
-                  m.id,
-                  "saida"
-                )
-            );
-
-          }
-
-        }
-      );
-    }
-
-
-    /* =====================================================
-       CARD
-       ===================================================== */
-
-    function criarCardMotorista(m) {
-
-      const status =
-        String(
-          m.status || ""
-        ).toLowerCase();
-
-
-      const classeStatus =
-        classeDoStatus(
+        const texto = [
+          m.nome,
+          m.apelido,
+          m.codigo,
+          m.cargo,
+          m.categoria,
           m.status
-        );
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        return texto.includes(busca);
+      });
+
+    if (!filtrados.length) {
+
+      lista.innerHTML = `
+        <div class="vazio">
+          Nenhum motorista encontrado.
+        </div>
+      `;
+
+      return;
+    }
+
+    lista.innerHTML =
+      filtrados
+        .map(m => criarCardMotorista(m))
+        .join("");
+  }
 
 
-      const salarioAtivo =
-        m.salario_ativo === true;
+  function criarCardMotorista(m) {
 
+    const status =
+      String(m.status || "pendente")
+        .toLowerCase();
 
-      const saldo =
-        Number(
-          m.saldo_stacoin || 0
-        );
+    let statusClasse =
+      "status-pendente";
 
+    let statusTexto =
+      "🟡 PENDENTE";
 
-      return `
+    if (status === "ativo") {
 
-        <article class="motorista">
+      statusClasse =
+        "status-ativo";
 
-          <div class="motorista-topo">
+      statusTexto =
+        "🟢 ATIVO";
 
-            <div class="identidade">
+    } else if (status === "inativo") {
 
-              <span class="codigo">
+      statusClasse =
+        "status-inativo";
 
-                ${escapeHtml(
-                  m.codigo ||
-                  "SEM ID"
-                )}
+      statusTexto =
+        "🔴 INATIVO";
+    }
 
-              </span>
+    const salarioAtivo =
+      Boolean(m.salario_ativo);
 
+    const saldo =
+      Number(m.saldo_stacoin || 0);
 
-              <div class="nome">
+    return `
+      <article class="motorista">
 
-                ${escapeHtml(
-                  m.nome ||
-                  "Sem nome"
-                )}
+        <div class="motorista-topo">
 
-              </div>
+          <div class="motorista-nome">
 
+            <h3>
+              ${escaparHTML(m.nome || "Sem nome")}
+            </h3>
 
-              <div class="apelido">
+            <p>
+              ${escaparHTML(m.apelido || "Sem apelido")}
+              •
+              ${escaparHTML(m.cargo || "Sem cargo")}
+            </p>
 
-                ${
-                  m.apelido
-                    ? "@" +
-                      escapeHtml(
-                        m.apelido
-                      )
-                    : "Sem apelido"
-                }
-
-              </div>
-
-            </div>
-
-
-            <span
-              class="status ${classeStatus}"
-            >
-
-              ${escapeHtml(
-                m.status ||
-                "Sem status"
-              )}
-
+            <span class="codigo">
+              ${escaparHTML(m.codigo || "SEM ID")}
             </span>
 
           </div>
 
+          <span class="status-badge ${statusClasse}">
+            ${statusTexto}
+          </span>
 
-          <div class="dados">
-
-            <div class="dado">
-
-              <span>
-                Cargo
-              </span>
-
-              <strong>
-                ${escapeHtml(
-                  m.cargo || "-"
-                )}
-              </strong>
-
-            </div>
+        </div>
 
 
-            <div class="dado">
+        <div class="info-linha">
 
-              <span>
-                Categoria
-              </span>
-
-              <strong>
-                ${escapeHtml(
-                  m.categoria || "-"
-                )}
-              </strong>
-
-            </div>
-
-
-            <div class="dado">
-
-              <span>
-                Nível
-              </span>
-
-              <strong>
-                ${escapeHtml(
-                  m.nivel || "-"
-                )}
-              </strong>
-
-            </div>
-
-
-            <div class="dado">
-
-              <span>
-                STACOIN
-              </span>
-
-              <strong>
-                ${formatarNumero(
-                  saldo
-                )}
-              </strong>
-
-            </div>
-
+          <div class="info">
+            <small>Categoria</small>
+            <strong>
+              ${escaparHTML(m.categoria || "—")}
+            </strong>
           </div>
 
-
-          <!-- STATUS -->
-
-          <div class="status-box">
-
-            <div class="status-box-titulo">
-
-              <strong>
-                👤 Status do motorista
-              </strong>
-
-              <span class="status-atual-texto">
-                Atual:
-                ${escapeHtml(
-                  m.status ||
-                  "Sem status"
-                )}
-              </span>
-
-            </div>
-
-
-            <div class="status-controles">
-
-              <button
-                id="status-ativo-${m.id}"
-                type="button"
-                class="btn-status ativo ${
-                  status === "ativo"
-                    ? "selecionado"
-                    : ""
-                }"
-              >
-                🟢 ATIVO
-              </button>
-
-
-              <button
-                id="status-pendente-${m.id}"
-                type="button"
-                class="btn-status pendente ${
-                  status === "pendente"
-                    ? "selecionado"
-                    : ""
-                }"
-              >
-                🟡 PENDENTE
-              </button>
-
-
-              <button
-                id="status-inativo-${m.id}"
-                type="button"
-                class="btn-status inativo ${
-                  status === "inativo"
-                    ? "selecionado"
-                    : ""
-                }"
-              >
-                🔴 INATIVO
-              </button>
-
-            </div>
-
+          <div class="info">
+            <small>Nível</small>
+            <strong>
+              ${escaparHTML(m.nível ?? m.nivel ?? "—")}
+            </strong>
           </div>
 
+          <div class="info">
+            <small>XP</small>
+            <strong>
+              ${formatarNumero(m.xp || 0)}
+            </strong>
+          </div>
 
-          <!-- SALÁRIO -->
+        </div>
 
-          <div class="salario-box">
 
-            <div class="salario-info">
+        <!-- STATUS -->
 
-              <strong>
-                💰 Salário quinzenal
-              </strong>
+        <div class="controle">
 
-              <small>
+          <div class="controle-titulo">
+            🔐 Status do motorista
+          </div>
 
-                ${
-                  salarioAtivo
-                    ? "Este motorista está habilitado para receber."
-                    : "Este motorista não está habilitado para receber."
-                }
-
-              </small>
-
-            </div>
-
+          <div class="botoes">
 
             <button
-              id="salario-${m.id}"
               type="button"
-              class="btn-salario ${
-                salarioAtivo
-                  ? "ativo"
-                  : "inativo"
-              }"
+              class="btn btn-ativo"
+              onclick="alterarStatus(${Number(m.id)}, 'ativo')"
             >
+              🟢 ATIVO
+            </button>
 
-              ${
-                salarioAtivo
-                  ? "✓ SALÁRIO ATIVO"
-                  : "ATIVAR SALÁRIO"
-              }
+            <button
+              type="button"
+              class="btn btn-pendente"
+              onclick="alterarStatus(${Number(m.id)}, 'pendente')"
+            >
+              🟡 PENDENTE
+            </button>
 
+            <button
+              type="button"
+              class="btn btn-inativo"
+              onclick="alterarStatus(${Number(m.id)}, 'inativo')"
+            >
+              🔴 INATIVO
             </button>
 
           </div>
 
+        </div>
 
-          <!-- STACOIN -->
 
-          <div class="stacoin-box">
+        <!-- SALÁRIO -->
 
-            <div class="stacoin-cabecalho">
+        <div class="controle">
 
-              <span class="stacoin-titulo">
-                🪙 Controle de STACOIN
-              </span>
+          <div class="controle-titulo">
+            💰 Salário quinzenal
+          </div>
 
-              <span class="stacoin-saldo">
-                🪙 ${formatarNumero(saldo)}
-              </span>
+          <div class="botoes">
 
+            <button
+              type="button"
+              class="btn ${
+                salarioAtivo
+                  ? "btn-salario-on"
+                  : "btn-salario-off"
+              }"
+              onclick="alterarSalario(${Number(m.id)}, ${!salarioAtivo})"
+            >
+              ${
+                salarioAtivo
+                  ? "🟢 SALÁRIO ATIVO"
+                  : "⚪ SALÁRIO INATIVO"
+              }
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- STACOIN -->
+
+        <div class="stacoin-box">
+
+          <div class="stacoin-topo">
+
+            <div class="stacoin-titulo">
+              🪙 STACOIN
             </div>
 
-
-            <div class="stacoin-acoes">
-
-              <button
-                id="stacoin-adicionar-${m.id}"
-                type="button"
-                class="btn-stacoin btn-adicionar"
-              >
-                ➕ ADICIONAR STACOIN
-              </button>
-
-
-              <button
-                id="stacoin-retirar-${m.id}"
-                type="button"
-                class="btn-stacoin btn-retirar"
-              >
-                ➖ RETIRAR STACOIN
-              </button>
-
+            <div class="stacoin-saldo">
+              ${formatarNumero(saldo)} STC
             </div>
 
           </div>
 
-        </article>
-      `;
+          <div class="stacoin-acoes">
+
+            <button
+              type="button"
+              class="btn-stacoin btn-adicionar"
+              onclick="abrirModalStacoin(${Number(m.id)}, 'entrada')"
+            >
+              ➕ ADICIONAR STACOIN
+            </button>
+
+            <button
+              type="button"
+              class="btn-stacoin btn-retirar"
+              onclick="abrirModalStacoin(${Number(m.id)}, 'saida')"
+            >
+              ➖ RETIRAR STACOIN
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+    `;
+  }
+
+
+  /* =========================================================
+     ALTERAR STATUS
+  ========================================================= */
+
+  async function alterarStatus(id, novoStatus) {
+
+    const motorista =
+      motoristas.find(m =>
+        Number(m.id) === Number(id)
+      );
+
+    if (!motorista) {
+      mostrarMensagem("Motorista não encontrado.");
+      return;
     }
 
+    const nomes = {
+      ativo: "ATIVO",
+      pendente: "PENDENTE",
+      inativo: "INATIVO"
+    };
 
-    /* =====================================================
-       ALTERAR STATUS
-       ===================================================== */
+    const confirmou =
+      confirm(
+        `Alterar ${motorista.nome} para ${nomes[novoStatus]}?`
+      );
 
-    async function alterarStatus(
-      motoristaId,
-      novoStatus
-    ) {
+    if (!confirmou) {
+      return;
+    }
 
-      const motorista =
-        motoristas.find(
-          m =>
-            Number(m.id) ===
-            Number(motoristaId)
-        );
-
-
-      if (!motorista) return;
-
-
-      const nomesStatus = {
-
-        ativo: "ATIVO",
-        pendente: "PENDENTE",
-        inativo: "INATIVO"
-
-      };
-
-
-      if (
-        !confirm(
-          `Alterar ${motorista.nome} para ${nomesStatus[novoStatus]}?`
-        )
-      ) {
-        return;
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "definir_status_motorista",
+      {
+        p_motorista_id: Number(id),
+        p_status: novoStatus
       }
+    );
+
+    if (error) {
+
+      console.error(error);
+
+      mostrarMensagem(
+        "❌ " + (error.message || "Não foi possível alterar o status.")
+      );
+
+      return;
+    }
+
+    if (!data?.sucesso) {
+
+      mostrarMensagem(
+        "❌ Não foi possível alterar o status."
+      );
+
+      return;
+    }
+
+    motorista.status =
+      novoStatus;
+
+    atualizarResumo();
+
+    renderizarMotoristas();
+
+    mostrarMensagem(
+      `✅ ${motorista.nome} agora está ${nomes[novoStatus]}.`
+    );
+  }
 
 
-      const botoes = [
+  /* =========================================================
+     ALTERAR SALÁRIO
+  ========================================================= */
 
-        document.getElementById(
-          `status-ativo-${motoristaId}`
-        ),
+  async function alterarSalario(id, ativo) {
 
-        document.getElementById(
-          `status-pendente-${motoristaId}`
-        ),
+    const motorista =
+      motoristas.find(m =>
+        Number(m.id) === Number(id)
+      );
 
-        document.getElementById(
-          `status-inativo-${motoristaId}`
-        )
+    if (!motorista) {
+      mostrarMensagem("Motorista não encontrado.");
+      return;
+    }
 
-      ];
+    const confirmou =
+      confirm(
+        `${ativo ? "Ativar" : "Desativar"} o salário de ${motorista.nome}?`
+      );
+
+    if (!confirmou) {
+      return;
+    }
+
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "definir_salario_ativo",
+      {
+        p_motorista_id: Number(id),
+        p_ativo: Boolean(ativo)
+      }
+    );
+
+    if (error) {
+
+      console.error(error);
+
+      mostrarMensagem(
+        "❌ " + (error.message || "Não foi possível alterar o salário.")
+      );
+
+      return;
+    }
+
+    motorista.salario_ativo =
+      Boolean(ativo);
+
+    atualizarResumo();
+
+    renderizarMotoristas();
+
+    mostrarMensagem(
+      ativo
+        ? `✅ Salário ativado para ${motorista.nome}.`
+        : `⚪ Salário desativado para ${motorista.nome}.`
+    );
+  }
 
 
-      botoes.forEach(
-        botao => {
+  /* =========================================================
+     MODAL STACOIN
+  ========================================================= */
 
-          if (botao) {
-            botao.disabled = true;
-          }
+  function abrirModalStacoin(id, tipo) {
 
+    const motorista =
+      motoristas.find(m =>
+        Number(m.id) === Number(id)
+      );
+
+    if (!motorista) {
+
+      mostrarMensagem(
+        "Motorista não encontrado."
+      );
+
+      return;
+    }
+
+    motoristaStacoinSelecionado =
+      motorista;
+
+    tipoStacoinSelecionado =
+      tipo;
+
+    const modal =
+      document.getElementById("modalStacoin");
+
+    const motoristaCampo =
+      document.getElementById("stacoinMotorista");
+
+    const valorCampo =
+      document.getElementById("stacoinValor");
+
+    const motivoCampo =
+      document.getElementById("stacoinMotivo");
+
+    const tipoElemento =
+      document.getElementById("tipoOperacao");
+
+    const botaoConfirmar =
+      document.getElementById("btnConfirmarStacoin");
+
+    motoristaCampo.value =
+      `${motorista.nome} • ${motorista.codigo || "SEM ID"}`;
+
+    valorCampo.value =
+      "";
+
+    motivoCampo.value =
+      "";
+
+    if (tipo === "entrada") {
+
+      tipoElemento.className =
+        "tipo-operacao tipo-entrada";
+
+      tipoElemento.textContent =
+        "➕ ADICIONAR STACOIN";
+
+      botaoConfirmar.className =
+        "btn-confirmar";
+
+    } else {
+
+      tipoElemento.className =
+        "tipo-operacao tipo-saida";
+
+      tipoElemento.textContent =
+        "➖ RETIRAR STACOIN";
+
+      botaoConfirmar.className =
+        "btn-confirmar saida";
+    }
+
+    modal.style.display =
+      "flex";
+
+    setTimeout(() => {
+      valorCampo.focus();
+    }, 100);
+  }
+
+
+  function fecharModalStacoin() {
+
+    document.getElementById(
+      "modalStacoin"
+    ).style.display = "none";
+
+    motoristaStacoinSelecionado =
+      null;
+
+    tipoStacoinSelecionado =
+      "entrada";
+  }
+
+
+  /* =========================================================
+     CONFIRMAR STACOIN
+  ========================================================= */
+
+  async function confirmarStacoin() {
+
+    if (!motoristaStacoinSelecionado) {
+
+      mostrarMensagem(
+        "❌ Nenhum motorista selecionado."
+      );
+
+      return;
+    }
+
+    const valorCampo =
+      document.getElementById(
+        "stacoinValor"
+      );
+
+    const motivoCampo =
+      document.getElementById(
+        "stacoinMotivo"
+      );
+
+    const valor =
+      Number(valorCampo.value);
+
+    const motivo =
+      motivoCampo.value.trim();
+
+    if (!Number.isInteger(valor) || valor <= 0) {
+
+      mostrarMensagem(
+        "❌ Informe um valor inteiro maior que zero."
+      );
+
+      valorCampo.focus();
+
+      return;
+    }
+
+    if (!motivo) {
+
+      mostrarMensagem(
+        "❌ Informe o motivo da movimentação."
+      );
+
+      motivoCampo.focus();
+
+      return;
+    }
+
+    const motorista =
+      motoristaStacoinSelecionado;
+
+    const tipo =
+      tipoStacoinSelecionado;
+
+    const sinal =
+      tipo === "entrada"
+        ? "+"
+        : "-";
+
+    const confirmou =
+      confirm(
+        `${sinal}${formatarNumero(valor)} STACOIN\n\n` +
+        `Motorista: ${motorista.nome}\n` +
+        `Motivo: ${motivo}\n\n` +
+        `Confirmar movimentação?`
+      );
+
+    if (!confirmou) {
+      return;
+    }
+
+    const botao =
+      document.getElementById(
+        "btnConfirmarStacoin"
+      );
+
+    botao.disabled = true;
+    botao.textContent = "PROCESSANDO...";
+
+    try {
+
+      const {
+        data,
+        error
+      } = await supabaseClient.rpc(
+        "adm_alterar_stacoin",
+        {
+          p_motorista_id:
+            Number(motorista.id),
+
+          p_tipo:
+            tipo,
+
+          p_valor:
+            valor,
+
+          p_motivo:
+            motivo
         }
       );
 
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.rpc(
-          "definir_status_motorista",
-          {
-            p_motorista_id:
-              motoristaId,
-
-            p_status:
-              novoStatus
-          }
-        );
-
-
       if (error) {
 
         console.error(
-          "Erro definir_status_motorista:",
+          "Erro STACOIN:",
           error
         );
 
-        mostrarToast(
-          "Não foi possível alterar o status.",
-          true
+        mostrarMensagem(
+          "❌ " +
+          (
+            error.message ||
+            "Não foi possível alterar o STACOIN."
+          ),
+          5000
         );
-
-        renderizarMotoristas();
 
         return;
       }
 
+      if (!data?.sucesso) {
 
-      if (
-        !data ||
-        data.sucesso !== true
-      ) {
-
-        mostrarToast(
-          "O Supabase não confirmou a alteração.",
-          true
+        mostrarMensagem(
+          "❌ A movimentação não foi concluída.",
+          5000
         );
-
-        renderizarMotoristas();
 
         return;
       }
 
+      /* ATUALIZA SALDO LOCAL */
 
-      motorista.status =
-        novoStatus;
+      motorista.saldo_stacoin =
+        Number(data.novo_saldo || 0);
 
-
-      renderizarMotoristas();
-
-
-      mostrarToast(
-        `${motorista.nome} agora está ${nomesStatus[novoStatus]}.`
-      );
-    }
-
-
-    /* =====================================================
-       ALTERAR SALÁRIO
-       ===================================================== */
-
-    async function alterarSalario(
-      motoristaId,
-      novoStatus
-    ) {
-
-      const motorista =
-        motoristas.find(
-          m =>
-            Number(m.id) ===
-            Number(motoristaId)
-        );
-
-
-      if (!motorista) return;
-
-
-      const mensagem =
-        novoStatus
-          ? `Ativar salário para ${motorista.nome}?`
-          : `Desativar salário de ${motorista.nome}?`;
-
-
-      if (!confirm(mensagem)) {
-        return;
-      }
-
-
-      const botao =
-        document.getElementById(
-          `salario-${motoristaId}`
-        );
-
-
-      if (botao) {
-
-        botao.disabled = true;
-
-        botao.textContent =
-          "SALVANDO...";
-      }
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.rpc(
-          "definir_salario_ativo",
-          {
-            p_motorista_id:
-              motoristaId,
-
-            p_ativo:
-              novoStatus
-          }
-        );
-
-
-      if (error) {
-
-        console.error(
-          "Erro definir_salario_ativo:",
-          error
-        );
-
-        mostrarToast(
-          "Não foi possível alterar o salário.",
-          true
-        );
-
-        renderizarMotoristas();
-
-        return;
-      }
-
-
-      if (
-        !data ||
-        data.sucesso !== true
-      ) {
-
-        mostrarToast(
-          "O Supabase não confirmou a alteração.",
-          true
-        );
-
-        renderizarMotoristas();
-
-        return;
-      }
-
-
-      const encontrado =
-        motoristas.find(
-          m =>
-            Number(m.id) ===
-            Number(motoristaId)
-        );
-
-
-      if (encontrado) {
-
-        encontrado.salario_ativo =
-          novoStatus;
-      }
-
+      fecharModalStacoin();
 
       atualizarResumo();
 
       renderizarMotoristas();
 
-
-      mostrarToast(
-        novoStatus
-          ? `${motorista.nome} agora está com salário ATIVO.`
-          : `${motorista.nome} agora está com salário INATIVO.`
+      mostrarMensagem(
+        `✅ ${sinal}${formatarNumero(valor)} STACOIN aplicado em ${motorista.nome}. Novo saldo: ${formatarNumero(data.novo_saldo)} STC.`,
+        5000
       );
-    }
 
+    } catch (erro) {
 
-    /* =====================================================
-       ABRIR MODAL STACOIN
-       ===================================================== */
+      console.error(erro);
 
-    function abrirModalStacoin(
-      motoristaId,
-      tipo
-    ) {
-
-      const motorista =
-        motoristas.find(
-          m =>
-            Number(m.id) ===
-            Number(motoristaId)
-        );
-
-
-      if (!motorista) return;
-
-
-      motoristaStacoinAtual =
-        motorista;
-
-      tipoStacoinAtual =
-        tipo;
-
-
-      const saldo =
-        Number(
-          motorista.saldo_stacoin || 0
-        );
-
-
-      modalTitulo.textContent =
-        tipo === "entrada"
-          ? "➕ Adicionar STACOIN"
-          : "➖ Retirar STACOIN";
-
-
-      modalSubtitulo.textContent =
-        tipo === "entrada"
-          ? `Adicionar STACOIN para ${motorista.nome}.`
-          : `Retirar STACOIN de ${motorista.nome}.`;
-
-
-      modalSaldo.textContent =
-        `Saldo atual: ${formatarNumero(saldo)} STACOIN`;
-
-
-      stacoinValor.value =
-        "";
-
-      stacoinMotivo.value =
-        "";
-
-
-      btnConfirmarStacoin.className =
-        "btn-modal btn-confirmar" +
+      mostrarMensagem(
+        "❌ " +
         (
-          tipo === "saida"
-            ? " retirar"
-            : ""
-        );
-
-
-      btnConfirmarStacoin.textContent =
-        tipo === "entrada"
-          ? "ADICIONAR"
-          : "RETIRAR";
-
-
-      modalStacoin.classList.add(
-        "aberto"
+          erro?.message ||
+          "Erro inesperado ao alterar STACOIN."
+        ),
+        5000
       );
 
+    } finally {
 
-      setTimeout(() => {
+      botao.disabled = false;
 
-        stacoinValor.focus();
-
-      }, 100);
+      botao.textContent =
+        "CONFIRMAR";
     }
+  }
 
 
-    /* =====================================================
-       FECHAR MODAL
-       ===================================================== */
+  /* =========================================================
+     BUSCA
+  ========================================================= */
 
-    function fecharModalStacoin() {
-
-      modalStacoin.classList.remove(
-        "aberto"
-      );
-
-      motoristaStacoinAtual =
-        null;
-
-      tipoStacoinAtual =
-        null;
-
-      btnConfirmarStacoin.disabled =
-        false;
-    }
-
-
-    btnCancelarStacoin.addEventListener(
-      "click",
-      fecharModalStacoin
+  document
+    .getElementById("busca")
+    .addEventListener(
+      "input",
+      renderizarMotoristas
     );
 
 
-    modalStacoin.addEventListener(
+  /* =========================================================
+     FECHAR MODAL CLICANDO FORA
+  ========================================================= */
+
+  document
+    .getElementById("modalStacoin")
+    .addEventListener(
       "click",
-      event => {
+      function(event) {
 
-        if (
-          event.target ===
-          modalStacoin
-        ) {
-
+        if (event.target === this) {
           fecharModalStacoin();
         }
 
@@ -2554,253 +1689,64 @@
     );
 
 
-    /* =====================================================
-       CONFIRMAR STACOIN
-       ===================================================== */
-
-    btnConfirmarStacoin.addEventListener(
-      "click",
-      movimentarStacoin
-    );
-
-
-    async function movimentarStacoin() {
-
-      if (
-        !motoristaStacoinAtual ||
-        !tipoStacoinAtual
-      ) {
-        return;
-      }
-
-
-      const valor =
-        Number(
-          stacoinValor.value
-        );
-
-
-      const motivo =
-        stacoinMotivo.value.trim();
-
-
-      if (
-        !Number.isFinite(valor) ||
-        valor <= 0 ||
-        !Number.isInteger(valor)
-      ) {
-
-        mostrarToast(
-          "Digite um valor inteiro maior que zero.",
-          true
-        );
-
-        stacoinValor.focus();
-
-        return;
-      }
-
-
-      if (!motivo) {
-
-        mostrarToast(
-          "Informe o motivo da movimentação.",
-          true
-        );
-
-        stacoinMotivo.focus();
-
-        return;
-      }
-
-
-      const saldoAtual =
-        Number(
-          motoristaStacoinAtual.saldo_stacoin || 0
-        );
-
-
-      if (
-        tipoStacoinAtual === "saida" &&
-        valor > saldoAtual
-      ) {
-
-        mostrarToast(
-          "Saldo STACOIN insuficiente.",
-          true
-        );
-
-        return;
-      }
-
-
-      const acao =
-        tipoStacoinAtual === "entrada"
-          ? "adicionar"
-          : "retirar";
-
-
-      const confirmacao =
-        tipoStacoinAtual === "entrada"
-          ? `Adicionar ${formatarNumero(valor)} STACOIN para ${motoristaStacoinAtual.nome}?`
-          : `Retirar ${formatarNumero(valor)} STACOIN de ${motoristaStacoinAtual.nome}?`;
-
-
-      if (!confirm(confirmacao)) {
-        return;
-      }
-
-
-      btnConfirmarStacoin.disabled =
-        true;
-
-      btnConfirmarStacoin.textContent =
-        "SALVANDO...";
-
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.rpc(
-          "movimentar_stacoin_adm",
-          {
-            p_motorista_id:
-              motoristaStacoinAtual.id,
-
-            p_tipo:
-              tipoStacoinAtual,
-
-            p_valor:
-              valor,
-
-            p_motivo:
-              motivo
-          }
-        );
-
-
-      btnConfirmarStacoin.disabled =
-        false;
-
-
-      if (error) {
-
-        console.error(
-          "Erro movimentar STACOIN:",
-          error
-        );
-
-
-        mostrarToast(
-          error.message ||
-          "Não foi possível movimentar STACOIN.",
-          true
-        );
-
-        btnConfirmarStacoin.textContent =
-          tipoStacoinAtual === "entrada"
-            ? "ADICIONAR"
-            : "RETIRAR";
-
-        return;
-      }
-
-
-      if (
-        !data ||
-        data.sucesso !== true
-      ) {
-
-        mostrarToast(
-          "O Supabase não confirmou a movimentação.",
-          true
-        );
-
-        return;
-      }
-
-
-      /* Atualiza saldo local */
-
-      motoristaStacoinAtual.saldo_stacoin =
-        Number(
-          data.novo_saldo || 0
-        );
-
-
-      const nome =
-        motoristaStacoinAtual.nome;
-
-
-      const novoSaldo =
-        motoristaStacoinAtual.saldo_stacoin;
-
-
-      fecharModalStacoin();
-
-      renderizarMotoristas();
-
-
-      mostrarToast(
-        tipoStacoinAtual === "entrada"
-          ? `+${formatarNumero(valor)} STACOIN adicionados para ${nome}. Saldo: ${formatarNumero(novoSaldo)}.`
-          : `-${formatarNumero(valor)} STACOIN retirados de ${nome}. Saldo: ${formatarNumero(novoSaldo)}.`
-      );
-    }
-
-
-    /* =====================================================
-       SESSÃO
-       ===================================================== */
-
-    supabaseClient.auth.onAuthStateChange(
-      async (
-        event,
-        session
-      ) => {
-
-        console.log(
-          "Auth:",
-          event
-        );
-
-
-        if (
-          event ===
-          "SIGNED_OUT"
-        ) {
-
-          mostrarBloqueio(
-            "Sessão encerrada",
-            "Faça login novamente pela Santa Luzia Central.",
-            true
+  /* =========================================================
+     ESC FECHA MODAL
+  ========================================================= */
+
+  document.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (event.key === "Escape") {
+
+        const modal =
+          document.getElementById(
+            "modalStacoin"
           );
 
-          return;
+        if (modal.style.display === "flex") {
+          fecharModalStacoin();
         }
-
-
-        if (
-          event ===
-          "SIGNED_IN" &&
-          session
-        ) {
-
-          await verificarADM();
-        }
-
       }
-    );
+
+    }
+  );
 
 
-    /* =====================================================
-       INICIAR
-       ===================================================== */
+  /* =========================================================
+     LOGIN / AUTH
+  ========================================================= */
 
-    iniciar();
+  supabaseClient.auth.onAuthStateChange(
+    function(event, session) {
 
-  </script>
+      console.log(
+        "Auth:",
+        event,
+        Boolean(session)
+      );
+
+      if (
+        event === "SIGNED_IN" ||
+        event === "INITIAL_SESSION"
+      ) {
+
+        if (session) {
+          iniciarPainel();
+        }
+      }
+
+    }
+  );
+
+
+  /* =========================================================
+     INICIAR
+  ========================================================= */
+
+  iniciarPainel();
+
+</script>
 
 </body>
 </html>
