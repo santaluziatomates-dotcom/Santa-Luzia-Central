@@ -192,6 +192,17 @@
       line-height: 1.5;
     }
 
+    .info-stacoin {
+      background: #fffaf0;
+      border: 1px solid #ead8a8;
+      color: #765b08;
+      border-radius: 13px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
     .lista {
       display: flex;
       flex-direction: column;
@@ -417,6 +428,70 @@
       cursor: not-allowed;
     }
 
+    /* STACOIN */
+
+    .stacoin-box {
+      margin-top: 12px;
+      border-top: 1px solid #edf0ed;
+      padding-top: 12px;
+    }
+
+    .stacoin-cabecalho {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+
+    .stacoin-titulo {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .stacoin-saldo {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #a16b00;
+      background: #fff8e8;
+      border: 1px solid #ead9a9;
+      border-radius: 9px;
+      padding: 6px 9px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .stacoin-acoes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-stacoin {
+      min-height: 42px;
+      border-radius: 10px;
+      padding: 9px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .btn-adicionar {
+      background: #176b3a;
+      color: white;
+    }
+
+    .btn-retirar {
+      background: #fff0f0;
+      color: #a52a2a;
+      border: 1px solid #efcaca;
+    }
+
+    .btn-stacoin:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
     .vazio {
       background: white;
       border: 1px solid #e0e7e1;
@@ -433,6 +508,8 @@
       color: #68766d;
       font-size: 12px;
     }
+
+    /* BLOQUEIO */
 
     .bloqueio {
       min-height: 100vh;
@@ -515,6 +592,8 @@
       margin-top: 8px;
     }
 
+    /* TOAST */
+
     .toast {
       position: fixed;
       left: 50%;
@@ -536,6 +615,124 @@
       background: #a52a2a;
     }
 
+    /* MODAL STACOIN */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 2000;
+    }
+
+    .modal-overlay.aberto {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 390px;
+      background: white;
+      border-radius: 19px;
+      padding: 19px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.18);
+    }
+
+    .modal h2 {
+      font-size: 17px;
+      color: #17321f;
+      margin-bottom: 5px;
+    }
+
+    .modal-subtitulo {
+      font-size: 10px;
+      color: #758178;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+
+    .campo-modal {
+      margin-bottom: 12px;
+    }
+
+    .campo-modal label {
+      display: block;
+      font-size: 9px;
+      font-weight: bold;
+      color: #66736b;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .campo-modal input,
+    .campo-modal textarea {
+      width: 100%;
+      border: 1px solid #d9e1db;
+      border-radius: 10px;
+      padding: 11px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .campo-modal textarea {
+      min-height: 75px;
+      resize: vertical;
+    }
+
+    .campo-modal input:focus,
+    .campo-modal textarea:focus {
+      border-color: #176b3a;
+    }
+
+    .modal-acoes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .btn-modal {
+      min-height: 42px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .btn-confirmar {
+      background: #176b3a;
+      color: white;
+    }
+
+    .btn-confirmar.retirar {
+      background: #a52a2a;
+    }
+
+    .btn-cancelar {
+      background: #eef1ef;
+      color: #58645c;
+    }
+
+    .btn-modal:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .saldo-modal {
+      background: #fff8e8;
+      border: 1px solid #ead9a9;
+      color: #765b08;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 13px;
+      text-align: center;
+    }
+
     @media (max-width: 600px) {
 
       .resumo {
@@ -551,7 +748,7 @@
       }
 
       .status-controles {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
       }
 
       .salario-box {
@@ -581,6 +778,14 @@
       .status {
         align-self: flex-start;
       }
+
+      .stacoin-acoes {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-acoes {
+        grid-template-columns: 1fr;
+      }
     }
 
   </style>
@@ -591,6 +796,87 @@
   <div id="app"></div>
 
   <div id="toast" class="toast"></div>
+
+  <!-- MODAL STACOIN -->
+
+  <div
+    id="modalStacoin"
+    class="modal-overlay"
+  >
+
+    <div class="modal">
+
+      <h2 id="modalStacoinTitulo">
+        STACOIN
+      </h2>
+
+      <div
+        id="modalStacoinSubtitulo"
+        class="modal-subtitulo"
+      >
+        Movimentação de STACOIN
+      </div>
+
+      <div
+        id="modalSaldo"
+        class="saldo-modal"
+      >
+        Saldo atual: 0 STACOIN
+      </div>
+
+      <div class="campo-modal">
+
+        <label>
+          Valor
+        </label>
+
+        <input
+          id="stacoinValor"
+          type="number"
+          min="1"
+          step="1"
+          inputmode="numeric"
+          placeholder="Ex: 100"
+        >
+
+      </div>
+
+      <div class="campo-modal">
+
+        <label>
+          Motivo
+        </label>
+
+        <textarea
+          id="stacoinMotivo"
+          placeholder="Ex: Bonificação por destaque"
+        ></textarea>
+
+      </div>
+
+      <div class="modal-acoes">
+
+        <button
+          id="btnCancelarStacoin"
+          type="button"
+          class="btn-modal btn-cancelar"
+        >
+          CANCELAR
+        </button>
+
+        <button
+          id="btnConfirmarStacoin"
+          type="button"
+          class="btn-modal btn-confirmar"
+        >
+          CONFIRMAR
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 
   <script>
@@ -603,7 +889,7 @@
       "https://cckypvqophyviphqhich.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+      "sb_publishable_M_6iIpO4FNhxskWG0XXrA_Uwuw_bbP";
 
     const supabaseClient =
       window.supabase.createClient(
@@ -630,7 +916,51 @@
     const toast =
       document.getElementById("toast");
 
+    const modalStacoin =
+      document.getElementById(
+        "modalStacoin"
+      );
+
+    const stacoinValor =
+      document.getElementById(
+        "stacoinValor"
+      );
+
+    const stacoinMotivo =
+      document.getElementById(
+        "stacoinMotivo"
+      );
+
+    const modalSaldo =
+      document.getElementById(
+        "modalSaldo"
+      );
+
+    const modalTitulo =
+      document.getElementById(
+        "modalStacoinTitulo"
+      );
+
+    const modalSubtitulo =
+      document.getElementById(
+        "modalStacoinSubtitulo"
+      );
+
+    const btnConfirmarStacoin =
+      document.getElementById(
+        "btnConfirmarStacoin"
+      );
+
+    const btnCancelarStacoin =
+      document.getElementById(
+        "btnCancelarStacoin"
+      );
+
     let motoristas = [];
+
+    let motoristaStacoinAtual = null;
+
+    let tipoStacoinAtual = null;
 
 
     /* =====================================================
@@ -645,12 +975,17 @@
       toast.textContent = mensagem;
 
       toast.className =
-        "toast" + (erro ? " erro" : "");
+        "toast" +
+        (erro ? " erro" : "");
 
-      toast.style.display = "block";
+      toast.style.display =
+        "block";
 
       setTimeout(() => {
-        toast.style.display = "none";
+
+        toast.style.display =
+          "none";
+
       }, 3000);
     }
 
@@ -682,7 +1017,7 @@
 
 
     /* =====================================================
-       TELA DE BLOQUEIO
+       BLOQUEIO
        ===================================================== */
 
     function mostrarBloqueio(
@@ -740,10 +1075,12 @@
 
 
     /* =====================================================
-       MOSTRA USUÁRIO LOGADO
+       USUÁRIO LOGADO
        ===================================================== */
 
-    async function mostrarUsuarioLogado(session) {
+    async function mostrarUsuarioLogado(
+      session
+    ) {
 
       const email =
         session?.user?.email || "";
@@ -768,7 +1105,9 @@
         existente.innerHTML = `
           🔐 Conta conectada:
           <strong>
-            ${escapeHtml(identificacao)}
+            ${escapeHtml(
+              identificacao
+            )}
           </strong>
         `;
       }
@@ -776,7 +1115,7 @@
 
 
     /* =====================================================
-       CARREGAMENTO INICIAL
+       INICIAR
        ===================================================== */
 
     async function iniciar() {
@@ -825,13 +1164,12 @@
         session
       );
 
-
       await verificarADM();
     }
 
 
     /* =====================================================
-       VERIFICA ADM
+       VERIFICAR ADM
        ===================================================== */
 
     async function verificarADM() {
@@ -854,7 +1192,7 @@
 
         mostrarBloqueio(
           "Não foi possível verificar",
-          "O sistema não conseguiu confirmar sua autorização de administrador. Verifique se a função sou_adm está configurada no Supabase.",
+          "O sistema não conseguiu confirmar sua autorização de administrador.",
           false
         );
 
@@ -912,7 +1250,6 @@
               </div>
 
             </div>
-
 
             <div class="status-adm">
               👑 ADM AUTORIZADO
@@ -1004,7 +1341,7 @@
 
           <div class="info-status">
 
-            👑 <strong>
+            👤 <strong>
               Controle de status
             </strong>
 
@@ -1016,9 +1353,21 @@
             <strong>Pendente</strong> ou
             <strong>Inativo</strong>.
 
-            O pagamento automático considera
-            apenas motoristas com status
-            ativo/oficial e salário ativo.
+          </div>
+
+
+          <div class="info-stacoin">
+
+            🪙 <strong>
+              Controle de STACOIN
+            </strong>
+
+            <br>
+
+            O ADM pode adicionar ou retirar
+            STACOIN de qualquer motorista.
+            Toda movimentação fica registrada
+            automaticamente no extrato do motorista.
 
           </div>
 
@@ -1167,6 +1516,63 @@
           : [];
 
 
+      /* Busca saldos separadamente */
+
+      const {
+        data: saldos,
+        error: erroSaldos
+      } =
+        await supabaseClient.rpc(
+          "listar_saldos_stacoin_adm"
+        );
+
+
+      if (
+        !erroSaldos &&
+        Array.isArray(saldos)
+      ) {
+
+        saldos.forEach(
+          saldo => {
+
+            const motorista =
+              motoristas.find(
+                m =>
+                  Number(m.id) ===
+                  Number(
+                    saldo.motorista_id
+                  )
+              );
+
+
+            if (motorista) {
+
+              motorista.saldo_stacoin =
+                Number(
+                  saldo.saldo || 0
+                );
+            }
+
+          }
+        );
+
+      }
+
+
+      /* Garante zero */
+
+      motoristas.forEach(
+        motorista => {
+
+          motorista.saldo_stacoin =
+            Number(
+              motorista.saldo_stacoin || 0
+            );
+
+        }
+      );
+
+
       atualizarResumo();
 
       renderizarMotoristas();
@@ -1235,7 +1641,7 @@
 
 
     /* =====================================================
-       CLASSE DO STATUS
+       STATUS
        ===================================================== */
 
     function classeDoStatus(status) {
@@ -1245,6 +1651,7 @@
           .trim()
           .toLowerCase();
 
+
       if (
         valor === "ativo" ||
         valor === "oficial" ||
@@ -1253,11 +1660,13 @@
         return "ativo";
       }
 
+
       if (
         valor === "pendente"
       ) {
         return "pendente";
       }
+
 
       if (
         valor === "inativo"
@@ -1265,12 +1674,13 @@
         return "inativo";
       }
 
+
       return "outro";
     }
 
 
     /* =====================================================
-       RENDERIZAR MOTORISTAS
+       RENDERIZAR
        ===================================================== */
 
     function renderizarMotoristas() {
@@ -1360,6 +1770,7 @@
                   !m.salario_ativo
                 )
             );
+
           }
 
 
@@ -1391,6 +1802,7 @@
                   "ativo"
                 )
             );
+
           }
 
 
@@ -1404,6 +1816,7 @@
                   "pendente"
                 )
             );
+
           }
 
 
@@ -1417,6 +1830,47 @@
                   "inativo"
                 )
             );
+
+          }
+
+
+          const adicionar =
+            document.getElementById(
+              `stacoin-adicionar-${m.id}`
+            );
+
+
+          const retirar =
+            document.getElementById(
+              `stacoin-retirar-${m.id}`
+            );
+
+
+          if (adicionar) {
+
+            adicionar.addEventListener(
+              "click",
+              () =>
+                abrirModalStacoin(
+                  m.id,
+                  "entrada"
+                )
+            );
+
+          }
+
+
+          if (retirar) {
+
+            retirar.addEventListener(
+              "click",
+              () =>
+                abrirModalStacoin(
+                  m.id,
+                  "saida"
+                )
+            );
+
           }
 
         }
@@ -1425,7 +1879,7 @@
 
 
     /* =====================================================
-       CARD MOTORISTA
+       CARD
        ===================================================== */
 
     function criarCardMotorista(m) {
@@ -1444,6 +1898,12 @@
 
       const salarioAtivo =
         m.salario_ativo === true;
+
+
+      const saldo =
+        Number(
+          m.saldo_stacoin || 0
+        );
 
 
       return `
@@ -1559,8 +2019,7 @@
 
               <strong>
                 ${formatarNumero(
-                  m.saldo_stacoin ||
-                  0
+                  saldo
                 )}
               </strong>
 
@@ -1569,7 +2028,7 @@
           </div>
 
 
-          <!-- CONTROLE DE STATUS -->
+          <!-- STATUS -->
 
           <div class="status-box">
 
@@ -1635,7 +2094,7 @@
           </div>
 
 
-          <!-- CONTROLE DE SALÁRIO -->
+          <!-- SALÁRIO -->
 
           <div class="salario-box">
 
@@ -1678,6 +2137,47 @@
 
           </div>
 
+
+          <!-- STACOIN -->
+
+          <div class="stacoin-box">
+
+            <div class="stacoin-cabecalho">
+
+              <span class="stacoin-titulo">
+                🪙 Controle de STACOIN
+              </span>
+
+              <span class="stacoin-saldo">
+                🪙 ${formatarNumero(saldo)}
+              </span>
+
+            </div>
+
+
+            <div class="stacoin-acoes">
+
+              <button
+                id="stacoin-adicionar-${m.id}"
+                type="button"
+                class="btn-stacoin btn-adicionar"
+              >
+                ➕ ADICIONAR STACOIN
+              </button>
+
+
+              <button
+                id="stacoin-retirar-${m.id}"
+                type="button"
+                class="btn-stacoin btn-retirar"
+              >
+                ➖ RETIRAR STACOIN
+              </button>
+
+            </div>
+
+          </div>
+
         </article>
       `;
     }
@@ -1705,25 +2205,18 @@
 
       const nomesStatus = {
 
-        ativo:
-          "ATIVO",
-
-        pendente:
-          "PENDENTE",
-
-        inativo:
-          "INATIVO"
+        ativo: "ATIVO",
+        pendente: "PENDENTE",
+        inativo: "INATIVO"
 
       };
 
 
-      const mensagem =
-        `Alterar ${motorista.nome} para ${nomesStatus[novoStatus]}?`;
-
-
-      if (!confirm(
-        mensagem
-      )) {
+      if (
+        !confirm(
+          `Alterar ${motorista.nome} para ${nomesStatus[novoStatus]}?`
+        )
+      ) {
         return;
       }
 
@@ -1749,9 +2242,7 @@
         botao => {
 
           if (botao) {
-
-            botao.disabled =
-              true;
+            botao.disabled = true;
           }
 
         }
@@ -1781,12 +2272,10 @@
           error
         );
 
-
         mostrarToast(
           "Não foi possível alterar o status.",
           true
         );
-
 
         renderizarMotoristas();
 
@@ -1803,7 +2292,6 @@
           "O Supabase não confirmou a alteração.",
           true
         );
-
 
         renderizarMotoristas();
 
@@ -1850,9 +2338,7 @@
           : `Desativar salário de ${motorista.nome}?`;
 
 
-      if (!confirm(
-        mensagem
-      )) {
+      if (!confirm(mensagem)) {
         return;
       }
 
@@ -1895,12 +2381,10 @@
           error
         );
 
-
         mostrarToast(
           "Não foi possível alterar o salário.",
           true
         );
-
 
         renderizarMotoristas();
 
@@ -1917,7 +2401,6 @@
           "O Supabase não confirmou a alteração.",
           true
         );
-
 
         renderizarMotoristas();
 
@@ -1946,17 +2429,338 @@
 
 
       mostrarToast(
-
         novoStatus
           ? `${motorista.nome} agora está com salário ATIVO.`
           : `${motorista.nome} agora está com salário INATIVO.`
-
       );
     }
 
 
     /* =====================================================
-       ALTERAÇÃO DE SESSÃO
+       ABRIR MODAL STACOIN
+       ===================================================== */
+
+    function abrirModalStacoin(
+      motoristaId,
+      tipo
+    ) {
+
+      const motorista =
+        motoristas.find(
+          m =>
+            Number(m.id) ===
+            Number(motoristaId)
+        );
+
+
+      if (!motorista) return;
+
+
+      motoristaStacoinAtual =
+        motorista;
+
+      tipoStacoinAtual =
+        tipo;
+
+
+      const saldo =
+        Number(
+          motorista.saldo_stacoin || 0
+        );
+
+
+      modalTitulo.textContent =
+        tipo === "entrada"
+          ? "➕ Adicionar STACOIN"
+          : "➖ Retirar STACOIN";
+
+
+      modalSubtitulo.textContent =
+        tipo === "entrada"
+          ? `Adicionar STACOIN para ${motorista.nome}.`
+          : `Retirar STACOIN de ${motorista.nome}.`;
+
+
+      modalSaldo.textContent =
+        `Saldo atual: ${formatarNumero(saldo)} STACOIN`;
+
+
+      stacoinValor.value =
+        "";
+
+      stacoinMotivo.value =
+        "";
+
+
+      btnConfirmarStacoin.className =
+        "btn-modal btn-confirmar" +
+        (
+          tipo === "saida"
+            ? " retirar"
+            : ""
+        );
+
+
+      btnConfirmarStacoin.textContent =
+        tipo === "entrada"
+          ? "ADICIONAR"
+          : "RETIRAR";
+
+
+      modalStacoin.classList.add(
+        "aberto"
+      );
+
+
+      setTimeout(() => {
+
+        stacoinValor.focus();
+
+      }, 100);
+    }
+
+
+    /* =====================================================
+       FECHAR MODAL
+       ===================================================== */
+
+    function fecharModalStacoin() {
+
+      modalStacoin.classList.remove(
+        "aberto"
+      );
+
+      motoristaStacoinAtual =
+        null;
+
+      tipoStacoinAtual =
+        null;
+
+      btnConfirmarStacoin.disabled =
+        false;
+    }
+
+
+    btnCancelarStacoin.addEventListener(
+      "click",
+      fecharModalStacoin
+    );
+
+
+    modalStacoin.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          modalStacoin
+        ) {
+
+          fecharModalStacoin();
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       CONFIRMAR STACOIN
+       ===================================================== */
+
+    btnConfirmarStacoin.addEventListener(
+      "click",
+      movimentarStacoin
+    );
+
+
+    async function movimentarStacoin() {
+
+      if (
+        !motoristaStacoinAtual ||
+        !tipoStacoinAtual
+      ) {
+        return;
+      }
+
+
+      const valor =
+        Number(
+          stacoinValor.value
+        );
+
+
+      const motivo =
+        stacoinMotivo.value.trim();
+
+
+      if (
+        !Number.isFinite(valor) ||
+        valor <= 0 ||
+        !Number.isInteger(valor)
+      ) {
+
+        mostrarToast(
+          "Digite um valor inteiro maior que zero.",
+          true
+        );
+
+        stacoinValor.focus();
+
+        return;
+      }
+
+
+      if (!motivo) {
+
+        mostrarToast(
+          "Informe o motivo da movimentação.",
+          true
+        );
+
+        stacoinMotivo.focus();
+
+        return;
+      }
+
+
+      const saldoAtual =
+        Number(
+          motoristaStacoinAtual.saldo_stacoin || 0
+        );
+
+
+      if (
+        tipoStacoinAtual === "saida" &&
+        valor > saldoAtual
+      ) {
+
+        mostrarToast(
+          "Saldo STACOIN insuficiente.",
+          true
+        );
+
+        return;
+      }
+
+
+      const acao =
+        tipoStacoinAtual === "entrada"
+          ? "adicionar"
+          : "retirar";
+
+
+      const confirmacao =
+        tipoStacoinAtual === "entrada"
+          ? `Adicionar ${formatarNumero(valor)} STACOIN para ${motoristaStacoinAtual.nome}?`
+          : `Retirar ${formatarNumero(valor)} STACOIN de ${motoristaStacoinAtual.nome}?`;
+
+
+      if (!confirm(confirmacao)) {
+        return;
+      }
+
+
+      btnConfirmarStacoin.disabled =
+        true;
+
+      btnConfirmarStacoin.textContent =
+        "SALVANDO...";
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.rpc(
+          "movimentar_stacoin_adm",
+          {
+            p_motorista_id:
+              motoristaStacoinAtual.id,
+
+            p_tipo:
+              tipoStacoinAtual,
+
+            p_valor:
+              valor,
+
+            p_motivo:
+              motivo
+          }
+        );
+
+
+      btnConfirmarStacoin.disabled =
+        false;
+
+
+      if (error) {
+
+        console.error(
+          "Erro movimentar STACOIN:",
+          error
+        );
+
+
+        mostrarToast(
+          error.message ||
+          "Não foi possível movimentar STACOIN.",
+          true
+        );
+
+        btnConfirmarStacoin.textContent =
+          tipoStacoinAtual === "entrada"
+            ? "ADICIONAR"
+            : "RETIRAR";
+
+        return;
+      }
+
+
+      if (
+        !data ||
+        data.sucesso !== true
+      ) {
+
+        mostrarToast(
+          "O Supabase não confirmou a movimentação.",
+          true
+        );
+
+        return;
+      }
+
+
+      /* Atualiza saldo local */
+
+      motoristaStacoinAtual.saldo_stacoin =
+        Number(
+          data.novo_saldo || 0
+        );
+
+
+      const nome =
+        motoristaStacoinAtual.nome;
+
+
+      const novoSaldo =
+        motoristaStacoinAtual.saldo_stacoin;
+
+
+      fecharModalStacoin();
+
+      renderizarMotoristas();
+
+
+      mostrarToast(
+        tipoStacoinAtual === "entrada"
+          ? `+${formatarNumero(valor)} STACOIN adicionados para ${nome}. Saldo: ${formatarNumero(novoSaldo)}.`
+          : `-${formatarNumero(valor)} STACOIN retirados de ${nome}. Saldo: ${formatarNumero(novoSaldo)}.`
+      );
+    }
+
+
+    /* =====================================================
+       SESSÃO
        ===================================================== */
 
     supabaseClient.auth.onAuthStateChange(
