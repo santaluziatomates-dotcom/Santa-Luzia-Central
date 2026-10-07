@@ -1134,31 +1134,22 @@
         await supabaseClient.auth.getSession();
 
 
-      if (error) {
+    if (error) {
 
-        console.error(error);
+  console.error(
+    "Erro sou_adm:",
+    error
+  );
 
-        mostrarBloqueio(
-          "Erro de autenticação",
-          error.message,
-          false
-        );
+  mostrarBloqueio(
+    "Erro ao verificar ADM",
+    error.message ||
+    "O Supabase não conseguiu verificar sua autorização.",
+    false
+  );
 
-        return;
-      }
-
-
-      if (!session) {
-
-        mostrarBloqueio(
-          "Login necessário",
-          "Entre primeiro na sua conta pela Santa Luzia Central. Depois volte ao Painel ADM.",
-          true
-        );
-
-        return;
-      }
-
+  return;
+}
 
       await mostrarUsuarioLogado(
         session
