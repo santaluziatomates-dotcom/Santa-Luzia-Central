@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ADM Ranking das Lives | Santa Luzia</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --green: #176b3a;
+      --dark: #104526;
+      --light: #eef7f0;
+      --red: #c83232;
+      --border: #dce7de;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f4f7f4;
+      color: #203126;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      background: var(--dark);
+      color: white;
+      padding: 25px 18px;
+      text-align: center;
+      border-bottom: 5px solid #c93a36;
+    }
+
+    header h1 { margin: 0 0 8px; font-size: 25px; }
+    header p { margin: 0; color: #d8eadc; }
+
+    main {
+      max-width: 760px;
+      margin: 25px auto;
+      padding: 0 15px 35px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 12px #163b1b0a;
+    }
+
+    h2 { margin: 0 0 18px; font-size: 20px; }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0 0 7px;
+    }
+
+    input, select {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #cbd8cd;
+      border-radius: 9px;
+      background: white;
+      color: #203126;
+      font-size: 16px;
+    }
+
+    .period {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .place {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 13px;
+    }
+
+    .place h3 { margin: 0 0 13px; font-size: 17px; }
+    .gold { border-left: 5px solid #e4b52c; }
+    .silver { border-left: 5px solid #9ba8ad; }
+    .bronze { border-left: 5px solid #b8794c; }
+
+    .fields {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 135px;
+      gap: 12px;
+    }
+
+    button, .link-button {
+      display: inline-block;
+      width: 100%;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .55; cursor: wait; }
+
+    .secondary {
+      background: #e9f1eb;
+      color: var(--dark);
+      border: 1px solid var(--border);
+    }
+
+    .history-item {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .history-item:last-child { border-bottom: 0; }
+
+    .history-item button {
+      margin-top: 9px;
+      padding: 10px;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 9px;
+      background: var(--light);
+      margin-bottom: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .error { background: #fff0f0; color: #9e2020; }
+    .muted { color: #66756a; font-size: 13px; line-height: 1.5; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 480px) {
+      .fields { grid-template-columns: 1fr; }
+      .panel { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏆 ADM — Ranking das Lives</h1>
+    <p>Santa Luzia Tomates</p>
+  </header>
+
+  <main>
+    <div id="status" class="status">Verificando acesso...</div>
+
+    <section id="loginBox" class="panel hidden">
+      <h2>🔐 Acesso administrativo</h2>
+      <p>Entre pela página principal da Santa Luzia Central usando sua conta Google autorizada.</p>
+      <a class="link-button" href="./index.html">Ir para a Central e entrar</a>
+      <p class="muted">Depois do login, volte para esta página.</p>
+    </section>
+
+    <div id="app" class="hidden">
+      <section class="panel">
+        <h2>📅 Selecionar ranking</h2>
+        <div class="period">
+          <div>
+            <label for="month">Mês</label>
+            <select id="month">
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+          <div>
+            <label for="year">Ano</label>
+            <input id="year" type="number" min="2020" max="2100">
+          </div>
+        </div>
+
+        <button id="loadBtn" class="secondary" type="button">
+          Carregar mês selecionado
+        </button>
+      </section>
+
+      <section class="panel">
+        <h2>🥇🥈🥉 Editar Top 3</h2>
+        <p class="muted">
+          Preencha os nomes e as pontuações finais de cada colocado.
+          Os valores são editados manualmente.
+        </p>
+
+        <div class="place gold">
+          <h3>🥇 1º lugar</h3>
+          <div class="fields">
+            <div>
+              <label for="firstName">Nome do vencedor</label>
+              <input id="firstName" maxlength="100" placeholder="Nome do jogador">
+            </div>
+            <div>
+              <label for="firstPoints">Pontos</label>
+              <input id="firstPoints" type="number" min="0" step="1" value="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="place silver">
+          <h3>🥈 2º lugar</h3>
+          <div class="fields">
+            <div>
+              <label for="secondName">Nome do jogador</label>
+              <input id="secondName" maxlength="100" placeholder="Nome do jogador">
+            </div>
+            <div>
+              <label for="secondPoints">Pontos</label>
+              <input id="secondPoints" type="number" min="0" step="1" value="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="place bronze">
+          <h3>🥉 3º lugar</h3>
+          <div class="fields">
+            <div>
+              <label for="thirdName">Nome do jogador</label>
+              <input id="thirdName" maxlength="100" placeholder="Nome do jogador">
+            </div>
+            <div>
+              <label for="thirdPoints">Pontos</label>
+              <input id="thirdPoints" type="number" min="0" step="1" value="0">
+            </div>
+          </div>
+        </div>
+
+        <button id="saveBtn" type="button">💾 Salvar ranking do mês</button>
+      </section>
+
+      <section class="panel">
+        <h2>📚 Histórico de rankings</h2>
+        <p class="muted">Escolha um mês salvo para consultar ou editar os resultados.</p>
+        <div id="history">Carregando histórico...</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    /*
+      CONFIGURAÇÃO OBRIGATÓRIA:
+      Copie a URL e a chave pública (publishable/anon) do Supabase
+      que já são usadas no index.html da Santa Luzia Central.
+      Nunca coloque uma service_role ou chave secreta aqui.
+    */
+    const SUPABASE_URL = "https://cckypvqophyviphqhich.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+
+    const ADMIN_EMAIL = "santaluziatomates@gmail.com";
+    const ADMIN_UID = "ec962f8b-92ad-4fe5-98ef-c7cbb1b653e2";
+    const TABLE = "ranking_lives_mensal";
+
+    const statusBox = document.getElementById("status");
+    const loginBox = document.getElementById("loginBox");
+    const app = document.getElementById("app");
+    const saveBtn = document.getElementById("saveBtn");
+
+    let db = null;
+
+    function message(text, isError = false) {
+      statusBox.textContent = text;
+      statusBox.className = "status" + (isError ? " error" : "");
+    }
+
+    function selectedPeriod() {
+      const mes = Number(document.getElementById("month").value);
+      const ano = Number(document.getElementById("year").value);
+
+      if (!Number.isInteger(ano) || ano < 2020 || ano > 2100) {
+        throw new Error("Informe um ano entre 2020 e 2100.");
+      }
+
+      return { ano, mes };
+    }
+
+    function numberValue(id) {
+      const raw = document.getElementById(id).value;
+      const value = Number(raw);
+
+      if (raw.trim() === "" || !Number.isSafeInteger(value) || value < 0) {
+        throw new Error("Informe pontos inteiros iguais ou maiores que zero.");
+      }
+
+      return value;
+    }
+
+    function setForm(row) {
+      document.getElementById("firstName").value = row?.primeiro_nome ?? "";
+      document.getElementById("firstPoints").value = row?.primeiro_pontos ?? 0;
+      document.getElementById("secondName").value = row?.segundo_nome ?? "";
+      document.getElementById("secondPoints").value = row?.segundo_pontos ?? 0;
+      document.getElementById("thirdName").value = row?.terceiro_nome ?? "";
+      document.getElementById("thirdPoints").value = row?.terceiro_pontos ?? 0;
+    }
+
+    async function loadMonth() {
+      try {
+        const { ano, mes } = selectedPeriod();
+
+        const { data, error } = await db
+          .from(TABLE)
+          .select("*")
+          .eq("ano", ano)
+          .eq("mes", mes)
+          .maybeSingle();
+
+        if (error) throw error;
+
+        setForm(data);
+        message(data
+          ? `Ranking de ${mes}/${ano} carregado.`
+          : `Ainda não existe ranking salvo para ${mes}/${ano}. Você pode cadastrá-lo.`);
+      } catch (error) {
+        message("Erro ao carregar: " + error.message, true);
+      }
+    }
+
+    async function saveMonth() {
+      saveBtn.disabled = true;
+
+      try {
+        const { ano, mes } = selectedPeriod();
+
+        const payload = {
+          ano,
+          mes,
+          primeiro_nome: document.getElementById("firstName").value.trim(),
+          primeiro_pontos: numberValue("firstPoints"),
+          segundo_nome: document.getElementById("secondName").value.trim(),
+          segundo_pontos: numberValue("secondPoints"),
+          terceiro_nome: document.getElementById("thirdName").value.trim(),
+          terceiro_pontos: numberValue("thirdPoints"),
+          atualizado_em: new Date().toISOString()
+        };
+
+        if (!payload.primeiro_nome || !payload.segundo_nome || !payload.terceiro_nome) {
+          throw new Error("Preencha os nomes dos três colocados.");
+        }
+
+        if (new Set([
+          payload.primeiro_nome.toLocaleLowerCase("pt-BR"),
+          payload.segundo_nome.toLocaleLowerCase("pt-BR"),
+          payload.terceiro_nome.toLocaleLowerCase("pt-BR")
+        ]).size !== 3) {
+          throw new Error("Use nomes diferentes para os três colocados.");
+        }
+
+        const { error } = await db
+          .from(TABLE)
+          .upsert(payload, { onConflict: "ano,mes" });
+
+        if (error) throw error;
+
+        message(`Ranking de ${mes}/${ano} salvo com sucesso!`);
+        await loadHistory();
+      } catch (error) {
+        message("Não foi possível salvar: " + error.message, true);
+      } finally {
+        saveBtn.disabled = false;
+      }
+    }
+
+    async function loadHistory() {
+      const history = document.getElementById("history");
+      history.textContent = "Carregando histórico...";
+
+      const { data, error } = await db
+        .from(TABLE)
+        .select("*")
+        .order("ano", { ascending: false })
+        .order("mes", { ascending: false });
+
+      if (error) {
+        history.textContent = "Erro ao carregar histórico: " + error.message;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        history.textContent = "Nenhum ranking salvo ainda.";
+        return;
+      }
+
+      history.replaceChildren();
+
+      const months = [
+        "", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+      ];
+
+      for (const row of data) {
+        const item = document.createElement("div");
+        item.className = "history-item";
+
+        const title = document.createElement("strong");
+        title.textContent = `${months[row.mes]} de ${row.ano}`;
+
+        const detail = document.createElement("p");
+        detail.className = "muted";
+        detail.textContent =
+          `🥇 ${row.primeiro_nome} — ${Number(row.primeiro_pontos).toLocaleString("pt-BR")} pontos | ` +
+          `🥈 ${row.segundo_nome} — ${Number(row.segundo_pontos).toLocaleString("pt-BR")} pontos | ` +
+          `🥉 ${row.terceiro_nome} — ${Number(row.terceiro_pontos).toLocaleString("pt-BR")} pontos`;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "secondary";
+        button.textContent = "Editar este mês";
+        button.addEventListener("click", () => {
+          document.getElementById("month").value = String(row.mes);
+          document.getElementById("year").value = String(row.ano);
+          setForm(row);
+          message(`Você está editando ${months[row.mes]} de ${row.ano}.`);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        item.append(title, detail, button);
+        history.appendChild(item);
+      }
+    }
+
+    async function initialize() {
+      try {
+        if (
+          SUPABASE_URL.includes("COLE_AQUI") ||
+          SUPABASE_ANON_KEY.includes("COLE_AQUI")
+        ) {
+          throw new Error(
+            "Falta configurar a URL e a chave pública do Supabase copiadas do index.html."
+          );
+        }
+
+        db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const { data, error } = await db.auth.getUser();
+
+        if (error || !data.user) {
+          message("Faça login pela Central para acessar a administração.");
+          loginBox.classList.remove("hidden");
+          return;
+        }
+
+        const user = data.user;
+        const isAdmin =
+          user.id === ADMIN_UID &&
+          user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+        if (!isAdmin) {
+          message("Acesso negado: esta conta não está autorizada a editar o ranking.", true);
+          return;
+        }
+
+        app.classList.remove("hidden");
+        message(`Acesso autorizado: ${user.email}`);
+
+        const now = new Date();
+        document.getElementById("month").value = String(now.getMonth() + 1);
+        document.getElementById("year").value = String(now.getFullYear());
+
+        await loadMonth();
+        await loadHistory();
+      } catch (error) {
+        message(error.message, true);
+      }
+    }
+
+    document.getElementById("loadBtn").addEventListener("click", loadMonth);
+    saveBtn.addEventListener("click", saveMonth);
+
+    initialize();
+  </script>
+</body>
+</html>
