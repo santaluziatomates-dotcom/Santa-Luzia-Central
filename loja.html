@@ -1917,129 +1917,62 @@ const supabaseClient =
     );
 
 
-/* PRODUTOS */
+/* PRODUTOS CARREGADOS DO SUPABASE */
 
-const produtos = [
+let produtos = [];
 
-    {
-        id:"iveco",
-        categoria:"iveco",
-        nome:"Iveco S-Way",
-        descricao:"Vermelha",
-        preco:8000,
-        codigo:"9MuRDvF.jpeg",
-        imagens:[
-            "iveco.PNG",
-            "iveco2.PNG"
-        ]
-    },
+function identificarCategoriaProduto(nome, descricao) {
+    const texto = `${nome || ""} ${descricao || ""}`.toLowerCase();
 
-    {
-        id:"bob-laranja",
-        categoria:"bob",
-        nome:"BOB",
-        descricao:"Constellation Laranja",
-        preco:8000,
-        codigo:"tTuD4KI.jpeg",
-        imagens:[
-            "bob.laranja.PNG",
-            "bob.laranja2.PNG"
-        ]
-    },
+    if (texto.includes("iveco")) return "iveco";
+    if (texto.includes("bob") || texto.includes("constellation")) return "bob";
+    if (texto.includes("scania")) return "scania";
+    if (texto.includes("volvo")) return "volvo";
 
-    {
-        id:"bob-amarelo",
-        categoria:"bob",
-        nome:"BOB",
-        descricao:"Constellation Amarelo",
-        preco:8000,
-        codigo:"gGlnvjT.jpeg",
-        imagens:[
-            "bob.amarelo.PNG",
-            "bob.amarelo2.PNG"
-        ]
-    },
+    return "outro";
+}
 
-    {
-        id:"r440-preta",
-        categoria:"scania",
-        nome:"Scania R440",
-        descricao:"Preta e dourada",
-        preco:10000,
-        codigo:"l3OArhI.jpeg",
-        imagens:[
-            "440.preta.PNG",
-            "440.preta2.PNG"
-        ]
-    },
+async function carregarProdutosLoja() {
+    const { data, error } = await supabaseClient
+        .from("loja_produtos")
+        .select("id,nome,descricao,categoria,preco,imagem_url,imagens,codigo,ativo")
+        .eq("ativo", true)
+        .eq("categoria", "skin")
+        .order("id", { ascending: true });
 
-    {
-        id:"r440-azul",
-        categoria:"scania",
-        nome:"Scania R440",
-        descricao:"Azul",
-        preco:8000,
-        codigo:"UEb84SW.jpeg",
-        imagens:[
-            "440.azul.PNG",
-            "440.azul2.PNG"
-        ]
-    },
-
-    {
-        id:"fh-preta",
-        categoria:"volvo",
-        nome:"Volvo FH",
-        descricao:"Preta e dourada",
-        preco:10000,
-        codigo:"2RbSBCZ.jpeg",
-        imagens:[
-            "fh.preta2.PNG",
-            "fh.preta.PNG"
-        ]
-    },
-
-    {
-        id:"fh-vermelha",
-        categoria:"volvo",
-        nome:"Volvo FH",
-        descricao:"Vermelha",
-        preco:8000,
-        codigo:"rUdEXul.jpeg",
-        imagens:[
-            "fh.vermelha.PNG",
-            "fh.vermelha2.PNG"
-        ]
-    },
-
-    {
-        id:"p320-cinza",
-        categoria:"scania",
-        nome:"Scania P320",
-        descricao:"Cinza",
-        preco:10000,
-        codigo:"BCotT9q.jpeg",
-        imagens:[
-            "320cinza.PNG",
-            "320cinza2.PNG",
-            "320cinza3.PNG"
-        ]
-    },
-
-    {
-        id:"p320-branca",
-        categoria:"scania",
-        nome:"Scania P320",
-        descricao:"Branca",
-        preco:10000,
-        codigo:"GpcyGWA.jpeg",
-        imagens:[
-            "320branca.PNG"
-        ]
+    if (error) {
+        console.error("Erro ao carregar produtos da loja:", error);
+        throw new Error("Não foi possível carregar as skins. Tente novamente.");
     }
 
-];
+    produtos = (data || []).map((item) => {
+        const imagens = Array.isArray(item.imagens)
+            ? item.imagens.filter(Boolean)
+            : [];
 
+        if (item.imagem_url && !imagens.includes(item.imagem_url)) {
+            imagens.unshift(item.imagem_url);
+        }
+
+        return {
+            id: String(item.id),
+            categoria: identificarCategoriaProduto(item.nome, item.descricao),
+            nome: item.nome,
+            descricao: item.descricao || "",
+            preco: Number(item.preco),
+            codigo: item.codigo,
+            imagens
+        };
+    }).filter((produto) =>
+        produto.codigo &&
+        Number.isFinite(produto.preco) &&
+        produto.preco > 0 &&
+        produto.imagens.length > 0
+    );
+
+    renderProdutos();
+    renderMinhasSkins();
+}
 
 /* =========================================================
    FOTOS DOS PRÊMIOS — CORRIGIDO
@@ -4175,9 +4108,20 @@ document.addEventListener(
 
 /* INICIALIZAÇÃO */
 
-renderProdutos();
+async function iniciarLoja() {
+    try {
+        await carregarProdutosLoja();
+        await carregarSaldo();
+    } catch (error) {
+        console.error("Erro ao iniciar a loja:", error);
+        alert(
+            error.message ||
+            "Não foi possível carregar a loja. Tente novamente."
+        );
+    }
+}
 
-carregarSaldo();
+iniciarLoja();
 
 
 /* ATUALIZAR AO VOLTAR */
