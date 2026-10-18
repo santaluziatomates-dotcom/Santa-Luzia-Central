@@ -1507,9 +1507,10 @@ footer{
         </p>
 
         <div
-            class="code-box"
-            id="resultCodeBox"
-        >
+    class="code-box"
+    id="resultCodeBox"
+
+>
 
             <div class="code-label">
                 Código do prêmio
@@ -4112,6 +4113,26 @@ document.addEventListener(
     }
 );
 
+    /* COPIAR CÓDIGO DO PRÊMIO */
+
+document.getElementById("copyCode").addEventListener("click", async function () {
+    const codigo = document.getElementById("resultCode").textContent.trim();
+
+    if (!codigo || codigo === "—") {
+        alert("Nenhum código disponível para copiar.");
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(codigo);
+        this.textContent = "CÓDIGO COPIADO!";
+        setTimeout(() => {
+            this.textContent = "COPIAR CÓDIGO";
+        }, 2000);
+    } catch (error) {
+        alert("Não foi possível copiar automaticamente. Selecione e copie o código manualmente.");
+    }
+});
 
 /* INICIALIZAÇÃO */
 
