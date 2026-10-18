@@ -19,6 +19,7 @@ label{display:block;font-weight:bold;margin:13px 0 6px}
 input,select,textarea{width:100%;padding:12px;border:1px solid #ccd3cc;border-radius:8px;font:inherit;background:white}
 textarea{min-height:80px;resize:vertical}
 button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:pointer;font-size:14px}
+button:disabled{opacity:.6;cursor:wait}
 .primary{background:var(--green);color:white}
 .secondary{background:#e8eee9;color:#24412d}
 .danger{background:#fff0f0;color:#a51f28}
@@ -28,11 +29,13 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 .product{border:1px solid #e1e6e1;border-radius:10px;padding:12px;min-width:0}
 .product img{width:100%;height:155px;object-fit:contain;background:#f6f7f6;border-radius:7px}
 .product h3{margin:10px 0 6px;overflow-wrap:anywhere}
-.muted{color:#687368;font-size:13px}
+.muted{color:#687368;font-size:13px;overflow-wrap:anywhere}
 .price{font-weight:bold;color:var(--green);margin:8px 0}
+.product-code{background:#f4f6f4;border-radius:7px;padding:9px;font-size:13px;overflow-wrap:anywhere}
 #status{padding:12px;border-radius:8px;background:#e8eee9;margin-bottom:15px;overflow-wrap:anywhere}
 .hidden{display:none!important}
 #preview{max-width:180px;max-height:150px;object-fit:contain;margin-top:10px}
+.field-help{font-size:12px;color:#687368;margin:5px 0 0;line-height:1.4}
 @media(max-width:520px){.grid{grid-template-columns:1fr}.panel{padding:15px}header h1{font-size:20px}}
 </style>
 </head>
@@ -43,7 +46,7 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 </header>
 
 <main>
-  <div id="status" role="status">Inicializando painel...</div>
+  <div id="status" role="status" aria-live="polite">Inicializando painel...</div>
 
   <section class="panel" id="loginPanel">
     <h2>Entrar como administrador</h2>
@@ -67,7 +70,8 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
         <input type="hidden" id="productId">
 
         <label for="name">Nome do produto</label>
-        <input id="name" required maxlength="120" placeholder="Ex.: Volvo FH Vermelho">
+        <input id="name" required maxlength="120"
+          placeholder="Ex.: Volvo FH Vermelho">
 
         <label for="description">Descrição</label>
         <textarea id="description" maxlength="1000"
@@ -90,18 +94,25 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
           </div>
         </div>
 
-        <label for="code">Código único do produto (opcional)</label>
-        <input id="code" maxlength="120" placeholder="Ex.: volvo-fh-vermelho">
+        <label for="code">Código da skin / produto</label>
+        <input id="code" maxlength="120"
+          placeholder="Digite o código que será entregue após a compra">
+        <p class="field-help">
+          Para skins, o código é obrigatório. Use um código único, com letras,
+          números, ponto, hífen ou sublinhado. Ex.: 9MuRDvF.jpeg
+        </p>
 
         <label for="imageFile">Imagem do produto</label>
         <input id="imageFile" type="file" accept="image/*">
         <img id="preview" class="hidden" alt="Prévia da imagem">
 
-        <label for="imageUrl">URL da imagem</label>
-        <input id="imageUrl" type="url" placeholder="Será preenchida ao enviar uma imagem">
+        <label for="imageUrl">URL da imagem principal</label>
+        <input id="imageUrl" type="url"
+          placeholder="Será preenchida ao enviar uma imagem">
 
         <label for="extraImages">URLs de imagens adicionais (opcional)</label>
-        <textarea id="extraImages" placeholder="Uma URL por linha"></textarea>
+        <textarea id="extraImages"
+          placeholder="Uma URL por linha"></textarea>
 
         <label>
           <input id="active" type="checkbox" checked
@@ -110,26 +121,36 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
         </label>
 
         <div class="actions">
-          <button class="primary" type="submit">Salvar produto</button>
-          <button class="secondary" type="button" id="cancelEdit">Limpar formulário</button>
+          <button class="primary" id="saveButton" type="submit">
+            Salvar produto
+          </button>
+          <button class="secondary" type="button" id="cancelEdit">
+            Limpar formulário
+          </button>
         </div>
       </form>
     </div>
 
     <div class="panel">
       <h2>Produtos cadastrados</h2>
-      <button class="secondary" id="refresh" type="button">Atualizar lista</button>
+      <button class="secondary" id="refresh" type="button">
+        Atualizar lista
+      </button>
       <div id="products" style="margin-top:16px"></div>
     </div>
 
     <div class="panel">
-      <button class="danger" id="logout" type="button">Sair do painel</button>
+      <button class="danger" id="logout" type="button">
+        Sair do painel
+      </button>
     </div>
   </section>
 </main>
 
 <script>
 (() => {
+  'use strict';
+
   const SUPABASE_URL = 'https://cckypvqophyviphqhich.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
   const ADMIN_ID = 'ec962f8b-92ad-4fe5-98ef-c7cbb1b653e2';
@@ -137,10 +158,15 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 
   const $ = id => document.getElementById(id);
   const status = $('status');
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
   let currentUser = null;
   let products = [];
+  let saving = false;
+  let sessionCheckFinished = false;
 
   function message(text, error = false) {
     status.textContent = text;
@@ -148,22 +174,22 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
     status.style.color = error ? '#a51f28' : '#24412d';
   }
 
-  function escapeHTML(value) {
-    return String(value ?? '').replace(/[&<>"']/g, c => ({
-      '&':'&amp;', '<':'&lt;', '>':'&gt;',
-      '"':'&quot;', "'":'&#39;'
-    }[c]));
-  }
-
   function showAdmin(user) {
     currentUser = user;
-    const authorized = user && user.id === ADMIN_ID;
-    $('loginPanel').classList.toggle('hidden', !!authorized);
+    const authorized = !!user && user.id === ADMIN_ID;
+
+    $('loginPanel').classList.toggle('hidden', authorized);
     $('adminArea').classList.toggle('hidden', !authorized);
 
     if (!authorized) {
-      message(user ? 'Este usuário não está autorizado a administrar a loja.' :
-        'Entre com a conta de administrador.');
+      products = [];
+      $('products').replaceChildren();
+      message(
+        user
+          ? 'Este usuário não está autorizado a administrar a loja.'
+          : 'Entre com a conta de administrador.',
+        !!user
+      );
       return;
     }
 
@@ -173,12 +199,24 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 
   async function checkSession() {
     const { data, error } = await client.auth.getSession();
-    if (error) return message(error.message, true);
+    sessionCheckFinished = true;
+
+    if (error) {
+      message('Erro ao verificar sessão: ' + error.message, true);
+      return;
+    }
+
     showAdmin(data.session?.user || null);
   }
 
   $('loginForm').addEventListener('submit', async event => {
     event.preventDefault();
+
+    if (!sessionCheckFinished) {
+      message('Aguarde a verificação da sessão.', true);
+      return;
+    }
+
     message('Verificando acesso...');
 
     const { data, error } = await client.auth.signInWithPassword({
@@ -194,7 +232,10 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
     if (data.user?.id !== ADMIN_ID) {
       await client.auth.signOut();
       showAdmin(null);
-      message('Acesso negado: esta conta não é a administradora autorizada.', true);
+      message(
+        'Acesso negado: esta conta não é a administradora autorizada.',
+        true
+      );
       return;
     }
 
@@ -203,21 +244,26 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 
   async function loadProducts() {
     if (!currentUser || currentUser.id !== ADMIN_ID) return;
+
     message('Carregando produtos...');
+    $('refresh').disabled = true;
 
-    const { data, error } = await client
-      .from('loja_produtos')
-      .select('*')
-      .order('criado_em', { ascending: false });
+    try {
+      const { data, error } = await client
+        .from('loja_produtos')
+        .select('*')
+        .order('criado_em', { ascending: false });
 
-    if (error) {
+      if (error) throw error;
+
+      products = data || [];
+      renderProducts();
+      message('Lista atualizada: ' + products.length + ' produto(s).');
+    } catch (error) {
       message('Erro ao carregar produtos: ' + error.message, true);
-      return;
+    } finally {
+      $('refresh').disabled = false;
     }
-
-    products = data || [];
-    renderProducts();
-    message('Lista atualizada: ' + products.length + ' produto(s).');
   }
 
   function renderProducts() {
@@ -233,14 +279,18 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
       const card = document.createElement('article');
       card.className = 'product';
 
-      const image = document.createElement('img');
-      image.alt = 'Imagem de ' + product.nome;
-      image.src = product.imagem_url || '';
-      image.onerror = () => { image.style.display = 'none'; };
-      card.appendChild(image);
+      if (product.imagem_url) {
+        const image = document.createElement('img');
+        image.alt = 'Imagem de ' + (product.nome || 'produto');
+        image.src = product.imagem_url;
+        image.onerror = () => {
+          image.style.display = 'none';
+        };
+        card.appendChild(image);
+      }
 
       const title = document.createElement('h3');
-      title.textContent = product.nome;
+      title.textContent = product.nome || 'Produto sem nome';
       card.appendChild(title);
 
       const desc = document.createElement('p');
@@ -250,14 +300,21 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 
       const price = document.createElement('p');
       price.className = 'price';
-      price.textContent = Number(product.preco).toLocaleString('pt-BR') + ' STACOIN';
+      price.textContent =
+        Number(product.preco).toLocaleString('pt-BR') + ' STACOIN';
       card.appendChild(price);
 
       const category = document.createElement('p');
       category.className = 'muted';
-      category.textContent = 'Categoria: ' + product.categoria +
+      category.textContent =
+        'Categoria: ' + product.categoria +
         ' • ' + (product.ativo ? 'Ativo' : 'Inativo');
       card.appendChild(category);
+
+      const code = document.createElement('p');
+      code.className = 'product-code';
+      code.textContent = 'Código: ' + (product.codigo || 'Não informado');
+      card.appendChild(code);
 
       const actions = document.createElement('div');
       actions.className = 'actions';
@@ -286,7 +343,7 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
     $('name').value = product.nome || '';
     $('description').value = product.descricao || '';
     $('category').value = product.categoria || 'skin';
-    $('price').value = product.preco;
+    $('price').value = product.preco ?? '';
     $('code').value = product.codigo || '';
     $('imageUrl').value = product.imagem_url || '';
     $('extraImages').value = (product.imagens || []).join('\n');
@@ -295,7 +352,10 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 
     $('preview').classList.toggle('hidden', !product.imagem_url);
     $('preview').src = product.imagem_url || '';
+    $('imageFile').value = '';
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    $('name').focus();
   }
 
   function clearForm() {
@@ -303,13 +363,22 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
     $('productId').value = '';
     $('active').checked = true;
     $('formTitle').textContent = 'Cadastrar produto';
-    $('preview').src = '';
+    $('preview').removeAttribute('src');
     $('preview').classList.add('hidden');
     $('imageFile').value = '';
   }
 
   $('cancelEdit').addEventListener('click', clearForm);
   $('refresh').addEventListener('click', loadProducts);
+
+  $('category').addEventListener('change', () => {
+    const isSkin = $('category').value === 'skin';
+
+    $('code').required = isSkin;
+    $('code').placeholder = isSkin
+      ? 'Código obrigatório da skin'
+      : 'Código do produto, se necessário';
+  });
 
   $('imageFile').addEventListener('change', () => {
     const file = $('imageFile').files[0];
@@ -334,12 +403,18 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
   async function uploadImage(file) {
     const ext = (file.name.split('.').pop() || 'jpg')
       .toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-    const path = currentUser.id + '/' + crypto.randomUUID() + '.' + ext;
 
-    const { error } = await client.storage.from(BUCKET).upload(path, file, {
-      upsert: false,
-      contentType: file.type
-    });
+    const path =
+      currentUser.id + '/' + crypto.randomUUID() + '.' + ext;
+
+    const { error } = await client.storage.from(BUCKET).upload(
+      path,
+      file,
+      {
+        upsert: false,
+        contentType: file.type
+      }
+    );
 
     if (error) throw error;
 
@@ -349,6 +424,9 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
 
   $('productForm').addEventListener('submit', async event => {
     event.preventDefault();
+
+    if (saving) return;
+
     if (!currentUser || currentUser.id !== ADMIN_ID) {
       message('Entre com a conta administradora.', true);
       return;
@@ -357,20 +435,63 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
     const name = $('name').value.trim();
     const description = $('description').value.trim();
     const category = $('category').value;
-    const price = Number($('price').value);
+    const priceText = $('price').value.trim();
+    const price = Number(priceText);
     const code = $('code').value.trim() || null;
     const file = $('imageFile').files[0];
     let imageUrl = $('imageUrl').value.trim() || null;
 
-    if (!name || !Number.isSafeInteger(price) || price < 0) {
+    if (!name || priceText === '' ||
+        !Number.isSafeInteger(price) || price < 0) {
       message('Confira o nome e o preço informado.', true);
       return;
     }
 
-    if (code && !/^[a-zA-Z0-9_-]+$/.test(code)) {
-      message('Use no código apenas letras, números, hífen e sublinhado.', true);
+    if (category === 'skin' && !code) {
+      message('Informe o código da skin antes de salvar.', true);
+      $('code').focus();
       return;
     }
+
+    // Aceita os códigos antigos com .jpeg e novos códigos com
+    // letras, números, ponto, hífen e sublinhado.
+    if (code && !/^[a-zA-Z0-9._-]+$/.test(code)) {
+      message(
+        'Use no código apenas letras, números, ponto, hífen e sublinhado.',
+        true
+      );
+      $('code').focus();
+      return;
+    }
+
+    // Impede códigos repetidos em produtos diferentes.
+    if (code && products.some(product =>
+      String(product.codigo || '').toLowerCase() === code.toLowerCase() &&
+      String(product.id) !== $('productId').value
+    )) {
+      message(
+        'Este código já está cadastrado em outro produto. Informe um código único.',
+        true
+      );
+      $('code').focus();
+      return;
+    }
+
+    const extraImageUrls = $('extraImages').value
+      .split('\n')
+      .map(s => s.trim())
+      .filter(Boolean);
+
+    if (extraImageUrls.some(url => !/^https?:\/\//i.test(url))) {
+      message(
+        'As imagens adicionais devem usar URLs HTTP ou HTTPS.',
+        true
+      );
+      return;
+    }
+
+    saving = true;
+    $('saveButton').disabled = true;
 
     try {
       message('Salvando produto...');
@@ -380,14 +501,6 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
         $('imageUrl').value = imageUrl;
       }
 
-      const images = $('extraImages').value
-        .split('\n').map(s => s.trim()).filter(Boolean);
-
-      if (images.some(url => !/^https?:\/\//i.test(url))) {
-        message('As imagens adicionais devem usar URLs HTTP ou HTTPS.', true);
-        return;
-      }
-
       const payload = {
         nome: name,
         descricao: description,
@@ -395,7 +508,7 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
         preco: price,
         codigo: code,
         imagem_url: imageUrl,
-        imagens: images,
+        imagens: extraImageUrls,
         ativo: $('active').checked,
         atualizado_em: new Date().toISOString()
       };
@@ -404,38 +517,68 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
       let result;
 
       if (id) {
-        result = await client.from('loja_produtos')
-          .update(payload).eq('id', Number(id)).select().single();
+        result = await client
+          .from('loja_produtos')
+          .update(payload)
+          .eq('id', Number(id))
+          .select()
+          .single();
       } else {
-        result = await client.from('loja_produtos')
-          .insert(payload).select().single();
+        result = await client
+          .from('loja_produtos')
+          .insert(payload)
+          .select()
+          .single();
       }
 
-      if (result.error) throw result.error;
+      if (result.error) {
+        if (result.error.code === '23505') {
+          throw new Error(
+            'Este código já existe no banco de dados. Informe outro código.'
+          );
+        }
+        throw result.error;
+      }
 
       message('Produto salvo com sucesso!');
       clearForm();
       await loadProducts();
     } catch (error) {
-      message('Erro ao salvar: ' + (error.message || 'Erro desconhecido'), true);
+      message(
+        'Erro ao salvar: ' + (error.message || 'Erro desconhecido'),
+        true
+      );
+    } finally {
+      saving = false;
+      $('saveButton').disabled = false;
     }
   });
 
   async function toggleProduct(product) {
-    const { error } = await client.from('loja_produtos')
-      .update({
-        ativo: !product.ativo,
-        atualizado_em: new Date().toISOString()
-      })
-      .eq('id', product.id);
-
-    if (error) {
-      message('Erro ao alterar produto: ' + error.message, true);
+    if (!currentUser || currentUser.id !== ADMIN_ID) {
+      message('Entre com a conta administradora.', true);
       return;
     }
 
-    message('Status do produto alterado.');
-    await loadProducts();
+    try {
+      const { error } = await client
+        .from('loja_produtos')
+        .update({
+          ativo: !product.ativo,
+          atualizado_em: new Date().toISOString()
+        })
+        .eq('id', product.id);
+
+      if (error) throw error;
+
+      message('Status do produto alterado.');
+      await loadProducts();
+    } catch (error) {
+      message(
+        'Erro ao alterar produto: ' + error.message,
+        true
+      );
+    }
   }
 
   $('logout').addEventListener('click', async () => {
@@ -445,9 +588,11 @@ button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:poin
   });
 
   client.auth.onAuthStateChange((_event, session) => {
+    if (!sessionCheckFinished) return;
     showAdmin(session?.user || null);
   });
 
+  $('category').dispatchEvent(new Event('change'));
   checkSession();
 })();
 </script>
