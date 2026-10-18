@@ -103,7 +103,15 @@ button:disabled{opacity:.6;cursor:wait}
         </p>
 
         <label for="imageFile">Imagem do produto</label>
-        <input id="imageFile" type="file" accept="image/*">
+        <input
+  id="imageFile"
+  type="file"
+  accept="image/*"
+  multiple
+>
+<p class="field-help">
+  Selecione duas ou mais fotos de uma vez. Limite de 10 MB por imagem.
+</p>
         <img id="preview" class="hidden" alt="Prévia da imagem">
 
         <label for="imageUrl">URL da imagem principal</label>
@@ -380,47 +388,72 @@ button:disabled{opacity:.6;cursor:wait}
       : 'Código do produto, se necessário';
   });
 
-  $('imageFile').addEventListener('change', () => {
-    const file = $('imageFile').files[0];
-    if (!file) return;
+ $('imageFile').addEventListener('change', () => {
+  const files = Array.from($('imageFile').files);
 
-    if (!file.type.startsWith('image/')) {
-      message('Selecione um arquivo de imagem válido.', true);
-      $('imageFile').value = '';
-      return;
-    }
+  if (!files.length) return;
 
-    if (file.size > 10 * 1024 * 1024) {
-      message('A imagem deve ter no máximo 10 MB.', true);
-      $('imageFile').value = '';
-      return;
-    }
+  const invalidFile = files.find(file =>
+    !file.type.startsWith('image/')
+  );
 
-    $('preview').src = URL.createObjectURL(file);
-    $('preview').classList.remove('hidden');
-  });
+  if (invalidFile) {
+    message('Todos os arquivos selecionados devem ser imagens.', true);
+    $('imageFile').value = '';
+    return;
+  }
 
-  async function uploadImage(file) {
+  const oversizedFile = files.find(file =>
+    file.size > 10 * 1024 * 1024
+  );
+
+  if (oversizedFile) {
+    message('Cada imagem deve ter no máximo 10 MB.', true);
+    $('imageFile').value = '';
+    return;
+  }
+
+  $('preview').src = URL.createObjectURL(files[0]);
+  $('preview').classList.remove('hidden');
+
+  message(
+    files.length + ' foto(s) selecionada(s). Todas serão enviadas ao salvar.'
+  );
+});
+
+ async function uploadImages(files) {
+  const urls = [];
+
+  for (const file of files) {
     const ext = (file.name.split('.').pop() || 'jpg')
-      .toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '') || 'jpg';
 
     const path =
       currentUser.id + '/' + crypto.randomUUID() + '.' + ext;
 
-    const { error } = await client.storage.from(BUCKET).upload(
-      path,
-      file,
-      {
+    const { error } = await client.storage
+      .from(BUCKET)
+      .upload(path, file, {
         upsert: false,
         contentType: file.type
-      }
-    );
+      });
 
-    if (error) throw error;
+    if (error) {
+      throw new Error(
+        'Falha ao enviar "' + file.name + '": ' + error.message
+      );
+    }
 
-    const { data } = client.storage.from(BUCKET).getPublicUrl(path);
-    return data.publicUrl;
+    const { data } = client.storage
+      .from(BUCKET)
+      .getPublicUrl(path);
+
+    urls.push(data.publicUrl);
   }
+
+  return urls;
+}
 
   $('productForm').addEventListener('submit', async event => {
     event.preventDefault();
@@ -438,7 +471,7 @@ button:disabled{opacity:.6;cursor:wait}
     const priceText = $('price').value.trim();
     const price = Number(priceText);
     const code = $('code').value.trim() || null;
-    const file = $('imageFile').files[0];
+   const files = Array.from($('imageFile').files);
     let imageUrl = $('imageUrl').value.trim() || null;
 
     if (!name || priceText === '' ||
@@ -496,10 +529,21 @@ button:disabled{opacity:.6;cursor:wait}
     try {
       message('Salvando produto...');
 
-      if (file) {
-        imageUrl = await uploadImage(file);
-        $('imageUrl').value = imageUrl;
-      }
+      if (files.length > 0) {
+  message('Enviando ' + files.length + ' foto(s)...');
+
+  const uploadedUrls = await uploadImages(files);
+
+  // Primeira foto: imagem principal do produto
+  imageUrl = uploadedUrls[0];
+  $('imageUrl').value = imageUrl;
+
+  // Demais fotos: imagens adicionais do produto
+  extraImageUrls.push(...uploadedUrls.slice(1));
+
+  // Atualiza o campo com todas as imagens adicionais
+  $('extraImages').value = extraImageUrls.join('\n');
+}
 
       const payload = {
         nome: name,
