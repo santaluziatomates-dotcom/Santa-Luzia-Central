@@ -1946,13 +1946,20 @@ async function carregarProdutosLoja() {
     }
 
     produtos = (data || []).map((item) => {
-        const imagens = Array.isArray(item.imagens)
-            ? item.imagens.filter(Boolean)
-            : [];
+       const imagens = Array.isArray(item.imagens)
+    ? item.imagens.filter(Boolean)
+    : [];
 
-        if (item.imagem_url && !imagens.includes(item.imagem_url)) {
-            imagens.unshift(item.imagem_url);
-        }
+const imagemPrincipal = (item.imagem_url || "").trim();
+
+if (
+    imagemPrincipal.startsWith("https://") ||
+    imagemPrincipal.startsWith("http://")
+) {
+    if (!imagens.includes(imagemPrincipal)) {
+        imagens.unshift(imagemPrincipal);
+    }
+}
 
         return {
             id: String(item.id),
