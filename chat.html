@@ -94,9 +94,25 @@
       overflow-wrap: anywhere;
     }
 
-    .autor { font-size: 12px; font-weight: 800; color: var(--verde2); margin-bottom: 5px; }
-    .conteudo { white-space: pre-wrap; font-size: 15px; line-height: 1.4; }
-    .hora { text-align: right; color: var(--cinza); font-size: 10px; margin-top: 6px; }
+    .autor {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--verde2);
+      margin-bottom: 5px;
+    }
+
+    .conteudo {
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .hora {
+      text-align: right;
+      color: var(--cinza);
+      font-size: 10px;
+      margin-top: 6px;
+    }
 
     .acoes-mensagem {
       display: flex;
@@ -162,12 +178,39 @@
       font-size: 14px;
     }
 
-    .rodape { text-align: center; color: var(--cinza); font-size: 11px; padding: 18px; }
+    .rodape {
+      text-align: center;
+      color: var(--cinza);
+      font-size: 11px;
+      padding: 18px;
+    }
 
     #areaDono { margin-top: 14px; }
     .painel-adm { padding: 16px; }
     .painel-adm h2 { margin: 0 0 8px; font-size: 18px; }
-    .explicacao { font-size: 13px; color: var(--cinza); line-height: 1.5; }
+
+    .explicacao {
+      font-size: 13px;
+      color: var(--cinza);
+      line-height: 1.5;
+    }
+
+    .busca-motoristas {
+      width: 100%;
+      margin: 12px 0;
+      padding: 13px 14px;
+      border: 1px solid #d8e2da;
+      border-radius: 12px;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+      background: #fbfcfb;
+    }
+
+    .busca-motoristas:focus {
+      border-color: var(--verde2);
+      background: white;
+    }
 
     .linha-motorista {
       display: flex;
@@ -180,7 +223,13 @@
 
     .nome-motorista { font-weight: 700; font-size: 14px; }
     .subnome { color: var(--cinza); font-size: 12px; margin-top: 4px; }
-    .acoes-adm { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+    .acoes-adm {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
     .vazio { color: var(--cinza); font-size: 13px; padding: 12px 0; }
 
     @media (max-width: 420px) {
@@ -225,10 +274,21 @@
 
     <section id="areaDono" class="painel painel-adm" hidden>
       <h2>🛡️ Gerenciar ADMs</h2>
+
       <p class="explicacao">
         Somente o proprietário pode conceder ou retirar o cargo de ADM.
         Os administradores podem moderar o chat, mas não podem promover outras pessoas.
       </p>
+
+      <input
+        id="buscarMotorista"
+        class="busca-motoristas"
+        type="search"
+        placeholder="🔎 Buscar por nome ou apelido..."
+        aria-label="Buscar motorista por nome ou apelido"
+        autocomplete="off"
+      >
+
       <div id="estadoAdms" class="explicacao">Carregando lista...</div>
       <div id="listaAdms"></div>
     </section>
@@ -252,6 +312,7 @@
     const areaDono = document.getElementById("areaDono");
     const estadoAdms = document.getElementById("estadoAdms");
     const listaAdms = document.getElementById("listaAdms");
+    const buscarMotorista = document.getElementById("buscarMotorista");
 
     let motoristaId = null;
     let canal = null;
@@ -259,6 +320,8 @@
     let souDono = false;
     let souAdm = false;
     let idsAdms = new Set();
+    let todosMotoristas = [];
+    let carregandoAdms = false;
 
     function mostrarEstado(mensagem) {
       estado.textContent = mensagem;
@@ -320,6 +383,7 @@
             if (!confirm("Tem certeza de que deseja apagar esta mensagem?")) return;
 
             apagar.disabled = true;
+
             const { error } = await db.rpc("chat_apagar_mensagem", {
               mensagem_id: item.id
             });
@@ -343,15 +407,17 @@
     }
 
     async function carregarGerenciamentoAdms() {
-      if (!souDono) return;
+      if (!souDono || carregandoAdms) return;
 
+      carregandoAdms = true;
       estadoAdms.textContent = "Carregando motoristas e administradores...";
-      listaAdms.replaceChildren();
 
       const [motoristasResp, admsResp] = await Promise.all([
         db.rpc("chat_listar_motoristas_para_adm"),
         db.rpc("chat_listar_administradores")
       ]);
+
+      carregandoAdms = false;
 
       if (motoristasResp.error || admsResp.error) {
         console.error(motoristasResp.error || admsResp.error);
@@ -360,19 +426,50 @@
         return;
       }
 
-      const motoristas = motoristasResp.data || [];
+      todosMotoristas = motoristasResp.data || [];
+
       const adms = admsResp.data || [];
       idsAdms = new Set(adms.map(a => a.user_id));
 
-      estadoAdms.textContent = motoristas.length
-        ? "Escolha quem poderá ajudar a moderar o chat."
-        : "Nenhum motorista ativo vinculado foi encontrado.";
+      estadoAdms.textContent =
+        `${todosMotoristas.length} motoristas com conta vinculada. Digite abaixo para pesquisar.`;
 
-      for (const motorista of motoristas) {
+      desenharListaMotoristas();
+    }
+
+    function desenharListaMotoristas() {
+      listaAdms.replaceChildren();
+
+      const termo = buscarMotorista.value
+        .trim()
+        .toLocaleLowerCase("pt-BR");
+
+      const filtrados = todosMotoristas.filter(motorista => {
+        const nome = motorista.nome || "";
+        const apelido = motorista.apelido || "";
+
+        return `${nome} ${apelido}`
+          .toLocaleLowerCase("pt-BR")
+          .includes(termo);
+      });
+
+      if (!filtrados.length) {
+        const vazio = document.createElement("div");
+        vazio.className = "vazio";
+        vazio.textContent = termo
+          ? "Nenhum motorista encontrado nessa pesquisa."
+          : "Nenhum motorista com conta vinculada foi encontrado.";
+
+        listaAdms.appendChild(vazio);
+        return;
+      }
+
+      for (const motorista of filtrados) {
         const linha = document.createElement("div");
         linha.className = "linha-motorista";
 
         const info = document.createElement("div");
+
         const nome = document.createElement("div");
         nome.className = "nome-motorista";
         nome.textContent = motorista.apelido || motorista.nome || "Motorista";
@@ -396,33 +493,38 @@
         botao.addEventListener("click", async () => {
           if (jaAdm) {
             if (!confirm("Deseja retirar o cargo de ADM deste motorista?")) return;
-
-            botao.disabled = true;
-            const { error } = await db.rpc("chat_retirar_adm", {
-              usuario_alvo: motorista.user_id
-            });
-
-            if (error) {
-              console.error(error);
-              alert("Não foi possível retirar o ADM.");
-              botao.disabled = false;
-              return;
-            }
           } else {
             if (!confirm("Deseja conceder o cargo de ADM a este motorista?")) return;
-
-            botao.disabled = true;
-            const { error } = await db.rpc("chat_conceder_adm", {
-              usuario_alvo: motorista.user_id
-            });
-
-            if (error) {
-              console.error(error);
-              alert("Não foi possível conceder o ADM. Confirme se o motorista está ativo.");
-              botao.disabled = false;
-              return;
-            }
           }
+
+          botao.disabled = true;
+
+          const funcao = jaAdm
+            ? "chat_retirar_adm"
+            : "chat_conceder_adm";
+
+          const { error } = await db.rpc(funcao, {
+            usuario_alvo: motorista.user_id
+          });
+
+          if (error) {
+            console.error(error);
+
+            alert(
+              jaAdm
+                ? "Não foi possível retirar o ADM."
+                : "Não foi possível conceder o ADM. Apenas motoristas ativos podem receber ADM."
+            );
+
+            botao.disabled = false;
+            return;
+          }
+
+          alert(
+            jaAdm
+              ? "Cargo de ADM retirado com sucesso."
+              : "ADM concedido com sucesso!"
+          );
 
           await carregarGerenciamentoAdms();
         });
@@ -432,6 +534,8 @@
         listaAdms.appendChild(linha);
       }
     }
+
+    buscarMotorista.addEventListener("input", desenharListaMotoristas);
 
     async function iniciarChat() {
       const { data: sessaoData, error: sessaoErro } = await db.auth.getSession();
