@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADM | Lojinha da Correria</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--green:#176b38;--red:#c52b35;--bg:#f4f6f4;--text:#202820}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}
+header{background:#fff;border-bottom:3px solid var(--green);padding:20px}
+header h1{margin:0;color:var(--green);font-size:23px}
+header p{margin:7px 0 0;color:#657065}
+main{max-width:1000px;margin:22px auto;padding:0 14px}
+.panel{background:#fff;border-radius:12px;padding:20px;margin-bottom:18px;box-shadow:0 2px 10px #0000000b}
+h2{font-size:19px;margin:0 0 16px}
+label{display:block;font-weight:bold;margin:13px 0 6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #ccd3cc;border-radius:8px;font:inherit;background:#fff}
+textarea{min-height:75px;resize:vertical}
+button{border:0;border-radius:8px;padding:12px 15px;font-weight:bold;cursor:pointer;font-size:14px}
+button:disabled{opacity:.6;cursor:wait}
+.primary{background:var(--green);color:#fff}
+.secondary{background:#e8eee9;color:#24412d}
+.danger{background:#fff0f0;color:#a51f28}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.product{border:1px solid #e1e6e1;border-radius:10px;padding:12px;min-width:0;background:#fff}
+.product img{width:100%;height:155px;object-fit:contain;background:#f6f7f6;border-radius:7px}
+.product h3{margin:10px 0 6px;overflow-wrap:anywhere}
+.muted{color:#687368;font-size:13px;overflow-wrap:anywhere}
+.price{font-weight:bold;color:var(--green);margin:8px 0}
+#status{padding:12px;border-radius:8px;background:#e8eee9;margin-bottom:15px;overflow-wrap:anywhere}
+.hidden{display:none!important}
+#preview{max-width:180px;max-height:150px;object-fit:contain;margin-top:10px}
+.help{font-size:12px;color:#687368;margin:5px 0 0;line-height:1.4}
+.inline-check{display:flex;align-items:center;gap:8px;font-weight:normal}
+.inline-check input{width:auto}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.panel{padding:15px}header h1{font-size:20px}}
+</style>
+</head>
+<body>
+<header>
+<h1>🍅 Lojinha da Correria — Painel ADM</h1>
+<p>Cadastro de bebidas, lanches, doces e outros produtos</p>
+</header>
+<main>
+<div id="status" role="status" aria-live="polite">Verificando acesso...</div>
+<section class="panel" id="loginPanel">
+<h2>Entrar como administrador</h2>
+<form id="loginForm">
+<label for="email">E-mail</label>
+<input id="email" type="email" autocomplete="username" required placeholder="E-mail de administrador">
+<label for="password">Senha</label>
+<input id="password" type="password" autocomplete="current-password" required placeholder="Sua senha do Supabase">
+<div class="actions"><button class="primary" type="submit">Entrar</button></div>
+</form>
+</section>
+<section class="hidden" id="adminArea">
+<div class="panel">
+<h2 id="formTitle">Cadastrar produto</h2>
+<form id="productForm">
+<input type="hidden" id="productId">
+<label for="name">Nome do produto</label>
+<input id="name" maxlength="120" required placeholder="Ex.: Energético">
+<label for="description">Descrição</label>
+<textarea id="description" maxlength="1000" placeholder="Detalhes do produto (opcional)"></textarea>
+<div class="grid">
+<div>
+<label for="category">Categoria</label>
+<select id="category" required>
+<option value="bebidas">Bebidas</option>
+<option value="lanches">Lanches</option>
+<option value="doces">Doces e chocolates</option>
+<option value="chicletes">Chicletes e balas</option>
+<option value="farmacia">Farmácia / primeiros socorros fictícios</option>
+<option value="outros">Outros</option>
+</select>
+</div>
+<div>
+<label for="price">Preço em STACOIN</label>
+<input id="price" type="number" min="0" step="1" required placeholder="Ex.: 8">
+</div>
+</div>
+<label for="imageFile">Imagem do produto</label>
+<input id="imageFile" type="file" accept="image/*">
+<p class="help">Uma imagem por produto. Arquivos de até 10 MB. O nome original pode terminar em .PNG.</p>
+<img id="preview" class="hidden" alt="Prévia da imagem">
+<label for="imageUrl">URL da imagem (opcional)</label>
+<input id="imageUrl" type="url" placeholder="Preenchida automaticamente ao enviar imagem">
+<label class="inline-check"><input id="active" type="checkbox" checked> Produto ativo na loja</label>
+<div class="actions">
+<button class="primary" id="saveButton" type="submit">Salvar produto</button>
+<button class="secondary" id="cancelEdit" type="button">Limpar formulário</button>
+</div>
+</form>
+</div>
+<div class="panel">
+<h2>Produtos cadastrados</h2>
+<button class="secondary" id="refresh" type="button">Atualizar lista</button>
+<div id="products"></div>
+</div>
+<div class="panel"><button class="danger" id="logout" type="button">Sair do painel</button></div>
+</section>
+</main>
+<script>
+
+  (() => {
+'use strict';
+
+const SUPABASE_URL = 'https://cckypvqophyviphqhich.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
+const ADMIN_ID = 'ec962f8b-92ad-4fe5-98ef-c7cbb1b653e2';
+const BUCKET = 'loja-produtos';
+
+const $ = id => document.getElementById(id);
+const status = $('status');
+const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let currentUser = null;
+let products = [];
+let saving = false;
+let sessionCheckFinished = false;
+
+function message(text, error = false) {
+  status.textContent = text;
+  status.style.background = error ? '#fff0f0' : '#e8eee9';
+  status.style.color = error ? '#a51f28' : '#24412d';
+}
+
+function showAdmin(user) {
+  currentUser = user;
+  const authorized = !!user && user.id === ADMIN_ID;
+  $('loginPanel').classList.toggle('hidden', authorized);
+  $('adminArea').classList.toggle('hidden', !authorized);
+  if (!authorized) {
+    products = [];
+    $('products').replaceChildren();
+    message(user ? 'Esta conta não está autorizada a administrar a conveniência.' : 'Entre com a conta de administrador.', !!user);
+    return;
+  }
+  message('Administrador conectado.');
+  loadProducts();
+}
+
+async function checkSession() {
+  const { data, error } = await client.auth.getSession();
+  sessionCheckFinished = true;
+  if (error) {
+    message('Erro ao verificar sessão: ' + error.message, true);
+    return;
+  }
+  showAdmin(data.session?.user || null);
+}
+
+$('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!sessionCheckFinished) {
+    message('Aguarde a verificação da sessão.', true);
+    return;
+  }
+  message('Verificando acesso...');
+  const { data, error } = await client.auth.signInWithPassword({
+    email: $('email').value.trim(),
+    password: $('password').value
+  });
+  if (error) {
+    message('Não foi possível entrar: ' + error.message, true);
+    return;
+  }
+  if (data.user?.id !== ADMIN_ID) {
+    await client.auth.signOut();
+    showAdmin(null);
+    message('Acesso negado: esta conta não é a administradora autorizada.', true);
+    return;
+  }
+  showAdmin(data.user);
+});
+
+async function loadProducts() {
+  if (!currentUser || currentUser.id !== ADMIN_ID) return;
+  message('Carregando produtos...');
+  $('refresh').disabled = true;
+  try {
+    const { data, error } = await client
+      .from('conveniencia_produtos')
+      .select('*')
+      .order('criado_em', { ascending: false });
+    if (error) throw error;
+    products = data || [];
+    renderProducts();
+    message('Lista atualizada: ' + products.length + ' produto(s).');
+  } catch (error) {
+    message('Erro ao carregar produtos: ' + error.message, true);
+  } finally {
+    $('refresh').disabled = false;
+  }
+}
+
+function renderProducts() {
+  const container = $('products');
+  container.replaceChildren();
+  if (!products.length) {
+    container.textContent = 'Nenhum produto cadastrado ainda.';
+    return;
+  }
+  products.forEach(product => {
+    const card = document.createElement('article');
+    card.className = 'product';
+    if (product.imagem_url) {
+      const image = document.createElement('img');
+      image.alt = 'Imagem de ' + (product.nome || 'produto');
+      image.src = product.imagem_url;
+      image.onerror = () => image.style.display = 'none';
+      card.appendChild(image);
+    }
+    const title = document.createElement('h3');
+    title.textContent = product.nome || 'Produto sem nome';
+    card.appendChild(title);
+    const desc = document.createElement('p');
+    desc.className = 'muted';
+    desc.textContent = product.descricao || 'Sem descrição';
+    card.appendChild(desc);
+    const price = document.createElement('p');
+    price.className = 'price';
+    price.textContent = Number(product.preco).toLocaleString('pt-BR') + ' STACOIN';
+    card.appendChild(price);
+    const category = document.createElement('p');
+    category.className = 'muted';
+    category.textContent = 'Categoria: ' + product.categoria + ' • ' + (product.ativo ? 'Ativo' : 'Inativo');
+    card.appendChild(category);
+
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    const edit = document.createElement('button');
+    edit.type = 'button';
+    edit.className = 'secondary';
+    edit.textContent = 'Editar';
+    edit.addEventListener('click', () => editProduct(product));
+    actions.appendChild(edit);
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = product.ativo ? 'danger' : 'primary';
+    toggle.textContent = product.ativo ? 'Desativar' : 'Ativar';
+    toggle.addEventListener('click', () => toggleProduct(product));
+    actions.appendChild(toggle);
+
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'danger';
+    remove.textContent = 'Excluir';
+    remove.addEventListener('click', () => deleteProduct(product));
+    actions.appendChild(remove);
+
+    card.appendChild(actions);
+    container.appendChild(card);
+  });
+}
+
+function editProduct(product) {
+  $('productId').value = product.id;
+  $('name').value = product.nome || '';
+  $('description').value = product.descricao || '';
+  $('category').value = product.categoria || 'outros';
+  $('price').value = product.preco ?? '';
+  $('imageUrl').value = product.imagem_url || '';
+  $('active').checked = !!product.ativo;
+  $('formTitle').textContent = 'Editar produto #' + product.id;
+  $('preview').classList.toggle('hidden', !product.imagem_url);
+  $('preview').src = product.imagem_url || '';
+  $('imageFile').value = '';
+  window.scrollTo({top:0,behavior:'smooth'});
+  $('name').focus();
+}
+
+function clearForm() {
+  $('productForm').reset();
+  $('productId').value = '';
+  $('active').checked = true;
+  $('formTitle').textContent = 'Cadastrar produto';
+  $('preview').removeAttribute('src');
+  $('preview').classList.add('hidden');
+  $('imageFile').value = '';
+}
+$('cancelEdit').addEventListener('click', clearForm);
+$('refresh').addEventListener('click', loadProducts);
+
+   $('imageFile').addEventListener('change', () => {
+  const file = $('imageFile').files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    message('Selecione um arquivo de imagem.', true);
+    $('imageFile').value = '';
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    message('A imagem deve ter no máximo 10 MB.', true);
+    $('imageFile').value = '';
+    return;
+  }
+  $('preview').src = URL.createObjectURL(file);
+  $('preview').classList.remove('hidden');
+  message('Imagem selecionada. Ela será enviada ao salvar.');
+});
+
+async function uploadImage(file) {
+  const originalExtension = (file.name.split('.').pop() || 'jpg').replace(/[^a-zA-Z0-9]/g, '') || 'jpg';
+  const path = currentUser.id + '/conveniencia-' + crypto.randomUUID() + '.' + originalExtension;
+  const { error } = await client.storage.from(BUCKET).upload(path, file, {
+    upsert: false,
+    contentType: file.type
+  });
+  if (error) throw new Error('Falha ao enviar imagem: ' + error.message);
+  const { data } = client.storage.from(BUCKET).getPublicUrl(path);
+  return data.publicUrl;
+}
+
+$('productForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (saving) return;
+  if (!currentUser || currentUser.id !== ADMIN_ID) {
+    message('Entre com a conta administradora.', true);
+    return;
+  }
+
+  const nome = $('name').value.trim();
+  const descricao = $('description').value.trim();
+  const categoria = $('category').value;
+  const priceText = $('price').value.trim();
+  const preco = Number(priceText);
+  let imagem_url = $('imageUrl').value.trim() || null;
+  const file = $('imageFile').files[0];
+
+  if (!nome || priceText === '' || !Number.isSafeInteger(preco) || preco < 0) {
+    message('Confira o nome e o preço informado.', true);
+    return;
+  }
+
+  saving = true;
+  $('saveButton').disabled = true;
+  try {
+    message('Salvando produto...');
+    if (file) {
+      message('Enviando imagem...');
+      imagem_url = await uploadImage(file);
+      $('imageUrl').value = imagem_url;
+    }
+
+    const payload = {
+      nome,
+      descricao,
+      categoria,
+      preco,
+      imagem_url,
+      ativo: $('active').checked,
+      atualizado_em: new Date().toISOString()
+    };
+    const id = $('productId').value;
+    let result;
+    if (id) {
+      result = await client.from('conveniencia_produtos')
+        .update(payload).eq('id', Number(id)).select().single();
+    } else {
+      result = await client.from('conveniencia_produtos')
+        .insert(payload).select().single();
+    }
+    if (result.error) throw result.error;
+    message('Produto salvo com sucesso!');
+    clearForm();
+    await loadProducts();
+  } catch (error) {
+    message('Erro ao salvar: ' + (error.message || 'Erro desconhecido'), true);
+  } finally {
+    saving = false;
+    $('saveButton').disabled = false;
+  }
+});
+
+async function toggleProduct(product) {
+  if (!currentUser || currentUser.id !== ADMIN_ID) {
+    message('Entre com a conta administradora.', true);
+    return;
+  }
+  try {
+    const { error } = await client.from('conveniencia_produtos')
+      .update({ativo:!product.ativo, atualizado_em:new Date().toISOString()})
+      .eq('id', product.id);
+    if (error) throw error;
+    message('Status do produto alterado.');
+    await loadProducts();
+  } catch (error) {
+    message('Erro ao alterar produto: ' + error.message, true);
+  }
+}
+
+async function deleteProduct(product) {
+  if (!currentUser || currentUser.id !== ADMIN_ID) {
+    message('Entre com a conta administradora.', true);
+    return;
+  }
+  if (!window.confirm('Excluir "' + product.nome + '" permanentemente?')) return;
+  try {
+    const { error } = await client.from('conveniencia_produtos').delete().eq('id', product.id);
+    if (error) throw error;
+    message('Produto excluído.');
+    await loadProducts();
+  } catch (error) {
+    message('Erro ao excluir produto: ' + error.message, true);
+  }
+}
+
+$('logout').addEventListener('click', async () => {
+  await client.auth.signOut();
+  showAdmin(null);
+  clearForm();
+});
+
+client.auth.onAuthStateChange((_event, session) => {
+  if (!sessionCheckFinished) return;
+  showAdmin(session?.user || null);
+});
+
+checkSession();
+})();
+</script>
+</body>
+</html>
