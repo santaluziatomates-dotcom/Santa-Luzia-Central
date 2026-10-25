@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c2b">
+  <title>Chat | Santa Luzia Central</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --verde: #123c2b;
+      --verde2: #1c6845;
+      --vermelho: #d72e35;
+      --fundo: #f3f6f3;
+      --texto: #202a24;
+      --cinza: #718078;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--texto);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    header {
+      background: var(--verde);
+      color: white;
+      padding: 22px 18px;
+      border-bottom: 4px solid var(--vermelho);
+    }
+
+    .topo {
+      max-width: 760px;
+      margin: auto;
+    }
+
+    .marca {
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: .8;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin: 8px 0 5px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 14px;
+      color: #dce9df;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 18px auto;
+      padding: 0 12px;
+    }
+
+    .painel {
+      background: white;
+      border: 1px solid #e1e8e2;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px #183d2810;
+    }
+
+    .sala {
+      padding: 15px;
+      border-bottom: 1px solid #e8eee9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sala strong { font-size: 15px; }
+
+    .online {
+      font-size: 12px;
+      color: var(--verde2);
+      font-weight: 700;
+    }
+
+    #estado {
+      padding: 12px 16px;
+      color: var(--cinza);
+      font-size: 13px;
+    }
+
+    #mensagens {
+      height: min(58vh, 540px);
+      min-height: 300px;
+      overflow-y: auto;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 12px;
+      background: #fbfcfb;
+    }
+
+    .mensagem {
+      max-width: 88%;
+      align-self: flex-start;
+      background: #edf3ee;
+      border: 1px solid #e3ebe4;
+      padding: 10px 12px;
+      border-radius: 4px 15px 15px 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .autor {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--verde2);
+      margin-bottom: 5px;
+    }
+
+    .conteudo {
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .hora {
+      text-align: right;
+      color: var(--cinza);
+      font-size: 10px;
+      margin-top: 6px;
+    }
+
+    .compositor {
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #e8eee9;
+      background: white;
+    }
+
+    textarea {
+      min-width: 0;
+      flex: 1;
+      resize: none;
+      border: 1px solid #d8e2da;
+      border-radius: 13px;
+      padding: 12px;
+      font: inherit;
+      outline: none;
+      min-height: 46px;
+      max-height: 120px;
+    }
+
+    textarea:focus {
+      border-color: var(--verde2);
+    }
+
+    button {
+      border: 0;
+      border-radius: 13px;
+      background: var(--verde);
+      color: white;
+      font-weight: 700;
+      padding: 0 17px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .aviso {
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--cinza);
+      text-align: center;
+    }
+
+    .voltar {
+      display: inline-block;
+      margin: 15px 0 5px;
+      color: var(--verde2);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .rodape {
+      text-align: center;
+      color: var(--cinza);
+      font-size: 11px;
+      padding: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="topo">
+      <div class="marca">SANTA LUZIA CENTRAL</div>
+      <h1>🍅 Chat da empresa</h1>
+      <p>Um espaço exclusivo para os motoristas aprovados.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="painel">
+      <div class="sala">
+        <strong>🚛 Conversa geral</strong>
+        <span class="online">● Sala oficial</span>
+      </div>
+
+      <div id="estado">Verificando sua conta...</div>
+      <div id="mensagens"></div>
+
+      <form class="compositor" id="formulario">
+        <textarea id="texto"
+          maxlength="1000"
+          placeholder="Escreva sua mensagem..."
+          aria-label="Mensagem"
+          required></textarea>
+        <button id="enviar" type="submit" disabled>Enviar</button>
+      </form>
+
+      <div class="aviso">
+        Respeite os demais motoristas. Mensagens ofensivas ou spam
+        podem resultar em medidas da gestão.
+      </div>
+    </section>
+
+    <a class="voltar" href="index.html">← Voltar para a Central</a>
+  </main>
+
+  <div class="rodape">SANTA LUZIA TOMATES · CENTRAL OFICIAL</div>
+
+  <script>
+    const SUPABASE_URL =
+      "https://cckypvqophyviphqhich.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
+
+    const db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const estado = document.getElementById("estado");
+    const lista = document.getElementById("mensagens");
+    const formulario = document.getElementById("formulario");
+    const texto = document.getElementById("texto");
+    const enviar = document.getElementById("enviar");
+
+    let motoristaId = null;
+    let canal = null;
+    let enviando = false;
+
+    function mostrarEstado(mensagem) {
+      estado.textContent = mensagem;
+    }
+
+    function formatarHora(data) {
+      return new Date(data).toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function desenharMensagens(mensagens) {
+      lista.replaceChildren();
+
+      // A lista usa column-reverse para deixar as mensagens
+      // mais recentes visualmente na parte inferior.
+      for (const item of mensagens) {
+        const caixa = document.createElement("div");
+        caixa.className = "mensagem";
+
+        const autor = document.createElement("div");
+        autor.className = "autor";
+        autor.textContent =
+          item.apelido || item.nome || "Motorista Santa Luzia";
+
+        const conteudo = document.createElement("div");
+        conteudo.className = "conteudo";
+        conteudo.textContent = item.mensagem;
+
+        const hora = document.createElement("div");
+        hora.className = "hora";
+        hora.textContent = formatarHora(item.created_at);
+
+        caixa.append(autor, conteudo, hora);
+        lista.appendChild(caixa);
+      }
+    }
+
+    async function carregarMensagens() {
+      const { data, error } = await db.rpc("chat_listar_mensagens");
+
+      if (error) {
+        console.error(error);
+        mostrarEstado("Não foi possível carregar as mensagens.");
+        return;
+      }
+
+      desenharMensagens(data || []);
+      mostrarEstado("Chat conectado.");
+    }
+
+    async function iniciarChat() {
+      const { data: sessaoData, error: sessaoErro } =
+        await db.auth.getSession();
+
+      if (sessaoErro) {
+        mostrarEstado("Erro ao verificar a sessão. Reabra a Central.");
+        return;
+      }
+
+      if (!sessaoData.session) {
+        mostrarEstado(
+          "Entre primeiro na sua conta da Santa Luzia Central e depois abra o chat."
+        );
+        return;
+      }
+
+      const { data: id, error: motoristaErro } =
+        await db.rpc("chat_motorista_id");
+
+      if (motoristaErro) {
+        console.error(motoristaErro);
+        mostrarEstado("Não foi possível verificar sua aprovação.");
+        return;
+      }
+
+      if (!id) {
+        mostrarEstado(
+          "Acesso exclusivo para motoristas aprovados e vinculados à conta."
+        );
+        return;
+      }
+
+      motoristaId = id;
+      enviar.disabled = false;
+
+      await carregarMensagens();
+
+      canal = db
+        .channel("santa-luzia-chat")
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "chat_mensagens"
+          },
+          () => carregarMensagens()
+        )
+        .subscribe((status) => {
+          if (status === "CHANNEL_ERROR") {
+            mostrarEstado(
+              "Chat aberto, mas houve falha na conexão em tempo real."
+            );
+          }
+        });
+    }
+
+    formulario.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+
+      const mensagem = texto.value.trim();
+
+      if (!mensagem || !motoristaId || enviando) return;
+
+      enviando = true;
+      enviar.disabled = true;
+
+      const { error } = await db
+        .from("chat_mensagens")
+        .insert({
+          motorista_id: motoristaId,
+          mensagem: mensagem
+        });
+
+      enviando = false;
+      enviar.disabled = false;
+
+      if (error) {
+        console.error(error);
+        mostrarEstado(
+          "Não foi possível enviar. Confira a conexão e tente novamente."
+        );
+        return;
+      }
+
+      texto.value = "";
+      await carregarMensagens();
+      texto.focus();
+    });
+
+    texto.addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter" && !evento.shiftKey) {
+        evento.preventDefault();
+        formulario.requestSubmit();
+      }
+    });
+
+    iniciarChat();
+  </script>
+</body>
+</html>
