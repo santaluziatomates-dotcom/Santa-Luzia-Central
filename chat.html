@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123c2b">
   <title>Chat | Santa Luzia Central</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -34,9 +33,10 @@
       border-bottom: 4px solid var(--vermelho);
     }
 
-    .topo {
+    .topo, main {
       max-width: 760px;
-      margin: auto;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .marca {
@@ -46,22 +46,10 @@
       font-weight: 700;
     }
 
-    h1 {
-      font-size: 25px;
-      margin: 8px 0 5px;
-    }
+    h1 { font-size: 25px; margin: 8px 0 5px; }
+    header p { margin: 0; font-size: 14px; color: #dce9df; }
 
-    header p {
-      margin: 0;
-      font-size: 14px;
-      color: #dce9df;
-    }
-
-    main {
-      max-width: 760px;
-      margin: 18px auto;
-      padding: 0 12px;
-    }
+    main { margin-top: 18px; margin-bottom: 18px; padding: 0 12px; }
 
     .painel {
       background: white;
@@ -81,18 +69,9 @@
     }
 
     .sala strong { font-size: 15px; }
+    .online { font-size: 12px; color: var(--verde2); font-weight: 700; }
 
-    .online {
-      font-size: 12px;
-      color: var(--verde2);
-      font-weight: 700;
-    }
-
-    #estado {
-      padding: 12px 16px;
-      color: var(--cinza);
-      font-size: 13px;
-    }
+    #estado { padding: 12px 16px; color: var(--cinza); font-size: 13px; }
 
     #mensagens {
       height: min(58vh, 540px);
@@ -115,24 +94,14 @@
       overflow-wrap: anywhere;
     }
 
-    .autor {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--verde2);
-      margin-bottom: 5px;
-    }
+    .autor { font-size: 12px; font-weight: 800; color: var(--verde2); margin-bottom: 5px; }
+    .conteudo { white-space: pre-wrap; font-size: 15px; line-height: 1.4; }
+    .hora { text-align: right; color: var(--cinza); font-size: 10px; margin-top: 6px; }
 
-    .conteudo {
-      white-space: pre-wrap;
-      font-size: 15px;
-      line-height: 1.4;
-    }
-
-    .hora {
-      text-align: right;
-      color: var(--cinza);
-      font-size: 10px;
-      margin-top: 6px;
+    .acoes-mensagem {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
     }
 
     .compositor {
@@ -156,24 +125,25 @@
       max-height: 120px;
     }
 
-    textarea:focus {
-      border-color: var(--verde2);
-    }
+    textarea:focus { border-color: var(--verde2); }
 
     button {
       border: 0;
-      border-radius: 13px;
+      border-radius: 11px;
       background: var(--verde);
       color: white;
       font-weight: 700;
-      padding: 0 17px;
+      padding: 11px 14px;
       cursor: pointer;
+      font-size: 13px;
     }
 
-    button:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+
+    .botao-apagar { background: #b4232b; padding: 7px 10px; }
+    .botao-secundario { background: #e8f0ea; color: var(--verde); }
+    .botao-perigo { background: #b4232b; }
+    .botao-adm { background: var(--verde2); }
 
     .aviso {
       padding: 14px;
@@ -192,11 +162,31 @@
       font-size: 14px;
     }
 
-    .rodape {
-      text-align: center;
-      color: var(--cinza);
-      font-size: 11px;
-      padding: 18px;
+    .rodape { text-align: center; color: var(--cinza); font-size: 11px; padding: 18px; }
+
+    #areaDono { margin-top: 14px; }
+    .painel-adm { padding: 16px; }
+    .painel-adm h2 { margin: 0 0 8px; font-size: 18px; }
+    .explicacao { font-size: 13px; color: var(--cinza); line-height: 1.5; }
+
+    .linha-motorista {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-top: 1px solid #e8eee9;
+    }
+
+    .nome-motorista { font-weight: 700; font-size: 14px; }
+    .subnome { color: var(--cinza); font-size: 12px; margin-top: 4px; }
+    .acoes-adm { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+    .vazio { color: var(--cinza); font-size: 13px; padding: 12px 0; }
+
+    @media (max-width: 420px) {
+      .linha-motorista { align-items: flex-start; }
+      .acoes-adm { flex-direction: column; }
+      .compositor button { padding: 0 12px; }
     }
   </style>
 </head>
@@ -221,11 +211,9 @@
       <div id="mensagens"></div>
 
       <form class="compositor" id="formulario">
-        <textarea id="texto"
-          maxlength="1000"
+        <textarea id="texto" maxlength="1000"
           placeholder="Escreva sua mensagem..."
-          aria-label="Mensagem"
-          required></textarea>
+          aria-label="Mensagem" required></textarea>
         <button id="enviar" type="submit" disabled>Enviar</button>
       </form>
 
@@ -235,32 +223,42 @@
       </div>
     </section>
 
+    <section id="areaDono" class="painel painel-adm" hidden>
+      <h2>🛡️ Gerenciar ADMs</h2>
+      <p class="explicacao">
+        Somente o proprietário pode conceder ou retirar o cargo de ADM.
+        Os administradores podem moderar o chat, mas não podem promover outras pessoas.
+      </p>
+      <div id="estadoAdms" class="explicacao">Carregando lista...</div>
+      <div id="listaAdms"></div>
+    </section>
+
     <a class="voltar" href="index.html">← Voltar para a Central</a>
   </main>
 
   <div class="rodape">SANTA LUZIA TOMATES · CENTRAL OFICIAL</div>
 
   <script>
-    const SUPABASE_URL =
-      "https://cckypvqophyviphqhich.supabase.co";
+    const SUPABASE_URL = "https://cckypvqophyviphqhich.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
 
-    const SUPABASE_KEY =
-      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
-
-    const db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     const estado = document.getElementById("estado");
     const lista = document.getElementById("mensagens");
     const formulario = document.getElementById("formulario");
     const texto = document.getElementById("texto");
     const enviar = document.getElementById("enviar");
+    const areaDono = document.getElementById("areaDono");
+    const estadoAdms = document.getElementById("estadoAdms");
+    const listaAdms = document.getElementById("listaAdms");
 
     let motoristaId = null;
     let canal = null;
     let enviando = false;
+    let souDono = false;
+    let souAdm = false;
+    let idsAdms = new Set();
 
     function mostrarEstado(mensagem) {
       estado.textContent = mensagem;
@@ -273,33 +271,6 @@
         hour: "2-digit",
         minute: "2-digit"
       });
-    }
-
-    function desenharMensagens(mensagens) {
-      lista.replaceChildren();
-
-      // A lista usa column-reverse para deixar as mensagens
-      // mais recentes visualmente na parte inferior.
-      for (const item of mensagens) {
-        const caixa = document.createElement("div");
-        caixa.className = "mensagem";
-
-        const autor = document.createElement("div");
-        autor.className = "autor";
-        autor.textContent =
-          item.apelido || item.nome || "Motorista Santa Luzia";
-
-        const conteudo = document.createElement("div");
-        conteudo.className = "conteudo";
-        conteudo.textContent = item.mensagem;
-
-        const hora = document.createElement("div");
-        hora.className = "hora";
-        hora.textContent = formatarHora(item.created_at);
-
-        caixa.append(autor, conteudo, hora);
-        lista.appendChild(caixa);
-      }
     }
 
     async function carregarMensagens() {
@@ -315,40 +286,184 @@
       mostrarEstado("Chat conectado.");
     }
 
+    function desenharMensagens(mensagens) {
+      lista.replaceChildren();
+
+      for (const item of mensagens) {
+        const caixa = document.createElement("div");
+        caixa.className = "mensagem";
+
+        const autor = document.createElement("div");
+        autor.className = "autor";
+        autor.textContent = item.apelido || item.nome || "Motorista Santa Luzia";
+
+        const conteudo = document.createElement("div");
+        conteudo.className = "conteudo";
+        conteudo.textContent = item.mensagem;
+
+        const hora = document.createElement("div");
+        hora.className = "hora";
+        hora.textContent = formatarHora(item.created_at);
+
+        caixa.append(autor, conteudo, hora);
+
+        if (souAdm && item.id != null) {
+          const acoes = document.createElement("div");
+          acoes.className = "acoes-mensagem";
+
+          const apagar = document.createElement("button");
+          apagar.type = "button";
+          apagar.className = "botao-apagar";
+          apagar.textContent = "Apagar mensagem";
+
+          apagar.addEventListener("click", async () => {
+            if (!confirm("Tem certeza de que deseja apagar esta mensagem?")) return;
+
+            apagar.disabled = true;
+            const { error } = await db.rpc("chat_apagar_mensagem", {
+              mensagem_id: item.id
+            });
+
+            if (error) {
+              console.error(error);
+              alert("Não foi possível apagar a mensagem. Verifique suas permissões.");
+              apagar.disabled = false;
+              return;
+            }
+
+            await carregarMensagens();
+          });
+
+          acoes.appendChild(apagar);
+          caixa.appendChild(acoes);
+        }
+
+        lista.appendChild(caixa);
+      }
+    }
+
+    async function carregarGerenciamentoAdms() {
+      if (!souDono) return;
+
+      estadoAdms.textContent = "Carregando motoristas e administradores...";
+      listaAdms.replaceChildren();
+
+      const [motoristasResp, admsResp] = await Promise.all([
+        db.rpc("chat_listar_motoristas_para_adm"),
+        db.rpc("chat_listar_administradores")
+      ]);
+
+      if (motoristasResp.error || admsResp.error) {
+        console.error(motoristasResp.error || admsResp.error);
+        estadoAdms.textContent =
+          "Não foi possível carregar a lista. Confira as permissões do banco.";
+        return;
+      }
+
+      const motoristas = motoristasResp.data || [];
+      const adms = admsResp.data || [];
+      idsAdms = new Set(adms.map(a => a.user_id));
+
+      estadoAdms.textContent = motoristas.length
+        ? "Escolha quem poderá ajudar a moderar o chat."
+        : "Nenhum motorista ativo vinculado foi encontrado.";
+
+      for (const motorista of motoristas) {
+        const linha = document.createElement("div");
+        linha.className = "linha-motorista";
+
+        const info = document.createElement("div");
+        const nome = document.createElement("div");
+        nome.className = "nome-motorista";
+        nome.textContent = motorista.apelido || motorista.nome || "Motorista";
+
+        const detalhe = document.createElement("div");
+        detalhe.className = "subnome";
+        detalhe.textContent = motorista.nome || "";
+
+        info.append(nome, detalhe);
+
+        const acoes = document.createElement("div");
+        acoes.className = "acoes-adm";
+
+        const jaAdm = idsAdms.has(motorista.user_id);
+
+        const botao = document.createElement("button");
+        botao.type = "button";
+        botao.className = jaAdm ? "botao-perigo" : "botao-adm";
+        botao.textContent = jaAdm ? "Retirar ADM" : "Conceder ADM";
+
+        botao.addEventListener("click", async () => {
+          if (jaAdm) {
+            if (!confirm("Deseja retirar o cargo de ADM deste motorista?")) return;
+
+            botao.disabled = true;
+            const { error } = await db.rpc("chat_retirar_adm", {
+              usuario_alvo: motorista.user_id
+            });
+
+            if (error) {
+              console.error(error);
+              alert("Não foi possível retirar o ADM.");
+              botao.disabled = false;
+              return;
+            }
+          } else {
+            if (!confirm("Deseja conceder o cargo de ADM a este motorista?")) return;
+
+            botao.disabled = true;
+            const { error } = await db.rpc("chat_conceder_adm", {
+              usuario_alvo: motorista.user_id
+            });
+
+            if (error) {
+              console.error(error);
+              alert("Não foi possível conceder o ADM. Confirme se o motorista está ativo.");
+              botao.disabled = false;
+              return;
+            }
+          }
+
+          await carregarGerenciamentoAdms();
+        });
+
+        acoes.appendChild(botao);
+        linha.append(info, acoes);
+        listaAdms.appendChild(linha);
+      }
+    }
+
     async function iniciarChat() {
-      const { data: sessaoData, error: sessaoErro } =
-        await db.auth.getSession();
+      const { data: sessaoData, error: sessaoErro } = await db.auth.getSession();
 
-      if (sessaoErro) {
-        mostrarEstado("Erro ao verificar a sessão. Reabra a Central.");
+      if (sessaoErro || !sessaoData.session) {
+        mostrarEstado("Entre primeiro na sua conta da Santa Luzia Central e depois abra o chat.");
         return;
       }
 
-      if (!sessaoData.session) {
-        mostrarEstado(
-          "Entre primeiro na sua conta da Santa Luzia Central e depois abra o chat."
-        );
-        return;
-      }
+      const { data: id, error: motoristaErro } = await db.rpc("chat_motorista_id");
 
-      const { data: id, error: motoristaErro } =
-        await db.rpc("chat_motorista_id");
-
-      if (motoristaErro) {
+      if (motoristaErro || !id) {
         console.error(motoristaErro);
-        mostrarEstado("Não foi possível verificar sua aprovação.");
-        return;
-      }
-
-      if (!id) {
-        mostrarEstado(
-          "Acesso exclusivo para motoristas aprovados e vinculados à conta."
-        );
+        mostrarEstado("Acesso exclusivo para motoristas aprovados e vinculados à conta.");
         return;
       }
 
       motoristaId = id;
       enviar.disabled = false;
+
+      const [donoResp, admResp] = await Promise.all([
+        db.rpc("chat_eh_dono"),
+        db.rpc("chat_eh_adm")
+      ]);
+
+      if (!donoResp.error) souDono = donoResp.data === true;
+      if (!admResp.error) souAdm = admResp.data === true;
+
+      if (souDono) {
+        areaDono.hidden = false;
+        await carregarGerenciamentoAdms();
+      }
 
       await carregarMensagens();
 
@@ -357,7 +472,7 @@
         .on(
           "postgres_changes",
           {
-            event: "INSERT",
+            event: "*",
             schema: "public",
             table: "chat_mensagens"
           },
@@ -365,9 +480,7 @@
         )
         .subscribe((status) => {
           if (status === "CHANNEL_ERROR") {
-            mostrarEstado(
-              "Chat aberto, mas houve falha na conexão em tempo real."
-            );
+            mostrarEstado("Chat aberto, mas houve falha na conexão em tempo real.");
           }
         });
     }
@@ -376,27 +489,22 @@
       evento.preventDefault();
 
       const mensagem = texto.value.trim();
-
       if (!mensagem || !motoristaId || enviando) return;
 
       enviando = true;
       enviar.disabled = true;
 
-      const { error } = await db
-        .from("chat_mensagens")
-        .insert({
-          motorista_id: motoristaId,
-          mensagem: mensagem
-        });
+      const { error } = await db.from("chat_mensagens").insert({
+        motorista_id: motoristaId,
+        mensagem
+      });
 
       enviando = false;
       enviar.disabled = false;
 
       if (error) {
         console.error(error);
-        mostrarEstado(
-          "Não foi possível enviar. Confira a conexão e tente novamente."
-        );
+        mostrarEstado("Não foi possível enviar. Confira a conexão e tente novamente.");
         return;
       }
 
