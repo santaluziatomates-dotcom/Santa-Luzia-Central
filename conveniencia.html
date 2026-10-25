@@ -8,207 +8,230 @@
 
 <style>
 :root {
-  --verde: #123c2b;
-  --verde2: #1e6042;
-  --vermelho: #d93636;
-  --fundo: #f5f7f4;
-  --texto: #202820;
-  --cinza: #707970;
+  --verde:#123c2b;
+  --verde2:#1e6042;
+  --vermelho:#d93636;
+  --fundo:#f5f7f4;
+  --texto:#202820;
+  --cinza:#707970;
 }
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
 body {
-  margin: 0;
-  background: var(--fundo);
-  color: var(--texto);
-  font-family: Arial, Helvetica, sans-serif;
+  margin:0;
+  background:var(--fundo);
+  color:var(--texto);
+  font-family:Arial,Helvetica,sans-serif;
 }
 header {
-  background: var(--verde);
-  color: white;
-  padding: 25px 18px 22px;
-  border-bottom: 4px solid var(--vermelho);
+  background:var(--verde);
+  color:white;
+  padding:20px 16px;
+  border-bottom:4px solid var(--vermelho);
 }
 .topo {
-  max-width: 1000px;
-  margin: auto;
+  max-width:1000px;
+  margin:auto;
+}
+.topo-linha {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 .marca {
-  font-size: 12px;
-  letter-spacing: 2px;
-  font-weight: bold;
-  color: #d5e8d9;
+  font-size:12px;
+  letter-spacing:2px;
+  font-weight:bold;
+  color:#d5e8d9;
 }
 h1 {
-  margin: 9px 0 5px;
-  font-size: 29px;
+  margin:10px 0 5px;
+  font-size:28px;
 }
 header p {
-  color: #e0e9e2;
-  font-size: 14px;
-  margin: 0;
-  line-height: 1.5;
+  color:#e0e9e2;
+  font-size:14px;
+  margin:0;
+  line-height:1.5;
 }
+.saldo {
+  display:none;
+  background:#ffffff18;
+  border:1px solid #ffffff45;
+  border-radius:12px;
+  padding:9px 12px;
+  text-align:right;
+}
+.saldo small {
+  display:block;
+  font-size:10px;
+  color:#d5e8d9;
+  margin-bottom:4px;
+}
+.saldo strong { font-size:16px; }
 .faixa {
-  max-width: 1000px;
-  margin: 18px auto 0;
-  padding: 0 15px;
+  max-width:1000px;
+  margin:18px auto 0;
+  padding:0 15px;
 }
 .aviso {
-  background: #e7f0e7;
-  color: var(--verde);
-  border-radius: 12px;
-  padding: 13px 15px;
-  font-size: 13px;
-  line-height: 1.5;
+  background:#e7f0e7;
+  color:var(--verde);
+  border-radius:12px;
+  padding:13px 15px;
+  font-size:13px;
+  line-height:1.5;
 }
 main {
-  max-width: 1000px;
-  padding: 0 15px 35px;
-  margin: auto;
+  max-width:1000px;
+  padding:0 15px 35px;
+  margin:auto;
 }
-.barra {
-  margin: 22px 0 15px;
-}
+.barra { margin:22px 0 15px; }
 .barra input {
-  width: 100%;
-  border: 1px solid #dce2db;
-  border-radius: 12px;
-  background: white;
-  padding: 14px;
-  font-size: 15px;
-  outline-color: var(--verde2);
+  width:100%;
+  border:1px solid #dce2db;
+  border-radius:12px;
+  background:white;
+  padding:14px;
+  font-size:15px;
+  outline-color:var(--verde2);
 }
 .categorias {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 2px 0 12px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:2px 0 12px;
 }
 .categoria {
-  flex-shrink: 0;
-  padding: 10px 14px;
-  border-radius: 22px;
-  border: 1px solid #dce2db;
-  background: white;
-  color: var(--verde);
-  font-weight: bold;
-  font-size: 12px;
-  cursor: pointer;
+  flex-shrink:0;
+  padding:10px 14px;
+  border-radius:22px;
+  border:1px solid #dce2db;
+  background:white;
+  color:var(--verde);
+  font-weight:bold;
+  font-size:12px;
+  cursor:pointer;
 }
 .categoria.ativa {
-  background: var(--verde);
-  border-color: var(--verde);
-  color: white;
+  background:var(--verde);
+  border-color:var(--verde);
+  color:white;
 }
 .resumo {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-  margin: 10px 0 15px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin:10px 0 15px;
 }
-.resumo h2 {
-  margin: 0;
-  font-size: 18px;
-}
-.resumo span {
-  font-size: 12px;
-  color: var(--cinza);
-}
+.resumo h2 { margin:0; font-size:18px; }
+.resumo span { font-size:12px; color:var(--cinza); }
 .grade {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
 .produto {
-  min-width: 0;
-  background: white;
-  border: 1px solid #e8ebe6;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px #172b1708;
+  min-width:0;
+  background:white;
+  border:1px solid #e8ebe6;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 2px 8px #172b1708;
 }
 .foto {
-  height: 155px;
-  background: #edf1eb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  height:155px;
+  background:#edf1eb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
 }
 .foto img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 9px;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:9px;
 }
-.sem-foto {
-  font-size: 35px;
-}
-.info {
-  padding: 12px;
-}
+.sem-foto { font-size:35px; }
+.info { padding:12px; }
 .tag {
-  display: inline-block;
-  background: #edf4ed;
-  color: var(--verde2);
-  font-size: 10px;
-  font-weight: bold;
-  padding: 5px 7px;
-  border-radius: 5px;
-  text-transform: uppercase;
+  display:inline-block;
+  background:#edf4ed;
+  color:var(--verde2);
+  font-size:10px;
+  font-weight:bold;
+  padding:5px 7px;
+  border-radius:5px;
+  text-transform:uppercase;
 }
 .nome {
-  margin: 9px 0 5px;
-  font-size: 15px;
-  line-height: 1.3;
-  overflow-wrap: anywhere;
+  margin:9px 0 5px;
+  font-size:15px;
+  line-height:1.3;
+  overflow-wrap:anywhere;
 }
 .descricao {
-  font-size: 12px;
-  color: var(--cinza);
-  line-height: 1.4;
-  min-height: 32px;
-  overflow-wrap: anywhere;
+  font-size:12px;
+  color:var(--cinza);
+  line-height:1.4;
+  min-height:32px;
+  overflow-wrap:anywhere;
 }
 .preco {
-  color: var(--verde);
-  font-size: 18px;
-  font-weight: 800;
-  margin-top: 12px;
+  color:var(--verde);
+  font-size:18px;
+  font-weight:800;
+  margin-top:12px;
 }
-.moeda {
-  font-size: 11px;
-  font-weight: normal;
+.moeda { font-size:11px; font-weight:normal; }
+.comprar {
+  width:100%;
+  margin-top:12px;
+  padding:12px 8px;
+  border:0;
+  border-radius:9px;
+  background:var(--verde);
+  color:white;
+  font-size:13px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.comprar:disabled {
+  opacity:.6;
+  cursor:wait;
 }
 .estado {
-  text-align: center;
-  padding: 35px 15px;
-  color: var(--cinza);
-  font-size: 14px;
-  line-height: 1.6;
-  grid-column: 1 / -1;
+  text-align:center;
+  padding:35px 15px;
+  color:var(--cinza);
+  font-size:14px;
+  line-height:1.6;
+  grid-column:1/-1;
 }
 .estado strong {
-  display: block;
-  color: var(--verde);
-  font-size: 16px;
-  margin-bottom: 7px;
+  display:block;
+  color:var(--verde);
+  font-size:16px;
+  margin-bottom:7px;
 }
 footer {
-  border-top: 1px solid #e0e6df;
-  text-align: center;
-  padding: 22px 15px;
-  color: var(--cinza);
-  font-size: 11px;
-  line-height: 1.7;
+  border-top:1px solid #e0e6df;
+  text-align:center;
+  padding:22px 15px;
+  color:var(--cinza);
+  font-size:11px;
+  line-height:1.7;
 }
-@media (min-width: 650px) {
-  .grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .foto { height: 190px; }
+@media(min-width:650px) {
+  .grade { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .foto { height:190px; }
 }
-@media (min-width: 900px) {
-  .grade { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media(min-width:900px) {
+  .grade { grid-template-columns:repeat(4,minmax(0,1fr)); }
 }
 </style>
 </head>
@@ -216,7 +239,13 @@ footer {
 <body>
 <header>
   <div class="topo">
-    <div class="marca">SANTA LUZIA TOMATES</div>
+    <div class="topo-linha">
+      <div class="marca">SANTA LUZIA TOMATES</div>
+      <div class="saldo" id="painelSaldo">
+        <small>SEU SALDO STACOIN</small>
+        <strong id="valorSaldo">— STACOIN</strong>
+      </div>
+    </div>
     <h1>🍅 Lojinha da Correria</h1>
     <p>Abasteça sua viagem. Sua parada começa aqui.</p>
   </div>
@@ -225,8 +254,9 @@ footer {
 <div class="faixa">
   <div class="aviso">
     🛒 <strong>Bem-vindo à conveniência!</strong><br>
-    Confira os produtos disponíveis na nossa loja.
-    Os preços são apresentados em STACOIN.
+    Confira os produtos disponíveis. Você pode explorar a loja
+    sem entrar na conta. Para comprar, é necessário ter cadastro
+    aprovado e saldo STACOIN suficiente.
   </div>
 </div>
 
@@ -269,7 +299,6 @@ footer {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
-  // CONFIGURAÇÃO DO SUPABASE
   const SUPABASE_URL =
     'https://cckypvqophyviphqhich.supabase.co';
 
@@ -284,26 +313,30 @@ footer {
   const area = document.getElementById('produtos');
   const contador = document.getElementById('contador');
   const busca = document.getElementById('busca');
+  const painelSaldo = document.getElementById('painelSaldo');
+  const valorSaldo = document.getElementById('valorSaldo');
 
   let todosProdutos = [];
   let categoriaAtual = 'todos';
+  let motoristaAtual = null;
+  let saldoAtual = null;
 
   const nomesCategorias = {
-    bebidas: 'Bebidas',
-    lanches: 'Lanches',
-    doces: 'Doces',
-    chicletes: 'Chicletes',
-    farmacia: 'Farmácia',
-    outros: 'Outros'
+    bebidas:'Bebidas',
+    lanches:'Lanches',
+    doces:'Doces',
+    chicletes:'Chicletes',
+    farmacia:'Farmácia',
+    outros:'Outros'
   };
 
   function escapar(valor) {
     return String(valor ?? '').replace(/[&<>"']/g, letra => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
     })[letra]);
   }
 
@@ -317,6 +350,48 @@ footer {
       }
     } catch (_) {}
     return '';
+  }
+
+  function formatarSaldo(valor) {
+    return Number(valor || 0).toLocaleString('pt-BR') + ' STACOIN';
+  }
+
+  async function atualizarConta() {
+    motoristaAtual = null;
+    saldoAtual = null;
+    painelSaldo.style.display = 'none';
+
+    const { data: sessaoData, error: sessaoErro } =
+      await cliente.auth.getSession();
+
+    if (sessaoErro || !sessaoData.session) return;
+
+    const usuario = sessaoData.session.user;
+    if (!usuario) return;
+
+    const { data: motorista, error: motoristaErro } =
+      await cliente
+        .from('motoristas')
+        .select('id,status,salario_ativo')
+        .eq('user_id', usuario.id)
+        .maybeSingle();
+
+    if (motoristaErro || !motorista) return;
+
+    motoristaAtual = motorista;
+
+    const { data: carteira, error: carteiraErro } =
+      await cliente
+        .from('stacoin_carteiras')
+        .select('saldo')
+        .eq('motorista_id', motorista.id)
+        .maybeSingle();
+
+    if (!carteiraErro && carteira) {
+      saldoAtual = Number(carteira.saldo || 0);
+      valorSaldo.textContent = formatarSaldo(saldoAtual);
+      painelSaldo.style.display = 'block';
+    }
   }
 
   function mostrarProdutos() {
@@ -336,10 +411,8 @@ footer {
       return combinaCategoria && texto.includes(termo);
     });
 
-    contador.textContent =
-      filtrados.length + (filtrados.length === 1
-        ? ' produto'
-        : ' produtos');
+    contador.textContent = filtrados.length +
+      (filtrados.length === 1 ? ' produto' : ' produtos');
 
     if (!filtrados.length) {
       area.innerHTML = `
@@ -352,8 +425,7 @@ footer {
 
     area.innerHTML = filtrados.map(produto => {
       const imagem = imagemSegura(produto.imagem_url);
-      const categoria =
-        nomesCategorias[produto.categoria] || 'Outros';
+      const categoria = nomesCategorias[produto.categoria] || 'Outros';
 
       return `
         <article class="produto">
@@ -379,9 +451,113 @@ footer {
               ${Number(produto.preco).toLocaleString('pt-BR')}
               <span class="moeda">STACOIN</span>
             </div>
+            <button class="comprar"
+              data-comprar="${Number(produto.id)}">
+              COMPRAR
+            </button>
           </div>
         </article>`;
     }).join('');
+
+    area.querySelectorAll('[data-comprar]').forEach(botao => {
+      botao.addEventListener('click', () => {
+        comprarProduto(Number(botao.dataset.comprar), botao);
+      });
+    });
+  }
+
+  async function comprarProduto(produtoId, botao) {
+    botao.disabled = true;
+    const textoOriginal = botao.textContent;
+    botao.textContent = 'VERIFICANDO...';
+
+    try {
+      const { data: sessaoData, error: sessaoErro } =
+        await cliente.auth.getSession();
+
+      if (sessaoErro || !sessaoData.session) {
+        alert(
+          'Para comprar, entre na sua conta pela Santa Luzia Central. ' +
+          'Você pode continuar navegando pela lojinha sem login.'
+        );
+        return;
+      }
+
+      await atualizarConta();
+
+      if (!motoristaAtual) {
+        alert(
+          'Não encontramos seu cadastro de motorista. ' +
+          'Acesse a Santa Luzia Central e confira seu cadastro.'
+        );
+        return;
+      }
+
+      if (motoristaAtual.status !== 'ativo') {
+        alert('Seu cadastro ainda não está aprovado pela gestão.');
+        return;
+      }
+
+      if (motoristaAtual.salario_ativo !== true) {
+        alert(
+          'Sua conta não está habilitada para receber STACOIN. ' +
+          'Entre em contato com a gestão da Santa Luzia.'
+        );
+        return;
+      }
+
+      const produto = todosProdutos.find(p => Number(p.id) === produtoId);
+      if (!produto) {
+        alert('Produto não encontrado. Atualize a página e tente novamente.');
+        return;
+      }
+
+      if (!confirm(
+        'Confirmar compra?\n\n' +
+        produto.nome + '\n' +
+        'Valor: ' + Number(produto.preco).toLocaleString('pt-BR') +
+        ' STACOIN\n\nO valor será descontado do seu saldo.'
+      )) {
+        return;
+      }
+
+      botao.textContent = 'PROCESSANDO...';
+
+      const { data, error } = await cliente.rpc(
+        'comprar_produto_conveniencia',
+        { p_produto_id: produtoId }
+      );
+
+      if (error) {
+        console.error('Erro na compra:', error);
+        alert(
+          error.message ||
+          'Não foi possível concluir a compra. Tente novamente.'
+        );
+        return;
+      }
+
+      if (!data || data.sucesso !== true) {
+        alert(data?.mensagem || 'Não foi possível concluir a compra.');
+        return;
+      }
+
+      alert(
+        'COMPRA REALIZADA COM SUCESSO! 🍅\n\n' +
+        'Produto: ' + data.produto + '\n' +
+        'Valor: ' + Number(data.valor).toLocaleString('pt-BR') +
+        ' STACOIN'
+      );
+
+      await atualizarConta();
+
+    } catch (erro) {
+      console.error('Erro inesperado na compra:', erro);
+      alert('Ocorreu um erro inesperado. Tente novamente.');
+    } finally {
+      botao.disabled = false;
+      botao.textContent = textoOriginal;
+    }
   }
 
   async function carregarProdutos() {
@@ -427,14 +603,24 @@ footer {
       document.querySelectorAll('.categoria').forEach(item => {
         item.classList.remove('ativa');
       });
-
       botao.classList.add('ativa');
       categoriaAtual = botao.dataset.cat;
       mostrarProdutos();
     });
   });
 
-  carregarProdutos();
+  async function iniciar() {
+    await atualizarConta();
+    await carregarProdutos();
+  }
+
+  iniciar();
+
+  cliente.auth.onAuthStateChange(() => {
+    setTimeout(() => {
+      atualizarConta();
+    }, 0);
+  });
 })();
 </script>
 </body>
