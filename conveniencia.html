@@ -5,236 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123c2b">
 <title>Lojinha da Correria | Santa Luzia</title>
-
 <style>
-:root {
-  --verde:#123c2b;
-  --verde2:#1e6042;
-  --vermelho:#d93636;
-  --fundo:#f5f7f4;
-  --texto:#202820;
-  --cinza:#707970;
-}
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  background:var(--fundo);
-  color:var(--texto);
-  font-family:Arial,Helvetica,sans-serif;
-}
-header {
-  background:var(--verde);
-  color:white;
-  padding:20px 16px;
-  border-bottom:4px solid var(--vermelho);
-}
-.topo {
-  max-width:1000px;
-  margin:auto;
-}
-.topo-linha {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.marca {
-  font-size:12px;
-  letter-spacing:2px;
-  font-weight:bold;
-  color:#d5e8d9;
-}
-h1 {
-  margin:10px 0 5px;
-  font-size:28px;
-}
-header p {
-  color:#e0e9e2;
-  font-size:14px;
-  margin:0;
-  line-height:1.5;
-}
-.saldo {
-  display:none;
-  background:#ffffff18;
-  border:1px solid #ffffff45;
-  border-radius:12px;
-  padding:9px 12px;
-  text-align:right;
-}
-.saldo small {
-  display:block;
-  font-size:10px;
-  color:#d5e8d9;
-  margin-bottom:4px;
-}
-.saldo strong { font-size:16px; }
-.faixa {
-  max-width:1000px;
-  margin:18px auto 0;
-  padding:0 15px;
-}
-.aviso {
-  background:#e7f0e7;
-  color:var(--verde);
-  border-radius:12px;
-  padding:13px 15px;
-  font-size:13px;
-  line-height:1.5;
-}
-main {
-  max-width:1000px;
-  padding:0 15px 35px;
-  margin:auto;
-}
-.barra { margin:22px 0 15px; }
-.barra input {
-  width:100%;
-  border:1px solid #dce2db;
-  border-radius:12px;
-  background:white;
-  padding:14px;
-  font-size:15px;
-  outline-color:var(--verde2);
-}
-.categorias {
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:2px 0 12px;
-}
-.categoria {
-  flex-shrink:0;
-  padding:10px 14px;
-  border-radius:22px;
-  border:1px solid #dce2db;
-  background:white;
-  color:var(--verde);
-  font-weight:bold;
-  font-size:12px;
-  cursor:pointer;
-}
-.categoria.ativa {
-  background:var(--verde);
-  border-color:var(--verde);
-  color:white;
-}
-.resumo {
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin:10px 0 15px;
-}
-.resumo h2 { margin:0; font-size:18px; }
-.resumo span { font-size:12px; color:var(--cinza); }
-.grade {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-.produto {
-  min-width:0;
-  background:white;
-  border:1px solid #e8ebe6;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 2px 8px #172b1708;
-}
-.foto {
-  height:155px;
-  background:#edf1eb;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-}
-.foto img {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  padding:9px;
-}
-.sem-foto { font-size:35px; }
-.info { padding:12px; }
-.tag {
-  display:inline-block;
-  background:#edf4ed;
-  color:var(--verde2);
-  font-size:10px;
-  font-weight:bold;
-  padding:5px 7px;
-  border-radius:5px;
-  text-transform:uppercase;
-}
-.nome {
-  margin:9px 0 5px;
-  font-size:15px;
-  line-height:1.3;
-  overflow-wrap:anywhere;
-}
-.descricao {
-  font-size:12px;
-  color:var(--cinza);
-  line-height:1.4;
-  min-height:32px;
-  overflow-wrap:anywhere;
-}
-.preco {
-  color:var(--verde);
-  font-size:18px;
-  font-weight:800;
-  margin-top:12px;
-}
-.moeda { font-size:11px; font-weight:normal; }
-.comprar {
-  width:100%;
-  margin-top:12px;
-  padding:12px 8px;
-  border:0;
-  border-radius:9px;
-  background:var(--verde);
-  color:white;
-  font-size:13px;
-  font-weight:bold;
-  cursor:pointer;
-}
-.comprar:disabled {
-  opacity:.6;
-  cursor:wait;
-}
-.estado {
-  text-align:center;
-  padding:35px 15px;
-  color:var(--cinza);
-  font-size:14px;
-  line-height:1.6;
-  grid-column:1/-1;
-}
-.estado strong {
-  display:block;
-  color:var(--verde);
-  font-size:16px;
-  margin-bottom:7px;
-}
-footer {
-  border-top:1px solid #e0e6df;
-  text-align:center;
-  padding:22px 15px;
-  color:var(--cinza);
-  font-size:11px;
-  line-height:1.7;
-}
-@media(min-width:650px) {
-  .grade { grid-template-columns:repeat(3,minmax(0,1fr)); }
-  .foto { height:190px; }
-}
-@media(min-width:900px) {
-  .grade { grid-template-columns:repeat(4,minmax(0,1fr)); }
-}
+:root{--verde:#123c2b;--verde2:#1e6042;--vermelho:#d93636;--fundo:#f5f7f4;--texto:#202820;--cinza:#707970;--borda:#e2e8e0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:Arial,Helvetica,sans-serif}
+body.modal-aberto{overflow:hidden}
+header{background:var(--verde);color:white;padding:20px 16px;border-bottom:4px solid var(--vermelho)}
+.topo{max-width:1000px;margin:auto}
+.topo-linha{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.marca{font-size:12px;letter-spacing:2px;font-weight:bold;color:#d5e8d9}
+h1{margin:10px 0 5px;font-size:28px}
+header p{color:#e0e9e2;font-size:14px;margin:0;line-height:1.5}
+.saldo{display:none;background:#ffffff18;border:1px solid #ffffff45;border-radius:12px;padding:9px 12px;text-align:right}
+.saldo small{display:block;font-size:10px;color:#d5e8d9;margin-bottom:4px}
+.saldo strong{font-size:16px}
+.faixa{max-width:1000px;margin:18px auto 0;padding:0 15px}
+.aviso{background:#e7f0e7;color:var(--verde);border-radius:12px;padding:13px 15px;font-size:13px;line-height:1.5}
+main{max-width:1000px;padding:0 15px 35px;margin:auto}
+.abas{display:flex;gap:8px;margin:20px 0 16px}
+.aba{flex:1;padding:12px 10px;border:1px solid var(--borda);border-radius:10px;background:white;color:var(--verde);font-weight:bold;cursor:pointer}
+.aba.ativa{background:var(--verde);color:white;border-color:var(--verde)}
+.painel[hidden]{display:none!important}
+.barra{margin:18px 0 15px}
+.barra input{width:100%;border:1px solid #dce2db;border-radius:12px;background:white;padding:14px;font-size:15px;outline-color:var(--verde2)}
+.categorias{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px}
+.categoria{flex-shrink:0;padding:10px 14px;border-radius:22px;border:1px solid #dce2db;background:white;color:var(--verde);font-weight:bold;font-size:12px;cursor:pointer}
+.categoria.ativa{background:var(--verde);border-color:var(--verde);color:white}
+.resumo{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0 15px}
+.resumo h2{margin:0;font-size:18px}
+.resumo span{font-size:12px;color:var(--cinza)}
+.grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.produto{min-width:0;background:white;border:1px solid #e8ebe6;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px #172b1708}
+.foto{height:155px;background:#edf1eb;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.foto img{width:100%;height:100%;object-fit:contain;padding:9px}
+.sem-foto{font-size:35px}
+.info{padding:12px}
+.tag{display:inline-block;background:#edf4ed;color:var(--verde2);font-size:10px;font-weight:bold;padding:5px 7px;border-radius:5px;text-transform:uppercase}
+.nome{margin:9px 0 5px;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.descricao{font-size:12px;color:var(--cinza);line-height:1.4;min-height:32px;overflow-wrap:anywhere}
+.preco{color:var(--verde);font-size:18px;font-weight:800;margin-top:12px}
+.moeda{font-size:11px;font-weight:normal}
+.comprar,.botao-principal{width:100%;margin-top:12px;padding:12px 8px;border:0;border-radius:9px;background:var(--verde);color:white;font-size:13px;font-weight:bold;cursor:pointer}
+.comprar:disabled,.botao-principal:disabled{opacity:.6;cursor:wait}
+.estado{text-align:center;padding:35px 15px;color:var(--cinza);font-size:14px;line-height:1.6;grid-column:1/-1}
+.estado strong{display:block;color:var(--verde);font-size:16px;margin-bottom:7px}
+.historico-lista{display:grid;gap:10px}
+.compra{background:white;border:1px solid var(--borda);border-radius:12px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.compra strong{display:block;color:var(--verde);margin-bottom:5px;overflow-wrap:anywhere}
+.compra small{display:block;color:var(--cinza);line-height:1.5}
+.compra-valor{text-align:right;white-space:nowrap;font-weight:bold;color:var(--verde)}
+footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:var(--cinza);font-size:11px;line-height:1.7}
+.modal-fundo{display:none;position:fixed;inset:0;background:#07140ed9;z-index:1000;padding:16px;overflow-y:auto;align-items:center;justify-content:center}
+.modal-fundo.aberto{display:flex}
+.modal{position:relative;background:white;width:100%;max-width:470px;max-height:calc(100dvh - 32px);overflow-y:auto;border-radius:18px;box-shadow:0 15px 55px #0004}
+.modal-fechar{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:#ffffffed;color:var(--verde);font-size:24px;cursor:pointer;z-index:2}
+.modal-foto{height:240px;background:#edf1eb;display:flex;align-items:center;justify-content:center}
+.modal-foto img{width:100%;height:100%;object-fit:contain;padding:14px}
+.modal-conteudo{padding:18px}
+.modal-conteudo h2{margin:10px 0 8px;font-size:23px;overflow-wrap:anywhere}
+.modal-descricao{color:var(--cinza);font-size:14px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.preco-unitario{margin-top:16px;color:var(--cinza);font-size:13px}
+.preco-unitario strong{display:block;color:var(--verde);font-size:20px;margin-top:4px}
+.quantidade-linha{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px}
+.quantidade-linha label{font-size:14px;font-weight:bold}
+.controle-qtd{display:flex;align-items:center;gap:14px;background:#f1f5f0;border-radius:12px;padding:6px}
+.controle-qtd button{width:38px;height:38px;border:0;border-radius:9px;background:white;color:var(--verde);font-size:23px;font-weight:bold;cursor:pointer}
+.controle-qtd button:disabled{opacity:.35}
+.controle-qtd strong{min-width:20px;text-align:center;font-size:17px}
+.total-linha{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--borda);margin-top:18px;padding-top:16px}
+.total-linha span{font-size:14px;color:var(--cinza)}
+.total-linha strong{font-size:21px;color:var(--verde);text-align:right}
+.botao-secundario{width:100%;margin-top:9px;padding:12px;border:1px solid var(--borda);border-radius:9px;background:white;color:var(--verde);font-weight:bold;cursor:pointer}
+.nota-seguranca{font-size:11px;color:var(--cinza);line-height:1.5;margin:12px 0 0}
+@media(min-width:650px){.grade{grid-template-columns:repeat(3,minmax(0,1fr))}.foto{height:190px}}
+@media(min-width:900px){.grade{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 </head>
+
 
 <body>
 <header>
@@ -261,32 +108,56 @@ footer {
 </div>
 
 <main>
-  <div class="barra">
-    <input id="busca" type="search"
-      placeholder="🔎 Buscar produto..."
-      aria-label="Buscar produto">
+  <div class="abas" role="tablist" aria-label="Seções da lojinha">
+    <button class="aba ativa" id="abaLoja" type="button"
+      role="tab" aria-selected="true">🛒 Loja</button>
+    <button class="aba" id="abaHistorico" type="button"
+      role="tab" aria-selected="false">🧾 Minhas compras</button>
   </div>
 
-  <div class="categorias" id="categorias">
-    <button class="categoria ativa" data-cat="todos">Todos</button>
-    <button class="categoria" data-cat="bebidas">🥤 Bebidas</button>
-    <button class="categoria" data-cat="lanches">🍟 Lanches</button>
-    <button class="categoria" data-cat="doces">🍫 Doces</button>
-    <button class="categoria" data-cat="chicletes">🍬 Chicletes</button>
-    <button class="categoria" data-cat="farmacia">🩹 Farmácia</button>
-    <button class="categoria" data-cat="outros">📦 Outros</button>
-  </div>
-
-  <div class="resumo">
-    <h2>Produtos disponíveis</h2>
-    <span id="contador">Carregando...</span>
-  </div>
-
-  <section class="grade" id="produtos" aria-live="polite">
-    <div class="estado">
-      <strong>Carregando a lojinha...</strong>
-      Aguarde um instante.
+  <section class="painel" id="painelLoja">
+    <div class="barra">
+      <input id="busca" type="search"
+        placeholder="🔎 Buscar produto..."
+        aria-label="Buscar produto">
     </div>
+
+    <div class="categorias" id="categorias">
+      <button type="button" class="categoria ativa" data-cat="todos">Todos</button>
+      <button type="button" class="categoria" data-cat="bebidas">🥤 Bebidas</button>
+      <button type="button" class="categoria" data-cat="lanches">🍟 Lanches</button>
+      <button type="button" class="categoria" data-cat="doces">🍫 Doces</button>
+      <button type="button" class="categoria" data-cat="chicletes">🍬 Chicletes</button>
+      <button type="button" class="categoria" data-cat="farmacia">🩹 Farmácia</button>
+      <button type="button" class="categoria" data-cat="outros">📦 Outros</button>
+    </div>
+
+    <div class="resumo">
+      <h2>Produtos disponíveis</h2>
+      <span id="contador">Carregando...</span>
+    </div>
+
+    <section class="grade" id="produtos" aria-live="polite">
+      <div class="estado">
+        <strong>Carregando a lojinha...</strong>
+        Aguarde um instante.
+      </div>
+    </section>
+  </section>
+
+  <section class="painel" id="painelHistorico" hidden>
+    <div class="resumo">
+      <h2>Minhas compras</h2>
+      <span id="contadorHistorico"></span>
+    </div>
+    <div id="historico" class="historico-lista">
+      <div class="estado">
+        <strong>Seu histórico aparecerá aqui</strong>
+        Entre na sua conta para consultar suas compras.
+      </div>
+    </div>
+    <button type="button" class="botao-secundario"
+      id="atualizarHistorico">Atualizar histórico</button>
   </section>
 </main>
 
@@ -296,9 +167,61 @@ footer {
   © Santa Luzia Tomates
 </footer>
 
+<div class="modal-fundo" id="modalFundo"
+  role="dialog" aria-modal="true" aria-labelledby="modalNome">
+  <div class="modal">
+    <button type="button" class="modal-fechar"
+      id="fecharModal" aria-label="Fechar detalhes">×</button>
+
+    <div class="modal-foto" id="modalFoto">
+      <span class="sem-foto">🛍️</span>
+    </div>
+
+    <div class="modal-conteudo">
+      <span class="tag" id="modalCategoria">Produto</span>
+      <h2 id="modalNome">Produto</h2>
+      <div class="modal-descricao" id="modalDescricao"></div>
+
+      <div class="preco-unitario">
+        Preço por unidade
+        <strong id="modalPrecoUnitario">0 STACOIN</strong>
+      </div>
+
+      <div class="quantidade-linha">
+        <label for="quantidadeAtual">Quantidade</label>
+        <div class="controle-qtd">
+          <button type="button" id="menos"
+            aria-label="Diminuir quantidade">−</button>
+          <strong id="quantidadeAtual">1</strong>
+          <button type="button" id="mais"
+            aria-label="Aumentar quantidade">+</button>
+        </div>
+      </div>
+
+      <div class="total-linha">
+        <span>Total da compra</span>
+        <strong id="totalCompra">0 STACOIN</strong>
+      </div>
+
+      <button type="button" class="botao-principal"
+        id="finalizarCompra">FINALIZAR COMPRA</button>
+      <button type="button" class="botao-secundario"
+        id="cancelarCompra">Continuar olhando</button>
+
+      <p class="nota-seguranca">
+        A compra só será concluída após sua confirmação.
+        Confira a quantidade e o total antes de prosseguir.
+      </p>
+    </div>
+  </div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
+  'use strict';
+
   const SUPABASE_URL =
     'https://cckypvqophyviphqhich.supabase.co';
 
@@ -306,8 +229,7 @@ footer {
     'sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
 
   const cliente = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_URL, SUPABASE_KEY
   );
 
   const area = document.getElementById('produtos');
@@ -315,11 +237,26 @@ footer {
   const busca = document.getElementById('busca');
   const painelSaldo = document.getElementById('painelSaldo');
   const valorSaldo = document.getElementById('valorSaldo');
+  const modalFundo = document.getElementById('modalFundo');
+  const modalFoto = document.getElementById('modalFoto');
+  const modalNome = document.getElementById('modalNome');
+  const modalDescricao = document.getElementById('modalDescricao');
+  const modalCategoria = document.getElementById('modalCategoria');
+  const modalPrecoUnitario = document.getElementById('modalPrecoUnitario');
+  const quantidadeAtual = document.getElementById('quantidadeAtual');
+  const totalCompra = document.getElementById('totalCompra');
+  const finalizarCompra = document.getElementById('finalizarCompra');
+  const historico = document.getElementById('historico');
+  const contadorHistorico = document.getElementById('contadorHistorico');
 
   let todosProdutos = [];
   let categoriaAtual = 'todos';
   let motoristaAtual = null;
   let saldoAtual = null;
+  let produtoSelecionado = null;
+  let quantidade = 1;
+  let compraEmAndamento = false;
+  let carregandoHistorico = false;
 
   const nomesCategorias = {
     bebidas:'Bebidas',
@@ -352,8 +289,12 @@ footer {
     return '';
   }
 
+  function formatarNumero(valor) {
+    return Number(valor || 0).toLocaleString('pt-BR');
+  }
+
   function formatarSaldo(valor) {
-    return Number(valor || 0).toLocaleString('pt-BR') + ' STACOIN';
+    return formatarNumero(valor) + ' STACOIN';
   }
 
   async function atualizarConta() {
@@ -361,7 +302,7 @@ footer {
     saldoAtual = null;
     painelSaldo.style.display = 'none';
 
-    const { data: sessaoData, error: sessaoErro } =
+    const {data:sessaoData,error:sessaoErro} =
       await cliente.auth.getSession();
 
     if (sessaoErro || !sessaoData.session) return;
@@ -369,23 +310,20 @@ footer {
     const usuario = sessaoData.session.user;
     if (!usuario) return;
 
-    const { data: motorista, error: motoristaErro } =
-      await cliente
-        .from('motoristas')
-        .select('id,status,salario_ativo')
-        .eq('user_id', usuario.id)
-        .maybeSingle();
+    const {data:motorista,error:motoristaErro} = await cliente
+      .from('motoristas')
+      .select('id,status,salario_ativo')
+      .eq('user_id',usuario.id)
+      .maybeSingle();
 
     if (motoristaErro || !motorista) return;
-
     motoristaAtual = motorista;
 
-    const { data: carteira, error: carteiraErro } =
-      await cliente
-        .from('stacoin_carteiras')
-        .select('saldo')
-        .eq('motorista_id', motorista.id)
-        .maybeSingle();
+    const {data:carteira,error:carteiraErro} = await cliente
+      .from('stacoin_carteiras')
+      .select('saldo')
+      .eq('motorista_id',motorista.id)
+      .maybeSingle();
 
     if (!carteiraErro && carteira) {
       saldoAtual = Number(carteira.saldo || 0);
@@ -425,21 +363,18 @@ footer {
 
     area.innerHTML = filtrados.map(produto => {
       const imagem = imagemSegura(produto.imagem_url);
-      const categoria = nomesCategorias[produto.categoria] || 'Outros';
+      const categoria =
+        nomesCategorias[produto.categoria] || 'Outros';
 
       return `
         <article class="produto">
           <div class="foto">
-            ${
-              imagem
-                ? `<img src="${escapar(imagem)}"
-                     alt="${escapar(produto.nome)}"
-                     loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                   <span class="sem-foto"
-                     style="display:none">🛍️</span>`
-                : `<span class="sem-foto">🛍️</span>`
-            }
+            ${imagem
+              ? `<img src="${escapar(imagem)}"
+                  alt="${escapar(produto.nome)}" loading="lazy">
+                 <span class="sem-foto"
+                  style="display:none">🛍️</span>`
+              : '<span class="sem-foto">🛍️</span>'}
           </div>
           <div class="info">
             <span class="tag">${escapar(categoria)}</span>
@@ -448,91 +383,173 @@ footer {
               escapar(produto.descricao || 'Confira este produto.')
             }</div>
             <div class="preco">
-              ${Number(produto.preco).toLocaleString('pt-BR')}
+              ${formatarNumero(produto.preco)}
               <span class="moeda">STACOIN</span>
             </div>
-            <button class="comprar"
-              data-comprar="${Number(produto.id)}">
-              COMPRAR
+            <button class="comprar" type="button"
+              data-ver-produto="${Number(produto.id)}">
+              VER PRODUTO
             </button>
           </div>
         </article>`;
     }).join('');
 
-    area.querySelectorAll('[data-comprar]').forEach(botao => {
+    area.querySelectorAll('[data-ver-produto]').forEach(botao => {
       botao.addEventListener('click', () => {
-        comprarProduto(Number(botao.dataset.comprar), botao);
+        abrirDetalhes(Number(botao.dataset.verProduto));
       });
+    });
+
+    area.querySelectorAll('.foto img').forEach(img => {
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+        if (img.nextElementSibling) {
+          img.nextElementSibling.style.display = 'block';
+        }
+      }, {once:true});
     });
   }
 
-  async function comprarProduto(produtoId, botao) {
-    botao.disabled = true;
-    const textoOriginal = botao.textContent;
-    botao.textContent = 'VERIFICANDO...';
+  function abrirDetalhes(produtoId) {
+    const produto = todosProdutos.find(
+      p => Number(p.id) === produtoId
+    );
+
+    if (!produto) {
+      alert('Produto não encontrado. Atualize a página.');
+      return;
+    }
+
+    produtoSelecionado = produto;
+    quantidade = 1;
+
+    modalNome.textContent = produto.nome || 'Produto';
+    modalDescricao.textContent =
+      produto.descricao || 'Confira este produto.';
+    modalCategoria.textContent =
+      nomesCategorias[produto.categoria] || 'Outros';
+    modalPrecoUnitario.textContent = formatarSaldo(produto.preco);
+
+    const imagem = imagemSegura(produto.imagem_url);
+
+    modalFoto.innerHTML = imagem
+      ? `<img src="${escapar(imagem)}"
+           alt="${escapar(produto.nome)}">
+         <span class="sem-foto"
+           style="display:none">🛍️</span>`
+      : '<span class="sem-foto">🛍️</span>';
+
+    const img = modalFoto.querySelector('img');
+
+    if (img) {
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+        if (img.nextElementSibling) {
+          img.nextElementSibling.style.display = 'block';
+        }
+      }, {once:true});
+    }
+
+    atualizarQuantidade();
+    modalFundo.classList.add('aberto');
+    document.body.classList.add('modal-aberto');
+    document.getElementById('fecharModal').focus();
+  }
+
+  function fecharDetalhes() {
+    if (compraEmAndamento) return;
+    modalFundo.classList.remove('aberto');
+    document.body.classList.remove('modal-aberto');
+    produtoSelecionado = null;
+  }
+
+  function atualizarQuantidade() {
+    quantidadeAtual.textContent = String(quantidade);
+    document.getElementById('menos').disabled = quantidade <= 1;
+    document.getElementById('mais').disabled = quantidade >= 99;
+
+    const total =
+      Number(produtoSelecionado?.preco || 0) * quantidade;
+
+    totalCompra.textContent = formatarSaldo(total);
+    finalizarCompra.disabled = compraEmAndamento;
+  }
+
+  async function confirmarCompra() {
+    if (compraEmAndamento || !produtoSelecionado) return;
+
+    const produto = produtoSelecionado;
+    const qtd = quantidade;
+    const total = Number(produto.preco) * qtd;
+
+    if (!Number.isInteger(qtd) || qtd < 1 || qtd > 99 ||
+        !Number.isFinite(total) || total <= 0) {
+      alert('Quantidade ou preço inválido.');
+      return;
+    }
+
+    const {data:sessaoData,error:sessaoErro} =
+      await cliente.auth.getSession();
+
+    if (sessaoErro || !sessaoData.session) {
+      alert(
+        'Para comprar, entre na sua conta pela Santa Luzia Central.'
+      );
+      return;
+    }
 
     try {
-      const { data: sessaoData, error: sessaoErro } =
-        await cliente.auth.getSession();
-
-      if (sessaoErro || !sessaoData.session) {
-        alert(
-          'Para comprar, entre na sua conta pela Santa Luzia Central. ' +
-          'Você pode continuar navegando pela lojinha sem login.'
-        );
-        return;
-      }
-
       await atualizarConta();
+    } catch (erro) {
+      console.error(erro);
+      alert('Não conseguimos verificar seu cadastro. Tente novamente.');
+      return;
+    }
 
-      if (!motoristaAtual) {
-        alert(
-          'Não encontramos seu cadastro de motorista. ' +
-          'Acesse a Santa Luzia Central e confira seu cadastro.'
-        );
-        return;
-      }
+    if (!motoristaAtual) {
+      alert('Não encontramos seu cadastro de motorista.');
+      return;
+    }
 
-      if (motoristaAtual.status !== 'ativo') {
-        alert('Seu cadastro ainda não está aprovado pela gestão.');
-        return;
-      }
+    if (motoristaAtual.status !== 'ativo') {
+      alert('Seu cadastro ainda não está aprovado pela gestão.');
+      return;
+    }
 
-      if (motoristaAtual.salario_ativo !== true) {
-        alert(
-          'Sua conta não está habilitada para receber STACOIN. ' +
-          'Entre em contato com a gestão da Santa Luzia.'
-        );
-        return;
-      }
+    if (motoristaAtual.salario_ativo !== true) {
+      alert('Sua conta não está habilitada para receber STACOIN.');
+      return;
+    }
 
-      const produto = todosProdutos.find(p => Number(p.id) === produtoId);
-      if (!produto) {
-        alert('Produto não encontrado. Atualize a página e tente novamente.');
-        return;
-      }
+    const confirmado = confirm(
+      'Confirmar compra?\n\n' +
+      'Produto: ' + produto.nome + '\n' +
+      'Quantidade: ' + qtd + '\n' +
+      'Preço unitário: ' + formatarSaldo(produto.preco) + '\n' +
+      'TOTAL: ' + formatarSaldo(total) + '\n\n' +
+      'O valor será descontado do seu saldo STACOIN.'
+    );
 
-      if (!confirm(
-        'Confirmar compra?\n\n' +
-        produto.nome + '\n' +
-        'Valor: ' + Number(produto.preco).toLocaleString('pt-BR') +
-        ' STACOIN\n\nO valor será descontado do seu saldo.'
-      )) {
-        return;
-      }
+    if (!confirmado) return;
 
-      botao.textContent = 'PROCESSANDO...';
+    compraEmAndamento = true;
+    finalizarCompra.textContent = 'PROCESSANDO...';
+    atualizarQuantidade();
 
-      const { data, error } = await cliente.rpc(
+    try {
+      const {data,error} = await cliente.rpc(
         'comprar_produto_conveniencia',
-        { p_produto_id: produtoId }
+        {
+          p_produto_id: Number(produto.id),
+          p_quantidade: qtd
+        }
       );
 
       if (error) {
         console.error('Erro na compra:', error);
         alert(
-          error.message ||
-          'Não foi possível concluir a compra. Tente novamente.'
+          'Não foi possível concluir a compra: ' +
+          (error.message || 'tente novamente.')
         );
         return;
       }
@@ -542,21 +559,34 @@ footer {
         return;
       }
 
+      const valorFinal = data.total ?? data.valor ?? total;
+
       alert(
         'COMPRA REALIZADA COM SUCESSO! 🍅\n\n' +
-        'Produto: ' + data.produto + '\n' +
-        'Valor: ' + Number(data.valor).toLocaleString('pt-BR') +
-        ' STACOIN'
+        'Produto: ' + (data.produto || produto.nome) + '\n' +
+        'Quantidade: ' + (data.quantidade ?? qtd) + '\n' +
+        'Total: ' + formatarSaldo(valorFinal)
       );
+
+      compraEmAndamento = false;
+      finalizarCompra.textContent = 'FINALIZAR COMPRA';
+      fecharDetalhes();
 
       await atualizarConta();
 
+      if (!document.getElementById('painelHistorico').hidden) {
+        await carregarHistorico();
+      }
+
     } catch (erro) {
       console.error('Erro inesperado na compra:', erro);
-      alert('Ocorreu um erro inesperado. Tente novamente.');
+      alert(
+        'Ocorreu um erro inesperado. Confira seu saldo antes de tentar novamente.'
+      );
     } finally {
-      botao.disabled = false;
-      botao.textContent = textoOriginal;
+      compraEmAndamento = false;
+      finalizarCompra.textContent = 'FINALIZAR COMPRA';
+      atualizarQuantidade();
     }
   }
 
@@ -567,14 +597,14 @@ footer {
         Buscando os produtos disponíveis.
       </div>`;
 
-    const { data, error } = await cliente
+    const {data,error} = await cliente
       .from('conveniencia_produtos')
       .select('id,nome,descricao,categoria,preco,imagem_url,ativo')
-      .eq('ativo', true)
-      .order('criado_em', { ascending: false });
+      .eq('ativo',true)
+      .order('criado_em',{ascending:false});
 
     if (error) {
-      console.error('Erro ao carregar produtos:', error);
+      console.error('Erro ao carregar produtos:',error);
       contador.textContent = 'Não foi possível carregar';
 
       area.innerHTML = `
@@ -582,13 +612,14 @@ footer {
           <strong>Não conseguimos carregar os produtos.</strong>
           Confira sua conexão e tente novamente.
           <br><br>
-          <button class="categoria ativa" id="tentarNovamente">
+          <button class="categoria ativa"
+            id="tentarNovamente" type="button">
             Tentar novamente
           </button>
         </div>`;
 
       document.getElementById('tentarNovamente')
-        .addEventListener('click', carregarProdutos);
+        .addEventListener('click',carregarProdutos);
       return;
     }
 
@@ -596,30 +627,200 @@ footer {
     mostrarProdutos();
   }
 
-  busca.addEventListener('input', mostrarProdutos);
+  async function carregarHistorico() {
+    if (carregandoHistorico) return;
 
-  document.querySelectorAll('.categoria').forEach(botao => {
-    botao.addEventListener('click', () => {
-      document.querySelectorAll('.categoria').forEach(item => {
-        item.classList.remove('ativa');
-      });
-      botao.classList.add('ativa');
-      categoriaAtual = botao.dataset.cat;
-      mostrarProdutos();
-    });
+    carregandoHistorico = true;
+    historico.innerHTML = `
+      <div class="estado">
+        <strong>Carregando histórico...</strong>
+        Consultando suas compras.
+      </div>`;
+
+    contadorHistorico.textContent = '';
+
+    try {
+      const {data:sessaoData,error:sessaoErro} =
+        await cliente.auth.getSession();
+
+      if (sessaoErro || !sessaoData.session) {
+        historico.innerHTML = `
+          <div class="estado">
+            <strong>Entre na sua conta</strong>
+            Entre na Santa Luzia Central para consultar suas compras.
+          </div>`;
+        return;
+      }
+
+      const {data,error} =
+        await cliente.rpc('listar_historico_conveniencia');
+
+      if (error) {
+        console.error('Erro ao carregar histórico:',error);
+        historico.innerHTML = `
+          <div class="estado">
+            <strong>Não conseguimos carregar o histórico</strong>
+            Tente novamente mais tarde.
+          </div>`;
+        return;
+      }
+
+      const compras = Array.isArray(data)
+        ? data
+        : (data ? [data] : []);
+
+      contadorHistorico.textContent = compras.length +
+        (compras.length === 1 ? ' compra' : ' compras');
+
+      if (!compras.length) {
+        historico.innerHTML = `
+          <div class="estado">
+            <strong>Nenhuma compra por enquanto</strong>
+            Suas compras aparecerão aqui.
+          </div>`;
+        return;
+      }
+
+      historico.innerHTML = compras.map(item => {
+        const nome =
+          item.product_name ?? item.produto_nome ??
+          item.produto ?? 'Produto';
+
+        const qtd = Number(
+          item.quantity ?? item.quantidade ?? 1
+        );
+
+        const valor = Number(
+          item.value ?? item.valor ?? item.total ?? 0
+        );
+
+        const dataCompra =
+          item.date ?? item.created_at ?? item.criado_em ?? null;
+
+        let dataTexto = 'Data não informada';
+
+        if (dataCompra) {
+          const dataObj = new Date(dataCompra);
+
+          if (!Number.isNaN(dataObj.getTime())) {
+            dataTexto = dataObj.toLocaleString('pt-BR', {
+              dateStyle:'short',
+              timeStyle:'short'
+            });
+          }
+        }
+
+        return `
+          <article class="compra">
+            <div>
+              <strong>${escapar(nome)}</strong>
+              <small>Quantidade: ${Number.isFinite(qtd) ? qtd : 1}</small>
+              <small>${escapar(dataTexto)}</small>
+            </div>
+            <div class="compra-valor">${formatarSaldo(valor)}</div>
+          </article>`;
+      }).join('');
+
+    } finally {
+      carregandoHistorico = false;
+    }
+  }
+
+  function trocarAba(aba) {
+    const lojaAtiva = aba === 'loja';
+
+    document.getElementById('painelLoja').hidden = !lojaAtiva;
+    document.getElementById('painelHistorico').hidden = lojaAtiva;
+
+    document.getElementById('abaLoja')
+      .classList.toggle('ativa',lojaAtiva);
+    document.getElementById('abaHistorico')
+      .classList.toggle('ativa',!lojaAtiva);
+
+    document.getElementById('abaLoja')
+      .setAttribute('aria-selected',String(lojaAtiva));
+    document.getElementById('abaHistorico')
+      .setAttribute('aria-selected',String(!lojaAtiva));
+
+    if (!lojaAtiva) carregarHistorico();
+  }
+
+  document.getElementById('menos').addEventListener('click',() => {
+    if (quantidade > 1) {
+      quantidade--;
+      atualizarQuantidade();
+    }
   });
 
+  document.getElementById('mais').addEventListener('click',() => {
+    if (quantidade < 99) {
+      quantidade++;
+      atualizarQuantidade();
+    }
+  });
+
+  document.getElementById('fecharModal')
+    .addEventListener('click',fecharDetalhes);
+
+  document.getElementById('cancelarCompra')
+    .addEventListener('click',fecharDetalhes);
+
+  finalizarCompra.addEventListener('click',confirmarCompra);
+
+  modalFundo.addEventListener('click',event => {
+    if (event.target === modalFundo) fecharDetalhes();
+  });
+
+  document.addEventListener('keydown',event => {
+    if (event.key === 'Escape' &&
+        modalFundo.classList.contains('aberto')) {
+      fecharDetalhes();
+    }
+  });
+
+  document.getElementById('abaLoja')
+    .addEventListener('click',() => trocarAba('loja'));
+
+  document.getElementById('abaHistorico')
+    .addEventListener('click',() => trocarAba('historico'));
+
+  document.getElementById('atualizarHistorico')
+    .addEventListener('click',carregarHistorico);
+
+  busca.addEventListener('input',mostrarProdutos);
+
+  document.querySelectorAll('#categorias .categoria')
+    .forEach(botao => {
+      botao.addEventListener('click',() => {
+        document.querySelectorAll('#categorias .categoria')
+          .forEach(item => item.classList.remove('ativa'));
+
+        botao.classList.add('ativa');
+        categoriaAtual = botao.dataset.cat;
+        mostrarProdutos();
+      });
+    });
+
   async function iniciar() {
-    await atualizarConta();
+    try {
+      await atualizarConta();
+    } catch (erro) {
+      console.error('Erro ao verificar conta:',erro);
+    }
+
     await carregarProdutos();
   }
 
   iniciar();
 
   cliente.auth.onAuthStateChange(() => {
-    setTimeout(() => {
-      atualizarConta();
-    }, 0);
+    setTimeout(async () => {
+      try {
+        await atualizarConta();
+      } catch (erro) {
+        console.error('Erro ao atualizar conta:',erro);
+      }
+    },0);
   });
 })();
 </script>
