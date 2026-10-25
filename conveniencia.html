@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123c2b">
+<title>Lojinha da Correria | Santa Luzia</title>
+
+<style>
+:root {
+  --verde: #123c2b;
+  --verde2: #1e6042;
+  --vermelho: #d93636;
+  --fundo: #f5f7f4;
+  --texto: #202820;
+  --cinza: #707970;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
+}
+header {
+  background: var(--verde);
+  color: white;
+  padding: 25px 18px 22px;
+  border-bottom: 4px solid var(--vermelho);
+}
+.topo {
+  max-width: 1000px;
+  margin: auto;
+}
+.marca {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  color: #d5e8d9;
+}
+h1 {
+  margin: 9px 0 5px;
+  font-size: 29px;
+}
+header p {
+  color: #e0e9e2;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+.faixa {
+  max-width: 1000px;
+  margin: 18px auto 0;
+  padding: 0 15px;
+}
+.aviso {
+  background: #e7f0e7;
+  color: var(--verde);
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+main {
+  max-width: 1000px;
+  padding: 0 15px 35px;
+  margin: auto;
+}
+.barra {
+  margin: 22px 0 15px;
+}
+.barra input {
+  width: 100%;
+  border: 1px solid #dce2db;
+  border-radius: 12px;
+  background: white;
+  padding: 14px;
+  font-size: 15px;
+  outline-color: var(--verde2);
+}
+.categorias {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0 12px;
+}
+.categoria {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border-radius: 22px;
+  border: 1px solid #dce2db;
+  background: white;
+  color: var(--verde);
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+.categoria.ativa {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: white;
+}
+.resumo {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0 15px;
+}
+.resumo h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.resumo span {
+  font-size: 12px;
+  color: var(--cinza);
+}
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.produto {
+  min-width: 0;
+  background: white;
+  border: 1px solid #e8ebe6;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #172b1708;
+}
+.foto {
+  height: 155px;
+  background: #edf1eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 9px;
+}
+.sem-foto {
+  font-size: 35px;
+}
+.info {
+  padding: 12px;
+}
+.tag {
+  display: inline-block;
+  background: #edf4ed;
+  color: var(--verde2);
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 7px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+.nome {
+  margin: 9px 0 5px;
+  font-size: 15px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.descricao {
+  font-size: 12px;
+  color: var(--cinza);
+  line-height: 1.4;
+  min-height: 32px;
+  overflow-wrap: anywhere;
+}
+.preco {
+  color: var(--verde);
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 12px;
+}
+.moeda {
+  font-size: 11px;
+  font-weight: normal;
+}
+.estado {
+  text-align: center;
+  padding: 35px 15px;
+  color: var(--cinza);
+  font-size: 14px;
+  line-height: 1.6;
+  grid-column: 1 / -1;
+}
+.estado strong {
+  display: block;
+  color: var(--verde);
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+footer {
+  border-top: 1px solid #e0e6df;
+  text-align: center;
+  padding: 22px 15px;
+  color: var(--cinza);
+  font-size: 11px;
+  line-height: 1.7;
+}
+@media (min-width: 650px) {
+  .grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .foto { height: 190px; }
+}
+@media (min-width: 900px) {
+  .grade { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="topo">
+    <div class="marca">SANTA LUZIA TOMATES</div>
+    <h1>🍅 Lojinha da Correria</h1>
+    <p>Abasteça sua viagem. Sua parada começa aqui.</p>
+  </div>
+</header>
+
+<div class="faixa">
+  <div class="aviso">
+    🛒 <strong>Bem-vindo à conveniência!</strong><br>
+    Confira os produtos disponíveis na nossa loja.
+    Os preços são apresentados em STACOIN.
+  </div>
+</div>
+
+<main>
+  <div class="barra">
+    <input id="busca" type="search"
+      placeholder="🔎 Buscar produto..."
+      aria-label="Buscar produto">
+  </div>
+
+  <div class="categorias" id="categorias">
+    <button class="categoria ativa" data-cat="todos">Todos</button>
+    <button class="categoria" data-cat="bebidas">🥤 Bebidas</button>
+    <button class="categoria" data-cat="lanches">🍟 Lanches</button>
+    <button class="categoria" data-cat="doces">🍫 Doces</button>
+    <button class="categoria" data-cat="chicletes">🍬 Chicletes</button>
+    <button class="categoria" data-cat="farmacia">🩹 Farmácia</button>
+    <button class="categoria" data-cat="outros">📦 Outros</button>
+  </div>
+
+  <div class="resumo">
+    <h2>Produtos disponíveis</h2>
+    <span id="contador">Carregando...</span>
+  </div>
+
+  <section class="grade" id="produtos" aria-live="polite">
+    <div class="estado">
+      <strong>Carregando a lojinha...</strong>
+      Aguarde um instante.
+    </div>
+  </section>
+</main>
+
+<footer>
+  <strong>SANTA LUZIA TOMATES</strong><br>
+  Lojinha da Correria · Central Oficial<br>
+  © Santa Luzia Tomates
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  // CONFIGURAÇÃO DO SUPABASE
+  const SUPABASE_URL =
+    'https://cckypvqophyviphqhich.supabase.co';
+
+  const SUPABASE_KEY =
+    'sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
+
+  const cliente = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const area = document.getElementById('produtos');
+  const contador = document.getElementById('contador');
+  const busca = document.getElementById('busca');
+
+  let todosProdutos = [];
+  let categoriaAtual = 'todos';
+
+  const nomesCategorias = {
+    bebidas: 'Bebidas',
+    lanches: 'Lanches',
+    doces: 'Doces',
+    chicletes: 'Chicletes',
+    farmacia: 'Farmácia',
+    outros: 'Outros'
+  };
+
+  function escapar(valor) {
+    return String(valor ?? '').replace(/[&<>"']/g, letra => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[letra]);
+  }
+
+  function imagemSegura(url) {
+    if (!url) return '';
+    try {
+      const endereco = new URL(url);
+      if (endereco.protocol === 'https:' ||
+          endereco.protocol === 'http:') {
+        return endereco.href;
+      }
+    } catch (_) {}
+    return '';
+  }
+
+  function mostrarProdutos() {
+    const termo = busca.value.trim().toLocaleLowerCase('pt-BR');
+
+    const filtrados = todosProdutos.filter(produto => {
+      const combinaCategoria =
+        categoriaAtual === 'todos' ||
+        produto.categoria === categoriaAtual;
+
+      const texto = [
+        produto.nome,
+        produto.descricao,
+        nomesCategorias[produto.categoria] || ''
+      ].join(' ').toLocaleLowerCase('pt-BR');
+
+      return combinaCategoria && texto.includes(termo);
+    });
+
+    contador.textContent =
+      filtrados.length + (filtrados.length === 1
+        ? ' produto'
+        : ' produtos');
+
+    if (!filtrados.length) {
+      area.innerHTML = `
+        <div class="estado">
+          <strong>Nenhum produto encontrado</strong>
+          Tente outra busca ou selecione outra categoria.
+        </div>`;
+      return;
+    }
+
+    area.innerHTML = filtrados.map(produto => {
+      const imagem = imagemSegura(produto.imagem_url);
+      const categoria =
+        nomesCategorias[produto.categoria] || 'Outros';
+
+      return `
+        <article class="produto">
+          <div class="foto">
+            ${
+              imagem
+                ? `<img src="${escapar(imagem)}"
+                     alt="${escapar(produto.nome)}"
+                     loading="lazy"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                   <span class="sem-foto"
+                     style="display:none">🛍️</span>`
+                : `<span class="sem-foto">🛍️</span>`
+            }
+          </div>
+          <div class="info">
+            <span class="tag">${escapar(categoria)}</span>
+            <h3 class="nome">${escapar(produto.nome)}</h3>
+            <div class="descricao">${
+              escapar(produto.descricao || 'Confira este produto.')
+            }</div>
+            <div class="preco">
+              ${Number(produto.preco).toLocaleString('pt-BR')}
+              <span class="moeda">STACOIN</span>
+            </div>
+          </div>
+        </article>`;
+    }).join('');
+  }
+
+  async function carregarProdutos() {
+    area.innerHTML = `
+      <div class="estado">
+        <strong>Carregando a lojinha...</strong>
+        Buscando os produtos disponíveis.
+      </div>`;
+
+    const { data, error } = await cliente
+      .from('conveniencia_produtos')
+      .select('id,nome,descricao,categoria,preco,imagem_url,ativo')
+      .eq('ativo', true)
+      .order('criado_em', { ascending: false });
+
+    if (error) {
+      console.error('Erro ao carregar produtos:', error);
+      contador.textContent = 'Não foi possível carregar';
+
+      area.innerHTML = `
+        <div class="estado">
+          <strong>Não conseguimos carregar os produtos.</strong>
+          Confira sua conexão e tente novamente.
+          <br><br>
+          <button class="categoria ativa" id="tentarNovamente">
+            Tentar novamente
+          </button>
+        </div>`;
+
+      document.getElementById('tentarNovamente')
+        .addEventListener('click', carregarProdutos);
+      return;
+    }
+
+    todosProdutos = data || [];
+    mostrarProdutos();
+  }
+
+  busca.addEventListener('input', mostrarProdutos);
+
+  document.querySelectorAll('.categoria').forEach(botao => {
+    botao.addEventListener('click', () => {
+      document.querySelectorAll('.categoria').forEach(item => {
+        item.classList.remove('ativa');
+      });
+
+      botao.classList.add('ativa');
+      categoriaAtual = botao.dataset.cat;
+      mostrarProdutos();
+    });
+  });
+
+  carregarProdutos();
+})();
+</script>
+</body>
+</html>
