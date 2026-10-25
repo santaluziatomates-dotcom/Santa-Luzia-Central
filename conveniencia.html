@@ -6,79 +6,467 @@
 <meta name="theme-color" content="#123c2b">
 <title>Lojinha da Correria | Santa Luzia</title>
 <style>
-:root{--verde:#123c2b;--verde2:#1e6042;--vermelho:#d93636;--fundo:#f5f7f4;--texto:#202820;--cinza:#707970;--borda:#e2e8e0}
-*{box-sizing:border-box}
-body{margin:0;background:var(--fundo);color:var(--texto);font-family:Arial,Helvetica,sans-serif}
-body.modal-aberto{overflow:hidden}
-header{background:var(--verde);color:white;padding:20px 16px;border-bottom:4px solid var(--vermelho)}
-.topo{max-width:1000px;margin:auto}
-.topo-linha{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.marca{font-size:12px;letter-spacing:2px;font-weight:bold;color:#d5e8d9}
-h1{margin:10px 0 5px;font-size:28px}
-header p{color:#e0e9e2;font-size:14px;margin:0;line-height:1.5}
-.saldo{display:none;background:#ffffff18;border:1px solid #ffffff45;border-radius:12px;padding:9px 12px;text-align:right}
-.saldo small{display:block;font-size:10px;color:#d5e8d9;margin-bottom:4px}
-.saldo strong{font-size:16px}
-.faixa{max-width:1000px;margin:18px auto 0;padding:0 15px}
-.aviso{background:#e7f0e7;color:var(--verde);border-radius:12px;padding:13px 15px;font-size:13px;line-height:1.5}
-main{max-width:1000px;padding:0 15px 35px;margin:auto}
-.abas{display:flex;gap:8px;margin:20px 0 16px}
-.aba{flex:1;padding:12px 10px;border:1px solid var(--borda);border-radius:10px;background:white;color:var(--verde);font-weight:bold;cursor:pointer}
-.aba.ativa{background:var(--verde);color:white;border-color:var(--verde)}
-.painel[hidden]{display:none!important}
-.barra{margin:18px 0 15px}
-.barra input{width:100%;border:1px solid #dce2db;border-radius:12px;background:white;padding:14px;font-size:15px;outline-color:var(--verde2)}
-.categorias{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px}
-.categoria{flex-shrink:0;padding:10px 14px;border-radius:22px;border:1px solid #dce2db;background:white;color:var(--verde);font-weight:bold;font-size:12px;cursor:pointer}
-.categoria.ativa{background:var(--verde);border-color:var(--verde);color:white}
-.resumo{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0 15px}
-.resumo h2{margin:0;font-size:18px}
-.resumo span{font-size:12px;color:var(--cinza)}
-.grade{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.produto{min-width:0;background:white;border:1px solid #e8ebe6;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px #172b1708}
-.foto{height:155px;background:#edf1eb;display:flex;justify-content:center;align-items:center;overflow:hidden}
-.foto img{width:100%;height:100%;object-fit:contain;padding:9px}
-.sem-foto{font-size:35px}
-.info{padding:12px}
-.tag{display:inline-block;background:#edf4ed;color:var(--verde2);font-size:10px;font-weight:bold;padding:5px 7px;border-radius:5px;text-transform:uppercase}
-.nome{margin:9px 0 5px;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
-.descricao{font-size:12px;color:var(--cinza);line-height:1.4;min-height:32px;overflow-wrap:anywhere}
-.preco{color:var(--verde);font-size:18px;font-weight:800;margin-top:12px}
-.moeda{font-size:11px;font-weight:normal}
-.comprar,.botao-principal{width:100%;margin-top:12px;padding:12px 8px;border:0;border-radius:9px;background:var(--verde);color:white;font-size:13px;font-weight:bold;cursor:pointer}
-.comprar:disabled,.botao-principal:disabled{opacity:.6;cursor:wait}
-.estado{text-align:center;padding:35px 15px;color:var(--cinza);font-size:14px;line-height:1.6;grid-column:1/-1}
-.estado strong{display:block;color:var(--verde);font-size:16px;margin-bottom:7px}
-.historico-lista{display:grid;gap:10px}
-.compra{background:white;border:1px solid var(--borda);border-radius:12px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.compra strong{display:block;color:var(--verde);margin-bottom:5px;overflow-wrap:anywhere}
-.compra small{display:block;color:var(--cinza);line-height:1.5}
-.compra-valor{text-align:right;white-space:nowrap;font-weight:bold;color:var(--verde)}
-footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:var(--cinza);font-size:11px;line-height:1.7}
-.modal-fundo{display:none;position:fixed;inset:0;background:#07140ed9;z-index:1000;padding:16px;overflow-y:auto;align-items:center;justify-content:center}
-.modal-fundo.aberto{display:flex}
-.modal{position:relative;background:white;width:100%;max-width:470px;max-height:calc(100dvh - 32px);overflow-y:auto;border-radius:18px;box-shadow:0 15px 55px #0004}
-.modal-fechar{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:#ffffffed;color:var(--verde);font-size:24px;cursor:pointer;z-index:2}
-.modal-foto{height:240px;background:#edf1eb;display:flex;align-items:center;justify-content:center}
-.modal-foto img{width:100%;height:100%;object-fit:contain;padding:14px}
-.modal-conteudo{padding:18px}
-.modal-conteudo h2{margin:10px 0 8px;font-size:23px;overflow-wrap:anywhere}
-.modal-descricao{color:var(--cinza);font-size:14px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
-.preco-unitario{margin-top:16px;color:var(--cinza);font-size:13px}
-.preco-unitario strong{display:block;color:var(--verde);font-size:20px;margin-top:4px}
-.quantidade-linha{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px}
-.quantidade-linha label{font-size:14px;font-weight:bold}
-.controle-qtd{display:flex;align-items:center;gap:14px;background:#f1f5f0;border-radius:12px;padding:6px}
-.controle-qtd button{width:38px;height:38px;border:0;border-radius:9px;background:white;color:var(--verde);font-size:23px;font-weight:bold;cursor:pointer}
-.controle-qtd button:disabled{opacity:.35}
-.controle-qtd strong{min-width:20px;text-align:center;font-size:17px}
-.total-linha{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--borda);margin-top:18px;padding-top:16px}
-.total-linha span{font-size:14px;color:var(--cinza)}
-.total-linha strong{font-size:21px;color:var(--verde);text-align:right}
-.botao-secundario{width:100%;margin-top:9px;padding:12px;border:1px solid var(--borda);border-radius:9px;background:white;color:var(--verde);font-weight:bold;cursor:pointer}
-.nota-seguranca{font-size:11px;color:var(--cinza);line-height:1.5;margin:12px 0 0}
-@media(min-width:650px){.grade{grid-template-columns:repeat(3,minmax(0,1fr))}.foto{height:190px}}
-@media(min-width:900px){.grade{grid-template-columns:repeat(4,minmax(0,1fr))}}
+:root {
+  --verde: #123c2b;
+  --verde2: #1e6042;
+  --vermelho: #d93636;
+  --fundo: #f4f6f3;
+  --texto: #202820;
+  --cinza: #707970;
+  --borda: #e2e8e0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
+}
+body.modal-aberto { overflow: hidden; }
+header {
+  background: linear-gradient(125deg, #0d2f22, #174b34 65%, #246343);
+  color: white;
+  padding: 23px 16px 25px;
+  border-bottom: 4px solid var(--vermelho);
+}
+.topo { max-width: 1080px; margin: auto; }
+.topo-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: #d5e8d9;
+}
+.marca-simbolo {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #ffffff45;
+  background: #ffffff12;
+  border-radius: 11px;
+  font-size: 18px;
+}
+h1 {
+  margin: 18px 0 7px;
+  font-size: clamp(26px, 5vw, 35px);
+  letter-spacing: -.8px;
+}
+header p {
+  color: #e0e9e2;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.55;
+}
+.saldo {
+  display: none;
+  background: #ffffff12;
+  border: 1px solid #ffffff45;
+  border-radius: 14px;
+  padding: 10px 13px;
+  text-align: right;
+}
+.saldo small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #d5e8d9;
+  margin-bottom: 5px;
+}
+.saldo strong { font-size: 15px; }
+.faixa {
+  max-width: 1080px;
+  margin: 18px auto 0;
+  padding: 0 15px;
+}
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #e8f1e9;
+  color: var(--verde);
+  border: 1px solid #d8e6d9;
+  border-radius: 13px;
+  padding: 13px 15px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.aviso-icone { font-size: 19px; }
+main {
+  max-width: 1080px;
+  padding: 0 15px 38px;
+  margin: auto;
+}
+.abas {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0 17px;
+  padding: 5px;
+  background: #e9ede8;
+  border: 1px solid #e0e6de;
+  border-radius: 13px;
+}
+.aba {
+  flex: 1;
+  padding: 12px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #566258;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+.aba.ativa {
+  background: white;
+  color: var(--verde);
+  border-color: #e4e9e2;
+  box-shadow: 0 2px 6px #132d1710;
+}
+.painel[hidden] { display: none !important; }
+.barra { margin: 18px 0 14px; }
+.barra input {
+  width: 100%;
+  border: 1px solid #dce3da;
+  border-radius: 13px;
+  background: white;
+  padding: 15px;
+  font-size: 14px;
+  outline-color: var(--verde2);
+}
+.categorias {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0 12px;
+}
+.categoria {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border-radius: 22px;
+  border: 1px solid #dce2db;
+  background: white;
+  color: #425347;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+}
+.categoria.ativa {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: white;
+}
+.resumo {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin: 15px 0;
+}
+.resumo h2 { margin: 0; font-size: 17px; }
+.resumo span { font-size: 11px; color: var(--cinza); }
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.produto {
+  min-width: 0;
+  background: white;
+  border: 1px solid #e6ebe4;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px #172b1707;
+  transition: transform .18s, box-shadow .18s;
+}
+.produto:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px #172b1710;
+}
+.foto {
+  height: clamp(135px, 34vw, 190px);
+  background: linear-gradient(145deg, #f1f5ef, #e8eee6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 13px;
+  transition: transform .25s;
+}
+.produto:hover .foto img { transform: scale(1.035); }
+.sem-foto { font-size: 36px; }
+.info { padding: 12px 12px 13px; }
+.tag {
+  display: inline-block;
+  background: #edf4ed;
+  color: var(--verde2);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .45px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.nome {
+  margin: 10px 0 5px;
+  font-size: 14px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.descricao {
+  font-size: 11px;
+  color: var(--cinza);
+  line-height: 1.5;
+  min-height: 33px;
+  overflow-wrap: anywhere;
+}
+.preco {
+  color: var(--verde);
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 13px;
+}
+.moeda {
+  font-size: 10px;
+  font-weight: 700;
+  color: #718075;
+}
+.comprar, .botao-principal {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--verde);
+  color: white;
+  font-size: 11px;
+  letter-spacing: .35px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.comprar:hover, .botao-principal:hover { background: var(--verde2); }
+.comprar:disabled, .botao-principal:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+.estado {
+  text-align: center;
+  padding: 35px 15px;
+  color: var(--cinza);
+  font-size: 13px;
+  line-height: 1.65;
+  grid-column: 1 / -1;
+  background: white;
+  border: 1px dashed #dce5da;
+  border-radius: 14px;
+}
+.estado strong {
+  display: block;
+  color: var(--verde);
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+.historico-lista { display: grid; gap: 10px; }
+.compra {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 13px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+.compra strong {
+  display: block;
+  color: var(--verde);
+  margin-bottom: 5px;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.compra small {
+  display: block;
+  color: var(--cinza);
+  line-height: 1.6;
+  font-size: 11px;
+}
+.compra-valor {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 800;
+  color: var(--verde);
+  font-size: 13px;
+}
+footer {
+  border-top: 1px solid #e0e6df;
+  text-align: center;
+  padding: 23px 15px;
+  color: var(--cinza);
+  font-size: 10px;
+  line-height: 1.8;
+  background: #f0f3ef;
+}
+footer strong {
+  color: var(--verde);
+  letter-spacing: 1.4px;
+}
+.modal-fundo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #07140ed9;
+  z-index: 1000;
+  padding: 16px;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+}
+.modal-fundo.aberto { display: flex; }
+.modal {
+  position: relative;
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 65px #0005;
+}
+.modal-fechar {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #e5e9e2;
+  border-radius: 50%;
+  background: #ffffffed;
+  color: var(--verde);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 2;
+}
+.modal-foto {
+  height: clamp(210px, 42vh, 280px);
+  background: linear-gradient(145deg, #f1f5ef, #e6eee5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 18px;
+}
+.modal-conteudo { padding: 19px; }
+.modal-conteudo h2 {
+  margin: 11px 0 8px;
+  font-size: 24px;
+  overflow-wrap: anywhere;
+}
+.modal-descricao {
+  color: var(--cinza);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.preco-unitario {
+  margin-top: 17px;
+  color: var(--cinza);
+  font-size: 11px;
+}
+.preco-unitario strong {
+  display: block;
+  color: var(--verde);
+  font-size: 21px;
+  margin-top: 5px;
+}
+.quantidade-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 13px 0;
+  border-top: 1px solid #edf0eb;
+}
+.quantidade-linha label { font-size: 13px; font-weight: 800; }
+.controle-qtd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0f4ef;
+  border: 1px solid #e5ebe3;
+  border-radius: 12px;
+  padding: 5px;
+}
+.controle-qtd button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5eae3;
+  border-radius: 9px;
+  background: white;
+  color: var(--verde);
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.controle-qtd button:disabled { opacity: .35; }
+.controle-qtd strong { min-width: 20px; text-align: center; }
+.total-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--borda);
+  margin-top: 3px;
+  padding-top: 16px;
+}
+.total-linha span { font-size: 12px; color: var(--cinza); }
+.total-linha strong { font-size: 21px; color: var(--verde); text-align: right; }
+.botao-secundario {
+  width: 100%;
+  margin-top: 9px;
+  padding: 12px;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: white;
+  color: var(--verde);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.nota-seguranca {
+  font-size: 10px;
+  color: var(--cinza);
+  line-height: 1.55;
+  margin: 12px 0 0;
+}
+@media (min-width: 600px) {
+  .grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+  .info { padding: 14px; }
+  .foto { height: 185px; }
+}
+@media (min-width: 850px) {
+  .grade { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 17px; }
+  main { padding-bottom: 48px; }
+}
 </style>
 </head>
 
@@ -87,39 +475,36 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 <header>
   <div class="topo">
     <div class="topo-linha">
-      <div class="marca">SANTA LUZIA TOMATES</div>
+      <div class="marca"><span class="marca-simbolo">🍅</span> SANTA LUZIA TOMATES</div>
       <div class="saldo" id="painelSaldo">
         <small>SEU SALDO STACOIN</small>
         <strong id="valorSaldo">— STACOIN</strong>
       </div>
     </div>
-    <h1>🍅 Lojinha da Correria</h1>
+    <h1>Lojinha da Correria</h1>
     <p>Abasteça sua viagem. Sua parada começa aqui.</p>
   </div>
 </header>
 
 <div class="faixa">
   <div class="aviso">
-    🛒 <strong>Bem-vindo à conveniência!</strong><br>
-    Confira os produtos disponíveis. Você pode explorar a loja
-    sem entrar na conta. Para comprar, é necessário ter cadastro
-    aprovado e saldo STACOIN suficiente.
+    <span class="aviso-icone">🛒</span>
+    <div><strong>Bem-vindo à conveniência!</strong><br>
+      Confira os produtos disponíveis. Você pode explorar a loja sem entrar na conta.
+      Para comprar, é necessário ter cadastro aprovado e saldo STACOIN suficiente.
+    </div>
   </div>
 </div>
 
 <main>
   <div class="abas" role="tablist" aria-label="Seções da lojinha">
-    <button class="aba ativa" id="abaLoja" type="button"
-      role="tab" aria-selected="true">🛒 Loja</button>
-    <button class="aba" id="abaHistorico" type="button"
-      role="tab" aria-selected="false">🧾 Minhas compras</button>
+    <button class="aba ativa" id="abaLoja" type="button" role="tab" aria-selected="true">🛒 Loja</button>
+    <button class="aba" id="abaHistorico" type="button" role="tab" aria-selected="false">🧾 Minhas compras</button>
   </div>
 
   <section class="painel" id="painelLoja">
     <div class="barra">
-      <input id="busca" type="search"
-        placeholder="🔎 Buscar produto..."
-        aria-label="Buscar produto">
+      <input id="busca" type="search" placeholder="Buscar produto pelo nome..." aria-label="Buscar produto">
     </div>
 
     <div class="categorias" id="categorias">
@@ -138,10 +523,7 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     </div>
 
     <section class="grade" id="produtos" aria-live="polite">
-      <div class="estado">
-        <strong>Carregando a lojinha...</strong>
-        Aguarde um instante.
-      </div>
+      <div class="estado"><strong>Carregando a lojinha...</strong>Aguarde um instante.</div>
     </section>
   </section>
 
@@ -151,13 +533,9 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
       <span id="contadorHistorico"></span>
     </div>
     <div id="historico" class="historico-lista">
-      <div class="estado">
-        <strong>Seu histórico aparecerá aqui</strong>
-        Entre na sua conta para consultar suas compras.
-      </div>
+      <div class="estado"><strong>Seu histórico aparecerá aqui</strong>Entre na sua conta para consultar suas compras.</div>
     </div>
-    <button type="button" class="botao-secundario"
-      id="atualizarHistorico">Atualizar histórico</button>
+    <button type="button" class="botao-secundario" id="atualizarHistorico">Atualizar histórico</button>
   </section>
 </main>
 
@@ -167,15 +545,10 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
   © Santa Luzia Tomates
 </footer>
 
-<div class="modal-fundo" id="modalFundo"
-  role="dialog" aria-modal="true" aria-labelledby="modalNome">
+<div class="modal-fundo" id="modalFundo" role="dialog" aria-modal="true" aria-labelledby="modalNome">
   <div class="modal">
-    <button type="button" class="modal-fechar"
-      id="fecharModal" aria-label="Fechar detalhes">×</button>
-
-    <div class="modal-foto" id="modalFoto">
-      <span class="sem-foto">🛍️</span>
-    </div>
+    <button type="button" class="modal-fechar" id="fecharModal" aria-label="Fechar detalhes">×</button>
+    <div class="modal-foto" id="modalFoto"><span class="sem-foto">🛍️</span></div>
 
     <div class="modal-conteudo">
       <span class="tag" id="modalCategoria">Produto</span>
@@ -190,11 +563,9 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
       <div class="quantidade-linha">
         <label for="quantidadeAtual">Quantidade</label>
         <div class="controle-qtd">
-          <button type="button" id="menos"
-            aria-label="Diminuir quantidade">−</button>
+          <button type="button" id="menos" aria-label="Diminuir quantidade">−</button>
           <strong id="quantidadeAtual">1</strong>
-          <button type="button" id="mais"
-            aria-label="Aumentar quantidade">+</button>
+          <button type="button" id="mais" aria-label="Aumentar quantidade">+</button>
         </div>
       </div>
 
@@ -203,10 +574,8 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
         <strong id="totalCompra">0 STACOIN</strong>
       </div>
 
-      <button type="button" class="botao-principal"
-        id="finalizarCompra">FINALIZAR COMPRA</button>
-      <button type="button" class="botao-secundario"
-        id="cancelarCompra">Continuar olhando</button>
+      <button type="button" class="botao-principal" id="finalizarCompra">FINALIZAR COMPRA</button>
+      <button type="button" class="botao-secundario" id="cancelarCompra">Continuar olhando</button>
 
       <p class="nota-seguranca">
         A compra só será concluída após sua confirmação.
@@ -222,15 +591,10 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 (() => {
   'use strict';
 
-  const SUPABASE_URL =
-    'https://cckypvqophyviphqhich.supabase.co';
+  const SUPABASE_URL = 'https://cckypvqophyviphqhich.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
 
-  const SUPABASE_KEY =
-    'sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
-
-  const cliente = window.supabase.createClient(
-    SUPABASE_URL, SUPABASE_KEY
-  );
+  const cliente = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const area = document.getElementById('produtos');
   const contador = document.getElementById('contador');
@@ -252,28 +616,27 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
   let todosProdutos = [];
   let categoriaAtual = 'todos';
   let motoristaAtual = null;
-  let saldoAtual = null;
   let produtoSelecionado = null;
   let quantidade = 1;
   let compraEmAndamento = false;
   let carregandoHistorico = false;
 
   const nomesCategorias = {
-    bebidas:'Bebidas',
-    lanches:'Lanches',
-    doces:'Doces',
-    chicletes:'Chicletes',
-    farmacia:'Farmácia',
-    outros:'Outros'
+    bebidas: 'Bebidas',
+    lanches: 'Lanches',
+    doces: 'Doces',
+    chicletes: 'Chicletes',
+    farmacia: 'Farmácia',
+    outros: 'Outros'
   };
 
   function escapar(valor) {
     return String(valor ?? '').replace(/[&<>"']/g, letra => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
     })[letra]);
   }
 
@@ -281,8 +644,7 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     if (!url) return '';
     try {
       const endereco = new URL(url);
-      if (endereco.protocol === 'https:' ||
-          endereco.protocol === 'http:') {
+      if (endereco.protocol === 'https:' || endereco.protocol === 'http:') {
         return endereco.href;
       }
     } catch (_) {}
@@ -299,10 +661,9 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 
   async function atualizarConta() {
     motoristaAtual = null;
-    saldoAtual = null;
     painelSaldo.style.display = 'none';
 
-    const {data:sessaoData,error:sessaoErro} =
+    const { data: sessaoData, error: sessaoErro } =
       await cliente.auth.getSession();
 
     if (sessaoErro || !sessaoData.session) return;
@@ -310,24 +671,23 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     const usuario = sessaoData.session.user;
     if (!usuario) return;
 
-    const {data:motorista,error:motoristaErro} = await cliente
+    const { data: motorista, error: motoristaErro } = await cliente
       .from('motoristas')
       .select('id,status,salario_ativo')
-      .eq('user_id',usuario.id)
+      .eq('user_id', usuario.id)
       .maybeSingle();
 
     if (motoristaErro || !motorista) return;
     motoristaAtual = motorista;
 
-    const {data:carteira,error:carteiraErro} = await cliente
+    const { data: carteira, error: carteiraErro } = await cliente
       .from('stacoin_carteiras')
       .select('saldo')
-      .eq('motorista_id',motorista.id)
+      .eq('motorista_id', motorista.id)
       .maybeSingle();
 
     if (!carteiraErro && carteira) {
-      saldoAtual = Number(carteira.saldo || 0);
-      valorSaldo.textContent = formatarSaldo(saldoAtual);
+      valorSaldo.textContent = formatarSaldo(carteira.saldo);
       painelSaldo.style.display = 'block';
     }
   }
@@ -337,8 +697,7 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 
     const filtrados = todosProdutos.filter(produto => {
       const combinaCategoria =
-        categoriaAtual === 'todos' ||
-        produto.categoria === categoriaAtual;
+        categoriaAtual === 'todos' || produto.categoria === categoriaAtual;
 
       const texto = [
         produto.nome,
@@ -363,31 +722,25 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 
     area.innerHTML = filtrados.map(produto => {
       const imagem = imagemSegura(produto.imagem_url);
-      const categoria =
-        nomesCategorias[produto.categoria] || 'Outros';
+      const categoria = nomesCategorias[produto.categoria] || 'Outros';
 
       return `
         <article class="produto">
           <div class="foto">
             ${imagem
-              ? `<img src="${escapar(imagem)}"
-                  alt="${escapar(produto.nome)}" loading="lazy">
-                 <span class="sem-foto"
-                  style="display:none">🛍️</span>`
+              ? `<img src="${escapar(imagem)}" alt="${escapar(produto.nome)}" loading="lazy">
+                 <span class="sem-foto" style="display:none">🛍️</span>`
               : '<span class="sem-foto">🛍️</span>'}
           </div>
           <div class="info">
             <span class="tag">${escapar(categoria)}</span>
             <h3 class="nome">${escapar(produto.nome)}</h3>
-            <div class="descricao">${
-              escapar(produto.descricao || 'Confira este produto.')
-            }</div>
+            <div class="descricao">${escapar(produto.descricao || 'Confira este produto.')}</div>
             <div class="preco">
               ${formatarNumero(produto.preco)}
               <span class="moeda">STACOIN</span>
             </div>
-            <button class="comprar" type="button"
-              data-ver-produto="${Number(produto.id)}">
+            <button class="comprar" type="button" data-ver-produto="${Number(produto.id)}">
               VER PRODUTO
             </button>
           </div>
@@ -403,17 +756,13 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     area.querySelectorAll('.foto img').forEach(img => {
       img.addEventListener('error', () => {
         img.style.display = 'none';
-        if (img.nextElementSibling) {
-          img.nextElementSibling.style.display = 'block';
-        }
-      }, {once:true});
+        if (img.nextElementSibling) img.nextElementSibling.style.display = 'block';
+      }, { once: true });
     });
   }
 
   function abrirDetalhes(produtoId) {
-    const produto = todosProdutos.find(
-      p => Number(p.id) === produtoId
-    );
+    const produto = todosProdutos.find(p => Number(p.id) === produtoId);
 
     if (!produto) {
       alert('Produto não encontrado. Atualize a página.');
@@ -424,19 +773,15 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     quantidade = 1;
 
     modalNome.textContent = produto.nome || 'Produto';
-    modalDescricao.textContent =
-      produto.descricao || 'Confira este produto.';
-    modalCategoria.textContent =
-      nomesCategorias[produto.categoria] || 'Outros';
+    modalDescricao.textContent = produto.descricao || 'Confira este produto.';
+    modalCategoria.textContent = nomesCategorias[produto.categoria] || 'Outros';
     modalPrecoUnitario.textContent = formatarSaldo(produto.preco);
 
     const imagem = imagemSegura(produto.imagem_url);
 
     modalFoto.innerHTML = imagem
-      ? `<img src="${escapar(imagem)}"
-           alt="${escapar(produto.nome)}">
-         <span class="sem-foto"
-           style="display:none">🛍️</span>`
+      ? `<img src="${escapar(imagem)}" alt="${escapar(produto.nome)}">
+         <span class="sem-foto" style="display:none">🛍️</span>`
       : '<span class="sem-foto">🛍️</span>';
 
     const img = modalFoto.querySelector('img');
@@ -444,10 +789,8 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     if (img) {
       img.addEventListener('error', () => {
         img.style.display = 'none';
-        if (img.nextElementSibling) {
-          img.nextElementSibling.style.display = 'block';
-        }
-      }, {once:true});
+        if (img.nextElementSibling) img.nextElementSibling.style.display = 'block';
+      }, { once: true });
     }
 
     atualizarQuantidade();
@@ -468,9 +811,7 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     document.getElementById('menos').disabled = quantidade <= 1;
     document.getElementById('mais').disabled = quantidade >= 99;
 
-    const total =
-      Number(produtoSelecionado?.preco || 0) * quantidade;
-
+    const total = Number(produtoSelecionado?.preco || 0) * quantidade;
     totalCompra.textContent = formatarSaldo(total);
     finalizarCompra.disabled = compraEmAndamento;
   }
@@ -488,13 +829,11 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
       return;
     }
 
-    const {data:sessaoData,error:sessaoErro} =
+    const { data: sessaoData, error: sessaoErro } =
       await cliente.auth.getSession();
 
     if (sessaoErro || !sessaoData.session) {
-      alert(
-        'Para comprar, entre na sua conta pela Santa Luzia Central.'
-      );
+      alert('Para comprar, entre na sua conta pela Santa Luzia Central.');
       return;
     }
 
@@ -537,7 +876,7 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
     atualizarQuantidade();
 
     try {
-      const {data,error} = await cliente.rpc(
+      const { data, error } = await cliente.rpc(
         'comprar_produto_conveniencia',
         {
           p_produto_id: Number(produto.id),
@@ -547,10 +886,8 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 
       if (error) {
         console.error('Erro na compra:', error);
-        alert(
-          'Não foi possível concluir a compra: ' +
-          (error.message || 'tente novamente.')
-        );
+        alert('Não foi possível concluir a compra: ' +
+          (error.message || 'tente novamente.'));
         return;
       }
 
@@ -577,12 +914,9 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
       if (!document.getElementById('painelHistorico').hidden) {
         await carregarHistorico();
       }
-
     } catch (erro) {
       console.error('Erro inesperado na compra:', erro);
-      alert(
-        'Ocorreu um erro inesperado. Confira seu saldo antes de tentar novamente.'
-      );
+      alert('Ocorreu um erro inesperado. Confira seu saldo antes de tentar novamente.');
     } finally {
       compraEmAndamento = false;
       finalizarCompra.textContent = 'FINALIZAR COMPRA';
@@ -597,29 +931,26 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
         Buscando os produtos disponíveis.
       </div>`;
 
-    const {data,error} = await cliente
+    const { data, error } = await cliente
       .from('conveniencia_produtos')
       .select('id,nome,descricao,categoria,preco,imagem_url,ativo')
-      .eq('ativo',true)
-      .order('criado_em',{ascending:false});
+      .eq('ativo', true)
+      .order('criado_em', { ascending: false });
 
     if (error) {
-      console.error('Erro ao carregar produtos:',error);
+      console.error('Erro ao carregar produtos:', error);
       contador.textContent = 'Não foi possível carregar';
-
       area.innerHTML = `
         <div class="estado">
           <strong>Não conseguimos carregar os produtos.</strong>
           Confira sua conexão e tente novamente.
           <br><br>
-          <button class="categoria ativa"
-            id="tentarNovamente" type="button">
+          <button class="categoria ativa" id="tentarNovamente" type="button">
             Tentar novamente
           </button>
         </div>`;
-
       document.getElementById('tentarNovamente')
-        .addEventListener('click',carregarProdutos);
+        .addEventListener('click', carregarProdutos);
       return;
     }
 
@@ -636,11 +967,10 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
         <strong>Carregando histórico...</strong>
         Consultando suas compras.
       </div>`;
-
     contadorHistorico.textContent = '';
 
     try {
-      const {data:sessaoData,error:sessaoErro} =
+      const { data: sessaoData, error: sessaoErro } =
         await cliente.auth.getSession();
 
       if (sessaoErro || !sessaoData.session) {
@@ -652,11 +982,10 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
         return;
       }
 
-      const {data,error} =
-        await cliente.rpc('listar_historico_conveniencia');
+      const { data, error } = await cliente.rpc('listar_historico_conveniencia');
 
       if (error) {
-        console.error('Erro ao carregar histórico:',error);
+        console.error('Erro ao carregar histórico:', error);
         historico.innerHTML = `
           <div class="estado">
             <strong>Não conseguimos carregar o histórico</strong>
@@ -665,9 +994,7 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
         return;
       }
 
-      const compras = Array.isArray(data)
-        ? data
-        : (data ? [data] : []);
+      const compras = Array.isArray(data) ? data : (data ? [data] : []);
 
       contadorHistorico.textContent = compras.length +
         (compras.length === 1 ? ' compra' : ' compras');
@@ -682,30 +1009,20 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
       }
 
       historico.innerHTML = compras.map(item => {
-        const nome =
-          item.product_name ?? item.produto_nome ??
+        const nome = item.product_name ?? item.produto_nome ??
           item.produto ?? 'Produto';
-
-        const qtd = Number(
-          item.quantity ?? item.quantidade ?? 1
-        );
-
-        const valor = Number(
-          item.value ?? item.valor ?? item.total ?? 0
-        );
-
-        const dataCompra =
-          item.date ?? item.created_at ?? item.criado_em ?? null;
+        const qtd = Number(item.quantity ?? item.quantidade ?? 1);
+        const valor = Number(item.value ?? item.valor ?? item.total ?? 0);
+        const dataCompra = item.date ?? item.created_at ?? item.criado_em ?? null;
 
         let dataTexto = 'Data não informada';
 
         if (dataCompra) {
           const dataObj = new Date(dataCompra);
-
           if (!Number.isNaN(dataObj.getTime())) {
             dataTexto = dataObj.toLocaleString('pt-BR', {
-              dateStyle:'short',
-              timeStyle:'short'
+              dateStyle: 'short',
+              timeStyle: 'short'
             });
           }
         }
@@ -720,7 +1037,6 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
             <div class="compra-valor">${formatarSaldo(valor)}</div>
           </article>`;
       }).join('');
-
     } finally {
       carregandoHistorico = false;
     }
@@ -731,83 +1047,67 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
 
     document.getElementById('painelLoja').hidden = !lojaAtiva;
     document.getElementById('painelHistorico').hidden = lojaAtiva;
-
-    document.getElementById('abaLoja')
-      .classList.toggle('ativa',lojaAtiva);
-    document.getElementById('abaHistorico')
-      .classList.toggle('ativa',!lojaAtiva);
-
-    document.getElementById('abaLoja')
-      .setAttribute('aria-selected',String(lojaAtiva));
-    document.getElementById('abaHistorico')
-      .setAttribute('aria-selected',String(!lojaAtiva));
+    document.getElementById('abaLoja').classList.toggle('ativa', lojaAtiva);
+    document.getElementById('abaHistorico').classList.toggle('ativa', !lojaAtiva);
+    document.getElementById('abaLoja').setAttribute('aria-selected', String(lojaAtiva));
+    document.getElementById('abaHistorico').setAttribute('aria-selected', String(!lojaAtiva));
 
     if (!lojaAtiva) carregarHistorico();
   }
 
-  document.getElementById('menos').addEventListener('click',() => {
+  document.getElementById('menos').addEventListener('click', () => {
     if (quantidade > 1) {
       quantidade--;
       atualizarQuantidade();
     }
   });
 
-  document.getElementById('mais').addEventListener('click',() => {
+  document.getElementById('mais').addEventListener('click', () => {
     if (quantidade < 99) {
       quantidade++;
       atualizarQuantidade();
     }
   });
 
-  document.getElementById('fecharModal')
-    .addEventListener('click',fecharDetalhes);
+  document.getElementById('fecharModal').addEventListener('click', fecharDetalhes);
+  document.getElementById('cancelarCompra').addEventListener('click', fecharDetalhes);
+  finalizarCompra.addEventListener('click', confirmarCompra);
 
-  document.getElementById('cancelarCompra')
-    .addEventListener('click',fecharDetalhes);
-
-  finalizarCompra.addEventListener('click',confirmarCompra);
-
-  modalFundo.addEventListener('click',event => {
+  modalFundo.addEventListener('click', event => {
     if (event.target === modalFundo) fecharDetalhes();
   });
 
-  document.addEventListener('keydown',event => {
-    if (event.key === 'Escape' &&
-        modalFundo.classList.contains('aberto')) {
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && modalFundo.classList.contains('aberto')) {
       fecharDetalhes();
     }
   });
 
   document.getElementById('abaLoja')
-    .addEventListener('click',() => trocarAba('loja'));
-
+    .addEventListener('click', () => trocarAba('loja'));
   document.getElementById('abaHistorico')
-    .addEventListener('click',() => trocarAba('historico'));
-
+    .addEventListener('click', () => trocarAba('historico'));
   document.getElementById('atualizarHistorico')
-    .addEventListener('click',carregarHistorico);
+    .addEventListener('click', carregarHistorico);
 
-  busca.addEventListener('input',mostrarProdutos);
+  busca.addEventListener('input', mostrarProdutos);
 
-  document.querySelectorAll('#categorias .categoria')
-    .forEach(botao => {
-      botao.addEventListener('click',() => {
-        document.querySelectorAll('#categorias .categoria')
-          .forEach(item => item.classList.remove('ativa'));
-
-        botao.classList.add('ativa');
-        categoriaAtual = botao.dataset.cat;
-        mostrarProdutos();
-      });
+  document.querySelectorAll('#categorias .categoria').forEach(botao => {
+    botao.addEventListener('click', () => {
+      document.querySelectorAll('#categorias .categoria')
+        .forEach(item => item.classList.remove('ativa'));
+      botao.classList.add('ativa');
+      categoriaAtual = botao.dataset.cat;
+      mostrarProdutos();
     });
+  });
 
   async function iniciar() {
     try {
       await atualizarConta();
     } catch (erro) {
-      console.error('Erro ao verificar conta:',erro);
+      console.error('Erro ao verificar conta:', erro);
     }
-
     await carregarProdutos();
   }
 
@@ -818,9 +1118,9 @@ footer{border-top:1px solid #e0e6df;text-align:center;padding:22px 15px;color:va
       try {
         await atualizarConta();
       } catch (erro) {
-        console.error('Erro ao atualizar conta:',erro);
+        console.error('Erro ao atualizar conta:', erro);
       }
-    },0);
+    }, 0);
   });
 })();
 </script>
