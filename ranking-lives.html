@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#14532d">
   <title>Ranking das Lives | Santa Luzia Tomates</title>
-
   <style>
     :root {
       --verde: #14532d;
@@ -15,16 +14,13 @@
       --texto: #1f2937;
       --dourado: #eab308;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       background: var(--fundo);
       color: var(--texto);
       font-family: Arial, Helvetica, sans-serif;
     }
-
     header {
       background: var(--verde);
       color: white;
@@ -32,29 +28,24 @@
       padding: 30px 16px 24px;
       border-bottom: 5px solid #b91c1c;
     }
-
     .icone {
       font-size: 38px;
       margin-bottom: 8px;
     }
-
     header h1 {
       margin: 0;
       font-size: clamp(23px, 5vw, 34px);
     }
-
     header p {
       margin: 9px 0 0;
       color: #dcfce7;
       letter-spacing: 2px;
       font-size: 13px;
     }
-
     main {
       width: min(900px, 94%);
       margin: 26px auto 45px;
     }
-
     .painel {
       background: white;
       padding: 20px;
@@ -62,26 +53,22 @@
       box-shadow: 0 4px 18px #0000000b;
       margin-bottom: 20px;
     }
-
     .seletor {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       align-items: end;
     }
-
     .campo {
       flex: 1;
       min-width: 140px;
     }
-
     label {
       display: block;
       font-weight: bold;
       font-size: 13px;
       margin-bottom: 8px;
     }
-
     select {
       width: 100%;
       min-height: 44px;
@@ -92,21 +79,18 @@
       color: var(--texto);
       font-size: 15px;
     }
-
     .mes-titulo {
       text-align: center;
       color: var(--verde);
       margin: 0 0 22px;
       font-size: 21px;
     }
-
     .podio {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
       align-items: end;
     }
-
     .colocado {
       min-width: 0;
       text-align: center;
@@ -115,66 +99,54 @@
       border: 1px solid #e5e7eb;
       overflow-wrap: anywhere;
     }
-
     .colocado.primeiro {
       background: #fffbeb;
       border-color: #facc15;
       padding-top: 23px;
     }
-
     .colocado.segundo { background: #f8fafc; }
     .colocado.terceiro { background: #fff7ed; }
-
     .medalha {
       font-size: 36px;
       margin-bottom: 8px;
     }
-
     .posicao {
       font-size: 12px;
       color: #6b7280;
       font-weight: bold;
       text-transform: uppercase;
     }
-
     .nome {
       font-weight: bold;
       font-size: clamp(13px, 2.7vw, 18px);
       margin: 10px 0;
       overflow-wrap: anywhere;
     }
-
     .pontos {
       color: var(--verde);
       font-weight: bold;
       font-size: clamp(19px, 4vw, 27px);
     }
-
     .unidade {
       color: #6b7280;
       font-size: 11px;
       margin-top: 3px;
     }
-
     .mensagem {
       text-align: center;
       color: #6b7280;
       padding: 25px 8px;
       line-height: 1.6;
     }
-
     .erro { color: #b91c1c; }
-
     .historico-titulo {
       margin: 0 0 15px;
       font-size: 19px;
     }
-
     .historico-lista {
       display: grid;
       gap: 10px;
     }
-
     .mes-item {
       display: flex;
       justify-content: space-between;
@@ -190,21 +162,17 @@
       cursor: pointer;
       font-size: 14px;
     }
-
     .mes-item:hover {
       border-color: var(--verde2);
       background: #f0fdf4;
     }
-
     .mes-item strong { color: var(--verde); }
-
     .rodape {
       text-align: center;
       font-size: 12px;
       color: #6b7280;
       padding: 12px;
     }
-
     .linha-verde {
       width: 48px;
       height: 3px;
@@ -212,49 +180,126 @@
       margin: 0 auto 20px;
       border-radius: 5px;
     }
-
+    /* Botão para voltar à página inicial */
+    .voltar-inicio {
+      display: block;
+      width: fit-content;
+      max-width: 94%;
+      margin: 16px auto;
+      padding: 12px 18px;
+      background: #176b3a;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .voltar-inicio:hover {
+      background: #12552e;
+    }
+    /* Área de compra de moedas do TikTok */
+    .apoio-lives {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 22px 18px;
+      margin: 16px auto 22px;
+      text-align: center;
+      box-shadow: 0 4px 18px #0000000b;
+    }
+    .apoio-lives h2 {
+      color: var(--verde);
+      font-size: 20px;
+      margin: 0 0 10px;
+    }
+    .apoio-lives p {
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 auto 16px;
+      max-width: 540px;
+    }
+    .botao-moedas {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 360px;
+      min-height: 50px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      background: #b91c1c;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 12px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .botao-moedas:hover {
+      background: #991b1b;
+      transform: translateY(-1px);
+    }
+    .aviso-moedas {
+      display: block;
+      margin-top: 12px;
+      font-size: 11px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
     @media (max-width: 430px) {
-      main { width: 94%; margin-top: 17px; }
+      main {
+        width: 94%;
+        margin-top: 17px;
+      }
       .painel { padding: 15px; }
       .podio { gap: 6px; }
-      .colocado { padding-left: 4px; padding-right: 4px; }
+      .colocado {
+        padding-left: 4px;
+        padding-right: 4px;
+      }
       .medalha { font-size: 29px; }
+      .apoio-lives {
+        padding: 19px 14px;
+      }
     }
   </style>
 </head>
-
 <body>
   <header>
     <div class="icone">🏆🍅</div>
     <h1>Ranking das Lives</h1>
     <p>SANTA LUZIA TOMATES</p>
   </header>
-
-<a href="index.html" class="voltar-inicio">
-  ← Voltar para a página inicial
-</a>
-
-<style>
-  .voltar-inicio {
-    display: block;
-    width: fit-content;
-    margin: 16px auto;
-    padding: 12px 18px;
-    background: #176b3a;
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .voltar-inicio:hover {
-    background: #12552e;
-  }
-</style>
-  
+  <a href="index.html" class="voltar-inicio">
+    ← Voltar para a página inicial
+  </a>
+  <!-- Botão de compra de moedas -->
+  <section class="apoio-lives">
+    <h2>🪙 Apoie nossas lives!</h2>
+    <p>
+      Quer ajudar a Santa Luzia a subir no ranking durante as lives?
+      Compre moedas pelo TikTok e use seus presentes durante as
+      transmissões para apoiar nossa equipe!
+    </p>
+    <a
+      href="https://www.tiktok.com/coin?rc=JFQPTRLU&rie="
+      class="botao-moedas"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🪙 COMPRAR MOEDAS DO TIKTOK
+    </a>
+    <span class="aviso-moedas">
+      Você será direcionado à página de moedas do TikTok.
+      A compra é opcional e segue as condições da plataforma.
+    </span>
+  </section>
   <main>
     <section class="painel">
       <div class="seletor">
@@ -275,73 +320,65 @@
             <option value="12">Dezembro</option>
           </select>
         </div>
-
         <div class="campo">
           <label for="ano">Ano</label>
           <select id="ano"></select>
         </div>
       </div>
     </section>
-
     <section class="painel" aria-live="polite">
-      <h2 class="mes-titulo" id="tituloMes">Carregando ranking...</h2>
+      <h2 class="mes-titulo" id="tituloMes">
+        Carregando ranking...
+      </h2>
       <div class="linha-verde"></div>
       <div id="resultado" class="mensagem">
         Buscando os resultados...
       </div>
     </section>
-
     <section class="painel">
       <h2 class="historico-titulo">📅 Rankings anteriores</h2>
       <div id="historico" class="historico-lista mensagem">
         Carregando histórico...
       </div>
     </section>
-
     <div class="rodape">
       Santa Luzia Tomates • Ranking oficial das lives
     </div>
   </main>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // Configuração do projeto Supabase
-    const SUPABASE_URL = "https://cckypvqophyviphqhich.supabase.co";
-
-    // Use a mesma Publishable key utilizada na página ADM.
-    const SUPABASE_ANON_KEY = "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
-
+    const SUPABASE_URL =
+      "https://cckypvqophyviphqhich.supabase.co";
+    // Chave pública utilizada pela página
+    const SUPABASE_ANON_KEY =
+      "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
     const db = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_ANON_KEY
     );
-
     const nomesMeses = [
       "Janeiro", "Fevereiro", "Março", "Abril",
       "Maio", "Junho", "Julho", "Agosto",
       "Setembro", "Outubro", "Novembro", "Dezembro"
     ];
-
     const mesSelect = document.getElementById("mes");
     const anoSelect = document.getElementById("ano");
     const resultado = document.getElementById("resultado");
     const tituloMes = document.getElementById("tituloMes");
     const historico = document.getElementById("historico");
-
     const agora = new Date();
     const anoAtual = agora.getFullYear();
     const mesAtual = agora.getMonth() + 1;
-
+    // Preenche a lista de anos
     for (let ano = anoAtual; ano >= 2024; ano--) {
       const opcao = document.createElement("option");
       opcao.value = ano;
       opcao.textContent = ano;
       anoSelect.appendChild(opcao);
     }
-
     mesSelect.value = String(mesAtual);
     anoSelect.value = String(anoAtual);
-
     function escapar(texto) {
       return String(texto ?? "").replace(/[&<>"']/g, caractere => ({
         "&": "&amp;",
@@ -351,28 +388,25 @@
         "'": "&#39;"
       })[caractere]);
     }
-
     function mostrarErro(texto) {
       resultado.className = "mensagem erro";
       resultado.textContent = texto;
     }
-
     function formatarPontos(valor) {
       return Number(valor || 0).toLocaleString("pt-BR");
     }
-
+    // Carrega o ranking do mês escolhido
     async function carregarRanking(ano, mes) {
-      tituloMes.textContent = `Ranking de ${nomesMeses[mes - 1]} de ${ano}`;
+      tituloMes.textContent =
+        `Ranking de ${nomesMeses[mes - 1]} de ${ano}`;
       resultado.className = "mensagem";
       resultado.textContent = "Buscando os resultados...";
-
       const { data, error } = await db
         .from("ranking_lives_mensal")
         .select("*")
         .eq("ano", ano)
         .eq("mes", mes)
         .maybeSingle();
-
       if (error) {
         console.error(error);
         mostrarErro(
@@ -380,14 +414,12 @@
         );
         return;
       }
-
       if (!data) {
         resultado.className = "mensagem";
         resultado.textContent =
           "Ainda não há ranking publicado para este mês. Volte em breve!";
         return;
       }
-
       const colocados = [
         {
           classe: "segundo",
@@ -411,100 +443,92 @@
           pontos: data.terceiro_pontos
         }
       ];
-
       resultado.className = "podio";
       resultado.replaceChildren();
-
       colocados.forEach(item => {
         const cartao = document.createElement("div");
         cartao.className = `colocado ${item.classe}`;
-
         const medalha = document.createElement("div");
         medalha.className = "medalha";
         medalha.textContent = item.medalha;
-
         const posicao = document.createElement("div");
         posicao.className = "posicao";
         posicao.textContent = item.posicao;
-
         const nome = document.createElement("div");
         nome.className = "nome";
         nome.textContent = item.nome || "A definir";
-
         const pontos = document.createElement("div");
         pontos.className = "pontos";
         pontos.textContent = formatarPontos(item.pontos);
-
         const unidade = document.createElement("div");
         unidade.className = "unidade";
         unidade.textContent = "pontos";
-
-        cartao.append(medalha, posicao, nome, pontos, unidade);
+        cartao.append(
+          medalha,
+          posicao,
+          nome,
+          pontos,
+          unidade
+        );
         resultado.appendChild(cartao);
       });
     }
-
+    // Carrega o histórico dos rankings publicados
     async function carregarHistorico() {
       historico.className = "historico-lista";
       historico.textContent = "Carregando histórico...";
-
       const { data, error } = await db
         .from("ranking_lives_mensal")
         .select("ano, mes, primeiro_nome, primeiro_pontos")
         .order("ano", { ascending: false })
         .order("mes", { ascending: false });
-
       if (error) {
         console.error(error);
         historico.className = "mensagem erro";
-        historico.textContent = "Não foi possível carregar os rankings anteriores.";
+        historico.textContent =
+          "Não foi possível carregar os rankings anteriores.";
         return;
       }
-
       historico.replaceChildren();
-
       if (!data || data.length === 0) {
         historico.className = "mensagem";
-        historico.textContent = "Os rankings publicados aparecerão aqui.";
+        historico.textContent =
+          "Os rankings publicados aparecerão aqui.";
         return;
       }
-
       data.forEach(item => {
         const botao = document.createElement("button");
         botao.type = "button";
         botao.className = "mes-item";
-
         const nomeMes = document.createElement("span");
-        nomeMes.textContent = `${nomesMeses[item.mes - 1]} de ${item.ano}`;
-
+        nomeMes.textContent =
+          `${nomesMeses[item.mes - 1]} de ${item.ano}`;
         const vencedor = document.createElement("strong");
         vencedor.textContent = item.primeiro_nome
           ? `🥇 ${item.primeiro_nome}`
           : "Ver ranking";
-
         botao.append(nomeMes, vencedor);
-
         botao.addEventListener("click", () => {
           mesSelect.value = String(item.mes);
           anoSelect.value = String(item.ano);
           carregarRanking(item.ano, item.mes);
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
         });
-
         historico.appendChild(botao);
       });
     }
-
     function atualizarRanking() {
       carregarRanking(
         Number(anoSelect.value),
         Number(mesSelect.value)
       );
     }
-
     mesSelect.addEventListener("change", atualizarRanking);
     anoSelect.addEventListener("change", atualizarRanking);
-
+    // Inicialização da página
     atualizarRanking();
     carregarHistorico();
   </script>
