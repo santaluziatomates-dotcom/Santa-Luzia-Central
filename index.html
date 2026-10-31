@@ -49,53 +49,54 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: linear-gradient(135deg,#103b27,#174c32 60%,#226443);
+  background:
+    linear-gradient(90deg, #103b27, #226443 48%, #103b27);
   text-align: center;
-  padding: 34px 20px 30px;
-  border-bottom: 4px solid var(--vermelho);
+  padding: 30px 20px;
+  border-bottom: 5px solid #c93432;
   color: white;
 }
 
-.cabecalho::before,
-.cabecalho::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border: 1px solid rgba(255,255,255,.09);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
 .cabecalho::before {
-  width: 260px;
-  height: 260px;
-  top: -150px;
-  left: -90px;
+  content: "🌿";
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  font-size: 55px;
+  opacity: .25;
+  transform: rotate(-25deg);
+  z-index: -1;
 }
 
 .cabecalho::after {
-  width: 210px;
-  height: 210px;
-  bottom: -145px;
-  right: -55px;
+  content: "🍃";
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  font-size: 65px;
+  opacity: .25;
+  transform: rotate(25deg);
+  z-index: -1;
 }
 
 .logo {
-  width: 86px;
-  height: 86px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
+  padding: 7px;
+  background: white;
+  border-radius: 17px;
   margin-bottom: 12px;
-  filter: drop-shadow(0 5px 9px rgba(0,0,0,.18));
+  box-shadow: 0 5px 15px rgba(0,0,0,.18);
 }
 
 .cabecalho h1 {
+  color: white;
   font-size: 26px;
   margin-bottom: 7px;
   letter-spacing: 1px;
   font-weight: 800;
-  color: white;
 }
-
 .subtitulo {
   color: rgba(255,255,255,.78);
   font-size: 14px;
