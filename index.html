@@ -14,942 +14,1043 @@
   <style>
 
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f3f4f3;
-      color: #222;
-    }
-
-    .cabecalho {
-      position: relative;
-      background: #ffffff;
-      text-align: center;
-      padding: 28px 20px 25px;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .logo {
-      width: 82px;
-      height: 82px;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
-
-    .cabecalho h1 {
-      font-size: 28px;
-      margin-bottom: 6px;
-      letter-spacing: -0.6px;
-    }
-
-    .subtitulo {
-      color: #666;
-      font-size: 15px;
-    }
-
-    .selo {
-      display: inline-block;
-      margin-top: 13px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      background: #e9f3ec;
-      color: #176b3a;
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-    }
-
-    .stacoin-topo {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      display: none;
-      align-items: center;
-      gap: 7px;
-      background: #f8f4e7;
-      border: 1px solid #d6b24c;
-      border-radius: 14px;
-      padding: 7px 10px;
-      text-decoration: none;
-      color: #1f3d25;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-      transition: 0.2s;
-      z-index: 10;
-    }
-
-    .stacoin-topo:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(0,0,0,0.09);
-    }
-
-    .stacoin-moeda {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      overflow: hidden;
-      border-radius: 50%;
-    }
-
-    .stacoin-imagem {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-      display: block;
-      border-radius: 50%;
-      mix-blend-mode: multiply;
-    }
-
-    .stacoin-info {
-      text-align: left;
-      line-height: 1.05;
-    }
-
-    .stacoin-valor {
-      display: block;
-      font-size: 13px;
-      font-weight: bold;
-      color: #1f3d25;
-    }
-
-    .stacoin-label {
-      display: block;
-      font-size: 8px;
-      color: #777;
-      margin-top: 3px;
-      letter-spacing: 0.4px;
-    }
-
-    .area-login {
-      max-width: 850px;
-      margin: 0 auto;
-      padding: 15px 18px 0;
-    }
-
-    .login-card {
-      background: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 17px;
-      padding: 13px 15px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .login-icone {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      background: #f3f4f3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 21px;
-      flex-shrink: 0;
-    }
-
-    .login-info {
-      flex: 1;
-      min-width: 0;
-      text-align: left;
-    }
-
-    .login-info strong {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-
-    .login-info span {
-      display: block;
-      color: #777;
-      font-size: 11px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .botao-google {
-      border: none;
-      background: #176b3a;
-      color: white;
-      border-radius: 11px;
-      padding: 11px 14px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .botao-google:hover {
-      opacity: 0.92;
-    }
-
-    .botao-sair {
-      border: 1px solid #ddd;
-      background: white;
-      color: #555;
-      border-radius: 11px;
-      padding: 10px 13px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .botao-sair:hover {
-      background: #f5f5f5;
-    }
-
-    .login-status {
-      font-size: 10px;
-      color: #888;
-      margin-top: 7px;
-      text-align: center;
-    }
-
-    .login-ok {
-      color: #176b3a;
-      font-weight: bold;
-    }
-
-    .login-erro {
-      color: #b3261e;
-      font-weight: bold;
-    }
-
-    .cadastro-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 35, 25, 0.48);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 9999;
-    }
-
-    .cadastro-overlay.aberto {
-      display: flex;
-    }
-
-    .cadastro-card {
-      width: 100%;
-      max-width: 430px;
-      background: #ffffff;
-      border-radius: 22px;
-      padding: 24px 21px 21px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.20);
-      max-height: 92vh;
-      overflow-y: auto;
-    }
-
-    .cadastro-topo {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .cadastro-logo {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      margin-bottom: 8px;
-    }
-
-    .cadastro-topo h2 {
-      color: #17351f;
-      font-size: 21px;
-      margin-bottom: 6px;
-    }
-
-    .cadastro-topo p {
-      color: #777;
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .cadastro-id-info {
-      display: none;
-      background: #e9f3ec;
-      border: 1px solid #cce2d2;
-      border-radius: 15px;
-      padding: 13px;
-      text-align: center;
-      margin-bottom: 17px;
-    }
-
-    .cadastro-id-info strong {
-      display: block;
-      color: #176b3a;
-      font-size: 10px;
-      margin-bottom: 5px;
-      letter-spacing: 0.4px;
-    }
-
-    .cadastro-id-info span {
-      color: #176b3a;
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .cadastro-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .campo {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .campo label {
-      color: #333;
-      font-size: 11px;
-      font-weight: bold;
-    }
-
-    .campo input,
-    .campo select {
-      width: 100%;
-      border: 1px solid #d9ded9;
-      background: #f8faf8;
-      color: #222;
-      border-radius: 11px;
-      padding: 12px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .campo input:focus,
-    .campo select:focus {
-      border-color: #176b3a;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(23,107,58,0.08);
-    }
-
-    .campo input[readonly] {
-      background: #f1f3f1;
-      color: #777;
-    }
-
-    .cadastro-email {
-      margin-bottom: 13px;
-      padding: 10px 12px;
-      background: #f5f6f5;
-      border-radius: 11px;
-      color: #666;
-      font-size: 10px;
-      word-break: break-word;
-    }
-
-    .cadastro-email strong {
-      color: #333;
-    }
-
-    .botao-cadastrar {
-      width: 100%;
-      border: none;
-      background: #176b3a;
-      color: #ffffff;
-      border-radius: 12px;
-      padding: 13px;
-      margin-top: 4px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .botao-cadastrar:hover {
-      opacity: 0.93;
-    }
-
-    .botao-cadastrar:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-
-    .cadastro-erro {
-      display: none;
-      background: #fff0ef;
-      border: 1px solid #f1c4c0;
-      color: #a3231d;
-      border-radius: 11px;
-      padding: 10px;
-      font-size: 10px;
-      line-height: 1.4;
-      margin-bottom: 10px;
-    }
-
-    .cadastro-sucesso {
-      display: none;
-      text-align: center;
-    }
-
-    .cadastro-sucesso-icone {
-      font-size: 45px;
-      margin-bottom: 8px;
-    }
-
-    .cadastro-sucesso h3 {
-      color: #176b3a;
-      font-size: 21px;
-      margin-bottom: 7px;
-    }
-
-    .cadastro-sucesso p {
-      color: #666;
-      font-size: 12px;
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-
-    .cadastro-id-grande {
-      background: #f8f4e7;
-      border: 1px solid #d6b24c;
-      color: #176b3a;
-      border-radius: 15px;
-      padding: 14px;
-      margin-bottom: 15px;
-    }
-
-    .cadastro-id-grande small {
-      display: block;
-      color: #777;
-      font-size: 9px;
-      margin-bottom: 4px;
-    }
-
-    .cadastro-id-grande strong {
-      font-size: 27px;
-      letter-spacing: 1px;
-    }
-
-    .botao-continuar {
-      width: 100%;
-      border: none;
-      background: #176b3a;
-      color: white;
-      border-radius: 12px;
-      padding: 13px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .conteudo {
-      max-width: 850px;
-      margin: auto;
-      padding: 20px 18px 40px;
-    }
-
-    .boas-vindas {
-      background: #176b3a;
-      color: white;
-      border-radius: 20px;
-      padding: 22px 21px;
-      margin-bottom: 22px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.10);
-    }
-
-    .boas-vindas h2 {
-      font-size: 20px;
-      margin-bottom: 6px;
-    }
-
-    .boas-vindas p {
-      font-size: 13px;
-      line-height: 1.5;
-      opacity: 0.92;
-    }
-
-    .titulo-secao {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin: 23px 3px 11px;
-    }
-
-    .titulo-secao h2 {
-      font-size: 16px;
-    }
-
-    .linha {
-      flex: 1;
-      height: 1px;
-      background: #ddd;
-    }
-
-    .espaco-principal {
-      background: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 19px;
-      padding: 17px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .espaco-cabecalho {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .espaco-icone {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      background: #e9f3ec;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-
-    .espaco-texto {
-      flex: 1;
-    }
-
-    .espaco-texto h2 {
-      font-size: 18px;
-      color: #17351f;
-      margin-bottom: 3px;
-    }
-
-    .espaco-texto p {
-      color: #777;
-      font-size: 12px;
-    }
-
-    .mini-grade {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .mini-botao {
-      background: #f7f8f7;
-      border: 1px solid #e1e4e1;
-      border-radius: 14px;
-      padding: 14px 10px;
-      text-decoration: none;
-      color: #222;
-      text-align: center;
-      transition: 0.2s;
-    }
-
-    .mini-botao:hover {
-      background: #eef4ef;
-      transform: translateY(-1px);
-    }
-
-    .mini-icone {
-      font-size: 23px;
-      margin-bottom: 6px;
-    }
-
-    .mini-botao strong {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 3px;
-    }
-
-    .mini-botao span {
-      display: block;
-      color: #777;
-      font-size: 10px;
-      line-height: 1.3;
-    }
-
-    .cards-principais {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .card-principal {
-      min-height: 145px;
-      background: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 18px;
-      padding: 18px 15px;
-      text-decoration: none;
-      color: #222;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      transition: 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-principal:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 16px rgba(0,0,0,0.09);
-    }
-
-    .card-principal .icone-grande {
-      font-size: 31px;
-      margin-bottom: 9px;
-    }
-
-    .card-principal h3 {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .card-principal p {
-      font-size: 11px;
-      color: #777;
-      line-height: 1.35;
-    }
-
-    .card-principal.destaque {
-      border: 2px solid #176b3a;
-    }
-
-    .card-principal.stacoin-card {
-      border-color: #d6b24c;
-      background: #fffdf6;
-    }
-
-    .card-principal.em-breve {
-      opacity: 0.68;
-      cursor: default;
-    }
-
-    .badge-breve {
-      display: inline-block;
-      width: fit-content;
-      margin-top: 9px;
-      padding: 4px 8px;
-      border-radius: 20px;
-      background: #f1f2f1;
-      color: #777;
-      font-size: 9px;
-      font-weight: bold;
-      letter-spacing: 0.4px;
-    }
-
-    .empresa-caixa {
-      background: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .empresa-topo {
-      width: 100%;
-      border: none;
-      background: white;
-      padding: 17px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-align: left;
-      cursor: pointer;
-      color: #222;
-    }
-
-    .empresa-topo:hover {
-      background: #fafafa;
-    }
-
-    .empresa-icone {
-      width: 45px;
-      height: 45px;
-      border-radius: 13px;
-      background: #f1f3f1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 23px;
-      flex-shrink: 0;
-    }
-
-    .empresa-texto {
-      flex: 1;
-    }
-
-    .empresa-texto strong {
-      display: block;
-      font-size: 17px;
-      margin-bottom: 3px;
-    }
-
-    .empresa-texto span {
-      color: #777;
-      font-size: 11px;
-    }
-
-    .empresa-seta {
-      color: #176b3a;
-      font-size: 21px;
-      transition: 0.2s;
-    }
-
-    .empresa-caixa.aberta .empresa-seta {
-      transform: rotate(90deg);
-    }
-
-    .empresa-conteudo {
-      display: none;
-      padding: 0 13px 13px;
-    }
-
-    .empresa-caixa.aberta .empresa-conteudo {
-      display: block;
-    }
-
-    .empresa-grade {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .empresa-botao {
-      background: #f7f8f7;
-      border: 1px solid #e1e4e1;
-      border-radius: 14px;
-      padding: 14px 10px;
-      text-decoration: none;
-      color: #222;
-      text-align: center;
-      transition: 0.2s;
-    }
-
-    .empresa-botao:hover {
-      background: #eef4ef;
-      transform: translateY(-1px);
-    }
-
-    .empresa-botao .icone {
-      display: block;
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-
-    .empresa-botao strong {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 3px;
-    }
-
-    .empresa-botao span {
-      display: block;
-      font-size: 10px;
-      color: #777;
-      line-height: 1.3;
-    }
-
-    .rodape {
-      text-align: center;
-      padding: 20px 20px 35px;
-      color: #888;
-      font-size: 11px;
-    }
-
-    .rodape strong {
-      color: #176b3a;
-    }
-
-    @media (max-width: 600px) {
-
-      .cabecalho {
-        padding: 26px 15px 24px;
-      }
-
-      .logo {
-        width: 82px;
-        height: 82px;
-      }
-
-      .cabecalho h1 {
-        font-size: 25px;
-      }
-
-      .subtitulo {
-        font-size: 14px;
-      }
-
-      .stacoin-topo {
-        top: 10px;
-        right: 10px;
-        padding: 6px 8px;
-        border-radius: 12px;
-      }
-
-      .stacoin-moeda {
-        width: 28px;
-        height: 28px;
-      }
-
-      .stacoin-imagem {
-        width: 28px;
-        height: 28px;
-      }
-
-      .stacoin-valor {
-        font-size: 12px;
-      }
-
-      .stacoin-label {
-        font-size: 7px;
-      }
-
-      .area-login {
-        padding: 12px 15px 0;
-      }
-
-      .login-card {
-        padding: 12px;
-      }
-
-      .login-icone {
-        width: 38px;
-        height: 38px;
-        font-size: 19px;
-      }
-
-      .login-info strong {
-        font-size: 13px;
-      }
-
-      .login-info span {
-        font-size: 10px;
-      }
-
-      .botao-google,
-      .botao-sair {
-        padding: 10px 11px;
-        font-size: 11px;
-      }
-
-      .conteudo {
-        padding: 18px 15px 30px;
-      }
-
-      .boas-vindas {
-        padding: 19px 18px;
-        border-radius: 18px;
-        margin-bottom: 19px;
-      }
-
-      .boas-vindas h2 {
-        font-size: 18px;
-      }
-
-      .boas-vindas p {
-        font-size: 12px;
-      }
-
-      .titulo-secao {
-        margin-top: 21px;
-      }
-
-      .espaco-principal {
-        padding: 14px;
-      }
-
-      .espaco-cabecalho {
-        margin-bottom: 12px;
-      }
-
-      .espaco-texto h2 {
-        font-size: 17px;
-      }
-
-      .mini-grade {
-        gap: 8px;
-      }
-
-      .mini-botao {
-        padding: 12px 8px;
-      }
-
-      .mini-icone {
-        font-size: 21px;
-      }
-
-      .mini-botao strong {
-        font-size: 12px;
-      }
-
-      .cards-principais {
-        gap: 10px;
-      }
-
-      .card-principal {
-        min-height: 140px;
-        padding: 15px 12px;
-      }
-
-      .card-principal .icone-grande {
-        font-size: 28px;
-      }
-
-      .card-principal h3 {
-        font-size: 14px;
-      }
-
-      .card-principal p {
-        font-size: 10px;
-      }
-
-      .empresa-grade {
-        gap: 8px;
-      }
-
-      .empresa-botao {
-        padding: 12px 8px;
-      }
-
-      .empresa-botao .icone {
-        font-size: 21px;
-      }
-
-      .empresa-botao strong {
-        font-size: 12px;
-      }
-
-      .cadastro-card {
-        padding: 21px 16px 17px;
-        border-radius: 19px;
-      }
-
-      .cadastro-topo h2 {
-        font-size: 19px;
-      }
-
-      .cadastro-topo p {
-        font-size: 11px;
-      }
-
-    }
-
-    @media (max-width: 360px) {
-
-      .cards-principais {
-        grid-template-columns: 1fr;
-      }
-
-      .card-principal {
-        min-height: 115px;
-      }
-
-    }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --verde: #174c32;
+  --verde-escuro: #103b27;
+  --verde-medio: #226443;
+  --verde-claro: #e8f0e9;
+  --vermelho: #c93432;
+  --fundo: #f2f5f0;
+  --branco: #ffffff;
+  --texto: #26332b;
+  --cinza: #788179;
+  --borda: #e1e8e0;
+  --sombra: 0 8px 24px rgba(24,55,35,0.07);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 10% 12%, rgba(35,100,65,.055), transparent 35%),
+    radial-gradient(ellipse at 95% 55%, rgba(201,52,50,.035), transparent 30%),
+    var(--fundo);
+  color: var(--texto);
+  min-height: 100vh;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(135deg,#103b27,#174c32 60%,#226443);
+  text-align: center;
+  padding: 34px 20px 30px;
+  border-bottom: 4px solid var(--vermelho);
+  color: white;
+}
+
+.cabecalho::before,
+.cabecalho::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cabecalho::before {
+  width: 260px;
+  height: 260px;
+  top: -150px;
+  left: -90px;
+}
+
+.cabecalho::after {
+  width: 210px;
+  height: 210px;
+  bottom: -145px;
+  right: -55px;
+}
+
+.logo {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 5px 9px rgba(0,0,0,.18));
+}
+
+.cabecalho h1 {
+  font-size: 26px;
+  margin-bottom: 7px;
+  letter-spacing: 1px;
+  font-weight: 800;
+  color: white;
+}
+
+.subtitulo {
+  color: rgba(255,255,255,.78);
+  font-size: 14px;
+}
+
+.selo {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 7px 13px;
+  border-radius: 30px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.19);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* STACOIN */
+
+.stacoin-topo {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  background: #fffaf0;
+  border: 1px solid #d9bd72;
+  border-radius: 14px;
+  padding: 7px 10px;
+  text-decoration: none;
+  color: var(--verde);
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  transition: .2s;
+  z-index: 10;
+}
+
+.stacoin-topo:hover {
+  transform: translateY(-2px);
+}
+
+.stacoin-moeda {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.stacoin-imagem {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+}
+
+.stacoin-info {
+  text-align: left;
+  line-height: 1.05;
+}
+
+.stacoin-valor {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--verde);
+}
+
+.stacoin-label {
+  display: block;
+  font-size: 8px;
+  color: #777;
+  margin-top: 3px;
+  letter-spacing: .5px;
+}
+
+/* LOGIN */
+
+.area-login {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 17px 18px 0;
+}
+
+.login-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 17px;
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--sombra);
+}
+
+.login-icone {
+  width: 43px;
+  height: 43px;
+  border-radius: 14px;
+  background: var(--verde-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.login-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.login-info strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 3px;
+  color: var(--verde-escuro);
+}
+
+.login-info span {
+  display: block;
+  color: var(--cinza);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.botao-google {
+  border: none;
+  background: var(--verde);
+  color: white;
+  border-radius: 11px;
+  padding: 11px 14px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.botao-google:hover {
+  background: var(--verde-medio);
+}
+
+.botao-sair {
+  border: 1px solid var(--borda);
+  background: white;
+  color: #555;
+  border-radius: 11px;
+  padding: 10px 13px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.botao-sair:hover {
+  background: var(--fundo);
+}
+
+.login-status {
+  font-size: 10px;
+  color: var(--cinza);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.login-ok {
+  color: var(--verde-medio);
+  font-weight: bold;
+}
+
+.login-erro {
+  color: var(--vermelho);
+  font-weight: bold;
+}
+
+/* CADASTRO */
+
+.cadastro-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12,35,23,.68);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 9999;
+}
+
+.cadastro-overlay.aberto {
+  display: flex;
+}
+
+.cadastro-card {
+  width: 100%;
+  max-width: 430px;
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 23px;
+  padding: 24px 21px 21px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.24);
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.cadastro-topo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cadastro-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.cadastro-topo h2 {
+  color: var(--verde-escuro);
+  font-size: 21px;
+  margin-bottom: 6px;
+}
+
+.cadastro-topo p {
+  color: var(--cinza);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.cadastro-id-info {
+  display: none;
+  background: var(--verde-claro);
+  border: 1px solid #cce2d2;
+  border-radius: 15px;
+  padding: 13px;
+  text-align: center;
+  margin-bottom: 17px;
+}
+
+.cadastro-id-info strong {
+  display: block;
+  color: var(--verde);
+  font-size: 10px;
+  margin-bottom: 5px;
+  letter-spacing: .4px;
+}
+
+.cadastro-id-info span {
+  color: var(--verde);
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.campo label {
+  color: var(--verde-escuro);
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  border: 1px solid #dce4dc;
+  background: #f7f9f6;
+  color: var(--texto);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: var(--verde-medio);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(34,100,67,.10);
+}
+
+.campo input[readonly] {
+  background: #f1f3f1;
+  color: #777;
+}
+
+.cadastro-email {
+  margin-bottom: 13px;
+  padding: 11px 12px;
+  background: var(--fundo);
+  border-radius: 11px;
+  color: var(--cinza);
+  font-size: 10px;
+  word-break: break-word;
+}
+
+.cadastro-email strong {
+  color: var(--verde-escuro);
+}
+
+.botao-cadastrar,
+.botao-continuar {
+  width: 100%;
+  border: none;
+  background: linear-gradient(135deg,var(--verde),var(--verde-medio));
+  color: white;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botao-cadastrar:hover,
+.botao-continuar:hover {
+  filter: brightness(1.08);
+}
+
+.botao-cadastrar:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.cadastro-erro {
+  display: none;
+  background: #fff0ef;
+  border: 1px solid #f1c4c0;
+  color: #a3231d;
+  border-radius: 11px;
+  padding: 10px;
+  font-size: 10px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.cadastro-sucesso {
+  display: none;
+  text-align: center;
+}
+
+.cadastro-sucesso-icone {
+  font-size: 45px;
+  margin-bottom: 8px;
+}
+
+.cadastro-sucesso h3 {
+  color: var(--verde);
+  font-size: 21px;
+  margin-bottom: 7px;
+}
+
+.cadastro-sucesso p {
+  color: var(--cinza);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.cadastro-id-grande {
+  background: #fffaf0;
+  border: 1px solid #d9bd72;
+  color: var(--verde);
+  border-radius: 15px;
+  padding: 14px;
+  margin-bottom: 15px;
+}
+
+.cadastro-id-grande small {
+  display: block;
+  color: #777;
+  font-size: 9px;
+  margin-bottom: 4px;
+}
+
+.cadastro-id-grande strong {
+  font-size: 27px;
+  letter-spacing: 1px;
+}
+
+/* CONTEÚDO */
+
+.conteudo {
+  max-width: 850px;
+  margin: auto;
+  padding: 22px 18px 40px;
+}
+
+.boas-vindas {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(125deg,#103b27,#174c32 65%,#226443);
+  color: white;
+  border-radius: 21px;
+  padding: 25px 23px;
+  margin-bottom: 25px;
+  box-shadow: 0 9px 22px rgba(23,76,50,.15);
+}
+
+.boas-vindas::after {
+  content: "🍅";
+  position: absolute;
+  right: 18px;
+  bottom: -14px;
+  font-size: 75px;
+  opacity: .13;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+.boas-vindas h2 {
+  position: relative;
+  z-index: 1;
+  font-size: 20px;
+  margin-bottom: 7px;
+}
+
+.boas-vindas p {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: .9;
+  max-width: 85%;
+}
+
+/* TÍTULOS */
+
+.titulo-secao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 25px 3px 13px;
+}
+
+.titulo-secao h2 {
+  font-size: 14px;
+  color: var(--verde-escuro);
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+.linha {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg,#cbd8cc,transparent);
+}
+
+/* ÁREA DO MOTORISTA */
+
+.espaco-principal {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--sombra);
+}
+
+.espaco-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.espaco-icone {
+  width: 47px;
+  height: 47px;
+  border-radius: 15px;
+  background: var(--verde-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.espaco-texto {
+  flex: 1;
+}
+
+.espaco-texto h2 {
+  font-size: 18px;
+  color: var(--verde-escuro);
+  margin-bottom: 4px;
+}
+
+.espaco-texto p {
+  color: var(--cinza);
+  font-size: 12px;
+}
+
+.mini-grade {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+
+.mini-botao {
+  background: #f7f9f6;
+  border: 1px solid var(--borda);
+  border-radius: 15px;
+  padding: 15px 10px;
+  text-decoration: none;
+  color: var(--texto);
+  text-align: center;
+  transition: .2s;
+}
+
+.mini-botao:hover {
+  background: var(--verde-claro);
+  border-color: #c4d8c8;
+  transform: translateY(-2px);
+}
+
+.mini-icone {
+  font-size: 23px;
+  margin-bottom: 7px;
+}
+
+.mini-botao strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--verde-escuro);
+}
+
+.mini-botao span {
+  display: block;
+  color: var(--cinza);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+/* DESTAQUES */
+
+.cards-principais {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+
+.card-principal {
+  min-height: 150px;
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 19px;
+  padding: 18px 15px;
+  text-decoration: none;
+  color: var(--texto);
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: .2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-principal::after {
+  content: "";
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  right: -36px;
+  top: -36px;
+  border-radius: 50%;
+  background: rgba(23,76,50,.045);
+  pointer-events: none;
+}
+
+.card-principal:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 11px 25px rgba(24,55,35,.11);
+}
+
+.card-principal .icone-grande {
+  font-size: 31px;
+  margin-bottom: 10px;
+}
+
+.card-principal h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: var(--verde-escuro);
+}
+
+.card-principal p {
+  font-size: 11px;
+  color: var(--cinza);
+  line-height: 1.4;
+}
+
+.card-principal.destaque {
+  border-color: #c6d9c9;
+}
+
+.card-principal.stacoin-card {
+  border-color: #d9bd72;
+  background: linear-gradient(145deg,#fffdf7,#ffffff);
+}
+
+.card-principal.em-breve {
+  opacity: .65;
+  cursor: default;
+}
+
+.badge-breve {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 10px;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #edf0ed;
+  color: #68736a;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: .4px;
+}
+
+/* ÁREA DA EMPRESA */
+
+.empresa-caixa {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 19px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+.empresa-topo {
+  width: 100%;
+  border: none;
+  background: white;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--texto);
+}
+
+.empresa-topo:hover {
+  background: #f8faf7;
+}
+
+.empresa-icone {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--verde-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.empresa-texto {
+  flex: 1;
+}
+
+.empresa-texto strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 4px;
+  color: var(--verde-escuro);
+}
+
+.empresa-texto span {
+  color: var(--cinza);
+  font-size: 11px;
+}
+
+.empresa-seta {
+  color: var(--verde);
+  font-size: 21px;
+  transition: .25s;
+}
+
+.empresa-caixa.aberta .empresa-seta {
+  transform: rotate(90deg);
+}
+
+.empresa-conteudo {
+  display: none;
+  padding: 0 13px 15px;
+}
+
+.empresa-caixa.aberta .empresa-conteudo {
+  display: block;
+}
+
+.empresa-grade {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+
+.empresa-botao {
+  background: #f7f9f6;
+  border: 1px solid var(--borda);
+  border-radius: 15px;
+  padding: 15px 10px;
+  text-decoration: none;
+  color: var(--texto);
+  text-align: center;
+  transition: .2s;
+}
+
+.empresa-botao:hover {
+  background: var(--verde-claro);
+  border-color: #c4d8c8;
+  transform: translateY(-2px);
+}
+
+.empresa-botao .icone {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 7px;
+}
+
+.empresa-botao strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--verde-escuro);
+}
+
+.empresa-botao span:last-child {
+  display: block;
+  font-size: 10px;
+  color: var(--cinza);
+  line-height: 1.3;
+}
+
+/* RODAPÉ */
+
+.rodape {
+  text-align: center;
+  padding: 22px 20px 35px;
+  color: var(--cinza);
+  font-size: 11px;
+}
+
+.rodape strong {
+  color: var(--verde);
+  letter-spacing: .3px;
+}
+
+/* CELULAR */
+
+@media (max-width:600px) {
+  .cabecalho {
+    padding: 29px 15px 25px;
+  }
+
+  .logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cabecalho h1 {
+    font-size: 23px;
+  }
+
+  .subtitulo {
+    font-size: 13px;
+  }
+
+  .stacoin-topo {
+    top: 10px;
+    right: 10px;
+    padding: 6px 8px;
+    border-radius: 12px;
+  }
+
+  .stacoin-moeda,
+  .stacoin-imagem {
+    width: 28px;
+    height: 28px;
+  }
+
+  .stacoin-valor {
+    font-size: 12px;
+  }
+
+  .stacoin-label {
+    font-size: 7px;
+  }
+
+  .area-login {
+    padding: 13px 15px 0;
+  }
+
+  .login-card {
+    padding: 12px;
+  }
+
+  .login-icone {
+    width: 38px;
+    height: 38px;
+    font-size: 19px;
+  }
+
+  .login-info strong {
+    font-size: 12px;
+  }
+
+  .login-info span {
+    font-size: 10px;
+  }
+
+  .botao-google,
+  .botao-sair {
+    padding: 10px 11px;
+    font-size: 11px;
+  }
+
+  .conteudo {
+    padding: 19px 15px 30px;
+  }
+
+  .boas-vindas {
+    padding: 21px 18px;
+    border-radius: 19px;
+    margin-bottom: 20px;
+  }
+
+  .boas-vindas h2 {
+    font-size: 18px;
+  }
+
+  .boas-vindas p {
+    font-size: 12px;
+  }
+
+  .titulo-secao {
+    margin-top: 22px;
+  }
+
+  .espaco-principal {
+    padding: 15px;
+  }
+
+  .espaco-texto h2 {
+    font-size: 16px;
+  }
+
+  .mini-grade {
+    gap: 8px;
+  }
+
+  .mini-botao {
+    padding: 13px 8px;
+  }
+
+  .mini-icone {
+    font-size: 21px;
+  }
+
+  .mini-botao strong {
+    font-size: 12px;
+  }
+
+  .cards-principais {
+    gap: 10px;
+  }
+
+  .card-principal {
+    min-height: 140px;
+    padding: 15px 12px;
+  }
+
+  .card-principal .icone-grande {
+    font-size: 28px;
+  }
+
+  .card-principal h3 {
+    font-size: 13px;
+  }
+
+  .card-principal p {
+    font-size: 10px;
+  }
+
+  .empresa-grade {
+    gap: 8px;
+  }
+
+  .empresa-botao {
+    padding: 13px 8px;
+  }
+
+  .empresa-botao .icone {
+    font-size: 21px;
+  }
+
+  .empresa-botao strong {
+    font-size: 12px;
+  }
+
+  .cadastro-card {
+    padding: 21px 16px 17px;
+    border-radius: 19px;
+  }
+
+  .cadastro-topo h2 {
+    font-size: 19px;
+  }
+
+  .cadastro-topo p {
+    font-size: 11px;
+  }
+}
+
+@media (max-width:360px) {
+  .cards-principais {
+    grid-template-columns: 1fr;
+  }
+
+  .card-principal {
+    min-height: 115px;
+  }
+
+  .login-card {
+    gap: 8px;
+  }
+
+  .botao-google,
+  .botao-sair {
+    padding: 9px 8px;
+    font-size: 10px;
+  }
+}
 
   </style>
 </head>
