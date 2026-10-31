@@ -5,58 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ADM | Santa Luzia Shop</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--green:#176b38;--red:#c52b35;--bg:#f4f6f4;--text:#202820}
+:root{
+  --green:#176b38;
+  --red:#c52b35;
+  --bg:#f4f6f4;
+  --text:#202820;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}
-header{background:#fff;border-bottom:3px solid var(--green);padding:20px}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font:15px Arial,sans-serif
+}
+header{
+  background:#fff;border-bottom:3px solid var(--green);padding:20px
+}
 header h1{margin:0;color:var(--green);font-size:23px}
 header p{margin:7px 0 0;color:#657065}
-main{max-width:1000px;margin:22px auto;padding:0 14px}
-.panel{background:white;border-radius:12px;padding:20px;margin-bottom:18px;box-shadow:0 2px 10px #0000000b}
+main{max-width:1100px;margin:22px auto;padding:0 14px}
+.panel{
+  background:white;border-radius:12px;padding:20px;
+  margin-bottom:18px;box-shadow:0 2px 10px #0000000b
+}
 h2{font-size:19px;margin:0 0 16px}
+h3{font-size:16px;margin:18px 0 10px}
 label{display:block;font-weight:bold;margin:13px 0 6px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ccd3cc;border-radius:8px;font:inherit;background:white}
+input,select,textarea{
+  width:100%;padding:12px;border:1px solid #ccd3cc;
+  border-radius:8px;font:inherit;background:white
+}
 textarea{min-height:80px;resize:vertical}
-button{border:0;border-radius:8px;padding:12px 16px;font-weight:bold;cursor:pointer;font-size:14px}
+input[type="checkbox"]{width:auto}
+button{
+  border:0;border-radius:8px;padding:12px 16px;
+  font-weight:bold;cursor:pointer;font-size:14px
+}
 button:disabled{opacity:.6;cursor:wait}
 .primary{background:var(--green);color:white}
 .secondary{background:#e8eee9;color:#24412d}
 .danger{background:#fff0f0;color:#a51f28}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-#products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.product{border:1px solid #e1e6e1;border-radius:10px;padding:12px;min-width:0}
-.product img{width:100%;height:155px;object-fit:contain;background:#f6f7f6;border-radius:7px}
-.product h3{margin:10px 0 6px;overflow-wrap:anywhere}
-.muted{color:#687368;font-size:13px;overflow-wrap:anywhere}
+.grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px
+}
+#products,#boxes,#prizes{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:12px;margin-top:16px
+}
+.product,.box-card,.prize-card{
+  border:1px solid #e1e6e1;border-radius:10px;padding:12px;
+  min-width:0
+}
+.product img,.box-card img,.prize-card img{
+  width:100%;height:155px;object-fit:contain;
+  background:#f6f7f6;border-radius:7px
+}
+.product h3,.box-card h3,.prize-card h3{
+  margin:10px 0 6px;overflow-wrap:anywhere
+}
+.muted,.field-help{
+  color:#687368;font-size:13px;overflow-wrap:anywhere
+}
+.field-help{margin:5px 0 0;line-height:1.4}
 .price{font-weight:bold;color:var(--green);margin:8px 0}
-.product-code{background:#f4f6f4;border-radius:7px;padding:9px;font-size:13px;overflow-wrap:anywhere}
-#status{padding:12px;border-radius:8px;background:#e8eee9;margin-bottom:15px;overflow-wrap:anywhere}
+.product-code{
+  background:#f4f6f4;border-radius:7px;padding:9px;
+  font-size:13px;overflow-wrap:anywhere
+}
+#status{
+  padding:12px;border-radius:8px;background:#e8eee9;
+  margin-bottom:15px;overflow-wrap:anywhere
+}
 .hidden{display:none!important}
 #preview{max-width:180px;max-height:150px;object-fit:contain;margin-top:10px}
-.field-help{font-size:12px;color:#687368;margin:5px 0 0;line-height:1.4}
-@media(max-width:520px){.grid{grid-template-columns:1fr}.panel{padding:15px}header h1{font-size:20px}}
+hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
+.tag{
+  display:inline-block;background:#e8eee9;color:#24412d;
+  border-radius:20px;padding:5px 9px;font-size:12px;
+  font-weight:bold;margin:4px 3px 4px 0
+}
+.tag.off{background:#fff0f0;color:#a51f28}
+.code-list{
+  background:#f6f7f6;padding:10px;border-radius:8px;
+  font-size:13px;overflow-wrap:anywhere;white-space:pre-wrap
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .panel{padding:15px}
+  header h1{font-size:20px}
+}
 </style>
 </head>
+
 <body>
 <header>
   <h1>🍅 Santa Luzia Shop — Painel ADM</h1>
-  <p>Gerenciamento de skins, caixas, caminhões e acessórios</p>
+  <p>Gerenciamento de produtos, caixas promocionais e prêmios</p>
 </header>
 
 <main>
-  <div id="status" role="status" aria-live="polite">Inicializando painel...</div>
+  <div id="status" role="status" aria-live="polite">
+    Inicializando painel...
+  </div>
 
+  <!-- LOGIN -->
   <section class="panel" id="loginPanel">
     <h2>Entrar como administrador</h2>
     <form id="loginForm">
       <label for="email">E-mail</label>
       <input id="email" type="email" autocomplete="username"
         required placeholder="Seu e-mail de administrador">
+
       <label for="password">Senha</label>
       <input id="password" type="password"
         autocomplete="current-password" required placeholder="Sua senha">
+
       <div class="actions">
         <button class="primary" type="submit">Entrar</button>
       </div>
@@ -64,8 +129,11 @@ button:disabled{opacity:.6;cursor:wait}
   </section>
 
   <section class="hidden" id="adminArea">
+
+    <!-- PRODUTOS NORMAIS -->
     <div class="panel">
       <h2 id="formTitle">Cadastrar produto</h2>
+
       <form id="productForm">
         <input type="hidden" id="productId">
 
@@ -88,6 +156,7 @@ button:disabled{opacity:.6;cursor:wait}
               <option value="outro">Outro</option>
             </select>
           </div>
+
           <div>
             <label for="price">Preço em STACOIN</label>
             <input id="price" type="number" min="0" step="1" required>
@@ -96,35 +165,32 @@ button:disabled{opacity:.6;cursor:wait}
 
         <label for="code">Código da skin / produto</label>
         <input id="code" maxlength="120"
-          placeholder="Digite o código que será entregue após a compra">
+          placeholder="Código entregue após a compra">
+
         <p class="field-help">
-          Para skins, o código é obrigatório. Use um código único, com letras,
-          números, ponto, hífen ou sublinhado. Ex.: 9MuRDvF.jpeg
+          Para skins, o código é obrigatório. Use letras, números,
+          ponto, hífen ou sublinhado.
         </p>
 
         <label for="imageFile">Imagem do produto</label>
-        <input
-  id="imageFile"
-  type="file"
-  accept="image/*"
-  multiple
->
-<p class="field-help">
-  Selecione duas ou mais fotos de uma vez. Limite de 10 MB por imagem.
-</p>
+        <input id="imageFile" type="file" accept="image/*" multiple>
+
+        <p class="field-help">
+          Selecione duas ou mais fotos. Limite de 10 MB por imagem.
+        </p>
+
         <img id="preview" class="hidden" alt="Prévia da imagem">
 
         <label for="imageUrl">URL da imagem principal</label>
         <input id="imageUrl" type="url"
           placeholder="Será preenchida ao enviar uma imagem">
 
-        <label for="extraImages">URLs de imagens adicionais (opcional)</label>
+        <label for="extraImages">URLs de imagens adicionais</label>
         <textarea id="extraImages"
           placeholder="Uma URL por linha"></textarea>
 
         <label>
-          <input id="active" type="checkbox" checked
-            style="width:auto;margin-right:6px">
+          <input id="active" type="checkbox" checked>
           Produto ativo na loja
         </label>
 
@@ -144,7 +210,145 @@ button:disabled{opacity:.6;cursor:wait}
       <button class="secondary" id="refresh" type="button">
         Atualizar lista
       </button>
-      <div id="products" style="margin-top:16px"></div>
+      <div id="products"></div>
+    </div>
+
+    <hr>
+
+    <!-- CAIXAS PROMOCIONAIS -->
+    <div class="panel">
+      <h2>🎁 Caixas promocionais</h2>
+      <p class="muted">
+        Crie caixas para campanhas especiais, como Novembro Azul,
+        Natal e outras promoções da Santa Luzia.
+      </p>
+
+      <form id="boxForm">
+        <input type="hidden" id="boxId">
+
+        <label for="boxName">Nome da caixa</label>
+        <input id="boxName" maxlength="120" required
+          placeholder="Ex.: Caixa Novembro Azul">
+
+        <label for="boxDescription">Descrição</label>
+        <textarea id="boxDescription" maxlength="1000"
+          placeholder="Descrição da promoção"></textarea>
+
+        <label for="boxImage">URL da imagem de capa</label>
+        <input id="boxImage" type="url"
+          placeholder="https://...">
+
+        <label for="boxPrice">Preço em STACOIN</label>
+        <input id="boxPrice" type="number" min="0" step="1" required>
+
+        <div class="grid">
+          <div>
+            <label for="boxStart">Início da promoção</label>
+            <input id="boxStart" type="datetime-local">
+          </div>
+          <div>
+            <label for="boxEnd">Fim da promoção</label>
+            <input id="boxEnd" type="datetime-local">
+          </div>
+        </div>
+
+        <label>
+          <input id="boxActive" type="checkbox">
+          Caixa ativa
+        </label>
+
+        <div class="actions">
+          <button class="primary" id="saveBoxButton" type="submit">
+            Salvar caixa
+          </button>
+          <button class="secondary" id="clearBox" type="button">
+            Limpar formulário
+          </button>
+        </div>
+      </form>
+
+      <hr>
+
+      <h3>Caixas cadastradas</h3>
+      <button class="secondary" id="refreshBoxes" type="button">
+        Atualizar caixas
+      </button>
+      <div id="boxes"></div>
+    </div>
+
+    <!-- PRÊMIOS -->
+    <div class="panel">
+      <h2>🏆 Gerenciar prêmios da caixa</h2>
+
+      <label for="selectedBox">Selecione uma caixa</label>
+      <select id="selectedBox">
+        <option value="">Carregando caixas...</option>
+      </select>
+
+      <p class="field-help">
+        Escolha a caixa para cadastrar e controlar os prêmios dela.
+      </p>
+
+      <form id="prizeForm">
+        <input type="hidden" id="prizeId">
+
+        <label for="prizeType">Tipo de prêmio</label>
+        <select id="prizeType" required>
+          <option value="skin">Skin</option>
+          <option value="stacoin">STACOIN</option>
+        </select>
+
+        <label for="prizeName">Nome do prêmio</label>
+        <input id="prizeName" maxlength="120" required
+          placeholder="Ex.: Baú Carreta Tomate">
+
+        <div id="skinFields">
+          <label for="prizeImage">URL da imagem do prêmio</label>
+          <input id="prizeImage" type="url"
+            placeholder="https://...">
+
+          <label for="prizeCodes">Códigos disponíveis</label>
+          <textarea id="prizeCodes"
+            placeholder="Um código por linha"></textarea>
+
+          <p class="field-help">
+            Cada linha será cadastrada como um código individual.
+            Não repita códigos já cadastrados.
+          </p>
+        </div>
+
+        <div id="stacoinFields" class="hidden">
+          <label for="prizeValue">Quantidade de STACOIN do prêmio</label>
+          <input id="prizeValue" type="number" min="1" step="1"
+            placeholder="Ex.: 100">
+        </div>
+
+        <label for="prizeChance">Chance (%)</label>
+        <input id="prizeChance" type="number" min="0" max="100"
+          step="0.01" required placeholder="Ex.: 25">
+
+        <label>
+          <input id="prizeActive" type="checkbox" checked>
+          Prêmio ativo
+        </label>
+
+        <div class="actions">
+          <button class="primary" id="savePrizeButton" type="submit">
+            Salvar prêmio
+          </button>
+          <button class="secondary" id="clearPrize" type="button">
+            Limpar prêmio
+          </button>
+        </div>
+      </form>
+
+      <hr>
+
+      <h3>Prêmios cadastrados</h3>
+      <div id="chanceStatus" class="code-list">
+        Selecione uma caixa para visualizar os prêmios.
+      </div>
+      <div id="prizes"></div>
     </div>
 
     <div class="panel">
@@ -152,6 +356,7 @@ button:disabled{opacity:.6;cursor:wait}
         Sair do painel
       </button>
     </div>
+
   </section>
 </main>
 
@@ -165,7 +370,9 @@ button:disabled{opacity:.6;cursor:wait}
   const BUCKET = 'loja-produtos';
 
   const $ = id => document.getElementById(id);
+
   const status = $('status');
+
   const client = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
@@ -173,6 +380,8 @@ button:disabled{opacity:.6;cursor:wait}
 
   let currentUser = null;
   let products = [];
+  let boxes = [];
+  let prizes = [];
   let saving = false;
   let sessionCheckFinished = false;
 
@@ -182,8 +391,33 @@ button:disabled{opacity:.6;cursor:wait}
     status.style.color = error ? '#a51f28' : '#24412d';
   }
 
+  function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    })[char]);
+  }
+
+  function dateToInput(value) {
+    if (!value) return '';
+
+    const date = new Date(value);
+    const offset = date.getTimezoneOffset() * 60000;
+
+    return new Date(date.getTime() - offset)
+      .toISOString().slice(0,16);
+  }
+
+  function dateToISO(value) {
+    return value ? new Date(value).toISOString() : null;
+  }
+
   function showAdmin(user) {
     currentUser = user;
+
     const authorized = !!user && user.id === ADMIN_ID;
 
     $('loginPanel').classList.toggle('hidden', authorized);
@@ -191,7 +425,13 @@ button:disabled{opacity:.6;cursor:wait}
 
     if (!authorized) {
       products = [];
+      boxes = [];
+      prizes = [];
+
       $('products').replaceChildren();
+      $('boxes').replaceChildren();
+      $('prizes').replaceChildren();
+
       message(
         user
           ? 'Este usuário não está autorizado a administrar a loja.'
@@ -203,10 +443,12 @@ button:disabled{opacity:.6;cursor:wait}
 
     message('Administrador conectado.');
     loadProducts();
+    loadBoxes();
   }
 
   async function checkSession() {
     const { data, error } = await client.auth.getSession();
+
     sessionCheckFinished = true;
 
     if (error) {
@@ -240,15 +482,16 @@ button:disabled{opacity:.6;cursor:wait}
     if (data.user?.id !== ADMIN_ID) {
       await client.auth.signOut();
       showAdmin(null);
-      message(
-        'Acesso negado: esta conta não é a administradora autorizada.',
-        true
-      );
+      message('Acesso negado: conta não autorizada.', true);
       return;
     }
 
     showAdmin(data.user);
   });
+
+  // =====================================================
+  // PRODUTOS NORMAIS
+  // =====================================================
 
   async function loadProducts() {
     if (!currentUser || currentUser.id !== ADMIN_ID) return;
@@ -266,7 +509,9 @@ button:disabled{opacity:.6;cursor:wait}
 
       products = data || [];
       renderProducts();
+
       message('Lista atualizada: ' + products.length + ' produto(s).');
+
     } catch (error) {
       message('Erro ao carregar produtos: ' + error.message, true);
     } finally {
@@ -289,11 +534,9 @@ button:disabled{opacity:.6;cursor:wait}
 
       if (product.imagem_url) {
         const image = document.createElement('img');
-        image.alt = 'Imagem de ' + (product.nome || 'produto');
+        image.alt = 'Imagem do produto';
         image.src = product.imagem_url;
-        image.onerror = () => {
-          image.style.display = 'none';
-        };
+        image.onerror = () => image.style.display = 'none';
         card.appendChild(image);
       }
 
@@ -362,7 +605,7 @@ button:disabled{opacity:.6;cursor:wait}
     $('preview').src = product.imagem_url || '';
     $('imageFile').value = '';
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top:0,behavior:'smooth'});
     $('name').focus();
   }
 
@@ -374,6 +617,7 @@ button:disabled{opacity:.6;cursor:wait}
     $('preview').removeAttribute('src');
     $('preview').classList.add('hidden');
     $('imageFile').value = '';
+    $('category').dispatchEvent(new Event('change'));
   }
 
   $('cancelEdit').addEventListener('click', clearForm);
@@ -388,72 +632,59 @@ button:disabled{opacity:.6;cursor:wait}
       : 'Código do produto, se necessário';
   });
 
- $('imageFile').addEventListener('change', () => {
-  const files = Array.from($('imageFile').files);
+  $('imageFile').addEventListener('change', () => {
+    const files = Array.from($('imageFile').files);
 
-  if (!files.length) return;
+    if (!files.length) return;
 
-  const invalidFile = files.find(file =>
-    !file.type.startsWith('image/')
-  );
-
-  if (invalidFile) {
-    message('Todos os arquivos selecionados devem ser imagens.', true);
-    $('imageFile').value = '';
-    return;
-  }
-
-  const oversizedFile = files.find(file =>
-    file.size > 10 * 1024 * 1024
-  );
-
-  if (oversizedFile) {
-    message('Cada imagem deve ter no máximo 10 MB.', true);
-    $('imageFile').value = '';
-    return;
-  }
-
-  $('preview').src = URL.createObjectURL(files[0]);
-  $('preview').classList.remove('hidden');
-
-  message(
-    files.length + ' foto(s) selecionada(s). Todas serão enviadas ao salvar.'
-  );
-});
-
- async function uploadImages(files) {
-  const urls = [];
-
-  for (const file of files) {
-    const ext = (file.name.split('.').pop() || 'jpg')
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, '') || 'jpg';
-
-    const path =
-      currentUser.id + '/' + crypto.randomUUID() + '.' + ext;
-
-    const { error } = await client.storage
-      .from(BUCKET)
-      .upload(path, file, {
-        upsert: false,
-        contentType: file.type
-      });
-
-    if (error) {
-      throw new Error(
-        'Falha ao enviar "' + file.name + '": ' + error.message
-      );
+    if (files.some(file => !file.type.startsWith('image/'))) {
+      message('Todos os arquivos devem ser imagens.', true);
+      $('imageFile').value = '';
+      return;
     }
 
-    const { data } = client.storage
-      .from(BUCKET)
-      .getPublicUrl(path);
+    if (files.some(file => file.size > 10 * 1024 * 1024)) {
+      message('Cada imagem deve ter no máximo 10 MB.', true);
+      $('imageFile').value = '';
+      return;
+    }
 
-    urls.push(data.publicUrl);
+    $('preview').src = URL.createObjectURL(files[0]);
+    $('preview').classList.remove('hidden');
+
+    message(files.length + ' foto(s) selecionada(s).');
+  });
+
+  async function uploadImages(files) {
+    const urls = [];
+
+    for (const file of files) {
+      const ext = (file.name.split('.').pop() || 'jpg')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '') || 'jpg';
+
+      const path =
+        currentUser.id + '/' + crypto.randomUUID() + '.' + ext;
+
+      const {error} = await client.storage
+        .from(BUCKET)
+        .upload(path, file, {
+          upsert:false,
+          contentType:file.type
+        });
+
+      if (error) {
+        throw new Error(
+          'Falha ao enviar "' + file.name + '": ' + error.message
+        );
+      }
+
+      const {data} = client.storage.from(BUCKET).getPublicUrl(path);
+      urls.push(data.publicUrl);
+    }
+
+    return urls;
   }
-
-  return urls;
-}
 
   $('productForm').addEventListener('submit', async event => {
     event.preventDefault();
@@ -471,7 +702,8 @@ button:disabled{opacity:.6;cursor:wait}
     const priceText = $('price').value.trim();
     const price = Number(priceText);
     const code = $('code').value.trim() || null;
-   const files = Array.from($('imageFile').files);
+    const files = Array.from($('imageFile').files);
+
     let imageUrl = $('imageUrl').value.trim() || null;
 
     if (!name || priceText === '' ||
@@ -481,45 +713,28 @@ button:disabled{opacity:.6;cursor:wait}
     }
 
     if (category === 'skin' && !code) {
-      message('Informe o código da skin antes de salvar.', true);
-      $('code').focus();
+      message('Informe o código da skin.', true);
       return;
     }
 
-    // Aceita os códigos antigos com .jpeg e novos códigos com
-    // letras, números, ponto, hífen e sublinhado.
     if (code && !/^[a-zA-Z0-9._-]+$/.test(code)) {
-      message(
-        'Use no código apenas letras, números, ponto, hífen e sublinhado.',
-        true
-      );
-      $('code').focus();
+      message('Código com caracteres inválidos.', true);
       return;
     }
 
-    // Impede códigos repetidos em produtos diferentes.
     if (code && products.some(product =>
       String(product.codigo || '').toLowerCase() === code.toLowerCase() &&
       String(product.id) !== $('productId').value
     )) {
-      message(
-        'Este código já está cadastrado em outro produto. Informe um código único.',
-        true
-      );
-      $('code').focus();
+      message('Este código já está cadastrado.', true);
       return;
     }
 
     const extraImageUrls = $('extraImages').value
-      .split('\n')
-      .map(s => s.trim())
-      .filter(Boolean);
+      .split('\n').map(s => s.trim()).filter(Boolean);
 
     if (extraImageUrls.some(url => !/^https?:\/\//i.test(url))) {
-      message(
-        'As imagens adicionais devem usar URLs HTTP ou HTTPS.',
-        true
-      );
+      message('As imagens adicionais precisam usar HTTP ou HTTPS.', true);
       return;
     }
 
@@ -529,57 +744,43 @@ button:disabled{opacity:.6;cursor:wait}
     try {
       message('Salvando produto...');
 
-      if (files.length > 0) {
-  message('Enviando ' + files.length + ' foto(s)...');
+      if (files.length) {
+        message('Enviando ' + files.length + ' foto(s)...');
 
-  const uploadedUrls = await uploadImages(files);
+        const uploadedUrls = await uploadImages(files);
+        imageUrl = uploadedUrls[0];
+        $('imageUrl').value = imageUrl;
 
-  // Primeira foto: imagem principal do produto
-  imageUrl = uploadedUrls[0];
-  $('imageUrl').value = imageUrl;
-
-  // Demais fotos: imagens adicionais do produto
-  extraImageUrls.push(...uploadedUrls.slice(1));
-
-  // Atualiza o campo com todas as imagens adicionais
-  $('extraImages').value = extraImageUrls.join('\n');
-}
+        extraImageUrls.push(...uploadedUrls.slice(1));
+        $('extraImages').value = extraImageUrls.join('\n');
+      }
 
       const payload = {
-        nome: name,
-        descricao: description,
-        categoria: category,
-        preco: price,
-        codigo: code,
-        imagem_url: imageUrl,
-        imagens: extraImageUrls,
-        ativo: $('active').checked,
-        atualizado_em: new Date().toISOString()
+        nome:name,
+        descricao:description,
+        categoria:category,
+        preco:price,
+        codigo:code,
+        imagem_url:imageUrl,
+        imagens:extraImageUrls,
+        ativo:$('active').checked,
+        atualizado_em:new Date().toISOString()
       };
 
       const id = $('productId').value;
       let result;
 
       if (id) {
-        result = await client
-          .from('loja_produtos')
-          .update(payload)
-          .eq('id', Number(id))
-          .select()
-          .single();
+        result = await client.from('loja_produtos')
+          .update(payload).eq('id',Number(id)).select().single();
       } else {
-        result = await client
-          .from('loja_produtos')
-          .insert(payload)
-          .select()
-          .single();
+        result = await client.from('loja_produtos')
+          .insert(payload).select().single();
       }
 
       if (result.error) {
         if (result.error.code === '23505') {
-          throw new Error(
-            'Este código já existe no banco de dados. Informe outro código.'
-          );
+          throw new Error('Este código já existe no banco de dados.');
         }
         throw result.error;
       }
@@ -587,11 +788,9 @@ button:disabled{opacity:.6;cursor:wait}
       message('Produto salvo com sucesso!');
       clearForm();
       await loadProducts();
+
     } catch (error) {
-      message(
-        'Erro ao salvar: ' + (error.message || 'Erro desconhecido'),
-        true
-      );
+      message('Erro ao salvar: ' + error.message, true);
     } finally {
       saving = false;
       $('saveButton').disabled = false;
@@ -599,45 +798,665 @@ button:disabled{opacity:.6;cursor:wait}
   });
 
   async function toggleProduct(product) {
-    if (!currentUser || currentUser.id !== ADMIN_ID) {
-      message('Entre com a conta administradora.', true);
-      return;
-    }
+    if (!currentUser || currentUser.id !== ADMIN_ID) return;
 
     try {
-      const { error } = await client
-        .from('loja_produtos')
+      const {error} = await client.from('loja_produtos')
         .update({
-          ativo: !product.ativo,
-          atualizado_em: new Date().toISOString()
-        })
-        .eq('id', product.id);
+          ativo:!product.ativo,
+          atualizado_em:new Date().toISOString()
+        }).eq('id',product.id);
 
       if (error) throw error;
 
       message('Status do produto alterado.');
       await loadProducts();
+
     } catch (error) {
-      message(
-        'Erro ao alterar produto: ' + error.message,
-        true
-      );
+      message('Erro ao alterar produto: ' + error.message, true);
     }
   }
 
-  $('logout').addEventListener('click', async () => {
+  // =====================================================
+  // CAIXAS PROMOCIONAIS
+  // =====================================================
+
+  async function loadBoxes() {
+    if (!currentUser || currentUser.id !== ADMIN_ID) return;
+
+    try {
+      const {data,error} = await client
+        .from('stacoin_caixas')
+        .select('*')
+        .order('criado_em',{ascending:false});
+
+      if (error) throw error;
+
+      boxes = data || [];
+      renderBoxes();
+      fillBoxSelect();
+
+    } catch (error) {
+      message('Erro ao carregar caixas: ' + error.message, true);
+    }
+  }
+
+  function renderBoxes() {
+    const container = $('boxes');
+    container.replaceChildren();
+
+    if (!boxes.length) {
+      container.textContent = 'Nenhuma caixa cadastrada.';
+      return;
+    }
+
+    boxes.forEach(box => {
+      const card = document.createElement('article');
+      card.className = 'box-card';
+
+      if (box.imagem_url) {
+        const image = document.createElement('img');
+        image.src = box.imagem_url;
+        image.alt = 'Capa da caixa';
+        image.onerror = () => image.style.display = 'none';
+        card.appendChild(image);
+      }
+
+      const title = document.createElement('h3');
+      title.textContent = box.nome;
+      card.appendChild(title);
+
+      const desc = document.createElement('p');
+      desc.className = 'muted';
+      desc.textContent = box.descricao || 'Sem descrição';
+      card.appendChild(desc);
+
+      const price = document.createElement('p');
+      price.className = 'price';
+      price.textContent =
+        Number(box.preco).toLocaleString('pt-BR') + ' STACOIN';
+      card.appendChild(price);
+
+      const state = document.createElement('span');
+      state.className = 'tag' + (box.ativo ? '' : ' off');
+      state.textContent = box.ativo ? 'Ativa' : 'Inativa';
+      card.appendChild(state);
+
+      const dates = document.createElement('p');
+      dates.className = 'muted';
+      dates.textContent =
+        'Início: ' + (box.data_inicio
+          ? new Date(box.data_inicio).toLocaleString('pt-BR')
+          : 'Sem limite') +
+        ' | Fim: ' + (box.data_fim
+          ? new Date(box.data_fim).toLocaleString('pt-BR')
+          : 'Sem limite');
+      card.appendChild(dates);
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+
+      const edit = document.createElement('button');
+      edit.className = 'secondary';
+      edit.type = 'button';
+      edit.textContent = 'Editar';
+      edit.addEventListener('click', () => editBox(box));
+      actions.appendChild(edit);
+
+      const select = document.createElement('button');
+      select.className = 'primary';
+      select.type = 'button';
+      select.textContent = 'Gerenciar prêmios';
+      select.addEventListener('click', () => {
+        $('selectedBox').value = String(box.id);
+        loadPrizes();
+        $('selectedBox').scrollIntoView({behavior:'smooth'});
+      });
+      actions.appendChild(select);
+
+      const toggle = document.createElement('button');
+      toggle.className = box.ativo ? 'danger' : 'primary';
+      toggle.type = 'button';
+      toggle.textContent = box.ativo ? 'Desativar' : 'Ativar';
+      toggle.addEventListener('click', () => toggleBox(box));
+      actions.appendChild(toggle);
+
+      card.appendChild(actions);
+      container.appendChild(card);
+    });
+  }
+
+  function fillBoxSelect() {
+    const select = $('selectedBox');
+    const previous = select.value;
+
+    select.replaceChildren();
+
+    const first = document.createElement('option');
+    first.value = '';
+    first.textContent = 'Selecione uma caixa';
+    select.appendChild(first);
+
+    boxes.forEach(box => {
+      const option = document.createElement('option');
+      option.value = box.id;
+      option.textContent = box.nome;
+      select.appendChild(option);
+    });
+
+    if (boxes.some(box => String(box.id) === previous)) {
+      select.value = previous;
+    }
+  }
+
+  function editBox(box) {
+    $('boxId').value = box.id;
+    $('boxName').value = box.nome || '';
+    $('boxDescription').value = box.descricao || '';
+    $('boxImage').value = box.imagem_url || '';
+    $('boxPrice').value = box.preco ?? '';
+    $('boxStart').value = dateToInput(box.data_inicio);
+    $('boxEnd').value = dateToInput(box.data_fim);
+    $('boxActive').checked = !!box.ativo;
+
+    $('boxName').focus();
+    $('boxForm').scrollIntoView({behavior:'smooth'});
+  }
+
+  function clearBoxForm() {
+    $('boxForm').reset();
+    $('boxId').value = '';
+    $('boxActive').checked = false;
+  }
+
+  $('clearBox').addEventListener('click',clearBoxForm);
+  $('refreshBoxes').addEventListener('click',loadBoxes);
+
+  $('boxForm').addEventListener('submit',async event => {
+    event.preventDefault();
+
+    if (!currentUser || currentUser.id !== ADMIN_ID) {
+      message('Acesso administrativo necessário.',true);
+      return;
+    }
+
+    const name = $('boxName').value.trim();
+    const priceText = $('boxPrice').value.trim();
+    const price = Number(priceText);
+    const start = $('boxStart').value;
+    const end = $('boxEnd').value;
+
+    if (!name || priceText === '' ||
+        !Number.isSafeInteger(price) || price < 0) {
+      message('Confira o nome e o preço da caixa.',true);
+      return;
+    }
+
+    if (start && end && new Date(end) <= new Date(start)) {
+      message('A data final precisa ser posterior à inicial.',true);
+      return;
+    }
+
+    const image = $('boxImage').value.trim() || null;
+
+    if (image && !/^https?:\/\//i.test(image)) {
+      message('A imagem precisa usar HTTP ou HTTPS.',true);
+      return;
+    }
+
+    const payload = {
+      nome:name,
+      descricao:$('boxDescription').value.trim(),
+      imagem_url:image,
+      preco:price,
+      data_inicio:dateToISO(start),
+      data_fim:dateToISO(end),
+      ativo:$('boxActive').checked,
+      atualizado_em:new Date().toISOString()
+    };
+
+    const id = $('boxId').value;
+
+    try {
+      $('saveBoxButton').disabled = true;
+      message('Salvando caixa...');
+
+      let result;
+
+      if (id) {
+        result = await client.from('stacoin_caixas')
+          .update(payload).eq('id',Number(id)).select().single();
+      } else {
+        result = await client.from('stacoin_caixas')
+          .insert(payload).select().single();
+      }
+
+      if (result.error) throw result.error;
+
+      message('Caixa salva com sucesso!');
+      clearBoxForm();
+      await loadBoxes();
+
+    } catch (error) {
+      message('Erro ao salvar caixa: ' + error.message,true);
+    } finally {
+      $('saveBoxButton').disabled = false;
+    }
+  });
+
+  async function toggleBox(box) {
+    try {
+      const {error} = await client.from('stacoin_caixas')
+        .update({
+          ativo:!box.ativo,
+          atualizado_em:new Date().toISOString()
+        }).eq('id',box.id);
+
+      if (error) throw error;
+
+      message('Status da caixa alterado.');
+      await loadBoxes();
+
+    } catch (error) {
+      message('Erro ao alterar caixa: ' + error.message,true);
+    }
+  }
+
+  // =====================================================
+  // PRÊMIOS DAS CAIXAS
+  // =====================================================
+
+  $('selectedBox').addEventListener('change',() => {
+    clearPrizeForm();
+    loadPrizes();
+  });
+
+  $('prizeType').addEventListener('change',() => {
+    const isSkin = $('prizeType').value === 'skin';
+
+    $('skinFields').classList.toggle('hidden',!isSkin);
+    $('stacoinFields').classList.toggle('hidden',isSkin);
+
+    $('prizeImage').required = false;
+    $('prizeCodes').required = false;
+    $('prizeValue').required = !isSkin;
+  });
+
+  async function loadPrizes() {
+    const boxId = $('selectedBox').value;
+    const container = $('prizes');
+
+    container.replaceChildren();
+    prizes = [];
+
+    if (!boxId) {
+      $('chanceStatus').textContent =
+        'Selecione uma caixa para visualizar os prêmios.';
+      return;
+    }
+
+    try {
+      message('Carregando prêmios...');
+
+      const {data,error} = await client
+        .from('stacoin_caixa_premios')
+        .select('*')
+        .eq('caixa_id',Number(boxId))
+        .order('criado_em',{ascending:true});
+
+      if (error) throw error;
+
+      prizes = data || [];
+      await renderPrizes();
+
+      message('Prêmios carregados.');
+
+    } catch (error) {
+      message('Erro ao carregar prêmios: ' + error.message,true);
+    }
+  }
+
+  async function renderPrizes() {
+    const container = $('prizes');
+    container.replaceChildren();
+
+    const totalChance = prizes
+      .filter(prize => prize.ativo)
+      .reduce((sum,prize) => sum + Number(prize.chance),0);
+
+    $('chanceStatus').textContent =
+      'Soma das chances dos prêmios ativos: ' +
+      totalChance.toFixed(2).replace('.',',') +
+      '% — para liberar a caixa, o total precisa ser exatamente 100%.';
+
+    $('chanceStatus').style.background =
+      Math.abs(totalChance - 100) < 0.001 ? '#e8eee9' : '#fff0f0';
+
+    if (!prizes.length) {
+      container.textContent = 'Nenhum prêmio cadastrado nesta caixa.';
+      return;
+    }
+
+    for (const prize of prizes) {
+      const card = document.createElement('article');
+      card.className = 'prize-card';
+
+      if (prize.tipo === 'skin' && prize.imagem_url) {
+        const image = document.createElement('img');
+        image.src = prize.imagem_url;
+        image.alt = 'Imagem do prêmio';
+        image.onerror = () => image.style.display = 'none';
+        card.appendChild(image);
+      }
+
+      const title = document.createElement('h3');
+      title.textContent = prize.nome;
+      card.appendChild(title);
+
+      const type = document.createElement('p');
+      type.className = 'muted';
+      type.textContent = prize.tipo === 'skin'
+        ? 'Prêmio: Skin'
+        : 'Prêmio: STACOIN (' +
+          Number(prize.valor_stacoin).toLocaleString('pt-BR') + ')';
+      card.appendChild(type);
+
+      const chance = document.createElement('p');
+      chance.className = 'price';
+      chance.textContent = 'Chance: ' +
+        Number(prize.chance).toFixed(2).replace('.',',') + '%';
+      card.appendChild(chance);
+
+      const state = document.createElement('span');
+      state.className = 'tag' + (prize.ativo ? '' : ' off');
+      state.textContent = prize.ativo ? 'Ativo' : 'Inativo';
+      card.appendChild(state);
+
+      if (prize.tipo === 'skin') {
+        const stock = document.createElement('p');
+        stock.className = 'muted';
+        stock.textContent = 'Consultando estoque...';
+        card.appendChild(stock);
+
+        const {count,error} = await client
+          .from('stacoin_caixa_codigos')
+          .select('*',{count:'exact',head:true})
+          .eq('premio_id',prize.id)
+          .eq('status','disponivel');
+
+        stock.textContent = error
+          ? 'Estoque: não foi possível consultar'
+          : 'Códigos disponíveis: ' + count;
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'secondary';
+      edit.textContent = 'Editar';
+      edit.addEventListener('click',() => editPrize(prize));
+      actions.appendChild(edit);
+
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = prize.ativo ? 'danger' : 'primary';
+      toggle.textContent = prize.ativo ? 'Desativar' : 'Ativar';
+      toggle.addEventListener('click',() => togglePrize(prize));
+      actions.appendChild(toggle);
+
+      if (prize.tipo === 'skin') {
+        const codes = document.createElement('button');
+        codes.type = 'button';
+        codes.className = 'secondary';
+        codes.textContent = 'Ver códigos';
+        codes.addEventListener('click',() => showCodes(prize));
+        actions.appendChild(codes);
+      }
+
+      card.appendChild(actions);
+      container.appendChild(card);
+    }
+  }
+
+  function clearPrizeForm() {
+    $('prizeForm').reset();
+    $('prizeId').value = '';
+    $('prizeActive').checked = true;
+    $('prizeType').value = 'skin';
+    $('prizeType').dispatchEvent(new Event('change'));
+  }
+
+  $('clearPrize').addEventListener('click',clearPrizeForm);
+
+  function editPrize(prize) {
+    $('prizeId').value = prize.id;
+    $('prizeType').value = prize.tipo;
+    $('prizeType').dispatchEvent(new Event('change'));
+
+    $('prizeName').value = prize.nome || '';
+    $('prizeImage').value = prize.imagem_url || '';
+    $('prizeValue').value = prize.valor_stacoin ?? '';
+    $('prizeChance').value = prize.chance;
+    $('prizeActive').checked = !!prize.ativo;
+
+    // A edição não altera nem substitui os códigos já cadastrados.
+    $('prizeCodes').value = '';
+
+    $('prizeName').focus();
+    $('prizeForm').scrollIntoView({behavior:'smooth'});
+  }
+
+  $('prizeForm').addEventListener('submit',async event => {
+    event.preventDefault();
+
+    if (!currentUser || currentUser.id !== ADMIN_ID) {
+      message('Acesso administrativo necessário.',true);
+      return;
+    }
+
+    const boxId = $('selectedBox').value;
+
+    if (!boxId) {
+      message('Selecione uma caixa primeiro.',true);
+      return;
+    }
+
+    const type = $('prizeType').value;
+    const name = $('prizeName').value.trim();
+    const chanceText = $('prizeChance').value.trim();
+    const chance = Number(chanceText);
+    const id = $('prizeId').value;
+
+    if (!name || chanceText === '' ||
+        !Number.isFinite(chance) || chance < 0 || chance > 100) {
+      message('Confira o nome e a chance do prêmio.',true);
+      return;
+    }
+
+    let image = null;
+    let value = null;
+    let codes = [];
+
+    if (type === 'skin') {
+      image = $('prizeImage').value.trim() || null;
+
+      if (image && !/^https?:\/\//i.test(image)) {
+        message('A imagem precisa usar HTTP ou HTTPS.',true);
+        return;
+      }
+
+      codes = $('prizeCodes').value
+        .split('\n')
+        .map(code => code.trim())
+        .filter(Boolean);
+
+      if (!id && codes.length === 0) {
+        message('Cadastre pelo menos um código para a skin.',true);
+        return;
+      }
+
+      if (codes.some(code => !/^[a-zA-Z0-9._-]+$/.test(code))) {
+        message('Há códigos com caracteres inválidos.',true);
+        return;
+      }
+
+    } else {
+      value = Number($('prizeValue').value);
+
+      if (!Number.isSafeInteger(value) || value <= 0) {
+        message('Informe uma quantidade válida de STACOIN.',true);
+        return;
+      }
+    }
+
+    const payload = {
+      caixa_id:Number(boxId),
+      tipo:type,
+      nome:name,
+      imagem_url:image,
+      valor_stacoin:value,
+      chance:chance,
+      ativo:$('prizeActive').checked,
+      atualizado_em:new Date().toISOString()
+    };
+
+    try {
+      $('savePrizeButton').disabled = true;
+      message('Salvando prêmio...');
+
+      let result;
+
+      if (id) {
+        result = await client.from('stacoin_caixa_premios')
+          .update(payload)
+          .eq('id',Number(id))
+          .eq('caixa_id',Number(boxId))
+          .select()
+          .single();
+      } else {
+        result = await client.from('stacoin_caixa_premios')
+          .insert(payload)
+          .select()
+          .single();
+      }
+
+      if (result.error) throw result.error;
+
+      const prizeId = result.data.id;
+
+      if (type === 'skin' && codes.length) {
+        const rows = codes.map(code => ({
+          premio_id:prizeId,
+          codigo:code,
+          status:'disponivel'
+        }));
+
+        const {error:codeError} = await client
+          .from('stacoin_caixa_codigos')
+          .insert(rows);
+
+        if (codeError) {
+          throw new Error(
+            'Prêmio salvo, mas houve erro ao cadastrar os códigos: ' +
+            codeError.message
+          );
+        }
+      }
+
+      message('Prêmio salvo com sucesso!');
+      clearPrizeForm();
+      await loadPrizes();
+
+    } catch (error) {
+      message('Erro ao salvar prêmio: ' + error.message,true);
+    } finally {
+      $('savePrizeButton').disabled = false;
+    }
+  });
+
+  async function togglePrize(prize) {
+    try {
+      const {error} = await client
+        .from('stacoin_caixa_premios')
+        .update({
+          ativo:!prize.ativo,
+          atualizado_em:new Date().toISOString()
+        })
+        .eq('id',prize.id);
+
+      if (error) throw error;
+
+      message('Status do prêmio alterado.');
+      await loadPrizes();
+
+    } catch (error) {
+      message('Erro ao alterar prêmio: ' + error.message,true);
+    }
+  }
+
+  async function showCodes(prize) {
+    try {
+      message('Consultando códigos...');
+
+      const {data,error} = await client
+        .from('stacoin_caixa_codigos')
+        .select('codigo,status,criado_em')
+        .eq('premio_id',prize.id)
+        .order('criado_em',{ascending:true});
+
+      if (error) throw error;
+
+      const available = (data || []).filter(
+        item => item.status === 'disponivel'
+      );
+
+      const used = (data || []).filter(
+        item => item.status === 'utilizado'
+      );
+
+      const lines = [
+        'PRÊMIO: ' + prize.nome,
+        '',
+        'DISPONÍVEIS (' + available.length + '):',
+        ...available.map(item => item.codigo),
+        '',
+        'UTILIZADOS (' + used.length + '):',
+        ...used.map(item => item.codigo)
+      ];
+
+      // Exibe os códigos somente no painel administrativo.
+      alert(lines.join('\n'));
+      message('Códigos consultados.');
+
+    } catch (error) {
+      message('Erro ao consultar códigos: ' + error.message,true);
+    }
+  }
+
+  // =====================================================
+  // SAIR E INICIALIZAÇÃO
+  // =====================================================
+
+  $('logout').addEventListener('click',async () => {
     await client.auth.signOut();
     showAdmin(null);
     clearForm();
+    clearBoxForm();
+    clearPrizeForm();
   });
 
-  client.auth.onAuthStateChange((_event, session) => {
+  client.auth.onAuthStateChange((_event,session) => {
     if (!sessionCheckFinished) return;
     showAdmin(session?.user || null);
   });
 
   $('category').dispatchEvent(new Event('change'));
+  $('prizeType').dispatchEvent(new Event('change'));
+
   checkSession();
+
 })();
 </script>
 </body>
