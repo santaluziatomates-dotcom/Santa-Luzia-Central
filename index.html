@@ -46,60 +46,39 @@ body {
 /* CABEÇALHO */
 
 .cabecalho {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background:
-    linear-gradient(90deg, #103b27, #226443 48%, #103b27);
+  background: #edf3ed;
   text-align: center;
-  padding: 30px 20px;
-  border-bottom: 5px solid #c93432;
-  color: white;
+  padding: 30px 20px 26px;
+  border-top: 6px solid #174c32;
+  border-bottom: 4px solid #c93432;
+  color: #26332b;
 }
 
-.cabecalho::before {
-  content: "🌿";
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  font-size: 55px;
-  opacity: .25;
-  transform: rotate(-25deg);
-  z-index: -1;
-}
-
+.cabecalho::before,
 .cabecalho::after {
-  content: "🍃";
-  position: absolute;
-  right: 12px;
-  bottom: 8px;
-  font-size: 65px;
-  opacity: .25;
-  transform: rotate(25deg);
-  z-index: -1;
+  display: none;
+  content: none;
 }
 
 .logo {
-  width: 100px;
-  height: 100px;
+  width: 112px;
+  height: 112px;
   object-fit: contain;
-  padding: 7px;
-  background: white;
+  padding: 5px;
+  background: #ffffff;
+  border: 2px solid #dce8dc;
   border-radius: 17px;
   margin-bottom: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.18);
+  box-shadow: 0 5px 16px rgba(23,76,50,.12);
 }
 
 .cabecalho h1 {
-  color: white;
-  font-size: 26px;
-  margin-bottom: 7px;
-  letter-spacing: 1px;
-  font-weight: 800;
+  color: #174c32;
 }
+
 .subtitulo {
-  color: rgba(255,255,255,.78);
-  font-size: 14px;
+  color: #68776b;
+}
 }
 
 .selo {
