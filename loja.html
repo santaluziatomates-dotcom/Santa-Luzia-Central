@@ -52,6 +52,40 @@ header{background:#176b3a;color:white;padding:15px 18px;display:flex;align-items
 .buy.owned{background:#e8f3eb;color:#176b3a;border:1px solid #c8dfce}
 .buy.owned:hover{background:#dceee1}
 
+/* NAVEGAÇÃO POR ABAS */
+
+.shop-tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin:20px 0;
+}
+.shop-tab{
+    border:1px solid #dce8df;
+    background:white;
+    color:#356047;
+    padding:13px 6px;
+    border-radius:13px;
+    font-size:11px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.2s;
+}
+.shop-tab.active{
+    background:#176b3a;
+    color:white;
+    border-color:#176b3a;
+    box-shadow:0 4px 12px #176b3a25;
+}
+.page-view{display:none}
+.page-view.active{display:block}
+.collection-heading{
+    margin:22px 2px 12px;
+    font-size:18px;
+    font-weight:900;
+    color:#173b29;
+}
+
 /* CAIXAS DINÂMICAS */
 
 .box-area{display:block;margin-top:12px}
@@ -72,7 +106,7 @@ header{background:#176b3a;color:white;padding:15px 18px;display:flex;align-items
 
 /* MINHAS SKINS E PRÊMIOS */
 
-.my-skins-section,.my-prizes-section{display:none;margin-top:28px}
+.my-skins-section,.my-prizes-section{display:none;margin-top:10px}
 .my-skins-section.show,.my-prizes-section.show{display:block}
 .my-skins-grid,.my-prizes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .my-skin{background:white;border:1px solid #dfe9e2;border-radius:16px;padding:12px;box-shadow:0 3px 12px #176b3a0d}
@@ -81,7 +115,7 @@ header{background:#176b3a;color:white;padding:15px 18px;display:flex;align-items
 .my-skin p,.my-prize p{color:#718079;font-size:10px;margin-top:3px}
 .owned-badge{display:inline-block;margin-top:8px;padding:5px 8px;border-radius:999px;background:#e8f3eb;color:#176b3a;font-size:9px;font-weight:900}
 .view-code{width:100%;border:none;background:#176b3a;color:white;padding:9px;border-radius:10px;margin-top:9px;font-size:10px;font-weight:900;cursor:pointer}
-.empty-skins,.empty-prizes{background:white;border:1px dashed #cbd9cf;border-radius:15px;padding:18px;text-align:center;color:#718079;font-size:11px}
+.empty-skins,.empty-prizes{background:white;border:1px dashed #cbd9cf;border-radius:15px;padding:22px;text-align:center;color:#718079;font-size:12px;grid-column:1/-1}
 .my-prize{background:white;border:1px solid #dfe9e2;border-radius:16px;padding:10px;box-shadow:0 3px 12px #176b3a0d;cursor:pointer;transition:.2s;overflow:hidden}
 .my-prize:hover{transform:translateY(-2px)}
 .prize-photo{width:100%;height:150px;object-fit:contain;background:#f4f5f4;border-radius:12px;display:block}
@@ -171,9 +205,11 @@ header{padding:12px}
 @media(max-width:360px){
 .products,.my-skins-grid,.my-prizes-grid{grid-template-columns:1fr}
 .image-box{height:190px}
+.shop-tab{font-size:9px;padding:12px 3px}
 }
 </style>
 </head>
+
 <body>
 
 <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;margin:12px 14px;padding:9px 13px;background:#fff;color:#176b3a;border:1px solid #dfe5df;border-radius:11px;text-decoration:none;font-size:11px;font-weight:bold">← VOLTAR PARA A CENTRAL</a>
@@ -197,20 +233,23 @@ header{padding:12px}
 </header>
 
 <main class="container">
+
 <section class="hero">
 <h2>🍅 Santa Luzia Shop</h2>
 <p>Troque seus STACOIN por skins oficiais da nossa empresa.</p>
 </section>
 
-<section class="my-skins-section" id="mySkinsSection">
-<div class="section-title"><h2>🎟️ Minhas skins</h2><span id="mySkinsCount">0 adquiridas</span></div>
-<div class="my-skins-grid" id="mySkins"></div>
-</section>
+<!-- NAVEGAÇÃO PRINCIPAL -->
 
-<section class="my-prizes-section" id="myPrizesSection">
-<div class="section-title"><h2>🎁 Meus prêmios</h2><span id="myPrizesCount">0 ganhos</span></div>
-<div class="my-prizes-grid" id="myPrizes"></div>
-</section>
+<nav class="shop-tabs">
+<button class="shop-tab active" data-view="loja">🛒 LOJA</button>
+<button class="shop-tab" data-view="skins">🎟️ MINHAS SKINS</button>
+<button class="shop-tab" data-view="premios">🎁 MEUS PRÊMIOS</button>
+</nav>
+
+<!-- ABA LOJA -->
+
+<section class="page-view active" id="view-loja">
 
 <div class="section-title">
 <h2 id="catalogTitle">Skins oficiais</h2>
@@ -238,11 +277,41 @@ header{padding:12px}
 💰 <strong>STACOIN</strong> é a moeda interna da Santa Luzia.
 Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
 </div>
+
+</section>
+
+<!-- ABA MINHAS SKINS -->
+
+<section class="page-view" id="view-skins">
+<h2 class="collection-heading">🎟️ Minhas skins</h2>
+<section class="my-skins-section show" id="mySkinsSection">
+<div class="section-title">
+<h2>Skins adquiridas</h2>
+<span id="mySkinsCount">0 adquiridas</span>
+</div>
+<div class="my-skins-grid" id="mySkins"></div>
+</section>
+</section>
+
+<!-- ABA MEUS PRÊMIOS -->
+
+<section class="page-view" id="view-premios">
+<h2 class="collection-heading">🎁 Meus prêmios</h2>
+<section class="my-prizes-section show" id="myPrizesSection">
+<div class="section-title">
+<h2>Prêmios conquistados</h2>
+<span id="myPrizesCount">0 ganhos</span>
+</div>
+<div class="my-prizes-grid" id="myPrizes"></div>
+</section>
+</section>
+
 </main>
 
 <footer>SANTA LUZIA TOMATES • SANTA LUZIA BATATAS<br>Juntos fazemos mais 🍅</footer>
 
 <!-- MODAL COMPRA DE SKIN -->
+
 <div class="modal-bg" id="purchaseModal">
 <div class="modal">
 <div class="modal-top"><h2>Confirmar compra</h2><button class="close" id="closePurchase">×</button></div>
@@ -261,6 +330,7 @@ Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
 </div>
 
 <!-- MODAL RESULTADO -->
+
 <div class="modal-bg" id="resultModal">
 <div class="modal result">
 <div class="result-icon" id="resultIcon">🎁</div>
@@ -282,6 +352,7 @@ Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
 </div>
 
 <!-- MODAL SKIN ADQUIRIDA -->
+
 <div class="modal-bg" id="ownedModal">
 <div class="modal result">
 <div class="modal-top"><h2>🎟️ Minha skin</h2><button class="close" id="closeOwned">×</button></div>
@@ -300,6 +371,7 @@ Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
 </div>
 
 <!-- MODAL CAIXA DINÂMICA -->
+
 <div class="modal-bg" id="dynamicBoxModal">
 <div class="modal">
 <div class="modal-top">
@@ -321,6 +393,7 @@ Os pagamentos oficiais acontecem nos dias 5 e 20 de cada mês.
 </div>
 
 <!-- MODAL MEU PRÊMIO -->
+
 <div class="modal-bg" id="prizeModal">
 <div class="modal prize-resgatado">
 <div class="modal-top"><h2>🎁 Meu prêmio</h2><button class="close" id="closePrize">×</button></div>
@@ -406,6 +479,29 @@ const myPrizesSection=document.getElementById("myPrizesSection");
 const myPrizesEl=document.getElementById("myPrizes");
 const myPrizesCount=document.getElementById("myPrizesCount");
 
+/* NAVEGAÇÃO DAS ABAS */
+
+function trocarAba(aba){
+    document.querySelectorAll(".shop-tab").forEach(botao=>{
+        botao.classList.toggle("active",botao.dataset.view===aba);
+    });
+
+    document.querySelectorAll(".page-view").forEach(pagina=>{
+        pagina.classList.toggle("active",pagina.id===`view-${aba}`);
+    });
+
+    if(aba==="skins")renderMinhasSkins();
+    if(aba==="premios")renderMeusPremios();
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.querySelectorAll(".shop-tab").forEach(botao=>{
+    botao.addEventListener("click",()=>{
+        trocarAba(botao.dataset.view);
+    });
+});
+
 /* UTILITÁRIOS */
 
 function formatarStacoin(valor){
@@ -427,7 +523,7 @@ function premioEhStacoin(premio){
 function valorStacoinPremio(premio){
     const nome=String(premio?.produto_nome||"");
     const match=nome.match(/(\d+)\s*STACOIN/i);
-    if(match) return Number(match[1]);
+    if(match)return Number(match[1]);
     const valor=Number(premio?.valor||0);
     return valor>0?valor:0;
 }
@@ -599,32 +695,37 @@ function encontrarCompra(codigo){
 function renderMinhasSkins(){
     mySkinsEl.innerHTML="";
 
-    if(!comprasRealizadas.length){
-        mySkinsSection.classList.remove("show");
-        mySkinsCount.textContent="0 adquiridas";
+    const compras=comprasRealizadas.filter(compra=>compra.tipo==="skin");
+
+    mySkinsCount.textContent=
+        `${compras.length} adquirida${compras.length!==1?"s":""}`;
+
+    if(!compras.length){
+        mySkinsEl.innerHTML=`
+            <div class="empty-skins">
+                🎟️<br><br>
+                Você ainda não possui skins.<br>
+                Visite a Loja e adquira sua primeira skin!
+            </div>`;
         return;
     }
 
-    mySkinsSection.classList.add("show");
-    mySkinsCount.textContent=`${comprasRealizadas.length} adquirida${comprasRealizadas.length!==1?"s":""}`;
-
-    comprasRealizadas.forEach(compra=>{
+    compras.forEach(compra=>{
         const produto=produtos.find(p=>p.codigo===compra.codigo);
-        if(!produto)return;
 
         const card=document.createElement("div");
         card.className="my-skin";
 
         const imagem=document.createElement("img");
         imagem.className="my-skin-image";
-        imagem.src=produto.imagens[0];
-        imagem.alt=produto.nome;
+        imagem.src=produto?.imagens?.[0]||"logo.sta.PNG";
+        imagem.alt=produto?.nome||compra.produto_nome||"Skin adquirida";
 
         const titulo=document.createElement("h3");
-        titulo.textContent=produto.nome;
+        titulo.textContent=produto?.nome||compra.produto_nome||"Skin adquirida";
 
         const descricao=document.createElement("p");
-        descricao.textContent=produto.descricao;
+        descricao.textContent=produto?.descricao||"Skin oficial adquirida na Santa Luzia Shop.";
 
         const badge=document.createElement("span");
         badge.className="owned-badge";
@@ -633,7 +734,16 @@ function renderMinhasSkins(){
         const botao=document.createElement("button");
         botao.className="view-code";
         botao.textContent="VER MEU CÓDIGO";
-        botao.addEventListener("click",()=>abrirCodigoAdquirido(produto,compra.codigo));
+        botao.addEventListener("click",()=>{
+            abrirCodigoAdquirido(
+                produto||{
+                    nome:compra.produto_nome||"Skin adquirida",
+                    descricao:"",
+                    imagens:["logo.sta.PNG"]
+                },
+                compra.codigo
+            );
+        });
 
         card.append(imagem,titulo,descricao,badge,botao);
         mySkinsEl.appendChild(card);
@@ -645,14 +755,18 @@ function renderMinhasSkins(){
 function renderMeusPremios(){
     myPrizesEl.innerHTML="";
 
+    myPrizesCount.textContent=
+        `${premiosRealizados.length} ganho${premiosRealizados.length!==1?"s":""}`;
+
     if(!premiosRealizados.length){
-        myPrizesSection.classList.remove("show");
-        myPrizesCount.textContent="0 ganhos";
+        myPrizesEl.innerHTML=`
+            <div class="empty-prizes">
+                🎁<br><br>
+                Você ainda não ganhou prêmios em caixas.<br>
+                Quando conquistar um prêmio, ele aparecerá aqui!
+            </div>`;
         return;
     }
-
-    myPrizesSection.classList.add("show");
-    myPrizesCount.textContent=`${premiosRealizados.length} ganho${premiosRealizados.length!==1?"s":""}`;
 
     premiosRealizados.forEach(premio=>{
         const dinheiro=premioEhStacoin(premio);
@@ -669,14 +783,18 @@ function renderMeusPremios(){
         imagem.alt=dinheiro?"STACOIN":nome;
 
         const titulo=document.createElement("h3");
-        titulo.textContent=dinheiro?`💰 ${valor?valor+" STACOIN":"STACOIN"}`:nome;
+        titulo.textContent=dinheiro
+            ?`💰 ${valor?valor+" STACOIN":"STACOIN"}`
+            :nome;
 
         const descricao=document.createElement("p");
         descricao.textContent="🎁 Prêmio de caixa especial";
 
         const rodape=document.createElement("div");
         rodape.className="prize-hidden-code";
-        rodape.textContent=dinheiro?"💰 VALOR CREDITADO":"👆 TOQUE PARA VER O PRÊMIO";
+        rodape.textContent=dinheiro
+            ?"💰 VALOR CREDITADO"
+            :"👆 TOQUE PARA VER O PRÊMIO";
 
         card.append(imagem,titulo,descricao,rodape);
         card.addEventListener("click",()=>abrirPremioResgatado(premio));
@@ -687,9 +805,11 @@ function renderMeusPremios(){
 /* CÓDIGO DE SKIN */
 
 function abrirCodigoAdquirido(produto,codigo){
-    document.getElementById("ownedProductImage").src=produto.imagens[0];
-    document.getElementById("ownedProductName").textContent=`${produto.nome} — ${produto.descricao}`;
-    document.getElementById("ownedCode").textContent=codigo;
+    document.getElementById("ownedProductImage").src=
+        produto.imagens?.[0]||"logo.sta.PNG";
+    document.getElementById("ownedProductName").textContent=
+        `${produto.nome} — ${produto.descricao||""}`;
+    document.getElementById("ownedCode").textContent=codigo||"—";
     ownedModal.classList.add("show");
 }
 
@@ -729,7 +849,7 @@ function abrirPremioResgatado(premio){
         atualizarFotoPremio();
         codeBox.style.display="block";
         moneyBox.style.display="none";
-        nav.style.display=premioFotosAtuais.length>0?"flex":"none";
+        nav.style.display=premioFotosAtuais.length>1?"flex":"none";
         document.getElementById("prizeCode").textContent=premio.codigo||"—";
         document.getElementById("prizeInfo").textContent=
             "Seu prêmio está salvo na sua conta. O código pode ser consultado novamente.";
@@ -745,7 +865,8 @@ function atualizarFotoPremio(){
     premioFotoAtual=(premioFotoAtual+total)%total;
 
     document.getElementById("prizeProductImage").src=premioFotosAtuais[premioFotoAtual];
-    document.getElementById("prizePhotoCounter").textContent=`${premioFotoAtual+1} / ${total}`;
+    document.getElementById("prizePhotoCounter").textContent=
+        `${premioFotoAtual+1} / ${total}`;
     document.getElementById("prizePrev").disabled=total<=1;
     document.getElementById("prizeNext").disabled=total<=1;
 }
@@ -945,7 +1066,8 @@ function mostrarResultadoCaixaDinamica(data){
     const imagem=document.getElementById("dynamicResultImage");
 
     document.getElementById("resultIcon").textContent=dinheiro?"💰":"🎁";
-    document.getElementById("resultTitle").textContent=dinheiro?"Você ganhou STACOIN!":"Prêmio conquistado!";
+    document.getElementById("resultTitle").textContent=
+        dinheiro?"Você ganhou STACOIN!":"Prêmio conquistado!";
     document.getElementById("resultName").textContent=data.premio_nome||"Prêmio da caixa";
 
     imagem.style.display=data.premio_imagem?"block":"none";
@@ -995,6 +1117,14 @@ function renderProdutos(){
         `${lista.length} produto${lista.length!==1?"s":""}`;
 
     catalogTitle.textContent="Skins oficiais";
+
+    if(!lista.length){
+        productsEl.innerHTML=`
+            <div class="dynamic-box-empty" style="grid-column:1/-1">
+                Nenhuma skin encontrada nesta categoria.
+            </div>`;
+        return;
+    }
 
     lista.forEach(produto=>{
         const card=document.createElement("article");
