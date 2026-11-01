@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -54,7 +53,6 @@ hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
 </header>
 <main>
 <div id="status" role="status" aria-live="polite">Inicializando painel...</div>
-
 <section class="panel" id="loginPanel">
 <h2>Entrar como administrador</h2>
 <form id="loginForm">
@@ -65,9 +63,7 @@ hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
 <div class="actions"><button class="primary" type="submit">Entrar</button></div>
 </form>
 </section>
-
 <section class="hidden" id="adminArea">
-
 <div class="panel">
 <h2 id="formTitle">Cadastrar produto</h2>
 <form id="productForm">
@@ -102,15 +98,12 @@ hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
 </div>
 </form>
 </div>
-
 <div class="panel">
 <h2>Produtos cadastrados</h2>
 <button class="secondary" id="refresh" type="button">Atualizar lista</button>
 <div id="products"></div>
 </div>
-
 <hr>
-
 <div class="panel">
 <h2>🎁 Caixas promocionais</h2>
 <p class="muted">Crie caixas para campanhas especiais, como Novembro Azul, Natal e outras promoções da Santa Luzia.</p>
@@ -141,7 +134,6 @@ hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
 <button class="secondary" id="refreshBoxes" type="button">Atualizar caixas</button>
 <div id="boxes"></div>
 </div>
-
 <div class="panel">
 <h2>🏆 Gerenciar prêmios da caixa</h2>
 <label for="selectedBox">Selecione uma caixa</label>
@@ -161,6 +153,11 @@ hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
 <label for="prizeCodes">Códigos disponíveis</label>
 <textarea id="prizeCodes" placeholder="Um código por linha"></textarea>
 <p class="field-help">Cada linha será cadastrada como um código individual. Não repita códigos já cadastrados.</p>
+<label>
+<input id="prizeUnlimited" type="checkbox">
+Código ilimitado (pode ser entregue para vários motoristas)
+</label>
+<p class="field-help">Marque essa opção para permitir que os códigos cadastrados neste envio sejam utilizados mais de uma vez.</p>
 </div>
 <div id="stacoinFields" class="hidden">
 <label for="prizeValue">Quantidade de STACOIN do prêmio</label>
@@ -179,15 +176,12 @@ hr{border:0;border-top:1px solid #e1e6e1;margin:20px 0}
 <div id="chanceStatus" class="code-list">Selecione uma caixa para visualizar os prêmios.</div>
 <div id="prizes"></div>
 </div>
-
 <div class="panel"><button class="danger" id="logout" type="button">Sair do painel</button></div>
 </section>
 </main>
-
 <script>
 (() => {
 'use strict';
-
 const SUPABASE_URL='https://cckypvqophyviphqhich.supabase.co';
 const SUPABASE_KEY='sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP';
 const ADMIN_ID='ec962f8b-92ad-4fe5-98ef-c7cbb1b653e2';
@@ -195,22 +189,18 @@ const BUCKET='loja-produtos';
 const $=id=>document.getElementById(id);
 const status=$('status');
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
 let currentUser=null,products=[],boxes=[],prizes=[],saving=false,sessionCheckFinished=false;
-
 function message(text,error=false){
 status.textContent=text;
 status.style.background=error?'#fff0f0':'#e8eee9';
 status.style.color=error?'#a51f28':'#24412d';
 }
-
 function dateToInput(value){
 if(!value)return '';
 const date=new Date(value),offset=date.getTimezoneOffset()*60000;
 return new Date(date.getTime()-offset).toISOString().slice(0,16);
 }
 function dateToISO(value){return value?new Date(value).toISOString():null;}
-
 function showAdmin(user){
 currentUser=user;
 const authorized=!!user&&user.id===ADMIN_ID;
@@ -225,14 +215,12 @@ return;
 message('Administrador conectado.');
 loadProducts();loadBoxes();
 }
-
 async function checkSession(){
 const {data,error}=await client.auth.getSession();
 sessionCheckFinished=true;
 if(error){message('Erro ao verificar sessão: '+error.message,true);return;}
 showAdmin(data.session?.user||null);
 }
-
 $('loginForm').addEventListener('submit',async event=>{
 event.preventDefault();
 if(!sessionCheckFinished){message('Aguarde a verificação da sessão.',true);return;}
@@ -242,7 +230,6 @@ if(error){message('Não foi possível entrar: '+error.message,true);return;}
 if(data.user?.id!==ADMIN_ID){await client.auth.signOut();showAdmin(null);message('Acesso negado: conta não autorizada.',true);return;}
 showAdmin(data.user);
 });
-
 // ENVIO DE IMAGENS
 async function uploadImages(files){
 const urls=[];
@@ -256,7 +243,6 @@ urls.push(data.publicUrl);
 }
 return urls;
 }
-
 function setupImagePicker(inputId,previewId,multiple=false){
 $(inputId).addEventListener('change',()=>{
 const files=Array.from($(inputId).files);
@@ -278,7 +264,6 @@ message(files.length+' foto(s) selecionada(s).');
 setupImagePicker('imageFile','preview',true);
 setupImagePicker('boxImageFile','boxPreview');
 setupImagePicker('prizeImageFile','prizePreview');
-
 // PRODUTOS
 async function loadProducts(){
 if(!currentUser||currentUser.id!==ADMIN_ID)return;
@@ -291,7 +276,6 @@ message('Lista atualizada: '+products.length+' produto(s).');
 }catch(error){message('Erro ao carregar produtos: '+error.message,true);}
 finally{$('refresh').disabled=false;}
 }
-
 function renderProducts(){
 const container=$('products');container.replaceChildren();
 if(!products.length){container.textContent='Nenhum produto cadastrado ainda.';return;}
@@ -312,7 +296,6 @@ const toggle=document.createElement('button');toggle.type='button';toggle.classN
 card.appendChild(actions);container.appendChild(card);
 });
 }
-
 function editProduct(product){
 $('productId').value=product.id;$('name').value=product.nome||'';$('description').value=product.descricao||'';
 $('category').value=product.categoria||'skin';$('price').value=product.preco??'';$('code').value=product.codigo||'';
@@ -321,7 +304,6 @@ $('active').checked=!!product.ativo;$('formTitle').textContent='Editar produto #
 $('preview').classList.toggle('hidden',!product.imagem_url);$('preview').src=product.imagem_url||'';
 $('imageFile').value='';window.scrollTo({top:0,behavior:'smooth'});$('name').focus();
 }
-
 function clearForm(){
 $('productForm').reset();$('productId').value='';$('active').checked=true;
 $('formTitle').textContent='Cadastrar produto';$('preview').removeAttribute('src');
@@ -330,13 +312,11 @@ $('category').dispatchEvent(new Event('change'));
 }
 $('cancelEdit').addEventListener('click',clearForm);
 $('refresh').addEventListener('click',loadProducts);
-
 $('category').addEventListener('change',()=>{
 const isSkin=$('category').value==='skin';
 $('code').required=isSkin;
 $('code').placeholder=isSkin?'Código obrigatório da skin':'Código do produto, se necessário';
 });
-
 $('productForm').addEventListener('submit',async event=>{
 event.preventDefault();if(saving)return;
 if(!currentUser||currentUser.id!==ADMIN_ID){message('Entre com a conta administradora.',true);return;}
@@ -366,7 +346,6 @@ message('Produto salvo com sucesso!');clearForm();await loadProducts();
 }catch(error){message('Erro ao salvar: '+error.message,true);}
 finally{saving=false;$('saveButton').disabled=false;}
 });
-
 async function toggleProduct(product){
 if(!currentUser||currentUser.id!==ADMIN_ID)return;
 try{
@@ -374,7 +353,6 @@ const {error}=await client.from('loja_produtos').update({ativo:!product.ativo,at
 if(error)throw error;message('Status do produto alterado.');await loadProducts();
 }catch(error){message('Erro ao alterar produto: '+error.message,true);}
 }
-
 // CAIXAS
 async function loadBoxes(){
 if(!currentUser||currentUser.id!==ADMIN_ID)return;
@@ -383,7 +361,6 @@ const {data,error}=await client.from('stacoin_caixas').select('*').order('criado
 if(error)throw error;boxes=data||[];renderBoxes();fillBoxSelect();
 }catch(error){message('Erro ao carregar caixas: '+error.message,true);}
 }
-
 function renderBoxes(){
 const container=$('boxes');container.replaceChildren();
 if(!boxes.length){container.textContent='Nenhuma caixa cadastrada.';return;}
@@ -403,14 +380,12 @@ const toggle=document.createElement('button');toggle.className=box.ativo?'danger
 card.appendChild(actions);container.appendChild(card);
 });
 }
-
 function fillBoxSelect(){
 const select=$('selectedBox'),previous=select.value;select.replaceChildren();
 const first=document.createElement('option');first.value='';first.textContent='Selecione uma caixa';select.appendChild(first);
 boxes.forEach(box=>{const option=document.createElement('option');option.value=box.id;option.textContent=box.nome;select.appendChild(option);});
 if(boxes.some(box=>String(box.id)===previous))select.value=previous;
 }
-
 function editBox(box){
 $('boxId').value=box.id;$('boxName').value=box.nome||'';$('boxDescription').value=box.descricao||'';
 $('boxPrice').value=box.preco??'';$('boxStart').value=dateToInput(box.data_inicio);$('boxEnd').value=dateToInput(box.data_fim);
@@ -418,14 +393,12 @@ $('boxActive').checked=!!box.ativo;$('boxImageFile').value='';
 $('boxPreview').classList.toggle('hidden',!box.imagem_url);$('boxPreview').src=box.imagem_url||'';
 $('boxName').focus();$('boxForm').scrollIntoView({behavior:'smooth'});
 }
-
 function clearBoxForm(){
 $('boxForm').reset();$('boxId').value='';$('boxActive').checked=false;
 $('boxImageFile').value='';$('boxPreview').removeAttribute('src');$('boxPreview').classList.add('hidden');
 }
 $('clearBox').addEventListener('click',clearBoxForm);
 $('refreshBoxes').addEventListener('click',loadBoxes);
-
 $('boxForm').addEventListener('submit',async event=>{
 event.preventDefault();
 if(!currentUser||currentUser.id!==ADMIN_ID){message('Acesso administrativo necessário.',true);return;}
@@ -446,14 +419,12 @@ message('Caixa salva com sucesso!');clearBoxForm();await loadBoxes();
 }catch(error){message('Erro ao salvar caixa: '+error.message,true);}
 finally{$('saveBoxButton').disabled=false;}
 });
-
 async function toggleBox(box){
 try{
 const {error}=await client.from('stacoin_caixas').update({ativo:!box.ativo,atualizado_em:new Date().toISOString()}).eq('id',box.id);
 if(error)throw error;message('Status da caixa alterado.');await loadBoxes();
 }catch(error){message('Erro ao alterar caixa: '+error.message,true);}
 }
-
 // PRÊMIOS
 $('selectedBox').addEventListener('change',()=>{clearPrizeForm();loadPrizes();});
 $('prizeType').addEventListener('change',()=>{
@@ -462,7 +433,6 @@ $('skinFields').classList.toggle('hidden',!isSkin);
 $('stacoinFields').classList.toggle('hidden',isSkin);
 $('prizeValue').required=!isSkin;
 });
-
 async function loadPrizes(){
 const boxId=$('selectedBox').value,container=$('prizes');container.replaceChildren();prizes=[];
 if(!boxId){$('chanceStatus').textContent='Selecione uma caixa para visualizar os prêmios.';return;}
@@ -472,7 +442,6 @@ const {data,error}=await client.from('stacoin_caixa_premios').select('*').eq('ca
 if(error)throw error;prizes=data||[];await renderPrizes();message('Prêmios carregados.');
 }catch(error){message('Erro ao carregar prêmios: '+error.message,true);}
 }
-
 async function renderPrizes(){
 const container=$('prizes');container.replaceChildren();
 const totalChance=prizes.filter(p=>p.ativo).reduce((sum,p)=>sum+Number(p.chance),0);
@@ -498,14 +467,18 @@ if(prize.tipo==='skin'){const codes=document.createElement('button');codes.type=
 card.appendChild(actions);container.appendChild(card);
 }
 }
-
 function clearPrizeForm(){
-$('prizeForm').reset();$('prizeId').value='';$('prizeActive').checked=true;$('prizeType').value='skin';
-$('prizeImageFile').value='';$('prizePreview').removeAttribute('src');$('prizePreview').classList.add('hidden');
+$('prizeForm').reset();
+$('prizeId').value='';
+$('prizeActive').checked=true;
+$('prizeType').value='skin';
+$('prizeImageFile').value='';
+$('prizePreview').removeAttribute('src');
+$('prizePreview').classList.add('hidden');
+$('prizeUnlimited').checked=false;
 $('prizeType').dispatchEvent(new Event('change'));
 }
 $('clearPrize').addEventListener('click',clearPrizeForm);
-
 function editPrize(prize){
 $('prizeId').value=prize.id;$('prizeType').value=prize.tipo;$('prizeType').dispatchEvent(new Event('change'));
 $('prizeName').value=prize.nome||'';$('prizeValue').value=prize.valor_stacoin??'';
@@ -514,9 +487,9 @@ $('prizeImageFile').value='';
 $('prizePreview').classList.toggle('hidden',prize.tipo!=='skin'||!prize.imagem_url);
 $('prizePreview').src=prize.imagem_url||'';
 $('prizeCodes').value='';
+$('prizeUnlimited').checked=false;
 $('prizeName').focus();$('prizeForm').scrollIntoView({behavior:'smooth'});
 }
-
 $('prizeForm').addEventListener('submit',async event=>{
 event.preventDefault();
 if(!currentUser||currentUser.id!==ADMIN_ID){message('Acesso administrativo necessário.',true);return;}
@@ -527,6 +500,7 @@ const chanceText=$('prizeChance').value.trim(),chance=Number(chanceText),id=$('p
 if(!name||chanceText===''||!Number.isFinite(chance)||chance<0||chance>100){message('Confira o nome e a chance do prêmio.',true);return;}
 let image=null,value=null,codes=[];
 const prizeFile=$('prizeImageFile').files[0];
+const unlimited=$('prizeUnlimited').checked;
 const existingPrize=prizes.find(prize=>String(prize.id)===id);
 image=existingPrize?.imagem_url||null;
 if(type==='skin'){
@@ -545,7 +519,12 @@ const result=id?await client.from('stacoin_caixa_premios').update(payload).eq('i
 if(result.error)throw result.error;
 const prizeId=result.data.id;
 if(type==='skin'&&codes.length){
-const rows=codes.map(code=>({premio_id:prizeId,codigo:code,status:'disponivel'}));
+const rows=codes.map(code=>({
+premio_id:prizeId,
+codigo:code,
+status:'disponivel',
+ilimitado:unlimited
+}));
 const {error:codeError}=await client.from('stacoin_caixa_codigos').insert(rows);
 if(codeError)throw new Error('Prêmio salvo, mas houve erro ao cadastrar os códigos: '+codeError.message);
 }
@@ -553,26 +532,31 @@ message('Prêmio salvo com sucesso!');clearPrizeForm();await loadPrizes();
 }catch(error){message('Erro ao salvar prêmio: '+error.message,true);}
 finally{$('savePrizeButton').disabled=false;}
 });
-
 async function togglePrize(prize){
 try{
 const {error}=await client.from('stacoin_caixa_premios').update({ativo:!prize.ativo,atualizado_em:new Date().toISOString()}).eq('id',prize.id);
 if(error)throw error;message('Status do prêmio alterado.');await loadPrizes();
 }catch(error){message('Erro ao alterar prêmio: '+error.message,true);}
 }
-
 async function showCodes(prize){
 try{
 message('Consultando códigos...');
-const {data,error}=await client.from('stacoin_caixa_codigos').select('codigo,status,criado_em').eq('premio_id',prize.id).order('criado_em',{ascending:true});
+const {data,error}=await client.from('stacoin_caixa_codigos').select('codigo,status,criado_em,ilimitado').eq('premio_id',prize.id).order('criado_em',{ascending:true});
 if(error)throw error;
 const available=(data||[]).filter(item=>item.status==='disponivel');
 const used=(data||[]).filter(item=>item.status==='utilizado');
-const lines=['PRÊMIO: '+prize.nome,'','DISPONÍVEIS ('+available.length+'): ',...available.map(item=>item.codigo),'','UTILIZADOS ('+used.length+'): ',...used.map(item=>item.codigo)];
+const lines=[
+'PRÊMIO: '+prize.nome,
+'',
+'DISPONÍVEIS ('+available.length+'):',
+...available.map(item=>item.codigo+(item.ilimitado?' — ILIMITADO':'')),
+'',
+'UTILIZADOS ('+used.length+'):',
+...used.map(item=>item.codigo+(item.ilimitado?' — ILIMITADO':''))
+];
 alert(lines.join('\n'));message('Códigos consultados.');
 }catch(error){message('Erro ao consultar códigos: '+error.message,true);}
 }
-
 // SAIR E INICIALIZAÇÃO
 $('logout').addEventListener('click',async()=>{
 await client.auth.signOut();showAdmin(null);clearForm();clearBoxForm();clearPrizeForm();
@@ -584,7 +568,6 @@ showAdmin(session?.user||null);
 $('category').dispatchEvent(new Event('change'));
 $('prizeType').dispatchEvent(new Event('change'));
 checkSession();
-
 })();
 </script>
 </body>
