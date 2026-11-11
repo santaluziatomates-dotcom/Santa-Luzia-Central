@@ -4,269 +4,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10251b">
-<title>Santa Luzia - Ranking de Lives</title>
+<title>Ranking de Lives | Santa Luzia</title>
 
 <style>
 :root {
-  --bg: #09130e;
-  --panel: #14251b;
-  --green: #2ca65a;
-  --light: #8bd49b;
-  --red: #d83b35;
-  --gold: #f1c75b;
-  --text: #ffffff;
-  --muted: #a8b8ac;
+  --green: #123d29;
+  --green2: #1d6841;
+  --red: #d62828;
+  --black: #101510;
+  --card: #1b241e;
+  --white: #ffffff;
+  --gray: #aeb8b0;
+  --gold: #f4c542;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  background: radial-gradient(ellipse at top,#173b28,#09130e 65%);
-  color: var(--text);
+  padding: 18px;
+  background: linear-gradient(145deg, #08140d, #17231a);
+  color: var(--white);
   font-family: Arial, sans-serif;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 850px;
   margin: auto;
-  padding: 18px;
 }
 
 header {
   text-align: center;
-  padding: 20px 5px;
+  padding: 20px 10px;
 }
 
 .logo {
-  color: var(--light);
-  font-weight: bold;
-  letter-spacing: 2px;
+  font-size: 42px;
 }
 
 h1 {
-  font-size: 35px;
-  margin: 12px 0 5px;
+  margin: 8px 0;
+  font-size: 27px;
+  letter-spacing: 1px;
 }
 
-h1 span { color: var(--light); }
+.subtitle {
+  color: var(--gray);
+  font-size: 13px;
+}
 
-.subtitle { color: var(--muted); }
-
-.card {
-  background: var(--panel);
-  border: 1px solid #31513b;
-  border-radius: 18px;
-  padding: 18px;
-  margin-bottom: 16px;
-  box-shadow: 0 8px 25px #0004;
+.panel {
+  background: var(--card);
+  border: 1px solid #304438;
+  border-radius: 15px;
+  padding: 17px;
+  margin-bottom: 17px;
+  box-shadow: 0 5px 18px #0005;
 }
 
 h2 {
   font-size: 18px;
-  margin-top: 0;
+  margin: 0 0 15px;
+  color: #f4f4f4;
 }
 
 input {
   width: 100%;
-  padding: 13px;
-  border-radius: 10px;
-  border: 1px solid #42634b;
-  background: #09170e;
+  padding: 12px;
+  margin: 5px 0;
+  border: 1px solid #435548;
+  border-radius: 9px;
+  background: #101a13;
   color: white;
   font-size: 15px;
-  margin-bottom: 9px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #4ba66d;
 }
 
 button {
-  padding: 12px 15px;
   border: 0;
-  border-radius: 10px;
-  background: var(--green);
-  color: white;
+  border-radius: 9px;
+  padding: 11px 14px;
+  margin: 4px 2px;
+  font-size: 13px;
   font-weight: bold;
   cursor: pointer;
+  color: white;
+  background: var(--green2);
 }
 
-button.secondary {
-  background: #304536;
+button:hover {
+  filter: brightness(1.15);
 }
 
-button.danger {
-  background: #8d302c;
+.primary {
+  background: var(--green2);
 }
 
-button:active { transform: scale(.98); }
-
-.podium {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 9px;
-  align-items: end;
+.red {
+  background: #a92323;
 }
 
-.place {
-  background: #0b1910;
-  border: 1px solid #38543f;
-  border-radius: 14px;
-  padding: 13px 6px;
-  text-align: center;
-  overflow-wrap: anywhere;
+.gray {
+  background: #46534a;
 }
 
-.first {
-  border-color: var(--gold);
-  background: linear-gradient(#44391c,#17271d);
-}
-
-.medal { font-size: 30px; }
-
-.place-name {
-  font-weight: bold;
-  margin: 8px 0;
-}
-
-.place-score {
-  color: var(--light);
-  font-weight: bold;
-}
-
-.place-label {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 7px;
-  font-weight: bold;
-}
-
-.crown {
-  color: var(--gold);
-  font-size: 11px;
-  margin-top: 7px;
-  font-weight: bold;
-}
-
-.gift-card {
-  text-align: center;
-  border: 1px solid var(--gold);
-  background: linear-gradient(145deg,#46391b,#19291d);
-  padding: 23px 12px;
-  border-radius: 16px;
-}
-
-.gift-icon { font-size: 42px; }
-
-.gift-title {
-  color: var(--gold);
-  font-weight: 900;
-  letter-spacing: 1px;
-  margin: 8px 0;
-}
-
-.gift-name {
-  font-size: 23px;
-  font-weight: bold;
-  margin: 10px 0;
-  overflow-wrap: anywhere;
-}
-
-.gift-value {
-  font-size: 19px;
-  color: var(--light);
-  font-weight: bold;
+.gold {
+  background: #9b7616;
+  color: white;
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 140px;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
-.full { grid-column: 1 / -1; }
-
-.person {
-  display: grid;
-  grid-template-columns: 30px 1fr auto auto;
-  gap: 8px;
-  align-items: center;
-  background: #0b1910;
-  border: 1px solid #304b38;
-  border-radius: 11px;
-  padding: 11px;
-  margin-bottom: 8px;
-}
-
-.position {
-  color: var(--light);
-  font-weight: bold;
-}
-
-.person-name { font-weight: bold; overflow-wrap: anywhere; }
-
-.person-score {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.actions {
-  display: flex;
-  gap: 4px;
-}
-
-.actions button {
-  padding: 7px 9px;
+.form-grid button {
+  grid-column: 1 / -1;
 }
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin-top: 15px;
+  margin-bottom: 17px;
 }
 
 .stat {
-  text-align: center;
-  background: #0b1910;
-  padding: 13px;
+  background: #17251b;
+  border: 1px solid #304438;
+  padding: 15px;
   border-radius: 12px;
+  text-align: center;
 }
 
 .stat strong {
   display: block;
-  font-size: 22px;
-  color: var(--light);
+  font-size: 24px;
+  color: #65d58a;
 }
 
 .stat span {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.hint {
-  color: var(--muted);
   font-size: 12px;
+  color: var(--gray);
 }
 
-footer {
+.podium {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  align-items: end;
+  gap: 8px;
+}
+
+.podium-item {
   text-align: center;
-  color: #82988a;
-  font-size: 11px;
-  padding: 20px 5px;
+  background: #17251b;
+  border: 1px solid #344b3a;
+  border-radius: 12px;
+  padding: 13px 5px;
+  min-width: 0;
 }
 
-@media(max-width:560px) {
-  .person {
-    grid-template-columns: 25px 1fr auto;
+.podium-item.first {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, #443a19, #17251b);
+  padding-top: 22px;
+}
+
+.podium-item.second {
+  min-height: 145px;
+}
+
+.podium-item.third {
+  min-height: 125px;
+}
+
+.medal {
+  font-size: 30px;
+}
+
+.position {
+  font-size: 11px;
+  color: var(--gray);
+  margin: 5px 0;
+}
+
+.person-name {
+  font-size: 14px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+  margin: 7px 0;
+}
+
+.coins {
+  color: #f4c542;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.empty {
+  color: #8e9a91;
+  font-size: 12px;
+  padding: 10px 0;
+}
+
+.gift-box {
+  text-align: center;
+  background: linear-gradient(135deg, #3b2d0e, #1c251a);
+  border: 1px solid #9b7616;
+}
+
+.gift-icon {
+  font-size: 35px;
+}
+
+.gift-name {
+  color: var(--gold);
+  font-size: 21px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.gift-value {
+  font-size: 17px;
+}
+
+.person {
+  background: #121c15;
+  border: 1px solid #344438;
+  border-radius: 11px;
+  padding: 12px;
+  margin: 9px 0;
+}
+
+.person-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.person-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.person-info strong {
+  font-size: 14px;
+}
+
+.person-info small {
+  display: block;
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+.person-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.person-actions button {
+  padding: 9px 10px;
+}
+
+.live-title {
+  color: #65d58a;
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.footer {
+  text-align: center;
+  color: #839187;
+  font-size: 11px;
+  padding: 20px 0;
+}
+
+@media(max-width: 520px) {
+  body {
+    padding: 10px;
   }
-  .person-score {
-    grid-column: 2;
+
+  h1 {
+    font-size: 23px;
   }
-  .actions {
-    grid-column: 3;
-    grid-row: 1 / 3;
+
+  .person-top {
+    align-items: flex-start;
+    flex-direction: column;
   }
-  h1 { font-size: 29px; }
-  .place-name { font-size: 12px; }
+
+  .person-actions {
+    justify-content: flex-start;
+  }
+
+  .podium-item {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  .person-name {
+    font-size: 12px;
+  }
 }
 </style>
 </head>
@@ -275,408 +323,499 @@ footer {
 <div class="container">
 
 <header>
-  <div class="logo">🍅 SANTA LUZIA TOMATES</div>
-  <h1>APOIADORES <span>DA LIVE</span></h1>
-  <p class="subtitle">Quem vai conquistar a coroa hoje?</p>
+  <div class="logo">🍅</div>
+  <h1>SANTA LUZIA TOMATES</h1>
+  <div class="subtitle">RANKING OFICIAL DAS LIVES</div>
+  <div class="live-title" id="liveTitleDisplay">Ranking da Live</div>
 </header>
 
-<!-- TÍTULO DA LIVE -->
-<section class="card">
-  <h2>🔴 LIVE ATUAL</h2>
-  <input id="liveTitle" placeholder="Nome da live">
-  <button onclick="saveTitle()">Salvar título</button>
-</section>
+<div class="panel">
+  <h2>🎥 Nome da live</h2>
+  <input id="liveTitleInput" placeholder="Ex: Live especial Santa Luzia">
+  <button class="primary" onclick="saveLiveTitle()">Salvar título</button>
+</div>
 
-<!-- TOP 3 -->
-<section class="card">
-  <h2>🏆 TOP 3 APOIADORES</h2>
+<div class="stats">
+  <div class="stat">
+    <strong id="totalCoins">0</strong>
+    <span>MOEDAS RECEBIDAS</span>
+  </div>
+  <div class="stat">
+    <strong id="totalPeople">0</strong>
+    <span>APOIADORES</span>
+  </div>
+</div>
 
+<div class="panel">
+  <h2>🏆 PÓDIO DA LIVE</h2>
   <div class="podium" id="podium"></div>
+</div>
 
-  <p id="motivation" style="text-align:center;color:#d9e8dc">
-    O pódio está esperando seus primeiros apoiadores!
-  </p>
+<div class="panel gift-box">
+  <div class="gift-icon">🎁</div>
+  <h2>PRESENTE MAIS CARO DA LIVE</h2>
+  <div class="gift-name" id="giftNameDisplay">Nenhum presente registrado</div>
+  <div class="gift-value" id="giftValueDisplay">0 moedas</div>
+  <button class="gold" onclick="editGift()">✏️ Editar presente</button>
+</div>
 
-  <div class="stats">
-    <div class="stat">
-      <strong id="totalPoints">0</strong>
-      <span>PONTOS SOMADOS</span>
-    </div>
-    <div class="stat">
-      <strong id="supporters">0</strong>
-      <span>APOIADORES</span>
-    </div>
-  </div>
-</section>
-
-<!-- PRESENTE MAIS CARO -->
-<section class="card">
-  <h2>💎 DESTAQUE DA LIVE</h2>
-
-  <div class="gift-card">
-    <div class="gift-icon">👑💎</div>
-    <div class="gift-title">PRESENTE MAIS CARO DA LIVE</div>
-
-    <div class="gift-name" id="giftDisplay">
-      Aguardando presente...
-    </div>
-
-    <div class="gift-value" id="giftValueDisplay">
-      0 moedas
-    </div>
-
-    <p style="color:#d9e8dc;font-size:12px">
-      O presente que marcou a transmissão!
-    </p>
-  </div>
-
-  <h2 style="margin-top:18px">✏️ Atualizar presente</h2>
-
-  <input id="giftName" placeholder="Nome do presente">
-
-  <input
-    id="giftValue"
-    type="number"
-    min="0"
-    placeholder="Valor em moedas"
-  >
-
-  <button onclick="saveGift()">Salvar presente</button>
-</section>
-
-<!-- ADICIONAR APOIADOR -->
-<section class="card">
+<div class="panel">
   <h2>➕ ADICIONAR APOIADOR</h2>
 
-  <div class="form-grid">
-    <input id="name" placeholder="Nome ou @ do TikTok">
-    <input id="score" type="number" min="1" placeholder="Moedas">
-    <button class="full" onclick="addPerson()">
-      Adicionar pontos
-    </button>
-  </div>
+  <input id="personName" placeholder="Nome ou @ do participante">
 
-  <p class="hint">
-    Se o apoiador já estiver cadastrado, os novos pontos serão somados.
-  </p>
-</section>
+  <input id="personCoins" type="number" min="0" step="1" placeholder="Quantidade de moedas">
 
-<!-- CLASSIFICAÇÃO -->
-<section class="card">
-  <h2>📋 CLASSIFICAÇÃO COMPLETA</h2>
-  <div id="ranking"></div>
-</section>
+  <button class="primary" onclick="addPerson()" style="width:100%">
+    ADICIONAR AO RANKING
+  </button>
+</div>
 
-<!-- CONTROLE -->
-<section class="card">
-  <h2>🛠️ CONTROLE DO ADM</h2>
+<div class="panel">
+  <h2>📊 CLASSIFICAÇÃO COMPLETA</h2>
+  <div id="rankingList"></div>
+</div>
 
-  <button class="secondary" onclick="exportBackup()">
-    Exportar backup
+<div class="panel">
+  <h2>💾 BACKUP E CONTROLE</h2>
+
+  <button class="primary" onclick="exportBackup()">⬇️ Exportar backup</button>
+
+  <button class="gray" onclick="document.getElementById('importFile').click()">
+    ⬆️ Importar backup
   </button>
 
-  <button class="secondary" onclick="document.getElementById('importFile').click()">
-    Importar backup
-  </button>
+  <input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importBackup(event)">
 
-  <input id="importFile" type="file" accept=".json" hidden
-    onchange="importBackup(event)">
+  <hr style="border-color:#344438;margin:16px 0">
 
-  <button class="danger" onclick="resetLive()">
-    Encerrar live / zerar
-  </button>
+  <button class="red" onclick="resetLive()">🗑️ Zerar ranking da live</button>
+</div>
 
-  <p class="hint">
-    Exporte um backup antes de zerar o ranking.
-  </p>
-</section>
-
-<footer>
-  SANTA LUZIA TOMATES • RANKING OFICIAL DAS LIVES
-</footer>
+<div class="footer">
+  SANTA LUZIA TOMATES • RANKING DE APOIADORES
+</div>
 
 </div>
 
 <script>
-const KEY = "santa_luzia_ranking_v2";
+const STORAGE_KEY = "santa_luzia_ranking_v2";
 
-let state = {
-  title: "",
+let data = {
+  liveTitle: "Ranking da Live",
   people: [],
-  gift: {
-    name: "",
-    value: 0
-  }
+  giftName: "",
+  giftCoins: 0
 };
 
-function load() {
+function loadData() {
   try {
-    const saved = JSON.parse(localStorage.getItem(KEY));
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-    if(saved) {
-      state = {
-        title: saved.title || "",
-        people: Array.isArray(saved.people) ? saved.people : [],
-        gift: saved.gift || {name:"",value:0}
-      };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+
+      data.liveTitle = typeof parsed.liveTitle === "string"
+        ? parsed.liveTitle
+        : "Ranking da Live";
+
+      data.people = Array.isArray(parsed.people)
+        ? parsed.people.filter(p =>
+            p &&
+            typeof p.name === "string" &&
+            Number.isFinite(Number(p.coins))
+          ).map(p => ({
+            id: String(p.id || createId()),
+            name: p.name,
+            coins: Math.max(0, Math.floor(Number(p.coins)))
+          }))
+        : [];
+
+      data.giftName = typeof parsed.giftName === "string"
+        ? parsed.giftName
+        : "";
+
+      data.giftCoins = Math.max(0, Math.floor(Number(parsed.giftCoins) || 0));
     }
-  } catch(e) {}
-
-  document.getElementById("liveTitle").value = state.title;
-  document.getElementById("giftName").value = state.gift.name || "";
-  document.getElementById("giftValue").value = state.gift.value || "";
+  } catch (error) {
+    alert("Não foi possível carregar os dados salvos.");
+  }
 
   render();
 }
 
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(state));
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-function sorted() {
-  return [...state.people].sort(
-    (a,b) => b.score - a.score ||
-    a.name.localeCompare(b.name,"pt-BR")
-  );
+function createId() {
+  return "p_" + Date.now() + "_" + Math.random().toString(36).slice(2, 9);
 }
 
-function esc(value) {
-  return String(value).replace(/[&<>"']/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
+function normalizeName(name) {
+  return String(name || "").trim().toLowerCase();
 }
 
-function fmt(value) {
-  return Number(value || 0).toLocaleString("pt-BR");
+function sortedPeople() {
+  return [...data.people].sort((a, b) => b.coins - a.coins);
 }
 
 function render() {
-  const people = sorted();
+  document.getElementById("liveTitleDisplay").textContent =
+    data.liveTitle || "Ranking da Live";
 
-  const places = [
-    {p:people[0],medal:"🥇",label:"REI DA LIVE",cls:"first"},
-    {p:people[1],medal:"🥈",label:"VICE-REI",cls:""},
-    {p:people[2],medal:"🥉",label:"DESTAQUE",cls:""}
-  ];
+  document.getElementById("liveTitleInput").value =
+    data.liveTitle || "";
 
-  document.getElementById("podium").innerHTML =
-    places.map(s => `
-      <div class="place ${s.cls}">
-        <div class="medal">${s.medal}</div>
-        <div class="place-name">
-          ${s.p ? esc(s.p.name) : "Aguardando..."}
-        </div>
-        <div class="place-score">
-          ${s.p ? fmt(s.p.score)+" moedas" : "—"}
-        </div>
-        <div class="place-label">${s.label}</div>
-        ${s.p && s.label==="REI DA LIVE"
-          ? '<div class="crown">👑 DONO DA COROA</div>'
-          : ""}
-      </div>
-    `).join("");
+  document.getElementById("totalCoins").textContent =
+    data.people.reduce((sum, p) => sum + p.coins, 0).toLocaleString("pt-BR");
 
-  document.getElementById("totalPoints").textContent =
-    fmt(people.reduce((sum,p)=>sum+p.score,0));
+  document.getElementById("totalPeople").textContent =
+    data.people.length;
 
-  document.getElementById("supporters").textContent =
-    fmt(people.length);
-
-  document.getElementById("motivation").textContent =
-    people.length === 0
-      ? "O pódio está esperando seus primeiros apoiadores!"
-      : people.length === 1
-      ? "Tem um Rei da Live! Quem vai desafiar a coroa?"
-      : "A disputa está aberta! Quem vai tomar a coroa? 👑";
-
-  const list = document.getElementById("ranking");
-
-  if(!people.length) {
-    list.innerHTML =
-      '<p style="text-align:center;color:#a8b8ac">Nenhum apoiador cadastrado ainda.</p>';
-  } else {
-    list.innerHTML = people.map((p,i) => `
-      <div class="person">
-        <div class="position">${i+1}º</div>
-        <div class="person-name">${esc(p.name)}</div>
-        <div class="person-score">${fmt(p.score)} moedas</div>
-        <div class="actions">
-          <button class="secondary" onclick="editPerson('${p.id}')">✏️</button>
-          <button class="danger" onclick="deletePerson('${p.id}')">×</button>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  document.getElementById("giftDisplay").textContent =
-    state.gift.name || "Aguardando presente...";
+  document.getElementById("giftNameDisplay").textContent =
+    data.giftName || "Nenhum presente registrado";
 
   document.getElementById("giftValueDisplay").textContent =
-    fmt(state.gift.value) + " moedas";
+    Number(data.giftCoins || 0).toLocaleString("pt-BR") + " moedas";
+
+  renderPodium();
+  renderRanking();
 }
 
-function addPerson() {
-  const name = document.getElementById("name").value.trim();
-  const score = Number(document.getElementById("score").value);
+function renderPodium() {
+  const people = sortedPeople();
+  const podium = document.getElementById("podium");
 
-  if(!name || !Number.isFinite(score) || score <= 0) {
-    alert("Preencha o nome e uma quantidade válida de moedas.");
+  const positions = [
+    { position: 2, medal: "🥈", label: "VICE-REI", className: "second" },
+    { position: 1, medal: "🥇", label: "REI DA LIVE", className: "first" },
+    { position: 3, medal: "🥉", label: "DESTAQUE", className: "third" }
+  ];
+
+  podium.innerHTML = positions.map(item => {
+    const person = people[item.position - 1];
+
+    if (!person) {
+      return `
+        <div class="podium-item ${item.className}">
+          <div class="medal">${item.medal}</div>
+          <div class="position">${item.label}</div>
+          <div class="empty">Aguardando participante</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="podium-item ${item.className}">
+        <div class="medal">${item.medal}</div>
+        <div class="position">${item.label}</div>
+        <div class="person-name">${escapeHTML(person.name)}</div>
+        <div class="coins">${person.coins.toLocaleString("pt-BR")} moedas</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderRanking() {
+  const list = document.getElementById("rankingList");
+  const people = sortedPeople();
+
+  if (people.length === 0) {
+    list.innerHTML = '<div class="empty">Nenhum apoiador cadastrado ainda.</div>';
     return;
   }
 
-  const existing = state.people.find(
-    p => p.name.toLowerCase() === name.toLowerCase()
+  list.innerHTML = people.map((person, index) => `
+    <div class="person">
+      <div class="person-top">
+        <div class="person-info">
+          <strong>${medalFor(index)} ${index + 1}º - ${escapeHTML(person.name)}</strong>
+          <small>${person.coins.toLocaleString("pt-BR")} moedas</small>
+        </div>
+
+        <div class="person-actions">
+          <button class="primary" onclick="addMoreCoins('${person.id}')">＋ Moedas</button>
+          <button class="gold" onclick="editPerson('${person.id}')">✏️ Editar</button>
+          <button class="red" onclick="deletePerson('${person.id}')">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function medalFor(index) {
+  if (index === 0) return "🥇";
+  if (index === 1) return "🥈";
+  if (index === 2) return "🥉";
+  return "👤";
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+function addPerson() {
+  const nameInput = document.getElementById("personName");
+  const coinsInput = document.getElementById("personCoins");
+
+  const name = nameInput.value.trim();
+  const coins = Number(coinsInput.value);
+
+  if (!name) {
+    alert("Digite o nome do participante.");
+    return;
+  }
+
+  if (coinsInput.value === "" || !Number.isSafeInteger(coins) || coins < 0) {
+    alert("Digite uma quantidade válida de moedas.");
+    return;
+  }
+
+  const existing = data.people.find(p =>
+    normalizeName(p.name) === normalizeName(name)
   );
 
-  if(existing) {
-    existing.score += Math.floor(score);
+  if (existing) {
+    existing.coins += coins;
   } else {
-    state.people.push({
-      id: Date.now().toString() + Math.random().toString(16).slice(2),
+    data.people.push({
+      id: createId(),
       name,
-      score: Math.floor(score)
+      coins
     });
   }
 
-  document.getElementById("name").value = "";
-  document.getElementById("score").value = "";
+  nameInput.value = "";
+  coinsInput.value = "";
 
-  save();
+  saveData();
+  render();
+}
+
+function addMoreCoins(id) {
+  const person = data.people.find(p => p.id === id);
+  if (!person) return;
+
+  const answer = prompt(
+    "Quantas moedas deseja ADICIONAR para " + person.name + "?"
+  );
+
+  if (answer === null) return;
+
+  const amount = Number(answer);
+
+  if (answer.trim() === "" || !Number.isSafeInteger(amount) || amount < 0) {
+    alert("Digite um número inteiro válido.");
+    return;
+  }
+
+  person.coins += amount;
+
+  saveData();
   render();
 }
 
 function editPerson(id) {
-  const person = state.people.find(p => p.id === id);
-  if(!person) return;
+  const person = data.people.find(p => p.id === id);
+  if (!person) return;
 
-  const name = prompt("Nome do apoiador:",person.name);
-  if(name === null) return;
+  const newName = prompt("Editar nome do participante:", person.name);
 
-  const score = prompt("Total de moedas:",person.score);
-  if(score === null) return;
+  if (newName === null) return;
 
-  if(!name.trim() || !Number.isFinite(Number(score)) || Number(score)<0) {
-    alert("Dados inválidos.");
+  if (!newName.trim()) {
+    alert("O nome não pode ficar vazio.");
     return;
   }
 
-  person.name = name.trim();
-  person.score = Math.floor(Number(score));
+  const newCoinsText = prompt(
+    "Digite o TOTAL de moedas do participante:",
+    String(person.coins)
+  );
 
-  save();
+  if (newCoinsText === null) return;
+
+  const newCoins = Number(newCoinsText);
+
+  if (
+    newCoinsText.trim() === "" ||
+    !Number.isSafeInteger(newCoins) ||
+    newCoins < 0
+  ) {
+    alert("Digite uma quantidade inteira válida de moedas.");
+    return;
+  }
+
+  const duplicate = data.people.find(p =>
+    p.id !== id &&
+    normalizeName(p.name) === normalizeName(newName)
+  );
+
+  if (duplicate) {
+    alert("Já existe outro participante com esse nome.");
+    return;
+  }
+
+  person.name = newName.trim();
+  person.coins = newCoins;
+
+  saveData();
   render();
 }
 
 function deletePerson(id) {
-  const person = state.people.find(p => p.id === id);
-  if(!person) return;
+  const person = data.people.find(p => p.id === id);
+  if (!person) return;
 
-  if(confirm("Excluir "+person.name+" do ranking?")) {
-    state.people = state.people.filter(p => p.id !== id);
-    save();
-    render();
-  }
-}
-
-function saveTitle() {
-  state.title = document.getElementById("liveTitle").value.trim();
-  save();
-  alert("Título salvo!");
-}
-
-function saveGift() {
-  const name = document.getElementById("giftName").value.trim();
-  const value = Number(document.getElementById("giftValue").value);
-
-  if(!name || !Number.isFinite(value) || value < 0) {
-    alert("Preencha o nome do presente e o valor em moedas.");
+  if (!confirm("Deseja remover " + person.name + " do ranking?")) {
     return;
   }
 
-  state.gift = {
-    name,
-    value: Math.floor(value)
-  };
+  data.people = data.people.filter(p => p.id !== id);
 
-  save();
+  saveData();
   render();
-  alert("Presente mais caro atualizado!");
 }
 
-function resetLive() {
-  if(!confirm("Deseja encerrar a live e zerar os dados?")) return;
+function saveLiveTitle() {
+  const title = document.getElementById("liveTitleInput").value.trim();
 
-  state = {
-    title:"",
-    people:[],
-    gift:{name:"",value:0}
-  };
+  data.liveTitle = title || "Ranking da Live";
 
-  document.getElementById("liveTitle").value = "";
-  document.getElementById("giftName").value = "";
-  document.getElementById("giftValue").value = "";
+  saveData();
+  render();
+}
 
-  save();
+function editGift() {
+  const name = prompt(
+    "Nome do presente mais caro:",
+    data.giftName || ""
+  );
+
+  if (name === null) return;
+
+  const coinsText = prompt(
+    "Valor do presente em moedas:",
+    String(data.giftCoins || 0)
+  );
+
+  if (coinsText === null) return;
+
+  const coins = Number(coinsText);
+
+  if (
+    coinsText.trim() === "" ||
+    !Number.isSafeInteger(coins) ||
+    coins < 0
+  ) {
+    alert("Digite um valor válido.");
+    return;
+  }
+
+  data.giftName = name.trim();
+  data.giftCoins = coins;
+
+  saveData();
   render();
 }
 
 function exportBackup() {
-  const blob = new Blob(
-    [JSON.stringify(state,null,2)],
-    {type:"application/json"}
-  );
-
+  const content = JSON.stringify(data, null, 2);
+  const blob = new Blob([content], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
 
-  a.href = url;
-  a.download = "santa-luzia-ranking-backup.json";
-  a.click();
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "backup-ranking-santa-luzia.json";
+  link.click();
 
   URL.revokeObjectURL(url);
 }
 
 function importBackup(event) {
   const file = event.target.files[0];
-  if(!file) return;
+  if (!file) return;
 
   const reader = new FileReader();
 
-  reader.onload = () => {
+  reader.onload = function(e) {
     try {
-      const data = JSON.parse(reader.result);
+      const imported = JSON.parse(e.target.result);
 
-      if(!Array.isArray(data.people)) throw new Error();
+      if (
+        !imported ||
+        !Array.isArray(imported.people)
+      ) {
+        throw new Error("Arquivo inválido");
+      }
 
-      if(!confirm("Substituir o ranking atual pelo backup?")) return;
+      const people = imported.people
+        .filter(p =>
+          p &&
+          typeof p.name === "string" &&
+          Number.isSafeInteger(Number(p.coins)) &&
+          Number(p.coins) >= 0
+        )
+        .map(p => ({
+          id: String(p.id || createId()),
+          name: p.name.trim(),
+          coins: Number(p.coins)
+        }))
+        .filter(p => p.name !== "");
 
-      state = {
-        title: String(data.title || ""),
-        people: data.people,
-        gift: data.gift || {name:"",value:0}
+      if (!confirm("Importar esse backup e substituir o ranking atual?")) {
+        return;
+      }
+
+      data = {
+        liveTitle: typeof imported.liveTitle === "string"
+          ? imported.liveTitle
+          : "Ranking da Live",
+        people,
+        giftName: typeof imported.giftName === "string"
+          ? imported.giftName
+          : "",
+        giftCoins: Math.max(0, Math.floor(Number(imported.giftCoins) || 0))
       };
 
-      document.getElementById("liveTitle").value = state.title;
-      document.getElementById("giftName").value = state.gift.name || "";
-      document.getElementById("giftValue").value = state.gift.value || "";
-
-      save();
+      saveData();
       render();
-      alert("Backup importado!");
-    } catch(e) {
-      alert("Arquivo de backup inválido.");
+
+      alert("Backup importado com sucesso!");
+    } catch (error) {
+      alert("Não foi possível importar esse arquivo. Verifique se é um backup válido.");
+    } finally {
+      event.target.value = "";
     }
   };
 
   reader.readAsText(file);
-  event.target.value = "";
 }
 
-load();
+function resetLive() {
+  if (!confirm("Tem certeza que deseja zerar o ranking, os participantes e o presente registrado?")) {
+    return;
+  }
+
+  data = {
+    liveTitle: "Ranking da Live",
+    people: [],
+    giftName: "",
+    giftCoins: 0
+  };
+
+  saveData();
+  render();
+}
+
+loadData();
 </script>
 
 </body>
