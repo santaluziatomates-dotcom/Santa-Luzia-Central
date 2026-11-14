@@ -1,19 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#174c32">
 
-  <link rel="manifest" href="/Santa-Luzia-Central/manifest.json">
+<link rel="manifest" href="/Santa-Luzia-Central/manifest.json">
 
-  <title>Santa Luzia Central</title>
+<title>Santa Luzia Central</title>
 
-  <!-- SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-
-    * {
+<style>
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -46,26 +46,20 @@ body {
 /* CABEÇALHO */
 
 .cabecalho {
+  position: relative;
   background: #edf3ed;
   text-align: center;
   padding: 30px 20px 26px;
-  border-top: 6px solid #174c32;
-  border-bottom: 4px solid #c93432;
-  color: #26332b;
-}
-
-.cabecalho::before,
-.cabecalho::after {
-  display: none;
-  content: none;
+  border-top: 6px solid var(--verde);
+  border-bottom: 4px solid var(--vermelho);
 }
 
 .logo {
-  width: 112px;
-  height: 112px;
+  width: 105px;
+  height: 105px;
   object-fit: contain;
   padding: 5px;
-  background: #ffffff;
+  background: white;
   border: 2px solid #dce8dc;
   border-radius: 17px;
   margin-bottom: 12px;
@@ -73,21 +67,23 @@ body {
 }
 
 .cabecalho h1 {
-  color: #174c32;
+  color: var(--verde);
+  font-size: 25px;
+  letter-spacing: .5px;
 }
 
 .subtitulo {
   color: #68776b;
-}
+  font-size: 13px;
+  margin-top: 5px;
 }
 
 .selo {
   display: inline-block;
-  margin-top: 15px;
+  margin-top: 13px;
   padding: 7px 13px;
   border-radius: 30px;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.19);
+  background: var(--verde);
   color: white;
   font-size: 10px;
   font-weight: bold;
@@ -110,12 +106,7 @@ body {
   text-decoration: none;
   color: var(--verde);
   box-shadow: 0 4px 14px rgba(0,0,0,.12);
-  transition: .2s;
   z-index: 10;
-}
-
-.stacoin-topo:hover {
-  transform: translateY(-2px);
 }
 
 .stacoin-moeda {
@@ -124,18 +115,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-  border-radius: 50%;
 }
 
 .stacoin-imagem {
   width: 32px;
   height: 32px;
   object-fit: contain;
-  display: block;
-  border-radius: 50%;
-  mix-blend-mode: multiply;
 }
 
 .stacoin-info {
@@ -147,7 +132,6 @@ body {
   display: block;
   font-size: 13px;
   font-weight: bold;
-  color: var(--verde);
 }
 
 .stacoin-label {
@@ -155,7 +139,6 @@ body {
   font-size: 8px;
   color: #777;
   margin-top: 3px;
-  letter-spacing: .5px;
 }
 
 /* LOGIN */
@@ -211,7 +194,8 @@ body {
   text-overflow: ellipsis;
 }
 
-.botao-google {
+.botao-google,
+.botao-sair {
   border: none;
   background: var(--verde);
   color: white;
@@ -223,24 +207,10 @@ body {
   white-space: nowrap;
 }
 
-.botao-google:hover {
-  background: var(--verde-medio);
-}
-
 .botao-sair {
-  border: 1px solid var(--borda);
   background: white;
   color: #555;
-  border-radius: 11px;
-  padding: 10px 13px;
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.botao-sair:hover {
-  background: var(--fundo);
+  border: 1px solid var(--borda);
 }
 
 .login-status {
@@ -285,7 +255,6 @@ body {
   border: 1px solid var(--borda);
   border-radius: 23px;
   padding: 24px 21px 21px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.24);
   max-height: 92vh;
   overflow-y: auto;
 }
@@ -312,31 +281,6 @@ body {
   color: var(--cinza);
   font-size: 12px;
   line-height: 1.45;
-}
-
-.cadastro-id-info {
-  display: none;
-  background: var(--verde-claro);
-  border: 1px solid #cce2d2;
-  border-radius: 15px;
-  padding: 13px;
-  text-align: center;
-  margin-bottom: 17px;
-}
-
-.cadastro-id-info strong {
-  display: block;
-  color: var(--verde);
-  font-size: 10px;
-  margin-bottom: 5px;
-  letter-spacing: .4px;
-}
-
-.cadastro-id-info span {
-  color: var(--verde);
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: 1px;
 }
 
 .cadastro-form {
@@ -373,12 +317,6 @@ body {
 .campo select:focus {
   border-color: var(--verde-medio);
   background: white;
-  box-shadow: 0 0 0 3px rgba(34,100,67,.10);
-}
-
-.campo input[readonly] {
-  background: #f1f3f1;
-  color: #777;
 }
 
 .cadastro-email {
@@ -389,10 +327,6 @@ body {
   color: var(--cinza);
   font-size: 10px;
   word-break: break-word;
-}
-
-.cadastro-email strong {
-  color: var(--verde-escuro);
 }
 
 .botao-cadastrar,
@@ -409,14 +343,8 @@ body {
   cursor: pointer;
 }
 
-.botao-cadastrar:hover,
-.botao-continuar:hover {
-  filter: brightness(1.08);
-}
-
 .botao-cadastrar:disabled {
   opacity: .55;
-  cursor: not-allowed;
 }
 
 .cadastro-erro {
@@ -501,27 +429,21 @@ body {
   bottom: -14px;
   font-size: 75px;
   opacity: .13;
-  transform: rotate(-15deg);
-  pointer-events: none;
 }
 
 .boas-vindas h2 {
-  position: relative;
-  z-index: 1;
   font-size: 20px;
   margin-bottom: 7px;
 }
 
 .boas-vindas p {
-  position: relative;
-  z-index: 1;
   font-size: 13px;
   line-height: 1.5;
   opacity: .9;
   max-width: 85%;
 }
 
-/* TÍTULOS */
+/* SEÇÕES */
 
 .titulo-secao {
   display: flex;
@@ -543,7 +465,74 @@ body {
   background: linear-gradient(90deg,#cbd8cc,transparent);
 }
 
-/* ÁREA DO MOTORISTA */
+/* CARDS */
+
+.cards-principais {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+
+.card-principal {
+  min-height: 155px;
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 19px;
+  padding: 18px 15px;
+  text-decoration: none;
+  color: var(--texto);
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: .2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-principal:active {
+  transform: scale(.98);
+}
+
+.card-principal.destaque {
+  border-color: #c6d9c9;
+}
+
+.card-principal.stacoin-card {
+  border-color: #d9bd72;
+  background: linear-gradient(145deg,#fffdf7,#ffffff);
+}
+
+.icone-grande {
+  font-size: 31px;
+  margin-bottom: 10px;
+}
+
+.card-principal h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: var(--verde-escuro);
+}
+
+.card-principal p {
+  font-size: 11px;
+  color: var(--cinza);
+  line-height: 1.4;
+}
+
+.badge {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 10px;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #e9f3ec;
+  color: #176b3a;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* MEU ESPAÇO */
 
 .espaco-principal {
   background: white;
@@ -569,7 +558,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  flex-shrink: 0;
 }
 
 .espaco-texto {
@@ -604,10 +592,8 @@ body {
   transition: .2s;
 }
 
-.mini-botao:hover {
+.mini-botao:active {
   background: var(--verde-claro);
-  border-color: #c4d8c8;
-  transform: translateY(-2px);
 }
 
 .mini-icone {
@@ -629,93 +615,7 @@ body {
   line-height: 1.3;
 }
 
-/* DESTAQUES */
-
-.cards-principais {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 12px;
-}
-
-.card-principal {
-  min-height: 150px;
-  background: white;
-  border: 1px solid var(--borda);
-  border-radius: 19px;
-  padding: 18px 15px;
-  text-decoration: none;
-  color: var(--texto);
-  box-shadow: var(--sombra);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: .2s;
-  position: relative;
-  overflow: hidden;
-}
-
-.card-principal::after {
-  content: "";
-  position: absolute;
-  width: 75px;
-  height: 75px;
-  right: -36px;
-  top: -36px;
-  border-radius: 50%;
-  background: rgba(23,76,50,.045);
-  pointer-events: none;
-}
-
-.card-principal:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 11px 25px rgba(24,55,35,.11);
-}
-
-.card-principal .icone-grande {
-  font-size: 31px;
-  margin-bottom: 10px;
-}
-
-.card-principal h3 {
-  font-size: 15px;
-  margin-bottom: 6px;
-  color: var(--verde-escuro);
-}
-
-.card-principal p {
-  font-size: 11px;
-  color: var(--cinza);
-  line-height: 1.4;
-}
-
-.card-principal.destaque {
-  border-color: #c6d9c9;
-}
-
-.card-principal.stacoin-card {
-  border-color: #d9bd72;
-  background: linear-gradient(145deg,#fffdf7,#ffffff);
-}
-
-.card-principal.em-breve {
-  opacity: .65;
-  cursor: default;
-}
-
-.badge-breve {
-  display: inline-block;
-  width: fit-content;
-  margin-top: 10px;
-  padding: 5px 9px;
-  border-radius: 20px;
-  background: #edf0ed;
-  color: #68736a;
-  font-size: 9px;
-  font-weight: bold;
-  letter-spacing: .4px;
-}
-
-/* ÁREA DA EMPRESA */
+/* EMPRESA */
 
 .empresa-caixa {
   background: white;
@@ -738,10 +638,6 @@ body {
   color: var(--texto);
 }
 
-.empresa-topo:hover {
-  background: #f8faf7;
-}
-
 .empresa-icone {
   width: 46px;
   height: 46px;
@@ -751,7 +647,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 23px;
-  flex-shrink: 0;
 }
 
 .empresa-texto {
@@ -803,13 +698,6 @@ body {
   text-decoration: none;
   color: var(--texto);
   text-align: center;
-  transition: .2s;
-}
-
-.empresa-botao:hover {
-  background: var(--verde-claro);
-  border-color: #c4d8c8;
-  transform: translateY(-2px);
 }
 
 .empresa-botao .icone {
@@ -848,7 +736,7 @@ body {
 
 /* CELULAR */
 
-@media (max-width:600px) {
+@media(max-width:600px) {
   .cabecalho {
     padding: 29px 15px 25px;
   }
@@ -862,29 +750,16 @@ body {
     font-size: 23px;
   }
 
-  .subtitulo {
-    font-size: 13px;
-  }
-
   .stacoin-topo {
     top: 10px;
     right: 10px;
     padding: 6px 8px;
-    border-radius: 12px;
   }
 
   .stacoin-moeda,
   .stacoin-imagem {
     width: 28px;
     height: 28px;
-  }
-
-  .stacoin-valor {
-    font-size: 12px;
-  }
-
-  .stacoin-label {
-    font-size: 7px;
   }
 
   .area-login {
@@ -933,10 +808,6 @@ body {
     font-size: 12px;
   }
 
-  .titulo-secao {
-    margin-top: 22px;
-  }
-
   .espaco-principal {
     padding: 15px;
   }
@@ -945,20 +816,14 @@ body {
     font-size: 16px;
   }
 
-  .mini-grade {
+  .mini-grade,
+  .empresa-grade {
     gap: 8px;
   }
 
-  .mini-botao {
+  .mini-botao,
+  .empresa-botao {
     padding: 13px 8px;
-  }
-
-  .mini-icone {
-    font-size: 21px;
-  }
-
-  .mini-botao strong {
-    font-size: 12px;
   }
 
   .cards-principais {
@@ -970,10 +835,6 @@ body {
     padding: 15px 12px;
   }
 
-  .card-principal .icone-grande {
-    font-size: 28px;
-  }
-
   .card-principal h3 {
     font-size: 13px;
   }
@@ -982,37 +843,12 @@ body {
     font-size: 10px;
   }
 
-  .empresa-grade {
-    gap: 8px;
-  }
-
-  .empresa-botao {
-    padding: 13px 8px;
-  }
-
-  .empresa-botao .icone {
-    font-size: 21px;
-  }
-
-  .empresa-botao strong {
-    font-size: 12px;
-  }
-
   .cadastro-card {
     padding: 21px 16px 17px;
-    border-radius: 19px;
-  }
-
-  .cadastro-topo h2 {
-    font-size: 19px;
-  }
-
-  .cadastro-topo p {
-    font-size: 11px;
   }
 }
 
-@media (max-width:360px) {
+@media(max-width:360px) {
   .cards-principais {
     grid-template-columns: 1fr;
   }
@@ -1031,64 +867,33 @@ body {
     font-size: 10px;
   }
 }
-
-  </style>
+</style>
 </head>
 
 <body>
 
 <header class="cabecalho">
 
-  <a
-    href="perfil.html"
-    class="stacoin-topo"
-    id="stacoinTopo"
-  >
-
+  <a href="perfil.html" class="stacoin-topo" id="stacoinTopo">
     <div class="stacoin-moeda">
-
-      <img
-        src="stacoin.png"
-        alt="STACOIN"
-        class="stacoin-imagem"
-      >
-
+      <img src="stacoin.png" alt="STACOIN" class="stacoin-imagem">
     </div>
 
     <div class="stacoin-info">
-
-      <span
-        class="stacoin-valor"
-        id="stacoinValor"
-      >
-        0
-      </span>
-
-      <span class="stacoin-label">
-        STACOIN
-      </span>
-
+      <span class="stacoin-valor" id="stacoinValor">0</span>
+      <span class="stacoin-label">STACOIN</span>
     </div>
-
   </a>
 
-  <img
-    class="logo"
-    src="IMG_6552.PNG"
-    alt="Santa Luzia Tomates"
-  >
+  <img class="logo" src="IMG_6552.PNG" alt="Santa Luzia Tomates">
 
-  <h1>
-    SANTA LUZIA CENTRAL
-  </h1>
+  <h1>SANTA LUZIA CENTRAL</h1>
 
   <p class="subtitulo">
     Tudo da Santa Luzia em um só lugar.
   </p>
 
-  <div class="selo">
-    ✓ CENTRAL OFICIAL
-  </div>
+  <div class="selo">✓ CENTRAL OFICIAL</div>
 
 </header>
 
@@ -1096,66 +901,34 @@ body {
 
   <div class="login-card">
 
-    <div
-      class="login-icone"
-      id="loginIcone"
-    >
-      👤
-    </div>
+    <div class="login-icone" id="loginIcone">👤</div>
 
     <div class="login-info">
-
-      <strong id="loginTitulo">
-        Verificando conta...
-      </strong>
-
-      <span id="loginTexto">
-        Aguarde um momento
-      </span>
-
+      <strong id="loginTitulo">Verificando conta...</strong>
+      <span id="loginTexto">Aguarde um momento</span>
     </div>
 
-    <button
-      type="button"
-      class="botao-google"
-      id="botaoGoogle"
-      disabled
-    >
+    <button type="button" class="botao-google" id="botaoGoogle" disabled>
       Aguarde...
     </button>
 
   </div>
 
-  <div
-    class="login-status"
-    id="loginStatus"
-  ></div>
+  <div class="login-status" id="loginStatus"></div>
 
 </section>
 
-<div
-  class="cadastro-overlay"
-  id="cadastroOverlay"
->
+<div class="cadastro-overlay" id="cadastroOverlay">
 
   <div class="cadastro-card">
 
-    <div
-      class="cadastro-form-area"
-      id="cadastroFormArea"
-    >
+    <div class="cadastro-form-area" id="cadastroFormArea">
 
       <div class="cadastro-topo">
 
-        <img
-          src="IMG_6552.PNG"
-          alt="Santa Luzia"
-          class="cadastro-logo"
-        >
+        <img src="IMG_6552.PNG" alt="Santa Luzia" class="cadastro-logo">
 
-        <h2>
-          🆔 Crie seu Santa Luzia ID
-        </h2>
+        <h2>🆔 Crie seu Santa Luzia ID</h2>
 
         <p>
           Complete seu cadastro para receber sua identificação oficial dentro da Santa Luzia Central.
@@ -1163,125 +936,45 @@ body {
 
       </div>
 
-      <div
-        class="cadastro-email"
-        id="cadastroEmail"
-      >
-        <strong>Conta Google:</strong>
-        carregando...
+      <div class="cadastro-email" id="cadastroEmail">
+        <strong>Conta Google:</strong> carregando...
       </div>
 
-      <div
-        class="cadastro-erro"
-        id="cadastroErro"
-      ></div>
+      <div class="cadastro-erro" id="cadastroErro"></div>
 
-      <form
-        class="cadastro-form"
-        id="cadastroForm"
-      >
+      <form class="cadastro-form" id="cadastroForm">
 
         <div class="campo">
-
-          <label for="cadastroNome">
-            NOME
-          </label>
-
-          <input
-            type="text"
-            id="cadastroNome"
-            maxlength="100"
-            autocomplete="name"
-            placeholder="Seu nome completo"
-            required
-          >
-
+          <label for="cadastroNome">NOME</label>
+          <input type="text" id="cadastroNome" maxlength="100" autocomplete="name" placeholder="Seu nome completo" required>
         </div>
 
         <div class="campo">
-
-          <label for="cadastroApelido">
-            APELIDO
-          </label>
-
-          <input
-            type="text"
-            id="cadastroApelido"
-            maxlength="60"
-            placeholder="Seu apelido na Santa Luzia"
-            required
-          >
-
+          <label for="cadastroApelido">APELIDO</label>
+          <input type="text" id="cadastroApelido" maxlength="60" placeholder="Seu apelido na Santa Luzia" required>
         </div>
 
         <div class="campo">
-
-          <label for="cadastroCargo">
-            CARGO
-          </label>
-
-          <input
-            type="text"
-            id="cadastroCargo"
-            maxlength="80"
-            placeholder="Ex.: Motorista"
-            required
-          >
-
+          <label for="cadastroCargo">CARGO</label>
+          <input type="text" id="cadastroCargo" maxlength="80" placeholder="Ex.: Motorista" required>
         </div>
 
         <div class="campo">
+          <label for="cadastroCategoria">CNH / CATEGORIA</label>
 
-          <label for="cadastroCategoria">
-            CNH / CATEGORIA
-          </label>
-
-          <select
-            id="cadastroCategoria"
-            required
-          >
-
-            <option value="">
-              Selecione
-            </option>
-
-            <option value="A">
-              A
-            </option>
-
-            <option value="B">
-              B
-            </option>
-
-            <option value="C">
-              C
-            </option>
-
-            <option value="D">
-              D
-            </option>
-
-            <option value="E">
-              E
-            </option>
-
-            <option value="D/E">
-              D/E
-            </option>
-
-            <option value="AE">
-              AE
-            </option>
-
+          <select id="cadastroCategoria" required>
+            <option value="">Selecione</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="D/E">D/E</option>
+            <option value="AE">AE</option>
           </select>
-
         </div>
 
-        <button
-          type="submit"
-          class="botao-cadastrar"
-          id="botaoCadastrar"
-        >
+        <button type="submit" class="botao-cadastrar" id="botaoCadastrar">
           🪪 CRIAR MEU SANTA LUZIA ID
         </button>
 
@@ -1289,44 +982,26 @@ body {
 
     </div>
 
-    <div
-      class="cadastro-sucesso"
-      id="cadastroSucesso"
-    >
+    <div class="cadastro-sucesso" id="cadastroSucesso">
 
-      <div class="cadastro-sucesso-icone">
-        🎉
-      </div>
+      <div class="cadastro-sucesso-icone">🎉</div>
 
-      <h3 id="cadastroSucessoTitulo">
-        Cadastro concluído!
-      </h3>
+      <h3 id="cadastroSucessoTitulo">Cadastro concluído!</h3>
 
       <p id="cadastroSucessoTexto">
         Seu Santa Luzia ID foi criado com sucesso.
       </p>
 
       <div class="cadastro-id-grande">
-
-        <small>
-          SEU SANTA LUZIA ID
-        </small>
-
-        <strong id="novoCodigo">
-          SL-0000
-        </strong>
-
+        <small>SEU SANTA LUZIA ID</small>
+        <strong id="novoCodigo">SL-0000</strong>
       </div>
 
       <p>
         Guarde esse número. Ele será usado para sua identificação dentro da empresa.
       </p>
 
-      <button
-        type="button"
-        class="botao-continuar"
-        id="botaoContinuar"
-      >
+      <button type="button" class="botao-continuar" id="botaoContinuar">
         ENTRAR NA CENTRAL →
       </button>
 
@@ -1339,311 +1014,94 @@ body {
 <main class="conteudo">
 
   <section class="boas-vindas">
-
-    <h2>
-      🍅 Bem-vindo à Santa Luzia
-    </h2>
-
+    <h2>🍅 Bem-vindo à Santa Luzia</h2>
     <p>
-      Sua central oficial para acessar
-      tudo da nossa empresa.
+      Sua central oficial para acessar os serviços e acompanhar sua vida dentro da empresa.
     </p>
-
   </section>
 
   <div class="titulo-secao">
-
-    <h2>
-      👤 MEU ESPAÇO
-    </h2>
-
+    <h2>👤 MINHA CONTA</h2>
     <div class="linha"></div>
-
   </div>
 
   <section class="espaco-principal">
 
     <div class="espaco-cabecalho">
 
-      <div class="espaco-icone">
-        👤
-      </div>
+      <div class="espaco-icone">👤</div>
 
       <div class="espaco-texto">
-
-        <h2>
-          Área do Motorista
-        </h2>
-
-        <p>
-          Seus documentos, perfil e identificação.
-        </p>
-
+        <h2>Área do Motorista</h2>
+        <p>Seus documentos, perfil e identificação.</p>
       </div>
 
     </div>
 
     <div class="mini-grade">
 
-      <a
-        href="santaluziaid.html"
-        class="mini-botao"
-      >
-
-        <div class="mini-icone">
-          🪪
-        </div>
-
-        <strong>
-          Santa Luzia ID
-        </strong>
-
-        <span>
-          Identificação oficial
-        </span>
-
+      <a href="santaluziaid.html" class="mini-botao">
+        <div class="mini-icone">🪪</div>
+        <strong>Santa Luzia ID</strong>
+        <span>Identificação oficial</span>
       </a>
 
-      <a
-        href="perfil.html"
-        class="mini-botao"
-      >
-
-        <div class="mini-icone">
-          👤
-        </div>
-
-        <strong>
-          Meu Perfil
-        </strong>
-
-        <span>
-          Dados e STACOIN
-        </span>
-
+      <a href="perfil.html" class="mini-botao">
+        <div class="mini-icone">👤</div>
+        <strong>Meu Perfil</strong>
+        <span>Dados e STACOIN</span>
       </a>
 
-      <a
-        href="cnh.html"
-        class="mini-botao"
-      >
-
-        <div class="mini-icone">
-          🪪
-        </div>
-
-        <strong>
-          Minha CNH
-        </strong>
-
-        <span>
-          Habilitação interna
-        </span>
-
+      <a href="cnh.html" class="mini-botao">
+        <div class="mini-icone">🚛</div>
+        <strong>Minha CNH</strong>
+        <span>Habilitação interna</span>
       </a>
 
-      <a
-        href="skins.html"
-        class="mini-botao"
-      >
-
-        <div class="mini-icone">
-          🎨
-        </div>
-
-        <strong>
-          Skins
-        </strong>
-
-        <span>
-          Skins da empresa
-        </span>
-
-      </a>
-
-<a
-        href="chat.html"
-        class="mini-botao"
-      >
-
-        <div class="mini-icone">
-          💬
-        </div>
-
-        <strong>
-          Chat dos Motoristas
-        </strong>
-
-        <span>
-          Converse com a equipe
-        </span>
-
-      </a>
-      
     </div>
 
   </section>
 
   <div class="titulo-secao">
-
-    <h2>
-      ⭐ DESTAQUES
-    </h2>
-
+    <h2>⭐ SERVIÇOS PRINCIPAIS</h2>
     <div class="linha"></div>
-
   </div>
 
   <div class="cards-principais">
 
-    <a
-      href="loja.html"
-      class="card-principal stacoin-card destaque"
-    >
-
-      <div class="icone-grande">
-        🛒
-      </div>
-
-      <h3>
-        LOJA SANTA LUZIA
-      </h3>
-
-      <p>
-        Skins, baús, cabines, bandeiras e muito mais.
-      </p>
-
-      <span class="badge-breve" style="
-        background:#e9f3ec;
-        color:#176b3a;
-      ">
-        ABRIR LOJA →
-      </span>
-
+    <a href="salarios.html" class="card-principal destaque">
+      <div class="icone-grande">💰</div>
+      <h3>MEU SALÁRIO</h3>
+      <p>Consulte seus pagamentos, valores recebidos e pendências.</p>
+      <span class="badge">ACESSAR SALÁRIOS →</span>
     </a>
 
-<a
-      href="conveniencia.html"
-      class="card-principal destaque"
-    >
-
-      <div class="icone-grande">
-        🍔
-      </div>
-
-      <h3>
-        CONVENIÊNCIA
-      </h3>
-
-      <p>
-        Bebidas, lanches, marmitex e muito mais.
-      </p>
-
-      <span
-        class="badge-breve"
-        style="background:#e9f3ec;color:#176b3a;"
-      >
-        ACESSAR CONVENIÊNCIA →
-      </span>
-
-    </a>
-    
-    <div class="card-principal em-breve">
-
-      <div class="icone-grande">
-        🎮
-      </div>
-
-      <h3>
-        CENTRAL GAMES
-      </h3>
-
-      <p>
-        Jogue, faça pontos e ganhe STACOIN.
-      </p>
-
-      <span class="badge-breve">
-        EM BREVE
-      </span>
-
-    </div>
-
-<a href="ranking-lives.html" class="card-principal destaque">
-
-  <div class="icone-grande">🏆</div>
-
-  <h3>COMUNIDADE</h3>
-
-  <p>
-    Confira os rankings, ADM, doadores e novidades.
-  </p>
-
-  <span class="badge-breve" style="background:#e9f3ec;color:#176b3a;">
-    ACESSAR COMUNIDADE →
-  </span>
-
-</a>
-    <a
-      href="perfil.html"
-      class="card-principal destaque"
-    >
-
-      <div class="icone-grande">
-        🪙
-      </div>
-
-      <h3>
-        MEU STACOIN
-      </h3>
-
-      <p>
-        Consulte seu saldo e seu extrato.
-      </p>
-
+    <a href="loja.html" class="card-principal stacoin-card destaque">
+      <div class="icone-grande">🛒</div>
+      <h3>LOJA SANTA LUZIA</h3>
+      <p>Skins, baús, cabines, acessórios e muito mais.</p>
+      <span class="badge">ABRIR LOJA →</span>
     </a>
 
   </div>
 
   <div class="titulo-secao">
-
-    <h2>
-      🏢 EMPRESA
-    </h2>
-
+    <h2>🏢 INSTITUCIONAL</h2>
     <div class="linha"></div>
-
   </div>
 
-  <section
-    class="empresa-caixa"
-    id="empresaCaixa"
-  >
+  <section class="empresa-caixa" id="empresaCaixa">
 
-    <button
-      type="button"
-      class="empresa-topo"
-      id="botaoEmpresa"
-    >
+    <button type="button" class="empresa-topo" id="botaoEmpresa">
 
-      <div class="empresa-icone">
-        🏢
-      </div>
+      <div class="empresa-icone">🏢</div>
 
       <div class="empresa-texto">
-
-        <strong>
-          Área da Empresa
-        </strong>
-
-        <span>
-          Notícias, eventos, jogos, notas e informações.
-        </span>
-
+        <strong>Área da Empresa</strong>
+        <span>Notícias, eventos, jogos e informações.</span>
       </div>
 
-      <div class="empresa-seta">
-        →
-      </div>
+      <div class="empresa-seta">→</div>
 
     </button>
 
@@ -1651,175 +1109,52 @@ body {
 
       <div class="empresa-grade">
 
-        <a
-          href="globaltruck.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            🚛
-          </span>
-
-          <strong>
-            Global Truck
-          </strong>
-
-          <span>
-            Informações e conteúdos
-          </span>
-
+        <a href="globaltruck.html" class="empresa-botao">
+          <span class="icone">🚛</span>
+          <strong>Global Truck</strong>
+          <span>Informações e conteúdos</span>
         </a>
 
-        <a
-          href="truckers.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            🚚
-          </span>
-
-          <strong>
-            Truckers
-          </strong>
-
-          <span>
-            Informações e conteúdos
-          </span>
-
+        <a href="truckers.html" class="empresa-botao">
+          <span class="icone">🚚</span>
+          <strong>Truckers</strong>
+          <span>Informações e conteúdos</span>
         </a>
 
-        <a
-          href="comoentrar.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            📖
-          </span>
-
-          <strong>
-            Como Entrar
-          </strong>
-
-          <span>
-            Veja como fazer parte
-          </span>
-
+        <a href="comoentrar.html" class="empresa-botao">
+          <span class="icone">📖</span>
+          <strong>Como Entrar</strong>
+          <span>Veja como fazer parte</span>
         </a>
 
-        <a
-          href="noticias.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            📰
-          </span>
-
-          <strong>
-            Notícias
-          </strong>
-
-          <span>
-            Novidades da Santa Luzia
-          </span>
-
+        <a href="noticias.html" class="empresa-botao">
+          <span class="icone">📰</span>
+          <strong>Notícias</strong>
+          <span>Novidades da Santa Luzia</span>
         </a>
 
-        <a
-          href="eventos.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            🏆
-          </span>
-
-          <strong>
-            Eventos
-          </strong>
-
-          <span>
-            Competições e premiações
-          </span>
-
+        <a href="eventos.html" class="empresa-botao">
+          <span class="icone">🏆</span>
+          <strong>Eventos</strong>
+          <span>Competições e premiações</span>
         </a>
 
-        <a
-          href="notas.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            🧾
-          </span>
-
-          <strong>
-            Notas
-          </strong>
-
-          <span>
-            Liberação e controle
-          </span>
-
+        <a href="notas.html" class="empresa-botao">
+          <span class="icone">🧾</span>
+          <strong>Notas</strong>
+          <span>Liberação e controle</span>
         </a>
 
-        <a
-          href="links.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            🔗
-          </span>
-
-          <strong>
-            Links
-          </strong>
-
-          <span>
-            Redes e canais
-          </span>
-
+        <a href="links.html" class="empresa-botao">
+          <span class="icone">🔗</span>
+          <strong>Links</strong>
+          <span>Redes e canais</span>
         </a>
 
-        <a
-          href="sobrenos.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            🏢
-          </span>
-
-          <strong>
-            Sobre Nós
-          </strong>
-
-          <span>
-            Conheça a Santa Luzia
-          </span>
-
-        </a>
-
-        <a
-          href="admn.html"
-          class="empresa-botao"
-        >
-
-          <span class="icone">
-            👑
-          </span>
-
-          <strong>
-            Painel ADMN
-          </strong>
-
-          <span>
-            Gestão da empresa
-          </span>
-
+        <a href="sobrenos.html" class="empresa-botao">
+          <span class="icone">🏢</span>
+          <strong>Sobre Nós</strong>
+          <span>Conheça a Santa Luzia</span>
         </a>
 
       </div>
@@ -1828,33 +1163,44 @@ body {
 
   </section>
 
+  <div class="titulo-secao">
+    <h2>🔐 ADMINISTRAÇÃO</h2>
+    <div class="linha"></div>
+  </div>
+
+  <section class="espaco-principal">
+
+    <div class="espaco-cabecalho">
+      <div class="espaco-icone">👑</div>
+
+      <div class="espaco-texto">
+        <h2>Painel Administrativo</h2>
+        <p>Área reservada à administração da empresa.</p>
+      </div>
+    </div>
+
+    <a href="admn.html" class="mini-botao" style="display:block">
+      <div class="mini-icone">⚙️</div>
+      <strong>ACESSAR PAINEL ADM</strong>
+      <span>Gerenciamento da Santa Luzia</span>
+    </a>
+
+  </section>
+
 </main>
 
 <footer class="rodape">
-
-  <strong>
-    Santa Luzia Tomates
-  </strong>
-
+  <strong>Santa Luzia Tomates</strong>
   <br>
-
   Santa Luzia Central • 2026
-
 </footer>
 
 <script>
-
 const SUPABASE_URL =
   "https://cckypvqophyviphqhich.supabase.co";
 
-
-/*
-  TROQUE SOMENTE ESTA CHAVE
-  PELA SUA CHAVE PUBLICÁVEL ATUAL
-*/
 const SUPABASE_KEY =
   "sb_publishable_M_6iIpO4FhNhxskWG0XXrA_Uwuw_bbP";
-
 
 const supabaseClient =
   window.supabase.createClient(
@@ -1870,1384 +1216,454 @@ const supabaseClient =
     }
   );
 
+/* ELEMENTOS */
 
-/* =========================
-   ELEMENTOS
-========================= */
+const botaoGoogle = document.getElementById("botaoGoogle");
+const loginTitulo = document.getElementById("loginTitulo");
+const loginTexto = document.getElementById("loginTexto");
+const loginIcone = document.getElementById("loginIcone");
+const loginStatus = document.getElementById("loginStatus");
+const stacoinTopo = document.getElementById("stacoinTopo");
+const stacoinValor = document.getElementById("stacoinValor");
 
-const botaoGoogle =
-  document.getElementById(
-    "botaoGoogle"
-  );
+const cadastroOverlay = document.getElementById("cadastroOverlay");
+const cadastroFormArea = document.getElementById("cadastroFormArea");
+const cadastroSucesso = document.getElementById("cadastroSucesso");
+const cadastroForm = document.getElementById("cadastroForm");
+const cadastroEmail = document.getElementById("cadastroEmail");
+const cadastroErro = document.getElementById("cadastroErro");
+const botaoCadastrar = document.getElementById("botaoCadastrar");
+const novoCodigo = document.getElementById("novoCodigo");
+const botaoContinuar = document.getElementById("botaoContinuar");
 
-const loginTitulo =
-  document.getElementById(
-    "loginTitulo"
-  );
+document.getElementById("botaoEmpresa").addEventListener("click", function() {
+  document.getElementById("empresaCaixa").classList.toggle("aberta");
+});
 
-const loginTexto =
-  document.getElementById(
-    "loginTexto"
-  );
+/* ERROS */
 
-const loginIcone =
-  document.getElementById(
-    "loginIcone"
-  );
-
-const loginStatus =
-  document.getElementById(
-    "loginStatus"
-  );
-
-const stacoinTopo =
-  document.getElementById(
-    "stacoinTopo"
-  );
-
-const stacoinValor =
-  document.getElementById(
-    "stacoinValor"
-  );
-
-
-/* =========================
-   CADASTRO
-========================= */
-
-const cadastroOverlay =
-  document.getElementById(
-    "cadastroOverlay"
-  );
-
-const cadastroFormArea =
-  document.getElementById(
-    "cadastroFormArea"
-  );
-
-const cadastroSucesso =
-  document.getElementById(
-    "cadastroSucesso"
-  );
-
-const cadastroForm =
-  document.getElementById(
-    "cadastroForm"
-  );
-
-const cadastroEmail =
-  document.getElementById(
-    "cadastroEmail"
-  );
-
-const cadastroErro =
-  document.getElementById(
-    "cadastroErro"
-  );
-
-const botaoCadastrar =
-  document.getElementById(
-    "botaoCadastrar"
-  );
-
-const novoCodigo =
-  document.getElementById(
-    "novoCodigo"
-  );
-
-const botaoContinuar =
-  document.getElementById(
-    "botaoContinuar"
-  );
-
-const cadastroSucessoTitulo =
-  document.getElementById(
-    "cadastroSucessoTitulo"
-  );
-
-const cadastroSucessoTexto =
-  document.getElementById(
-    "cadastroSucessoTexto"
-  );
-
-
-/* =========================
-   EMPRESA
-========================= */
-
-const empresaCaixa =
-  document.getElementById(
-    "empresaCaixa"
-  );
-
-const botaoEmpresa =
-  document.getElementById(
-    "botaoEmpresa"
-  );
-
-
-botaoEmpresa.addEventListener(
-  "click",
-  function() {
-
-    empresaCaixa.classList.toggle(
-      "aberta"
-    );
-
-  }
-);
-
-
-/* =========================
-   ERRO CADASTRO
-========================= */
-
-function mostrarErroCadastro(
-  mensagem
-) {
-
-  cadastroErro.textContent =
-    mensagem;
-
-  cadastroErro.style.display =
-    "block";
-
+function mostrarErroCadastro(mensagem) {
+  cadastroErro.textContent = mensagem;
+  cadastroErro.style.display = "block";
 }
-
 
 function esconderErroCadastro() {
-
-  cadastroErro.textContent =
-    "";
-
-  cadastroErro.style.display =
-    "none";
-
+  cadastroErro.textContent = "";
+  cadastroErro.style.display = "none";
 }
 
+/* CADASTRO */
 
-/* =========================
-   ABRIR CADASTRO
-========================= */
+function abrirCadastro(user) {
+  if (!user) return;
 
-function abrirCadastro(
-  user
-) {
+  cadastroEmail.textContent =
+    "Conta Google: " + (user.email || "Conta conectada");
 
-  if (!user) {
-    return;
-  }
-
-
-  cadastroEmail.innerHTML =
-    "<strong>Conta Google:</strong> " +
-    (user.email || "Conta conectada");
-
-
-  cadastroFormArea.style.display =
-    "block";
-
-
-  cadastroSucesso.style.display =
-    "none";
-
+  cadastroFormArea.style.display = "block";
+  cadastroSucesso.style.display = "none";
 
   esconderErroCadastro();
-
-
-  cadastroOverlay.classList.add(
-    "aberto"
-  );
-
+  cadastroOverlay.classList.add("aberto");
 
   const nomeGoogle =
     user.user_metadata?.full_name ||
     user.user_metadata?.name ||
     "";
 
+  const campoNome = document.getElementById("cadastroNome");
 
-  const campoNome =
-    document.getElementById(
-      "cadastroNome"
-    );
-
-
-  if (
-    nomeGoogle &&
-    !campoNome.value
-  ) {
-
-    campoNome.value =
-      nomeGoogle;
-
+  if (nomeGoogle && !campoNome.value) {
+    campoNome.value = nomeGoogle;
   }
-
-
-  setTimeout(
-    function() {
-
-      campoNome.focus();
-
-    },
-    100
-  );
-
 }
-
-
-/* =========================
-   FECHAR CADASTRO
-========================= */
 
 function fecharCadastro() {
-
-  cadastroOverlay.classList.remove(
-    "aberto"
-  );
-
+  cadastroOverlay.classList.remove("aberto");
 }
 
-
-/* =========================
-   VERIFICAR SANTA LUZIA ID
-========================= */
-
-async function verificarCadastro(
-  user
-) {
-
-  if (!user) {
-    return null;
-  }
-
+async function verificarCadastro(user) {
+  if (!user) return null;
 
   try {
+    const resultado = await supabaseClient
+      .from("motoristas")
+      .select("id,codigo,nome,apelido,cargo,categoria,salario_ativo,status,user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
 
-    const resultado =
-      await supabaseClient
-        .from("motoristas")
-        .select(
-          "id,codigo,nome,apelido,cargo,categoria,salario_ativo,status,user_id"
-        )
-        .eq(
-          "user_id",
-          user.id
-        )
-        .maybeSingle();
-
-
-    if (
-      resultado.error
-    ) {
-
-      console.error(
-        "Erro ao verificar cadastro:",
-        resultado.error
-      );
-
-      return null;
-
+    if (resultado.error) {
+      console.error("Erro ao verificar cadastro:", resultado.error);
+      throw resultado.error;
     }
-
 
     return resultado.data || null;
 
+  } catch (erro) {
+    console.error("Falha na consulta do motorista:", erro);
+    throw erro;
   }
-
-  catch (erro) {
-
-    console.error(
-      "Erro ao verificar cadastro:",
-      erro
-    );
-
-    return null;
-
-  }
-
 }
 
+/* CRIAR SANTA LUZIA ID */
 
-/* =========================
-   CRIAR / RECUPERAR ID
-========================= */
+cadastroForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
 
-cadastroForm.addEventListener(
-  "submit",
-  async function(event) {
+  esconderErroCadastro();
 
-    event.preventDefault();
+  const nome = document.getElementById("cadastroNome").value.trim();
+  const apelido = document.getElementById("cadastroApelido").value.trim();
+  const cargo = document.getElementById("cadastroCargo").value.trim();
+  const categoria = document.getElementById("cadastroCategoria").value.trim();
 
-
-    esconderErroCadastro();
-
-
-    const nome =
-      document
-        .getElementById(
-          "cadastroNome"
-        )
-        .value
-        .trim();
-
-
-    const apelido =
-      document
-        .getElementById(
-          "cadastroApelido"
-        )
-        .value
-        .trim();
-
-
-    const cargo =
-      document
-        .getElementById(
-          "cadastroCargo"
-        )
-        .value
-        .trim();
-
-
-    const categoria =
-      document
-        .getElementById(
-          "cadastroCategoria"
-        )
-        .value
-        .trim();
-
-
-    if (
-      !nome ||
-      !apelido ||
-      !cargo ||
-      !categoria
-    ) {
-
-      mostrarErroCadastro(
-        "Preencha todos os campos para continuar."
-      );
-
-      return;
-
-    }
-
-
-    botaoCadastrar.disabled =
-      true;
-
-    botaoCadastrar.textContent =
-      "VERIFICANDO SEU ID...";
-
-
-    try {
-
-      const sessao =
-        await supabaseClient.auth.getSession();
-
-
-      const user =
-        sessao.data?.session?.user;
-
-
-      if (!user) {
-
-        mostrarErroCadastro(
-          "Sua sessão expirou. Entre novamente com o Google."
-        );
-
-
-        botaoCadastrar.disabled =
-          false;
-
-
-        botaoCadastrar.textContent =
-          "🪪 CRIAR MEU SANTA LUZIA ID";
-
-
-        return;
-
-      }
-
-
-      /*
-        PRIMEIRA PROTEÇÃO:
-
-        Antes de chamar o RPC,
-        verifica se esta conta Google
-        já possui um Santa Luzia ID.
-      */
-
-      const cadastroExistente =
-        await verificarCadastro(
-          user
-        );
-
-
-      if (cadastroExistente) {
-
-        /*
-          A conta já possui ID.
-
-          NÃO cria outro.
-
-          Apenas mostra o ID que
-          pertence a esta conta.
-        */
-
-        novoCodigo.textContent =
-          cadastroExistente.codigo ||
-          "SEM CÓDIGO";
-
-
-        cadastroSucessoTitulo.textContent =
-          "Você já possui um Santa Luzia ID!";
-
-
-        cadastroSucessoTexto.textContent =
-          "Este ID já está vinculado à sua conta Google. Nenhum novo ID foi criado.";
-
-
-        cadastroFormArea.style.display =
-          "none";
-
-
-        cadastroSucesso.style.display =
-          "block";
-
-
-        loginStatus.textContent =
-          "✓ ID já vinculado à sua conta • " +
-          cadastroExistente.codigo;
-
-
-        loginStatus.className =
-          "login-status login-ok";
-
-
-        botaoCadastrar.disabled =
-          false;
-
-
-        botaoCadastrar.textContent =
-          "🪪 CRIAR MEU SANTA LUZIA ID";
-
-
-        return;
-
-      }
-
-
-      /*
-        SEGUNDA PROTEÇÃO:
-
-        Se não encontrou ID no navegador,
-        chama a função segura do Supabase.
-
-        O banco também verifica o user_id.
-      */
-
-      botaoCadastrar.textContent =
-        "CRIANDO SEU ID...";
-
-
-      const resultado =
-        await supabaseClient.rpc(
-          "criar_meu_cadastro",
-          {
-            p_nome:
-              nome,
-
-            p_apelido:
-              apelido,
-
-            p_cargo:
-              cargo,
-
-            p_categoria:
-              categoria
-          }
-        );
-
-
-      if (
-        resultado.error
-      ) {
-
-        console.error(
-          "Erro RPC:",
-          resultado.error
-        );
-
-
-        /*
-          Se o banco informar que já existe,
-          tentamos buscar novamente o ID
-          da conta antes de mostrar erro.
-        */
-
-        const cadastroDepoisDoErro =
-          await verificarCadastro(
-            user
-          );
-
-
-        if (
-          cadastroDepoisDoErro
-        ) {
-
-          novoCodigo.textContent =
-            cadastroDepoisDoErro.codigo ||
-            "SEM CÓDIGO";
-
-
-          cadastroSucessoTitulo.textContent =
-            "Você já possui um Santa Luzia ID!";
-
-
-          cadastroSucessoTexto.textContent =
-            "Seu ID já estava vinculado a esta conta. Nenhum novo ID foi criado.";
-
-
-          cadastroFormArea.style.display =
-            "none";
-
-
-          cadastroSucesso.style.display =
-            "block";
-
-
-          loginStatus.textContent =
-            "✓ ID já vinculado à sua conta • " +
-            cadastroDepoisDoErro.codigo;
-
-
-          loginStatus.className =
-            "login-status login-ok";
-
-
-          botaoCadastrar.disabled =
-            false;
-
-
-          botaoCadastrar.textContent =
-            "🪪 CRIAR MEU SANTA LUZIA ID";
-
-
-          return;
-
-        }
-
-
-        mostrarErroCadastro(
-          "Não foi possível criar seu ID. " +
-          (
-            resultado.error.message ||
-            "Tente novamente."
-          )
-        );
-
-
-        botaoCadastrar.disabled =
-          false;
-
-
-        botaoCadastrar.textContent =
-          "🪪 CRIAR MEU SANTA LUZIA ID";
-
-
-        return;
-
-      }
-
-
-      const dados =
-        resultado.data;
-
-
-      if (
-        !dados ||
-        !dados.sucesso
-      ) {
-
-        mostrarErroCadastro(
-          "O cadastro não foi concluído. Tente novamente."
-        );
-
-
-        botaoCadastrar.disabled =
-          false;
-
-
-        botaoCadastrar.textContent =
-          "🪪 CRIAR MEU SANTA LUZIA ID";
-
-
-        return;
-
-      }
-
-
-      /*
-        Se o RPC respondeu que já existia,
-        tratamos como ID existente.
-      */
-
-      if (
-        dados.ja_existia === true ||
-        dados.novo === false
-      ) {
-
-        novoCodigo.textContent =
-          dados.codigo ||
-          "SEM CÓDIGO";
-
-
-        cadastroSucessoTitulo.textContent =
-          "Você já possui um Santa Luzia ID!";
-
-
-        cadastroSucessoTexto.textContent =
-          "Este ID já está vinculado à sua conta Google. Nenhum novo ID foi criado.";
-
-      }
-
-      else {
-
-        novoCodigo.textContent =
-          dados.codigo ||
-          "SL-0000";
-
-
-        cadastroSucessoTitulo.textContent =
-          "Cadastro concluído!";
-
-
-        cadastroSucessoTexto.textContent =
-          "Seu Santa Luzia ID foi criado com sucesso.";
-
-      }
-
-
-      cadastroFormArea.style.display =
-        "none";
-
-
-      cadastroSucesso.style.display =
-        "block";
-
-
-      loginStatus.textContent =
-        "✓ Santa Luzia ID • " +
-        (
-          dados.codigo ||
-          "ID"
-        );
-
-
-      loginStatus.className =
-        "login-status login-ok";
-
-
-      botaoCadastrar.disabled =
-        false;
-
-
-      botaoCadastrar.textContent =
-        "🪪 CRIAR MEU SANTA LUZIA ID";
-
-    }
-
-    catch (erro) {
-
-      console.error(
-        "Erro inesperado:",
-        erro
-      );
-
-
-      mostrarErroCadastro(
-        "Ocorreu um erro ao verificar seu ID. Tente novamente."
-      );
-
-
-      botaoCadastrar.disabled =
-        false;
-
-
-      botaoCadastrar.textContent =
-        "🪪 CRIAR MEU SANTA LUZIA ID";
-
-    }
-
-  }
-);
-
-
-/* =========================
-   CONTINUAR
-========================= */
-
-botaoContinuar.addEventListener(
-  "click",
-  async function() {
-
-    fecharCadastro();
-
-
-    const resultado =
-      await supabaseClient.auth.getSession();
-
-
-    const user =
-      resultado.data?.session?.user;
-
-
-    if (user) {
-
-      await mostrarUsuario(
-        user
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================
-   STACOIN
-========================= */
-
-async function carregarStacoin(
-  user
-) {
-
-  if (!user) {
-
-    stacoinTopo.style.display =
-      "none";
-
+  if (!nome || !apelido || !cargo || !categoria) {
+    mostrarErroCadastro("Preencha todos os campos para continuar.");
     return;
-
   }
 
+  botaoCadastrar.disabled = true;
+  botaoCadastrar.textContent = "VERIFICANDO SEU ID...";
 
   try {
+    const sessao = await supabaseClient.auth.getSession();
+    const user = sessao.data?.session?.user;
 
-    const motoristaResultado =
-      await supabaseClient
-        .from("motoristas")
-        .select("id")
-        .eq(
-          "user_id",
-          user.id
-        )
-        .maybeSingle();
-
-
-    if (
-      motoristaResultado.error ||
-      !motoristaResultado.data
-    ) {
-
-      console.log(
-        "Motorista não encontrado para esta conta."
-      );
-
-
-      stacoinTopo.style.display =
-        "none";
-
-
-      return;
-
+    if (!user) {
+      throw new Error("Sua sessão expirou. Entre novamente com o Google.");
     }
 
+    const cadastroExistente = await verificarCadastro(user);
 
-    const motoristaId =
-      motoristaResultado.data.id;
-
-
-    const carteiraResultado =
-      await supabaseClient
-        .from("stacoin_carteiras")
-        .select("saldo")
-        .eq(
-          "motorista_id",
-          motoristaId
-        )
-        .maybeSingle();
-
-
-    if (
-      carteiraResultado.error
-    ) {
-
-      console.error(
-        "Erro ao carregar STACOIN:",
-        carteiraResultado.error
+    if (cadastroExistente) {
+      mostrarCadastroConcluido(
+        cadastroExistente.codigo,
+        "Você já possui um Santa Luzia ID!",
+        "Este ID já está vinculado à sua conta Google."
       );
-
-
-      stacoinTopo.style.display =
-        "none";
-
-
       return;
-
     }
 
+    botaoCadastrar.textContent = "CRIANDO SEU ID...";
 
-    const saldo =
-      carteiraResultado.data?.saldo ||
-      0;
+    const resultado = await supabaseClient.rpc("criar_meu_cadastro", {
+      p_nome: nome,
+      p_apelido: apelido,
+      p_cargo: cargo,
+      p_categoria: categoria
+    });
 
+    if (resultado.error) {
+      const cadastroDepoisDoErro = await verificarCadastro(user);
 
-    stacoinValor.textContent =
-      Number(
-        saldo
-      ).toLocaleString(
-        "pt-BR"
-      );
+      if (cadastroDepoisDoErro) {
+        mostrarCadastroConcluido(
+          cadastroDepoisDoErro.codigo,
+          "Você já possui um Santa Luzia ID!",
+          "Seu ID já estava vinculado a esta conta."
+        );
+        return;
+      }
 
+      throw resultado.error;
+    }
 
-    stacoinTopo.style.display =
-      "flex";
+    const dados = resultado.data;
 
-  }
+    if (!dados || !dados.sucesso) {
+      throw new Error("O cadastro não foi concluído. Verifique a função do banco.");
+    }
 
-  catch (erro) {
-
-    console.error(
-      "Erro STACOIN:",
-      erro
+    mostrarCadastroConcluido(
+      dados.codigo,
+      dados.ja_existia ? "Você já possui um Santa Luzia ID!" : "Cadastro concluído!",
+      dados.ja_existia
+        ? "Este ID já estava vinculado à sua conta."
+        : "Seu Santa Luzia ID foi criado com sucesso."
     );
 
+  } catch (erro) {
+    console.error("Erro no cadastro:", erro);
+    mostrarErroCadastro(erro.message || "Não foi possível criar seu ID.");
 
-    stacoinTopo.style.display =
-      "none";
-
+  } finally {
+    botaoCadastrar.disabled = false;
+    botaoCadastrar.textContent = "🪪 CRIAR MEU SANTA LUZIA ID";
   }
+});
 
+function mostrarCadastroConcluido(codigo, titulo, texto) {
+  novoCodigo.textContent = codigo || "SEM CÓDIGO";
+
+  document.getElementById("cadastroSucessoTitulo").textContent = titulo;
+  document.getElementById("cadastroSucessoTexto").textContent = texto;
+
+  cadastroFormArea.style.display = "none";
+  cadastroSucesso.style.display = "block";
+
+  loginStatus.textContent = "✓ Santa Luzia ID • " + (codigo || "ID");
+  loginStatus.className = "login-status login-ok";
 }
 
+/* CONTINUAR */
 
-/* =========================
-   MOSTRAR USUÁRIO
-========================= */
+botaoContinuar.addEventListener("click", async function() {
+  fecharCadastro();
 
-async function mostrarUsuario(
-  user
-) {
+  const resultado = await supabaseClient.auth.getSession();
+  const user = resultado.data?.session?.user;
 
+  if (user) {
+    await mostrarUsuario(user);
+  }
+});
+
+/* STACOIN */
+
+async function carregarStacoin(user) {
   if (!user) {
-
-    loginIcone.textContent =
-      "👤";
-
-
-    loginTitulo.textContent =
-      "Acesse sua conta";
-
-
-    loginTexto.textContent =
-      "Entre com sua conta Google";
-
-
-    botaoGoogle.textContent =
-      "Entrar com Google";
-
-
-    botaoGoogle.className =
-      "botao-google";
-
-
-    botaoGoogle.disabled =
-      false;
-
-
-    botaoGoogle.dataset.logado =
-      "false";
-
-
-    loginStatus.textContent =
-      "";
-
-
-    loginStatus.className =
-      "login-status";
-
-
-    stacoinTopo.style.display =
-      "none";
-
-
+    stacoinTopo.style.display = "none";
     return;
-
   }
 
+  try {
+    const motoristaResultado = await supabaseClient
+      .from("motoristas")
+      .select("id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (motoristaResultado.error) throw motoristaResultado.error;
+
+    if (!motoristaResultado.data) {
+      stacoinTopo.style.display = "none";
+      return;
+    }
+
+    const carteiraResultado = await supabaseClient
+      .from("stacoin_carteiras")
+      .select("saldo")
+      .eq("motorista_id", motoristaResultado.data.id)
+      .maybeSingle();
+
+    if (carteiraResultado.error) throw carteiraResultado.error;
+
+    const saldo = carteiraResultado.data?.saldo || 0;
+
+    stacoinValor.textContent =
+      Number(saldo).toLocaleString("pt-BR");
+
+    stacoinTopo.style.display = "flex";
+
+  } catch (erro) {
+    console.error("Erro ao carregar STACOIN:", erro);
+    stacoinTopo.style.display = "none";
+  }
+}
+
+/* USUÁRIO */
+
+async function mostrarUsuario(user) {
+  if (!user) {
+    loginIcone.textContent = "👤";
+    loginTitulo.textContent = "Acesse sua conta";
+    loginTexto.textContent = "Entre com sua conta Google";
+
+    botaoGoogle.textContent = "Entrar com Google";
+    botaoGoogle.className = "botao-google";
+    botaoGoogle.disabled = false;
+    botaoGoogle.dataset.logado = "false";
+
+    loginStatus.textContent = "";
+    loginStatus.className = "login-status";
+    stacoinTopo.style.display = "none";
+
+    return;
+  }
 
   const nome =
     user.user_metadata?.full_name ||
     user.user_metadata?.name ||
     "Usuário";
 
-
-  const email =
-    user.email ||
-    "";
-
-
-  loginIcone.textContent =
-    "👤";
-
-
-  loginTitulo.textContent =
-    "Olá, " + nome;
-
-
-  loginTexto.textContent =
-    email;
-
-
-  botaoGoogle.textContent =
-    "Sair";
-
-
-  botaoGoogle.className =
-    "botao-sair";
-
-
-  botaoGoogle.disabled =
-    false;
-
-
-  botaoGoogle.dataset.logado =
-    "true";
-
-
-  loginStatus.textContent =
-    "Verificando seu Santa Luzia ID...";
-
-
-  loginStatus.className =
-    "login-status";
-
-
-  /*
-    AQUI ESTÁ A PROTEÇÃO PRINCIPAL:
-
-    Procuramos o ID pelo user_id da
-    conta Google conectada.
-
-    Se encontrou, NÃO abre cadastro.
-  */
-
-  const motorista =
-    await verificarCadastro(
-      user
-    );
-
-
-  if (!motorista) {
-
-    loginStatus.textContent =
-      "🆔 Complete seu cadastro para criar seu Santa Luzia ID.";
-
-
-    loginStatus.className =
-      "login-status";
-
-
-    abrirCadastro(
-      user
-    );
-
-
-    return;
-
-  }
-
-
-  /*
-    A CONTA JÁ POSSUI ID.
-
-    Portanto ela entra normalmente.
-  */
-
-  loginStatus.textContent =
-    "✓ Conta conectada • " +
-    motorista.codigo;
-
-
-  loginStatus.className =
-    "login-status login-ok";
-
-
-  carregarStacoin(
-    user
-  );
-
-}
-
-
-/* =========================
-   RETORNO GOOGLE
-========================= */
-
-async function processarRetornoGoogle() {
-
-  const hash =
-    window.location.hash.substring(
-      1
-    );
-
-
-  if (!hash) {
-
-    console.log(
-      "Nenhum retorno Google encontrado."
-    );
-
-
-    return false;
-
-  }
-
-
-  const parametros =
-    new URLSearchParams(
-      hash
-    );
-
-
-  const accessToken =
-    parametros.get(
-      "access_token"
-    );
-
-
-  const refreshToken =
-    parametros.get(
-      "refresh_token"
-    );
-
-
-  if (
-    !accessToken ||
-    !refreshToken
-  ) {
-
-    console.log(
-      "Hash existe, mas não possui tokens de sessão."
-    );
-
-
-    return false;
-
-  }
-
-
-  loginStatus.textContent =
-    "🔐 Finalizando login...";
-
+  loginIcone.textContent = "👤";
+  loginTitulo.textContent = "Olá, " + nome;
+  loginTexto.textContent = user.email || "";
+
+  botaoGoogle.textContent = "Sair";
+  botaoGoogle.className = "botao-sair";
+  botaoGoogle.disabled = false;
+  botaoGoogle.dataset.logado = "true";
+
+  loginStatus.textContent = "Verificando seu Santa Luzia ID...";
+  loginStatus.className = "login-status";
 
   try {
+    const motorista = await verificarCadastro(user);
 
-    const resultado =
-      await supabaseClient.auth.setSession({
-
-        access_token:
-          accessToken,
-
-        refresh_token:
-          refreshToken
-
-      });
-
-
-    if (
-      resultado.error
-    ) {
-
-      const erroCompleto =
-        JSON.stringify(
-          resultado.error,
-          Object.getOwnPropertyNames(
-            resultado.error
-          ),
-          2
-        );
-
-
-      console.error(
-        "ERRO COMPLETO:",
-        erroCompleto
-      );
-
-
+    if (!motorista) {
       loginStatus.textContent =
-        "❌ " +
-        erroCompleto;
+        "🆔 Complete seu cadastro para criar seu Santa Luzia ID.";
 
-
-      loginStatus.className =
-        "login-status login-erro";
-
-
-      return false;
-
+      loginStatus.className = "login-status";
+      abrirCadastro(user);
+      return;
     }
 
+    loginStatus.textContent = "✓ Conta conectada • " + motorista.codigo;
+    loginStatus.className = "login-status login-ok";
 
-    if (
-      resultado.data?.session?.user
-    ) {
+    await carregarStacoin(user);
 
-      await mostrarUsuario(
-        resultado.data.session.user
-      );
+  } catch (erro) {
+    loginStatus.textContent =
+      "Não foi possível verificar seu cadastro. Tente novamente.";
 
+    loginStatus.className = "login-status login-erro";
+  }
+}
+
+/* RETORNO GOOGLE */
+
+async function processarRetornoGoogle() {
+  const hash = window.location.hash.substring(1);
+
+  if (!hash) return false;
+
+  const parametros = new URLSearchParams(hash);
+
+  const accessToken = parametros.get("access_token");
+  const refreshToken = parametros.get("refresh_token");
+
+  if (!accessToken || !refreshToken) return false;
+
+  loginStatus.textContent = "🔐 Finalizando login...";
+
+  try {
+    const resultado = await supabaseClient.auth.setSession({
+      access_token: accessToken,
+      refresh_token: refreshToken
+    });
+
+    if (resultado.error) throw resultado.error;
+
+    if (resultado.data?.session?.user) {
+      await mostrarUsuario(resultado.data.session.user);
 
       window.history.replaceState(
         {},
         document.title,
-        window.location.pathname +
-        window.location.search
+        window.location.pathname + window.location.search
       );
 
-
       return true;
-
     }
-
 
     return false;
 
-  }
-
-  catch (erro) {
-
-    console.error(
-      "Erro ao processar retorno:",
-      erro
-    );
-
+  } catch (erro) {
+    console.error("Erro ao processar retorno Google:", erro);
 
     loginStatus.textContent =
       "❌ Erro ao finalizar login.";
 
-
-    loginStatus.className =
-      "login-status login-erro";
-
+    loginStatus.className = "login-status login-erro";
 
     return false;
-
   }
-
 }
 
-
-/* =========================
-   VERIFICAR SESSÃO
-========================= */
+/* SESSÃO */
 
 async function verificarSessao() {
-
   try {
+    const resultado = await supabaseClient.auth.getSession();
 
-    const resultado =
-      await supabaseClient.auth.getSession();
+    if (resultado.error) throw resultado.error;
 
-
-    if (
-      resultado.data?.session?.user
-    ) {
-
-      await mostrarUsuario(
-        resultado.data.session.user
-      );
-
-
+    if (resultado.data?.session?.user) {
+      await mostrarUsuario(resultado.data.session.user);
       return true;
-
     }
 
-
-    mostrarUsuario(
-      null
-    );
-
-
+    mostrarUsuario(null);
     return false;
 
-  }
-
-  catch (erro) {
-
-    console.error(
-      erro
-    );
-
-
-    mostrarUsuario(
-      null
-    );
-
-
+  } catch (erro) {
+    console.error("Erro ao verificar sessão:", erro);
+    mostrarUsuario(null);
     return false;
-
   }
-
 }
 
-
-/* =========================
-   LOGIN GOOGLE
-========================= */
+/* LOGIN GOOGLE */
 
 async function entrarGoogle() {
+  botaoGoogle.disabled = true;
+  botaoGoogle.textContent = "Abrindo Google...";
 
-  botaoGoogle.disabled =
-    true;
+  loginStatus.textContent = "Abrindo login do Google...";
 
-
-  botaoGoogle.textContent =
-    "Abrindo Google...";
-
-
-  loginStatus.textContent =
-    "Abrindo login do Google...";
-
-
-  const resultado =
-    await supabaseClient.auth.signInWithOAuth({
-
-      provider:
-        "google",
-
+  try {
+    const resultado = await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
       options: {
-
         redirectTo:
           "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
-
       }
-
     });
 
+    if (resultado.error) throw resultado.error;
 
-  if (
-    resultado.error
-  ) {
+  } catch (erro) {
+    console.error("Erro no login:", erro);
 
-    console.error(
-      resultado.error
-    );
+    loginStatus.textContent = "❌ " + erro.message;
+    loginStatus.className = "login-status login-erro";
 
-
-    loginStatus.textContent =
-      "❌ " +
-      resultado.error.message;
-
-
-    loginStatus.className =
-      "login-status login-erro";
-
-
-    botaoGoogle.disabled =
-      false;
-
-
-    botaoGoogle.textContent =
-      "Entrar com Google";
-
+    botaoGoogle.disabled = false;
+    botaoGoogle.textContent = "Entrar com Google";
   }
-
 }
 
+/* BOTÃO LOGIN / SAIR */
 
-/* =========================
-   BOTÃO LOGIN
-========================= */
+botaoGoogle.addEventListener("click", async function() {
+  if (botaoGoogle.dataset.logado === "true") {
+    botaoGoogle.disabled = true;
 
-botaoGoogle.addEventListener(
-  "click",
-  async function() {
+    try {
+      const resultado = await supabaseClient.auth.signOut();
 
-    if (
-      botaoGoogle.dataset.logado ===
-      "true"
-    ) {
+      if (resultado.error) throw resultado.error;
 
-      await supabaseClient.auth.signOut();
+      mostrarUsuario(null);
 
+    } catch (erro) {
+      console.error("Erro ao sair:", erro);
 
-      mostrarUsuario(
-        null
-      );
+      loginStatus.textContent = "Não foi possível sair da conta.";
+      loginStatus.className = "login-status login-erro";
 
-
-      return;
-
+      botaoGoogle.disabled = false;
     }
 
-
-    await entrarGoogle();
-
+    return;
   }
-);
 
+  await entrarGoogle();
+});
 
-/* =========================
-   AUTH STATE
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-  async function(
-    event,
-    session
-  ) {
-
-    console.log(
-      "Auth:",
-      event,
-      session
-    );
-
-
-    if (
-      session?.user
-    ) {
-
-      await mostrarUsuario(
-        session.user
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================
-   INICIALIZAÇÃO
-========================= */
+/* INICIALIZAÇÃO */
 
 (async function() {
-
-  const processou =
-    await processarRetornoGoogle();
-
+  const processou = await processarRetornoGoogle();
 
   if (!processou) {
-
     await verificarSessao();
-
   }
 
+  botaoGoogle.disabled = false;
 })();
 
 </script>
