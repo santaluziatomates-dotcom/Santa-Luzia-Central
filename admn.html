@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -536,6 +537,115 @@
       background: #a72d2d;
     }
 
+    /* GERENCIAMENTO DE ADMS */
+
+    .gestao-adms {
+      background: white;
+      border: 1px solid #dfe7e1;
+      border-radius: 15px;
+      padding: 16px;
+      margin: 0 0 20px;
+    }
+
+    .gestao-adms h2 {
+      color: #176b3a;
+      font-size: 18px;
+      margin: 0 0 6px;
+    }
+
+    .gestao-adms p {
+      color: #68756d;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 0 0 14px;
+    }
+
+    .adm-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .adm-form input {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #d7e0d9;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+
+    .adm-form button {
+      border: 0;
+      border-radius: 10px;
+      padding: 0 14px;
+      background: #176b3a;
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .adm-form button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .lista-adms {
+      display: grid;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .adm-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #f7f9f7;
+      border: 1px solid #e5ebe6;
+      border-radius: 11px;
+    }
+
+    .adm-email {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-size: 12px;
+      font-weight: bold;
+      color: #183322;
+    }
+
+    .adm-situacao {
+      display: block;
+      margin-top: 5px;
+      font-size: 10px;
+      color: #68756d;
+    }
+
+    .adm-item button {
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 8px;
+      padding: 9px 10px;
+      background: #ffe7e7;
+      color: #a92b2b;
+      font-size: 10px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .adm-item button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .adm-principal {
+      color: #176b3a;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
     @media (max-width: 760px) {
       .resumo {
         grid-template-columns: repeat(2, 1fr);
@@ -559,6 +669,16 @@
         align-items: flex-start;
         flex-direction: column;
         gap: 4px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .adm-form {
+        grid-template-columns: 1fr;
+      }
+
+      .adm-form button {
+        padding: 12px;
       }
     }
   </style>
@@ -586,7 +706,50 @@
         <small id="contaInfo">Carregando...</small>
       </div>
 
+      <!-- GERENCIAMENTO DE ADMS -->
+
+      <div id="gestaoAdms" class="gestao-adms" style="display:none;">
+
+        <h2>👑 Gerenciar administradores</h2>
+
+        <p>
+          Adicione pessoas autorizadas a acessar o Painel ADM.
+          Somente a conta principal pode gerenciar esta lista.
+        </p>
+
+        <div class="adm-form">
+
+          <input
+            type="email"
+            id="novoAdmEmail"
+            placeholder="E-mail da conta Google"
+            autocomplete="email"
+          >
+
+          <button
+            type="button"
+            id="btnAdicionarAdm"
+            onclick="adicionarAdm()"
+          >
+            ➕ ADICIONAR ADM
+          </button>
+
+        </div>
+
+        <div class="titulo-secao">
+          <h2>👥 ADMs cadastrados</h2>
+        </div>
+
+        <div id="listaAdms" class="lista-adms">
+          <div class="carregando">
+            Carregando administradores...
+          </div>
+        </div>
+
+      </div>
+
       <div class="resumo">
+
         <div class="card-resumo">
           <span>Total</span>
           <strong id="totalMotoristas">0</strong>
@@ -606,6 +769,7 @@
           <span>STACOIN</span>
           <strong id="totalStacoin">0</strong>
         </div>
+
       </div>
 
       <div class="barra">
@@ -650,11 +814,7 @@
 
       <div class="campo">
         <label>Motorista</label>
-        <input
-          type="text"
-          id="stacoinMotorista"
-          readonly
-        >
+        <input type="text" id="stacoinMotorista" readonly>
       </div>
 
       <div class="campo">
@@ -708,10 +868,12 @@
      SUPABASE
   ========================================================= */
 
-const SUPABASE_URL = "https://hqrtbtulzeqoylfpjmdk.supabase.co";
+  const SUPABASE_URL =
+    "https://hqrtbtulzeqoylfpjmdk.supabase.co";
 
-const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
-  
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_gDDVH5-0Rr88BzvpfwgYA_N";
+
   const supabaseClient =
     window.supabase.createClient(
       SUPABASE_URL,
@@ -726,6 +888,12 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       }
     );
 
+  /* =========================================================
+     IDENTIFICAÇÃO DA CONTA PRINCIPAL
+  ========================================================= */
+
+  const ADM_PRINCIPAL_ID =
+    "52d4d775-e9f2-49eb-9b61-38c2bf77a69a";
 
   /* =========================================================
      ESTADO
@@ -736,7 +904,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
   let motoristaStacoinSelecionado = null;
 
   let tipoStacoinSelecionado = "entrada";
-
 
   /* =========================================================
      UTILIDADES
@@ -751,16 +918,15 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       .replace(/'/g, "&#039;");
   }
 
-
   function formatarNumero(valor) {
     const numero = Number(valor || 0);
 
     return numero.toLocaleString("pt-BR");
   }
 
-
   function mostrarMensagem(texto, tempo = 3200) {
-    const elemento = document.getElementById("mensagem");
+    const elemento =
+      document.getElementById("mensagem");
 
     elemento.textContent = texto;
     elemento.style.display = "block";
@@ -771,7 +937,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       elemento.style.display = "none";
     }, tempo);
   }
-
 
   function mostrarBloqueio(titulo, texto, mostrarLink = false) {
 
@@ -803,7 +968,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     document.getElementById("painel").style.display = "none";
   }
 
-
   /* =========================================================
      AUTENTICAÇÃO
   ========================================================= */
@@ -818,6 +982,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       } = await supabaseClient.auth.getSession();
 
       if (sessionError) {
+
         console.error(sessionError);
 
         mostrarBloqueio(
@@ -887,6 +1052,19 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       document.getElementById("painel").style.display =
         "block";
 
+      /* GERENCIAMENTO EXCLUSIVO DA CONTA PRINCIPAL */
+
+      const ehAdmPrincipal =
+        session.user.id === ADM_PRINCIPAL_ID;
+
+      if (ehAdmPrincipal) {
+
+        document.getElementById("gestaoAdms").style.display =
+          "block";
+
+        await carregarAdms();
+      }
+
       await carregarMotoristas();
 
     } catch (erro) {
@@ -902,6 +1080,264 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     }
   }
 
+  /* =========================================================
+     GERENCIAMENTO DE ADMS
+  ========================================================= */
+
+  async function carregarAdms() {
+
+    const lista =
+      document.getElementById("listaAdms");
+
+    lista.innerHTML = `
+      <div class="carregando">
+        Carregando administradores...
+      </div>
+    `;
+
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "adm_listar_administradores"
+    );
+
+    if (error) {
+
+      console.error("Erro ao listar ADMs:", error);
+
+      lista.innerHTML = `
+        <div class="vazio">
+          ❌ Não foi possível carregar os ADMs.<br><br>
+          ${escaparHTML(error.message)}
+        </div>
+      `;
+
+      return;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+
+      lista.innerHTML = `
+        <div class="vazio">
+          Nenhum administrador cadastrado.
+        </div>
+      `;
+
+      return;
+    }
+
+    lista.innerHTML = data.map(adm => {
+
+      const principal =
+        adm.user_id === ADM_PRINCIPAL_ID;
+
+      return `
+        <div class="adm-item">
+
+          <div>
+            <div class="adm-email">
+              ${escaparHTML(adm.email || "Sem e-mail")}
+            </div>
+
+            <span class="adm-situacao">
+              ${
+                adm.ativo
+                  ? "🟢 Acesso ativo"
+                  : "🔴 Acesso desativado"
+              }
+            </span>
+          </div>
+
+          ${
+            principal
+              ? `
+                <span class="adm-principal">
+                  ADMIN PRINCIPAL
+                </span>
+              `
+              : adm.ativo
+                ? `
+                  <button
+                    type="button"
+                    onclick="desativarAdm('${escaparHTML(adm.user_id)}')"
+                  >
+                    DESATIVAR
+                  </button>
+                `
+                : `
+                  <span class="adm-situacao">
+                    Sem acesso
+                  </span>
+                `
+          }
+
+        </div>
+      `;
+
+    }).join("");
+  }
+
+  async function adicionarAdm() {
+
+    const campo =
+      document.getElementById("novoAdmEmail");
+
+    const botao =
+      document.getElementById("btnAdicionarAdm");
+
+    const email =
+      campo.value.trim().toLowerCase();
+
+    if (!email || !email.includes("@")) {
+
+      mostrarMensagem("Informe um e-mail válido.");
+
+      campo.focus();
+
+      return;
+    }
+
+    const confirmou =
+      confirm(
+        `Conceder acesso ADM para ${email}?`
+      );
+
+    if (!confirmou) {
+      return;
+    }
+
+    botao.disabled = true;
+    botao.textContent = "ADICIONANDO...";
+
+    try {
+
+      const {
+        data,
+        error
+      } = await supabaseClient.rpc(
+        "adm_adicionar_administrador",
+        {
+          p_email: email
+        }
+      );
+
+      if (error) {
+
+        console.error("Erro ao adicionar ADM:", error);
+
+        mostrarMensagem(
+          "❌ " + error.message,
+          5000
+        );
+
+        return;
+      }
+
+      if (!data?.sucesso) {
+
+        mostrarMensagem(
+          "Não foi possível adicionar esse ADM."
+        );
+
+        return;
+      }
+
+      campo.value = "";
+
+      mostrarMensagem(
+        "✅ Administrador autorizado com sucesso!"
+      );
+
+      await carregarAdms();
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mostrarMensagem(
+        "❌ Erro ao adicionar administrador.",
+        5000
+      );
+
+    } finally {
+
+      botao.disabled = false;
+
+      botao.textContent =
+        "➕ ADICIONAR ADM";
+    }
+  }
+
+  async function desativarAdm(userId) {
+
+    if (userId === ADM_PRINCIPAL_ID) {
+
+      mostrarMensagem(
+        "A conta principal não pode ser desativada."
+      );
+
+      return;
+    }
+
+    const confirmou =
+      confirm(
+        "Deseja realmente desativar o acesso deste administrador?"
+      );
+
+    if (!confirmou) {
+      return;
+    }
+
+    try {
+
+      const {
+        data,
+        error
+      } = await supabaseClient.rpc(
+        "adm_desativar_administrador",
+        {
+          p_user_id: userId
+        }
+      );
+
+      if (error) {
+
+        console.error("Erro ao desativar ADM:", error);
+
+        mostrarMensagem(
+          "❌ " + error.message,
+          5000
+        );
+
+        return;
+      }
+
+      if (!data?.sucesso) {
+
+        mostrarMensagem(
+          "Não foi possível desativar esse ADM."
+        );
+
+        return;
+      }
+
+      mostrarMensagem(
+        "🔒 Acesso ADM desativado."
+      );
+
+      await carregarAdms();
+
+    } catch (erro) {
+
+      console.error(erro);
+
+      mostrarMensagem(
+        "❌ Erro ao desativar administrador.",
+        5000
+      );
+    }
+  }
 
   /* =========================================================
      CARREGAR MOTORISTAS
@@ -948,7 +1384,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     renderizarMotoristas();
   }
 
-
   /* =========================================================
      RESUMO
   ========================================================= */
@@ -987,7 +1422,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     document.getElementById("totalStacoin")
       .textContent = formatarNumero(stacoin);
   }
-
 
   /* =========================================================
      RENDERIZAR MOTORISTAS
@@ -1037,7 +1471,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
         .map(m => criarCardMotorista(m))
         .join("");
   }
-
 
   function criarCardMotorista(m) {
 
@@ -1103,7 +1536,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
         </div>
 
-
         <div class="info-linha">
 
           <div class="info">
@@ -1128,7 +1560,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
           </div>
 
         </div>
-
 
         <!-- STATUS -->
 
@@ -1168,7 +1599,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
         </div>
 
-
         <!-- SALÁRIO -->
 
         <div class="controle">
@@ -1198,7 +1628,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
           </div>
 
         </div>
-
 
         <!-- STACOIN -->
 
@@ -1241,7 +1670,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       </article>
     `;
   }
-
 
   /* =========================================================
      ALTERAR STATUS
@@ -1317,7 +1745,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     );
   }
 
-
   /* =========================================================
      ALTERAR SALÁRIO
   ========================================================= */
@@ -1378,7 +1805,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
         : `⚪ Salário desativado para ${motorista.nome}.`
     );
   }
-
 
   /* =========================================================
      MODAL STACOIN
@@ -1464,7 +1890,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     }, 100);
   }
 
-
   function fecharModalStacoin() {
 
     document.getElementById(
@@ -1477,7 +1902,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     tipoStacoinSelecionado =
       "entrada";
   }
-
 
   /* =========================================================
      CONFIRMAR STACOIN
@@ -1614,8 +2038,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
         return;
       }
 
-      /* ATUALIZA SALDO LOCAL */
-
       motorista.saldo_stacoin =
         Number(data.novo_saldo || 0);
 
@@ -1652,7 +2074,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
     }
   }
 
-
   /* =========================================================
      BUSCA
   ========================================================= */
@@ -1663,7 +2084,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
       "input",
       renderizarMotoristas
     );
-
 
   /* =========================================================
      FECHAR MODAL CLICANDO FORA
@@ -1681,7 +2101,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
       }
     );
-
 
   /* =========================================================
      ESC FECHA MODAL
@@ -1705,7 +2124,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
     }
   );
-
 
   /* =========================================================
      LOGIN / AUTH
@@ -1732,7 +2150,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
     }
   );
-
 
   /* =========================================================
      INICIAR
