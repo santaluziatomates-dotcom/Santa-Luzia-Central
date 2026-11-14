@@ -188,7 +188,7 @@ const ADMIN_ID='52d4d775-e9f2-49eb-9b61-38c2bf77a69a';
 const BUCKET='loja-produtos';
 const $=id=>document.getElementById(id);
 const status=$('status');
-const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentUser=null,products=[],boxes=[],prizes=[],saving=false,sessionCheckFinished=false;
 function message(text,error=false){
 status.textContent=text;
