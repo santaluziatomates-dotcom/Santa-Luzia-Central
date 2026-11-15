@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#174c32">
+<title>Meus Pagamentos | Santa Luzia</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+  --verde: #174c32;
+  --verde2: #226443;
+  --fundo: #f2f5f0;
+  --branco: #fff;
+  --texto: #26332b;
+  --cinza: #788179;
+  --borda: #e1e8e0;
+  --vermelho: #c93432;
+}
+
+body {
+  background: var(--fundo);
+  color: var(--texto);
+  min-height: 100vh;
+}
+
+header {
+  background: linear-gradient(130deg,#103b27,#226443);
+  color: white;
+  padding: 25px 18px 28px;
+  border-bottom: 4px solid var(--vermelho);
+}
+
+.topo {
+  max-width: 760px;
+  margin: auto;
+}
+
+.voltar {
+  display: inline-block;
+  color: #e4eee6;
+  text-decoration: none;
+  font-size: 12px;
+  margin-bottom: 23px;
+}
+
+.logo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icone-topo {
+  width: 49px;
+  height: 49px;
+  border-radius: 15px;
+  background: rgba(255,255,255,.13);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+}
+
+header h1 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+header p {
+  color: #d6e6da;
+  font-size: 12px;
+}
+
+main {
+  max-width: 760px;
+  margin: auto;
+  padding: 20px 16px 40px;
+}
+
+.usuario {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 17px;
+}
+
+.usuario-icone {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: #e8f0e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.usuario-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.usuario-info strong {
+  display: block;
+  color: var(--verde);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.usuario-info span {
+  display: block;
+  color: var(--cinza);
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  text-align: center;
+  padding: 13px;
+  color: var(--cinza);
+  font-size: 12px;
+}
+
+.status.erro {
+  color: var(--vermelho);
+}
+
+.painel-login {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 18px;
+  padding: 25px 18px;
+  text-align: center;
+  margin-top: 18px;
+}
+
+.painel-login .icone {
+  font-size: 39px;
+  margin-bottom: 12px;
+}
+
+.painel-login h2 {
+  color: var(--verde);
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.painel-login p {
+  font-size: 12px;
+  color: var(--cinza);
+  line-height: 1.5;
+  margin-bottom: 17px;
+}
+
+.botao {
+  border: none;
+  background: var(--verde);
+  color: white;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botao:disabled {
+  opacity: .6;
+}
+
+.resumo {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 11px;
+  margin-bottom: 17px;
+}
+
+.resumo-card {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 17px;
+  padding: 17px 14px;
+}
+
+.resumo-card.principal {
+  background: linear-gradient(135deg,#174c32,#226443);
+  color: white;
+  border: none;
+}
+
+.resumo-label {
+  display: block;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: .6px;
+  margin-bottom: 10px;
+  color: var(--cinza);
+}
+
+.principal .resumo-label {
+  color: #d7e8db;
+}
+
+.resumo-valor {
+  display: block;
+  font-size: 22px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.resumo-legenda {
+  display: block;
+  font-size: 10px;
+  color: var(--cinza);
+  margin-top: 6px;
+}
+
+.principal .resumo-legenda {
+  color: #d7e8db;
+}
+
+.secao-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 24px 2px 12px;
+}
+
+.secao-titulo h2 {
+  color: var(--verde);
+  font-size: 14px;
+}
+
+.filtro {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 13px;
+}
+
+.filtro button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--borda);
+  background: white;
+  border-radius: 10px;
+  color: var(--cinza);
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.filtro button.ativo {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: white;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pagamento {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagamento-icone {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background: #e9f3ec;
+  color: var(--verde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+}
+
+.pagamento-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pagamento-info strong {
+  display: block;
+  font-size: 12px;
+  color: var(--texto);
+  margin-bottom: 5px;
+  overflow-wrap: anywhere;
+}
+
+.pagamento-info span {
+  display: block;
+  font-size: 10px;
+  color: var(--cinza);
+  line-height: 1.4;
+}
+
+.pagamento-valor {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pagamento-valor strong {
+  display: block;
+  color: #21834c;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.pagamento-valor span {
+  display: block;
+  color: var(--cinza);
+  font-size: 9px;
+  margin-top: 4px;
+}
+
+.vazio {
+  text-align: center;
+  background: white;
+  border: 1px dashed #ccd8ce;
+  border-radius: 16px;
+  padding: 30px 18px;
+}
+
+.vazio .icone {
+  font-size: 37px;
+  margin-bottom: 10px;
+}
+
+.vazio h3 {
+  font-size: 14px;
+  color: var(--verde);
+  margin-bottom: 7px;
+}
+
+.vazio p {
+  color: var(--cinza);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.aviso {
+  background: #fffaf0;
+  border: 1px solid #eadbb1;
+  border-radius: 13px;
+  padding: 13px;
+  margin-top: 20px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #75623a;
+}
+
+.rodape {
+  text-align: center;
+  color: var(--cinza);
+  font-size: 10px;
+  padding: 23px 10px;
+}
+
+.rodape strong {
+  color: var(--verde);
+}
+
+@media(max-width:380px) {
+  .resumo-valor {
+    font-size: 18px;
+  }
+
+  .pagamento {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+
+  .pagamento-valor strong {
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topo">
+
+    <a href="index.html" class="voltar">← VOLTAR À CENTRAL</a>
+
+    <div class="logo-titulo">
+      <div class="icone-topo">💰</div>
+
+      <div>
+        <h1>Meus Pagamentos</h1>
+        <p>Seu histórico financeiro na Santa Luzia</p>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+  <div id="areaLogin" style="display:none">
+    <div class="painel-login">
+      <div class="icone">🔐</div>
+      <h2>Acesse sua conta</h2>
+      <p>
+        Entre com sua conta Google utilizada na Santa Luzia Central
+        para consultar seus pagamentos.
+      </p>
+      <button class="botao" id="botaoLogin">ENTRAR COM GOOGLE</button>
+    </div>
+  </div>
+
+  <div id="areaPagamentos" style="display:none">
+
+    <section class="usuario">
+      <div class="usuario-icone">👤</div>
+
+      <div class="usuario-info">
+        <strong id="nomeUsuario">Motorista</strong>
+        <span id="emailUsuario"></span>
+      </div>
+    </section>
+
+    <section class="resumo">
+
+      <div class="resumo-card principal">
+        <span class="resumo-label">RECEBIDO NESTE MÊS</span>
+        <strong class="resumo-valor" id="totalMes">0</strong>
+        <span class="resumo-legenda">STACOIN</span>
+      </div>
+
+      <div class="resumo-card">
+        <span class="resumo-label">PAGAMENTOS</span>
+        <strong class="resumo-valor" id="quantidadePagamentos">0</strong>
+        <span class="resumo-legenda">Neste mês</span>
+      </div>
+
+    </section>
+
+    <div class="secao-titulo">
+      <h2>📋 Histórico de pagamentos</h2>
+    </div>
+
+    <div class="filtro">
+      <button type="button" class="ativo" id="filtroTodos">Todos</button>
+      <button type="button" id="filtroMes">Este mês</button>
+    </div>
+
+    <div id="listaPagamentos" class="lista">
+      <div class="status">Carregando pagamentos...</div>
+    </div>
+
+    <div class="aviso">
+      ℹ️ Esta página apresenta os créditos manuais realizados pela
+      administração da Santa Luzia. Os pagamentos são registrados
+      diretamente no extrato STACOIN.
+    </div>
+
+    <div style="text-align:center;margin-top:16px">
+      <button type="button" class="botao" id="botaoAtualizar">
+        ↻ ATUALIZAR HISTÓRICO
+      </button>
+    </div>
+
+  </div>
+
+  <div class="status" id="statusGeral">Verificando sua conta...</div>
+
+</main>
+
+<footer class="rodape">
+  <strong>Santa Luzia Tomates</strong><br>
+  Santa Luzia Central • 2026
+</footer>
+
+<script>
+const SUPABASE_URL =
+  "https://hqrtbtulzeqoylfpjmdk.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_gDDVH_5-0Rr88BzvpfwgYA_N-2-Pfd_n";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+      flowType: "implicit"
+    }
+  }
+);
+
+let pagamentos = [];
+let filtroAtual = "todos";
+
+const areaLogin = document.getElementById("areaLogin");
+const areaPagamentos = document.getElementById("areaPagamentos");
+const statusGeral = document.getElementById("statusGeral");
+const listaPagamentos = document.getElementById("listaPagamentos");
+
+function formatarValor(valor) {
+  return Number(valor || 0).toLocaleString("pt-BR");
+}
+
+function formatarData(data) {
+  if (!data) return "Data não informada";
+
+  return new Date(data).toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function ehMesAtual(data) {
+  const d = new Date(data);
+  const agora = new Date();
+
+  return (
+    d.getMonth() === agora.getMonth() &&
+    d.getFullYear() === agora.getFullYear()
+  );
+}
+
+function mostrarStatus(texto, erro = false) {
+  statusGeral.textContent = texto;
+  statusGeral.className = erro ? "status erro" : "status";
+}
+
+async function entrarGoogle() {
+  const botao = document.getElementById("botaoLogin");
+
+  botao.disabled = true;
+  botao.textContent = "ABRINDO GOOGLE...";
+
+  try {
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo:
+          "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/salarios.html"
+      }
+    });
+
+    if (error) throw error;
+
+  } catch (erro) {
+    mostrarStatus("Não foi possível iniciar o login: " + erro.message, true);
+    botao.disabled = false;
+    botao.textContent = "ENTRAR COM GOOGLE";
+  }
+}
+
+document.getElementById("botaoLogin").addEventListener("click", entrarGoogle);
+
+async function iniciarPagina() {
+  try {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) throw error;
+
+    const user = data.session?.user;
+
+    if (!user) {
+      areaLogin.style.display = "block";
+      areaPagamentos.style.display = "none";
+      mostrarStatus("");
+      return;
+    }
+
+    areaLogin.style.display = "none";
+    areaPagamentos.style.display = "block";
+
+    document.getElementById("nomeUsuario").textContent =
+      user.user_metadata?.full_name ||
+      user.user_metadata?.name ||
+      "Motorista";
+
+    document.getElementById("emailUsuario").textContent =
+      user.email || "";
+
+    await carregarPagamentos();
+
+  } catch (erro) {
+    console.error(erro);
+    mostrarStatus("Erro ao verificar sua conta. Tente novamente.", true);
+  }
+}
+
+async function carregarPagamentos() {
+  listaPagamentos.innerHTML =
+    '<div class="status">Buscando seus pagamentos...</div>';
+
+  mostrarStatus("Atualizando histórico...");
+
+  try {
+    const { data, error } = await supabaseClient.rpc(
+      "meus_pagamentos_salas"
+    );
+
+    if (error) throw error;
+
+    pagamentos = data || [];
+
+    atualizarResumo();
+    mostrarLista();
+
+    mostrarStatus("");
+
+  } catch (erro) {
+    console.error("Erro ao carregar pagamentos:", erro);
+
+    listaPagamentos.innerHTML = `
+      <div class="vazio">
+        <div class="icone">⚠️</div>
+        <h3>Não foi possível carregar</h3>
+        <p>O histórico não pôde ser consultado. Tente atualizar a página.</p>
+      </div>
+    `;
+
+    mostrarStatus(
+      "Erro ao consultar seus pagamentos. Verifique a configuração do sistema.",
+      true
+    );
+  }
+}
+
+function atualizarResumo() {
+  const desteMes = pagamentos.filter(p => ehMesAtual(p.criado_em));
+
+  const total = desteMes.reduce(
+    (soma, p) => soma + Number(p.valor || 0),
+    0
+  );
+
+  document.getElementById("totalMes").textContent =
+    formatarValor(total);
+
+  document.getElementById("quantidadePagamentos").textContent =
+    formatarValor(desteMes.length);
+}
+
+function mostrarLista() {
+  const dados = filtroAtual === "mes"
+    ? pagamentos.filter(p => ehMesAtual(p.criado_em))
+    : pagamentos;
+
+  if (!dados.length) {
+    listaPagamentos.innerHTML = `
+      <div class="vazio">
+        <div class="icone">💰</div>
+        <h3>Nenhum pagamento encontrado</h3>
+        <p>
+          Quando a administração realizar um pagamento para você,
+          ele aparecerá aqui automaticamente.
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  listaPagamentos.innerHTML = "";
+
+  dados.forEach(p => {
+    const item = document.createElement("article");
+    item.className = "pagamento";
+
+    const icone = document.createElement("div");
+    icone.className = "pagamento-icone";
+    icone.textContent = "💵";
+
+    const info = document.createElement("div");
+    info.className = "pagamento-info";
+
+    const motivo = document.createElement("strong");
+    motivo.textContent = p.motivo || "Pagamento de sala";
+
+    const data = document.createElement("span");
+    data.textContent = formatarData(p.criado_em);
+
+    info.appendChild(motivo);
+    info.appendChild(data);
+
+    const valor = document.createElement("div");
+    valor.className = "pagamento-valor";
+
+    const valorTexto = document.createElement("strong");
+    valorTexto.textContent = "+ " + formatarValor(p.valor);
+
+    const legenda = document.createElement("span");
+    legenda.textContent = "STACOIN";
+
+    valor.appendChild(valorTexto);
+    valor.appendChild(legenda);
+
+    item.appendChild(icone);
+    item.appendChild(info);
+    item.appendChild(valor);
+
+    listaPagamentos.appendChild(item);
+  });
+}
+
+document.getElementById("filtroTodos").addEventListener("click", function() {
+  filtroAtual = "todos";
+
+  this.classList.add("ativo");
+  document.getElementById("filtroMes").classList.remove("ativo");
+
+  mostrarLista();
+});
+
+document.getElementById("filtroMes").addEventListener("click", function() {
+  filtroAtual = "mes";
+
+  this.classList.add("ativo");
+  document.getElementById("filtroTodos").classList.remove("ativo");
+
+  mostrarLista();
+});
+
+document.getElementById("botaoAtualizar").addEventListener("click", carregarPagamentos);
+
+supabaseClient.auth.onAuthStateChange((evento, sessao) => {
+  if (evento === "SIGNED_IN" && sessao?.user) {
+    iniciarPagina();
+  }
+
+  if (evento === "SIGNED_OUT") {
+    areaPagamentos.style.display = "none";
+    areaLogin.style.display = "block";
+    pagamentos = [];
+  }
+});
+
+iniciarPagina();
+</script>
+
+</body>
+</html>
