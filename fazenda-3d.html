@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#173d29">
+<title>Fazenda Santa Luzia 3D</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#9bc8e8;font-family:Arial,sans-serif;touch-action:none}
+#game{position:fixed;inset:0}
+canvas{display:block;width:100%;height:100%}
+#hud{position:fixed;inset:0;pointer-events:none;color:white;text-shadow:0 2px 4px #17251d}
+#brand{position:absolute;top:14px;left:14px;padding:10px 13px;border:1px solid #ffffff66;border-radius:12px;background:#123a28cc;font-weight:800;letter-spacing:.6px}
+#brand small{display:block;font-size:10px;font-weight:600;letter-spacing:1.5px;color:#d8eadb;margin-top:3px}
+#hint{position:absolute;top:14px;right:14px;max-width:210px;padding:9px 12px;border-radius:12px;background:#123a28b8;font-size:12px;line-height:1.4;text-align:right}
+#crosshair{position:absolute;left:50%;top:50%;width:8px;height:8px;border:1px solid #ffffffbb;border-radius:50%;transform:translate(-50%,-50%);opacity:.8}
+#welcome{position:absolute;left:50%;top:22%;transform:translateX(-50%);text-align:center;width:min(90%,520px);padding:18px 20px;border-radius:18px;background:#102f22d9;border:1px solid #ffffff55}
+#welcome h1{margin:0 0 7px;font-size:clamp(21px,5vw,34px);letter-spacing:1px}
+#welcome p{margin:0 0 14px;font-size:13px;line-height:1.45;color:#e3eee4}
+#start{pointer-events:auto;border:0;border-radius:999px;padding:12px 22px;background:#d62f32;color:#fff;font-weight:800;font-size:14px}
+#controls{position:absolute;bottom:18px;left:18px;width:116px;height:116px;border-radius:50%;background:#102f2270;border:1px solid #ffffff66;pointer-events:auto;display:none}
+#stick{position:absolute;left:35px;top:35px;width:46px;height:46px;border-radius:50%;background:#ffffffa8;border:2px solid white;box-shadow:0 2px 8px #0005}
+#looktip{position:absolute;bottom:22px;right:18px;padding:10px 13px;border-radius:12px;background:#102f2270;font-size:11px;display:none}
+#footer{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:10px;white-space:nowrap;color:#f2f6efaa}
+@media (pointer:coarse){
+#controls{display:block}
+#looktip{display:block}
+#hint{max-width:150px;font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div id="game"></div>
+
+<div id="hud">
+  <div id="brand">
+    🍅 FAZENDA SANTA LUZIA
+    <small>EXPLORAÇÃO 3D • PROTÓTIPO 01</small>
+  </div>
+
+  <div id="hint">
+    Explore a fazenda livremente<br>
+    Olhe ao redor e caminhe
+  </div>
+
+  <div id="crosshair"></div>
+
+  <div id="welcome">
+    <h1>FAZENDA SANTA LUZIA</h1>
+    <p>
+      Bem-vindo! Explore a entrada, a sede, o barracão e as plantações.<br>
+      Esta é a primeira versão jogável da nossa fazenda.
+    </p>
+    <button id="start">ENTRAR NA FAZENDA</button>
+  </div>
+
+  <div id="controls"><div id="stick"></div></div>
+  <div id="looktip">Arraste a tela para olhar ao redor</div>
+  <div id="footer">SANTA LUZIA TOMATES • UM SONHO QUE CONTINUA CRESCENDO</div>
+</div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const host = document.getElementById('game');
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0x9bc8e8);
+scene.fog = new THREE.Fog(0x9bc8e8, 55, 155);
+
+const camera = new THREE.PerspectiveCamera(
+  72, innerWidth/innerHeight, 0.1, 220
+);
+
+camera.position.set(0, 1.7, 24);
+camera.rotation.order = 'YXZ';
+
+const renderer = new THREE.WebGLRenderer({
+  antialias:true,
+  powerPreference:'high-performance'
+});
+
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+host.appendChild(renderer.domElement);
+
+scene.add(new THREE.HemisphereLight(0xe6f4ff, 0x66734a, 2.0));
+
+const sun = new THREE.DirectionalLight(0xfff2d7, 2.1);
+sun.position.set(-35, 55, 25);
+sun.castShadow = true;
+sun.shadow.mapSize.set(1024,1024);
+sun.shadow.camera.left=-65;
+sun.shadow.camera.right=65;
+sun.shadow.camera.top=65;
+sun.shadow.camera.bottom=-65;
+scene.add(sun);
+
+const mat=(color,roughness=1)=>
+  new THREE.MeshStandardMaterial({color,roughness});
+
+const grass=mat(0x5d963e);
+const darkGrass=mat(0x477b34);
+const dirt=mat(0x9b7047);
+const road=mat(0x85613f);
+const wood=mat(0x75452d);
+const red=mat(0xb72d2d);
+const roof=mat(0x3c4140);
+const cream=mat(0xe8dfc7);
+const green=mat(0x2f6936);
+const leaf=mat(0x347b37);
+const tomato=mat(0xd82c27);
+const potato=mat(0x9b7447);
+const metal=mat(0x48545a);
+const tire=mat(0x202326);
+
+const glass=new THREE.MeshStandardMaterial({
+  color:0x9bc8d0,
+  metalness:.2,
+  roughness:.25
+});
+
+const ground=new THREE.Mesh(
+  new THREE.PlaneGeometry(220,220),
+  grass
+);
+
+ground.rotation.x=-Math.PI/2;
+ground.position.y=-.08;
+ground.receiveShadow=true;
+scene.add(ground);
+
+function box(parent,x,y,z,w,h,d,material,cast=true){
+  const m=new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),
+    material
+  );
+  m.position.set(x,y,z);
+  m.castShadow=cast;
+  m.receiveShadow=true;
+  parent.add(m);
+  return m;
+}
+
+function building(x,z,w,d,wallMat,roofMat,roofHeight=2.3){
+  box(scene,x,1.6,z,w,3.2,d,wallMat);
+
+  const a=box(
+    scene,x-w*.25,3.35,z,
+    w*.58,.22,d+0.5,roofMat
+  );
+  a.rotation.z=-.48;
+
+  const b=box(
+    scene,x+w*.25,3.35,z,
+    w*.58,.22,d+0.5,roofMat
+  );
+  b.rotation.z=.48;
+
+  box(scene,x,1.05,z-d/2-.035,w*.22,2.1,.08,wood);
+
+  box(
+    scene,x-w*.28,1.35,z-d/2-.05,
+    .85,1.25,.09,glass
+  );
+
+  box(
+    scene,x+w*.28,1.35,z-d/2-.05,
+    .85,1.25,.09,glass
+  );
+}
+
+// SEDE DA FAZENDA
+building(-16,-13,13,10,cream,red,2.2);
+
+box(scene,-16,3.45,-7.7,3.3,.55,.18,wood);
+
+// PLACA DA FAZENDA
+function signTexture(line1,line2){
+  const c=document.createElement('canvas');
+  c.width=1024;
+  c.height=256;
+
+  const ctx=c.getContext('2d');
+
+  ctx.fillStyle='#173d29';
+  ctx.fillRect(0,0,1024,256);
+
+  ctx.strokeStyle='#e8e2c9';
+  ctx.lineWidth=12;
+  ctx.strokeRect(12,12,1000,232);
+
+  ctx.fillStyle='#fff7e7';
+  ctx.textAlign='center';
+  ctx.font='bold 76px Arial';
+  ctx.fillText(line1,512,112);
+
+  ctx.fillStyle='#d7e9d7';
+  ctx.font='bold 38px Arial';
+  ctx.fillText(line2,512,178);
+
+  const t=new THREE.CanvasTexture(c);
+  t.colorSpace=THREE.SRGBColorSpace;
+  return t;
+}
+
+function sign(x,y,z,w,h,l1,l2){
+  const board=box(scene,x,y,z,w,h,.28,wood);
+
+  const front=new THREE.Mesh(
+    new THREE.PlaneGeometry(w-.3,h-.3),
+    new THREE.MeshBasicMaterial({
+      map:signTexture(l1,l2)
+    })
+  );
+
+  front.position.set(x,y,z-.151);
+  scene.add(front);
+
+  box(scene,x-w*.42,y-h*.95,z,.25,h*1.8,.25,wood);
+  box(scene,x+w*.42,y-h*.95,z,.25,h*1.8,.25,wood);
+
+  return board;
+}
+
+sign(
+  0,3.7,7,11,2.2,
+  'FAZENDA SANTA LUZIA',
+  'TOMATES • BATATAS • TRANSPORTE'
+);
+
+// ESTRADA DE ENTRADA
+const entry=new THREE.Mesh(
+  new THREE.PlaneGeometry(9,75),
+  road
+);
+
+entry.rotation.x=-Math.PI/2;
+entry.position.set(0,.005,35);
+entry.receiveShadow=true;
+scene.add(entry);
+
+for(let z=2;z<72;z+=7){
+  box(scene,-4.35,.02,z,.12,.03,1.1,cream,false);
+  box(scene,4.35,.02,z,.12,.03,1.1,cream,false);
+}
+
+// BARRACÃO
+building(17,-13,17,13,red,roof,2.8);
+
+for(let i=-1;i<=1;i++){
+  box(scene,17+i*4.5,1.25,-19.58,3.5,2.5,.15,wood);
+}
+
+// ÁREA DE CARREGAMENTO
+box(scene,17,.35,-4,20,.7,4,road);
+
+for(let i=0;i<4;i++){
+  box(scene,9+i*5.3,.5,-1.8,4,.1,1.2,cream);
+}
+
+// SILOS
+function silo(x,z){
+  const cyl=new THREE.Mesh(
+    new THREE.CylinderGeometry(2,2,7,20),
+    mat(0xb9c2bd,.65)
+  );
+
+  cyl.position.set(x,3.5,z);
+  cyl.castShadow=true;
+  scene.add(cyl);
+
+  const cone=new THREE.Mesh(
+    new THREE.ConeGeometry(2.2,1.7,20),
+    roof
+  );
+
+  cone.position.set(x,7.85,z);
+  scene.add(cone);
+}
+
+silo(29,-24);
+silo(35,-24);
+
+// PLANTAÇÕES
+function cropField(cx,cz,rows,cols,spacingX,spacingZ,type){
+  const width=cols*spacingX+2;
+  const depth=rows*spacingZ+2;
+
+  const patch=new THREE.Mesh(
+    new THREE.PlaneGeometry(width,depth),
+    dirt
+  );
+
+  patch.rotation.x=-Math.PI/2;
+  patch.position.set(cx,.015,cz);
+  scene.add(patch);
+
+  for(let r=0;r<rows;r++){
+    const z=cz-depth/2+1.2+r*spacingZ;
+
+    for(let c=0;c<cols;c++){
+      const x=cx-width/2+1.2+c*spacingX;
+
+      if(type==='tomato'){
+
+        box(scene,x,.45,z,.12,.85,.12,green,false);
+
+        for(let k=0;k<4;k++){
+          const fruit=new THREE.Mesh(
+            new THREE.SphereGeometry(.19,10,8),
+            tomato
+          );
+
+          fruit.position.set(
+            x+(k%2)*.2-.1,
+            .48+Math.floor(k/2)*.2,
+            z+.12
+          );
+
+          fruit.castShadow=true;
+          scene.add(fruit);
+        }
+
+        const leaves=new THREE.Mesh(
+          new THREE.SphereGeometry(.42,8,6),
+          leaf
+        );
+
+        leaves.scale.set(1,.35,.65);
+        leaves.position.set(x,.86,z);
+        scene.add(leaves);
+
+      }else{
+
+        const mound=new THREE.Mesh(
+          new THREE.SphereGeometry(.48,10,7),
+          potato
+        );
+
+        mound.scale.set(1,.3,.55);
+        mound.position.set(x,.18,z);
+        scene.add(mound);
+
+        const top=new THREE.Mesh(
+          new THREE.SphereGeometry(.34,8,6),
+          leaf
+        );
+
+        top.scale.set(1,.65,1);
+        top.position.set(x,.48,z);
+        scene.add(top);
+      }
+    }
+  }
+}
+
+cropField(-29,13,8,7,1.8,2.1,'tomato');
+cropField(29,17,8,7,1.8,2.1,'potato');
+cropField(-28,-19,6,7,1.8,2,'potato');
+
+// CERCAS
+for(let x=-47;x<=-9;x+=3){
+  box(scene,x,.55,2,.14,1.1,.14,wood);
+  box(scene,x,.55,24,.14,1.1,.14,wood);
+}
+
+for(let z=2;z<=24;z+=3){
+  box(scene,-47,.55,z,.14,1.1,.14,wood);
+  box(scene,-9,.55,z,.14,1.1,.14,wood);
+}
+
+for(const z of [0.25,0.85,22.25,22.85]){
+  box(scene,-28,.45,z,38,.12,.12,cream,false);
+}
+
+// ÁRVORES
+function tree(x,z,s=1){
+  const trunk=new THREE.Mesh(
+    new THREE.CylinderGeometry(.22*s,.32*s,2.2*s,8),
+    wood
+  );
+
+  trunk.position.set(x,1.1*s,z);
+  trunk.castShadow=true;
+  scene.add(trunk);
+
+  for(let i=0;i<3;i++){
+    const crown=new THREE.Mesh(
+      new THREE.SphereGeometry(1.25*s,10,8),
+      i%2?darkGrass:green
+    );
+
+    crown.position.set(
+      x+(i-1)*.55*s,
+      2.5*s+(i===1?.55*s:0),
+      z
+    );
+
+    crown.castShadow=true;
+    scene.add(crown);
+  }
+}
+
+for(let i=0;i<38;i++){
+  const x=(Math.sin(i*12.34)*.5+.5)*130-65;
+  const z=(Math.cos(i*7.7)*.5+.5)*130-65;
+
+  if(Math.abs(x)>7&&Math.abs(z)>7){
+    tree(x,z,.8+(i%4)*.12);
+  }
+}
+
+// CAMINHÕES E TRATOR
+function vehicle(x,z,color,isTruck=false){
+  const g=new THREE.Group();
+  g.position.set(x,0,z);
+
+  const bodyMat=mat(color,.65);
+
+  box(
+    g,0,.95,0,
+    isTruck?5.2:2.8,
+    .85,
+    isTruck?2.1:1.7,
+    bodyMat
+  );
+
+  if(isTruck){
+
+    box(g,-.9,1.9,.05,2.3,1.25,1.95,bodyMat);
+    box(g,-.9,2,.99,1.55,.8,.04,glass);
+    box(g,1.7,1.75,0,1.5,1.1,1.95,cream);
+
+  }else{
+
+    box(g,-.1,1.8,0,1.5,1.1,1.45,glass);
+    box(g,1.15,.9,0,1.4,.45,1.6,metal);
+  }
+
+  const wheelX=isTruck?[-1.7,1.5]:[-.9,1];
+
+  for(const wx of wheelX){
+    for(const wz of [-.95,.95]){
+      const w=new THREE.Mesh(
+        new THREE.CylinderGeometry(.48,.48,.25,16),
+        tire
+      );
+
+      w.rotation.x=Math.PI/2;
+      w.position.set(wx,.48,wz);
+      w.castShadow=true;
+      g.add(w);
+    }
+  }
+
+  scene.add(g);
+  return g;
+}
+
+vehicle(8,-28,0xb72d2d,true);
+vehicle(20,-28,0x315d38,false);
+vehicle(-3,-29,0x315d38,true);
+
+// CAMINHOS INTERNOS
+const path=new THREE.Mesh(
+  new THREE.PlaneGeometry(42,5),
+  dirt
+);
+
+path.rotation.x=-Math.PI/2;
+path.position.set(0,.012,-3);
+scene.add(path);
+
+const path2=new THREE.Mesh(
+  new THREE.PlaneGeometry(5,35),
+  dirt
+);
+
+path2.rotation.x=-Math.PI/2;
+path2.position.set(0,.013,-18);
+scene.add(path2);
+
+// MÃOS DO PERSONAGEM
+const hands=new THREE.Group();
+camera.add(hands);
+scene.add(camera);
+
+const sleeve=mat(0x244f37);
+const skin=mat(0xd9a47d);
+
+function hand(x,y,z,flip){
+
+  const arm=new THREE.Mesh(
+    new THREE.CylinderGeometry(.105,.13,.65,10),
+    sleeve
+  );
+
+  arm.rotation.z=flip?-.25:.25;
+  arm.position.set(x,y,z);
+  hands.add(arm);
+
+  const palm=new THREE.Mesh(
+    new THREE.BoxGeometry(.22,.17,.2),
+    skin
+  );
+
+  palm.position.set(
+    x+(flip?-.03:.03),
+    y+.34,
+    z-.02
+  );
+
+  hands.add(palm);
+
+  for(let i=0;i<4;i++){
+    const f=new THREE.Mesh(
+      new THREE.CylinderGeometry(.035,.04,.15,7),
+      skin
+    );
+
+    f.position.set(
+      x+(i-1.5)*.055+(flip?-.03:.03),
+      y+.22,
+      z-.1
+    );
+
+    f.rotation.x=-.35;
+    hands.add(f);
+  }
+}
+
+hand(-.38,-.62,-1.05,false);
+hand(.38,-.62,-1.05,true);
+
+hands.visible=false;
+
+// MOVIMENTAÇÃO
+let yaw=0;
+let pitch=0;
+let started=false;
+
+const keys={};
+
+addEventListener('keydown',e=>{
+  keys[e.code]=true;
+
+  if([
+    'Space','ArrowUp','ArrowDown',
+    'ArrowLeft','ArrowRight'
+  ].includes(e.code)){
+    e.preventDefault();
+  }
+});
+
+addEventListener('keyup',e=>keys[e.code]=false);
+
+let joy={x:0,y:0};
+let dragLook=false;
+let lastX=0;
+let lastY=0;
+
+const controls=document.getElementById('controls');
+const stick=document.getElementById('stick');
+
+let joyId=null;
+
+controls.addEventListener('pointerdown',e=>{
+  joyId=e.pointerId;
+  controls.setPointerCapture(joyId);
+  updateJoy(e);
+});
+
+controls.addEventListener('pointermove',e=>{
+  if(e.pointerId===joyId)updateJoy(e);
+});
+
+function updateJoy(e){
+  const r=controls.getBoundingClientRect();
+
+  let dx=e.clientX-(r.left+r.width/2);
+  let dy=e.clientY-(r.top+r.height/2);
+
+  const len=Math.hypot(dx,dy);
+  const max=36;
+
+  if(len>max){
+    dx=dx/len*max;
+    dy=dy/len*max;
+  }
+
+  joy.x=dx/max;
+  joy.y=dy/max;
+
+  stick.style.transform=`translate(${dx}px,${dy}px)`;
+}
+
+function resetJoy(){
+  joy={x:0,y:0};
+  joyId=null;
+  stick.style.transform='translate(0,0)';
+}
+
+controls.addEventListener('pointerup',resetJoy);
+controls.addEventListener('pointercancel',resetJoy);
+
+// OLHAR AO REDOR
+renderer.domElement.addEventListener('pointerdown',e=>{
+  if(!started)return;
+
+  dragLook=true;
+  lastX=e.clientX;
+  lastY=e.clientY;
+
+  renderer.domElement.setPointerCapture(e.pointerId);
+});
+
+renderer.domElement.addEventListener('pointermove',e=>{
+  if(!dragLook)return;
+
+  const dx=e.clientX-lastX;
+  const dy=e.clientY-lastY;
+
+  lastX=e.clientX;
+  lastY=e.clientY;
+
+  yaw-=dx*.004;
+
+  pitch=Math.max(
+    -1.15,
+    Math.min(1.15,pitch-dy*.004)
+  );
+});
+
+renderer.domElement.addEventListener('pointerup',()=>{
+  dragLook=false;
+});
+
+// ENTRAR NA FAZENDA
+document.getElementById('start').addEventListener('click',()=>{
+  started=true;
+
+  document.getElementById('welcome').style.display='none';
+
+  hands.visible=true;
+
+  if(matchMedia('(pointer:fine)').matches){
+    renderer.domElement.requestPointerLock?.();
+  }
+});
+
+document.addEventListener('mousemove',e=>{
+  if(
+    document.pointerLockElement===renderer.domElement
+    && started
+  ){
+    yaw-=e.movementX*.0025;
+
+    pitch=Math.max(
+      -1.1,
+      Math.min(1.1,pitch-e.movementY*.0025)
+    );
+  }
+});
+
+document.addEventListener('pointerlockchange',()=>{});
+
+// LOOP DO JOGO
+function animate(){
+
+  requestAnimationFrame(animate);
+
+  if(started){
+
+    camera.rotation.set(pitch,yaw,0);
+
+    const forward=new THREE.Vector3(
+      -Math.sin(yaw),0,-Math.cos(yaw)
+    );
+
+    const right=new THREE.Vector3(
+      Math.cos(yaw),0,-Math.sin(yaw)
+    );
+
+    let move=new THREE.Vector3();
+
+    if(keys.KeyW||keys.ArrowUp)move.add(forward);
+    if(keys.KeyS||keys.ArrowDown)move.sub(forward);
+    if(keys.KeyD||keys.ArrowRight)move.add(right);
+    if(keys.KeyA||keys.ArrowLeft)move.sub(right);
+
+    move.addScaledVector(forward,-joy.y);
+    move.addScaledVector(right,joy.x);
+
+    if(move.lengthSq()>0){
+      move.normalize();
+      camera.position.addScaledVector(move,0.105);
+    }
+
+    camera.position.x=THREE.MathUtils.clamp(
+      camera.position.x,-58,58
+    );
+
+    camera.position.z=THREE.MathUtils.clamp(
+      camera.position.z,-58,68
+    );
+
+    camera.position.y=1.7;
+
+    hands.position.y=Math.sin(performance.now()*.006)*.008;
+  }
+
+  renderer.render(scene,camera);
+}
+
+animate();
+
+// AJUSTE DE TELA
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(innerWidth,innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+});
+
+</script>
+</body>
+</html>
