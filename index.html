@@ -581,6 +581,36 @@ body {
   gap: 10px;
 }
 
+/* CNH EM DESTAQUE */
+
+.mini-grade-unica {
+  grid-template-columns: 1fr;
+}
+
+.mini-grade-unica .mini-botao {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-align: left;
+  padding: 15px;
+}
+
+.mini-grade-unica .mini-icone {
+  margin: 0;
+  font-size: 27px;
+  flex-shrink: 0;
+}
+
+.mini-grade-unica .mini-botao strong {
+  margin: 0;
+}
+
+.mini-grade-unica .mini-botao span {
+  margin-left: auto;
+  text-align: right;
+  max-width: 48%;
+}
+
 .mini-botao {
   background: #f7f9f6;
   border: 1px solid var(--borda);
@@ -866,6 +896,14 @@ body {
     padding: 9px 8px;
     font-size: 10px;
   }
+
+  .mini-grade-unica .mini-botao {
+    align-items: flex-start;
+  }
+
+  .mini-grade-unica .mini-botao span {
+    max-width: 45%;
+  }
 }
 </style>
 </head>
@@ -874,7 +912,7 @@ body {
 
 <header class="cabecalho">
 
-  <a href="perfil.html" class="stacoin-topo" id="stacoinTopo">
+  <a href="loja.html" class="stacoin-topo" id="stacoinTopo">
     <div class="stacoin-moeda">
       <img src="stacoin.png" alt="STACOIN" class="stacoin-imagem">
     </div>
@@ -1029,33 +1067,21 @@ body {
 
     <div class="espaco-cabecalho">
 
-      <div class="espaco-icone">👤</div>
+      <div class="espaco-icone">🚛</div>
 
       <div class="espaco-texto">
         <h2>Área do Motorista</h2>
-        <p>Seus documentos, perfil e identificação.</p>
+        <p>Consulte sua habilitação interna na empresa.</p>
       </div>
 
     </div>
 
-    <div class="mini-grade">
-
-      <a href="santaluziaid.html" class="mini-botao">
-        <div class="mini-icone">🪪</div>
-        <strong>Santa Luzia ID</strong>
-        <span>Identificação oficial</span>
-      </a>
-
-      <a href="perfil.html" class="mini-botao">
-        <div class="mini-icone">👤</div>
-        <strong>Meu Perfil</strong>
-        <span>Dados e STACOIN</span>
-      </a>
+    <div class="mini-grade mini-grade-unica">
 
       <a href="cnh.html" class="mini-botao">
         <div class="mini-icone">🚛</div>
         <strong>Minha CNH</strong>
-        <span>Habilitação interna</span>
+        <span>Habilitação, categoria e nível na Santa Luzia</span>
       </a>
 
     </div>
@@ -1072,8 +1098,8 @@ body {
     <a href="salarios.html" class="card-principal destaque">
       <div class="icone-grande">💰</div>
       <h3>MEU SALÁRIO</h3>
-      <p>Consulte seus pagamentos, valores recebidos e pendências.</p>
-      <span class="badge">ACESSAR SALÁRIOS →</span>
+      <p>Acompanhe os pagamentos recebidos pela sua participação nas salas.</p>
+      <span class="badge">CONSULTAR PAGAMENTOS →</span>
     </a>
 
     <a href="loja.html" class="card-principal stacoin-card destaque">
