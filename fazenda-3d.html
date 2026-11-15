@@ -5,13 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#173d29">
-<title>Fazenda Santa Luzia 3D • Versão 3.0</title>
+<title>Fazenda Santa Luzia 3D • Versão 4.0</title>
 
 <style>
 *{box-sizing:border-box}
 html,body{
   margin:0;width:100%;height:100%;overflow:hidden;
-  background:#9bc8e8;font-family:Arial,sans-serif;
+  background:#91c5e8;font-family:Arial,sans-serif;
   touch-action:none
 }
 #game{position:fixed;inset:0}
@@ -22,90 +22,99 @@ canvas{display:block;width:100%;height:100%}
 }
 #brand{
   position:absolute;top:12px;left:12px;
-  padding:9px 12px;border:1px solid #ffffff66;
-  border-radius:12px;background:#123a28dc;
-  font-weight:800;letter-spacing:.5px;font-size:13px
+  padding:10px 13px;border:1px solid #ffffff66;
+  border-radius:12px;background:#123a28e8;
+  font-weight:800;font-size:13px;letter-spacing:.4px
 }
 #brand small{
   display:block;font-size:9px;font-weight:600;
-  letter-spacing:1.3px;color:#d8eadb;margin-top:3px
+  letter-spacing:1.2px;color:#d8eadb;margin-top:4px
 }
 #hint{
   position:absolute;top:12px;right:12px;
-  max-width:190px;padding:9px 11px;
-  border-radius:12px;background:#123a28c9;
-  font-size:11px;line-height:1.4;text-align:right
+  max-width:190px;padding:10px 12px;
+  border-radius:12px;background:#123a28d9;
+  font-size:11px;line-height:1.5;text-align:right
 }
 #crosshair{
   position:absolute;left:50%;top:50%;
-  width:8px;height:8px;border:1px solid #ffffffbb;
+  width:9px;height:9px;border:1px solid #ffffffcc;
   border-radius:50%;transform:translate(-50%,-50%);
-  opacity:.8
+  opacity:.85
 }
 #welcome{
   position:absolute;left:50%;top:50%;
   transform:translate(-50%,-50%);
-  text-align:center;width:min(90%,500px);
-  padding:22px;border-radius:18px;
-  background:#102f22ed;border:1px solid #ffffff55;
-  box-shadow:0 10px 35px #0005;pointer-events:auto
+  text-align:center;width:min(91%,480px);
+  padding:24px;border-radius:20px;
+  background:#102f22f2;border:1px solid #ffffff55;
+  box-shadow:0 12px 40px #0006;pointer-events:auto
 }
-#welcome h1{margin:0 0 8px;font-size:clamp(22px,5vw,34px)}
+#welcome h1{margin:0 0 9px;font-size:clamp(22px,5vw,34px)}
 #welcome p{
-  margin:0 0 16px;font-size:13px;
-  line-height:1.5;color:#e3eee4
+  margin:0 0 18px;font-size:13px;
+  line-height:1.6;color:#e3eee4
 }
-#start,#harvest{
+#start,#action{
   pointer-events:auto;border:0;border-radius:999px;
-  padding:13px 22px;background:#d62f32;color:white;
-  font-weight:800;font-size:13px;box-shadow:0 4px 12px #0004
+  padding:14px 23px;background:#c92f32;color:white;
+  font-weight:800;font-size:13px;
+  box-shadow:0 4px 12px #0004
 }
 #controls{
   position:absolute;bottom:18px;left:18px;
   width:116px;height:116px;border-radius:50%;
-  background:#102f2270;border:1px solid #ffffff66;
+  background:#102f2277;border:1px solid #ffffff66;
   pointer-events:auto;display:none;touch-action:none
 }
 #stick{
   position:absolute;left:35px;top:35px;
   width:46px;height:46px;border-radius:50%;
-  background:#ffffffa8;border:2px solid white;
+  background:#ffffffb5;border:2px solid white;
   box-shadow:0 2px 8px #0005
 }
 #looktip{
   position:absolute;bottom:22px;right:15px;
   padding:9px 12px;border-radius:12px;
-  background:#102f2270;font-size:10px;display:none
+  background:#102f2277;font-size:10px;display:none
 }
-#harvest{
+#action{
   display:none;position:absolute;right:18px;bottom:85px;
-  background:#d62f32;padding:13px 18px
+  padding:14px 18px;min-width:125px
 }
 #stats{
-  position:absolute;left:50%;top:75px;
+  position:absolute;left:50%;top:78px;
   transform:translateX(-50%);
-  padding:8px 13px;border-radius:12px;
-  background:#123a28d9;font-size:12px;
+  padding:9px 14px;border-radius:12px;
+  background:#123a28e8;font-size:12px;
   font-weight:700;white-space:nowrap;display:none
+}
+#mission{
+  position:absolute;left:50%;top:119px;
+  transform:translateX(-50%);
+  padding:8px 12px;border-radius:10px;
+  background:#123a28c9;font-size:10px;
+  white-space:nowrap;display:none
 }
 #message{
   position:absolute;left:50%;bottom:155px;
   transform:translateX(-50%);
-  padding:10px 14px;border-radius:10px;
-  background:#123a28e8;font-size:12px;
-  text-align:center;display:none;max-width:85%
+  padding:11px 15px;border-radius:11px;
+  background:#123a28ed;font-size:12px;
+  text-align:center;display:none;max-width:88%
 }
 #footer{
-  position:absolute;bottom:10px;left:50%;
+  position:absolute;bottom:9px;left:50%;
   transform:translateX(-50%);font-size:9px;
-  white-space:nowrap;color:#f2f6efaa
+  white-space:nowrap;color:#f2f6efbb
 }
 @media(pointer:coarse){
   #controls{display:block}
   #looktip{display:block}
-  #hint{max-width:140px;font-size:9px}
-  #harvest{bottom:155px;right:18px}
+  #hint{max-width:145px;font-size:9px}
+  #action{bottom:155px;right:18px}
   #message{bottom:215px}
+  #mission{top:125px;font-size:9px}
 }
 </style>
 </head>
@@ -121,26 +130,27 @@ canvas{display:block;width:100%;height:100%}
 
   <div id="hint">
     Explore a propriedade<br>
-    Caminhe até as plantações<br>
-    Use E para colher
+    Encontre as plantações<br>
+    Aproxime-se para interagir
   </div>
 
   <div id="crosshair"></div>
   <div id="stats">🍅 0 tomates &nbsp; 🥔 0 batatas</div>
+  <div id="mission">MISSÃO: COLHA 5 TOMATES E 5 BATATAS</div>
   <div id="message"></div>
 
   <div id="welcome">
     <h1>FAZENDA SANTA LUZIA</h1>
     <p>
-      Nossa propriedade está crescendo!<br>
-      Explore a sede, o barracão, os veículos e as plantações.
-      Agora você também pode colher.
+      Bem-vindo à nossa propriedade!<br>
+      Explore a sede, o barracão, a oficina e as plantações.
+      Nesta versão, você poderá colher os produtos e cumprir sua primeira missão.
     </p>
     <button id="start">ENTRAR NA FAZENDA</button>
   </div>
 
   <div id="controls"><div id="stick"></div></div>
-  <button id="harvest">🌱 COLHER</button>
+  <button id="action">🌱 COLHER</button>
   <div id="looktip">Arraste a tela para olhar</div>
   <div id="footer">SANTA LUZIA TOMATES • UM SONHO QUE CONTINUA CRESCENDO</div>
 </div>
@@ -148,18 +158,18 @@ canvas{display:block;width:100%;height:100%}
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-/* =====================================
-   CONFIGURAÇÃO E DESEMPENHO
-===================================== */
+/* =========================================
+   1. CONFIGURAÇÃO
+========================================= */
 
 const host=document.getElementById('game');
 const scene=new THREE.Scene();
 
 scene.background=new THREE.Color(0x91c5e8);
-scene.fog=new THREE.Fog(0x91c5e8,75,190);
+scene.fog=new THREE.Fog(0x91c5e8,85,210);
 
 const camera=new THREE.PerspectiveCamera(
-  72,innerWidth/innerHeight,.1,260
+  72,innerWidth/innerHeight,.1,280
 );
 camera.position.set(0,1.7,24);
 camera.rotation.order='YXZ';
@@ -168,6 +178,7 @@ const renderer=new THREE.WebGLRenderer({
   antialias:innerWidth>700,
   powerPreference:'high-performance'
 });
+
 renderer.setSize(innerWidth,innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.35));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -177,9 +188,9 @@ renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 host.appendChild(renderer.domElement);
 
-/* =====================================
-   ILUMINAÇÃO
-===================================== */
+/* =========================================
+   2. ILUMINAÇÃO
+========================================= */
 
 scene.add(new THREE.HemisphereLight(0xe8f5ff,0x617747,2));
 
@@ -194,49 +205,51 @@ sun.shadow.camera.bottom=-65;
 sun.shadow.bias=-.0003;
 scene.add(sun);
 
-/* =====================================
-   MATERIAIS
-===================================== */
+/* =========================================
+   3. MATERIAIS
+========================================= */
 
-function material(color,roughness=1){
+function mat(color,roughness=1){
   return new THREE.MeshStandardMaterial({color,roughness});
 }
 
-const grass=material(0x659b43);
-const darkGrass=material(0x477b34);
-const dirt=material(0x987047);
-const road=material(0x85613f);
-const wood=material(0x75452d);
-const red=material(0xb72d2d);
-const roof=material(0x343b3a);
-const cream=material(0xe8dfc7);
-const green=material(0x2f6936);
-const leaf=material(0x347b37);
-const tomato=material(0xd82c27);
-const potato=material(0x9b7447);
-const metal=material(0x48545a);
-const tire=material(0x202326);
-const white=material(0xf2eee3);
+const grass=mat(0x659b43);
+const darkGrass=mat(0x477b34);
+const dirt=mat(0x987047);
+const road=mat(0x85613f);
+const wood=mat(0x75452d);
+const red=mat(0xb72d2d);
+const roof=mat(0x343b3a);
+const cream=mat(0xe8dfc7);
+const green=mat(0x2f6936);
+const leaf=mat(0x347b37);
+const tomato=mat(0xd82c27);
+const potato=mat(0x9b7447);
+const metal=mat(0x48545a);
+const tire=mat(0x202326);
+const white=mat(0xf2eee3);
 const glass=new THREE.MeshStandardMaterial({
   color:0x9bc8d0,metalness:.2,roughness:.22
 });
 
-/* =====================================
-   FUNÇÕES DE CONSTRUÇÃO
-===================================== */
+/* =========================================
+   4. FUNÇÕES DE CONSTRUÇÃO
+========================================= */
 
-function box(parent,x,y,z,w,h,d,mat,cast=true){
-  const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+function box(parent,x,y,z,w,h,d,material,shadow=true){
+  const mesh=new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),material
+  );
   mesh.position.set(x,y,z);
-  mesh.castShadow=cast;
+  mesh.castShadow=shadow;
   mesh.receiveShadow=true;
   parent.add(mesh);
   return mesh;
 }
 
-function cylinder(parent,x,y,z,r,h,mat,segments=12){
+function cylinder(parent,x,y,z,r,h,material,segments=12){
   const mesh=new THREE.Mesh(
-    new THREE.CylinderGeometry(r,r,h,segments),mat
+    new THREE.CylinderGeometry(r,r,h,segments),material
   );
   mesh.position.set(x,y,z);
   mesh.castShadow=true;
@@ -245,8 +258,10 @@ function cylinder(parent,x,y,z,r,h,mat,segments=12){
   return mesh;
 }
 
-function plane(parent,x,y,z,w,d,mat){
-  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,d),mat);
+function plane(parent,x,y,z,w,d,material){
+  const mesh=new THREE.Mesh(
+    new THREE.PlaneGeometry(w,d),material
+  );
   mesh.rotation.x=-Math.PI/2;
   mesh.position.set(x,y,z);
   mesh.receiveShadow=true;
@@ -254,9 +269,9 @@ function plane(parent,x,y,z,w,d,mat){
   return mesh;
 }
 
-/* =====================================
-   TERRENO
-===================================== */
+/* =========================================
+   5. TERRENO E PAISAGEM
+========================================= */
 
 const ground=new THREE.Mesh(
   new THREE.PlaneGeometry(220,220),
@@ -267,10 +282,9 @@ ground.position.y=-.08;
 ground.receiveShadow=true;
 scene.add(ground);
 
-// Pequenas áreas de grama com variação de cor
-for(let i=0;i<34;i++){
-  const x=Math.sin(i*12.7)*75;
-  const z=Math.cos(i*8.3)*75;
+for(let i=0;i<45;i++){
+  const x=Math.sin(i*12.7)*78;
+  const z=Math.cos(i*8.3)*78;
   const patch=new THREE.Mesh(
     new THREE.CircleGeometry(2+(i%4),12),
     i%2?darkGrass:grass
@@ -280,9 +294,9 @@ for(let i=0;i<34;i++){
   scene.add(patch);
 }
 
-/* =====================================
-   COLISÕES
-===================================== */
+/* =========================================
+   6. COLISÕES
+========================================= */
 
 const obstacles=[];
 
@@ -292,86 +306,27 @@ function addObstacle(x,z,w,d){
 
 function collides(x,z){
   const radius=.48;
+
   for(const o of obstacles){
-    const nx=THREE.MathUtils.clamp(x,o.x-o.w/2,o.x+o.w/2);
-    const nz=THREE.MathUtils.clamp(z,o.z-o.d/2,o.z+o.d/2);
-    const dx=x-nx,dz=z-nz;
+    const nx=THREE.MathUtils.clamp(
+      x,o.x-o.w/2,o.x+o.w/2
+    );
+    const nz=THREE.MathUtils.clamp(
+      z,o.z-o.d/2,o.z+o.d/2
+    );
+
+    const dx=x-nx;
+    const dz=z-nz;
+
     if(dx*dx+dz*dz<radius*radius)return true;
   }
+
   return false;
 }
 
-/* =====================================
-   CONSTRUÇÕES
-===================================== */
-
-function building(x,z,w,d,wallMat,roofMat,doorMat=wood){
-  const group=new THREE.Group();
-  group.position.set(x,0,z);
-
-  box(group,0,1.6,0,w,3.2,d,wallMat);
-
-  // Telhado em duas águas
-  const a=box(group,-w*.25,3.35,0,w*.58,.22,d+.5,roofMat);
-  a.rotation.z=-.48;
-
-  const b=box(group,w*.25,3.35,0,w*.58,.22,d+.5,roofMat);
-  b.rotation.z=.48;
-
-  // Fachada voltada para a entrada
-  box(group,0,1.05,-d/2-.06,w*.22,2.1,.12,doorMat);
-
-  box(group,-w*.28,1.4,-d/2-.07,1,1.1,.12,glass);
-  box(group,w*.28,1.4,-d/2-.07,1,1.1,.12,glass);
-
-  // Molduras das janelas
-  box(group,-w*.28,1.4,-d/2-.14,1.12,.08,.08,white);
-  box(group,w*.28,1.4,-d/2-.14,1.12,.08,.08,white);
-
-  scene.add(group);
-  addObstacle(x,z,w,d);
-  return group;
-}
-
-/* =====================================
-   SEDE DA FAZENDA
-===================================== */
-
-building(-16,-13,13,10,cream,red);
-
-// Varanda
-box(scene,-16,.25,-7.4,14,.5,2,wood);
-
-for(let x=-22;x<=-10;x+=4){
-  box(scene,x,1.45,-6.6,.22,2.9,.22,cream);
-}
-
-// Degraus
-box(scene,-16,.12,-5.9,4,.24,.8,road);
-box(scene,-16,.3,-6.35,3.4,.2,.5,wood);
-
-// Letreiro da sede
-box(scene,-16,3.15,-7.78,5,.55,.15,wood);
-
-// Caminho até a casa
-plane(scene,-16,.015,-1,3,12,dirt);
-
-// Chaminé
-box(scene,-20,4,-13,1,2,1,roof);
-
-// Vasos da varanda
-for(const x of [-21,-11]){
-  cylinder(scene,x,.35,-7.5,.28,.55,red,12);
-  const plant=new THREE.Mesh(
-    new THREE.SphereGeometry(.42,8,7),leaf
-  );
-  plant.position.set(x,.8,-7.5);
-  scene.add(plant);
-}
-
-/* =====================================
-   PLACA DE ENTRADA - LOGO OFICIAL
-===================================== */
+/* =========================================
+   7. PLACA OFICIAL DA FAZENDA
+========================================= */
 
 function signTexture(){
   const canvas=document.createElement('canvas');
@@ -380,7 +335,6 @@ function signTexture(){
 
   const ctx=canvas.getContext('2d');
 
-  // Fundo da placa
   ctx.fillStyle='#173d29';
   ctx.fillRect(0,0,1200,340);
 
@@ -388,7 +342,6 @@ function signTexture(){
   ctx.lineWidth=12;
   ctx.strokeRect(9,9,1182,322);
 
-  // Texto é desenhado imediatamente
   ctx.textAlign='center';
   ctx.fillStyle='#fff7e7';
   ctx.font='bold 76px Arial';
@@ -402,7 +355,6 @@ function signTexture(){
   ctx.font='bold 27px Arial';
   ctx.fillText('TRADIÇÃO • QUALIDADE • PRODUÇÃO',720,270);
 
-  // A textura já existe antes de carregar a imagem
   const texture=new THREE.CanvasTexture(canvas);
   texture.colorSpace=THREE.SRGBColorSpace;
 
@@ -412,17 +364,16 @@ function signTexture(){
     texture.needsUpdate=true;
   };
   logo.onerror=()=>{
-    console.warn('Logo não carregada. Confira o caminho ../icon-192.PNG');
+    console.warn('Não foi possível carregar ../icon-192.PNG');
   };
 
-  // O arquivo está na raiz e o jogo está dentro da pasta jogos
+  // Jogo na pasta jogos; logo na raiz do projeto
   logo.src='../icon-192.PNG';
 
   return texture;
 }
 
 function sign(x,y,z,w,h){
-  // Estrutura de madeira
   box(scene,x,y,z,w,h,.35,wood);
 
   const front=new THREE.Mesh(
@@ -432,40 +383,37 @@ function sign(x,y,z,w,h){
       side:THREE.DoubleSide
     })
   );
+
   front.position.set(x,y,z-.19);
   scene.add(front);
 
-  // Pilares
   box(scene,x-w*.42,y-h*.95,z,.34,h*1.9,.38,wood);
   box(scene,x+w*.42,y-h*.95,z,.34,h*1.9,.38,wood);
 
-  // Bases de concreto
-  box(scene,x-w*.42,.2,z,.8,.4,.8,material(0x77766d));
-  box(scene,x+w*.42,.2,z,.8,.4,.8,material(0x77766d));
+  box(scene,x-w*.42,.2,z,.8,.4,.8,mat(0x77766d));
+  box(scene,x+w*.42,.2,z,.8,.4,.8,mat(0x77766d));
 
-  // Pequena cobertura
-  box(scene,x, y+h*.58,z,w+.6,.18,.55,roof);
+  box(scene,x,y+h*.58,z,w+.6,.18,.55,roof);
 }
 
 sign(0,3.7,7,13,2.6);
 
-/* =====================================
-   PORTÃO DA FAZENDA
-===================================== */
+/* =========================================
+   8. PORTÃO E ESTRADA DE ENTRADA
+========================================= */
 
 for(const x of [-7.5,7.5]){
   box(scene,x,1.4,12,.55,2.8,.55,wood);
   box(scene,x,2.9,12,.8,.25,.8,cream);
 }
 
-// Portão de madeira dividido em duas partes
 for(const x of [-4.7,-3.2,-1.7,1.7,3.2,4.7]){
   box(scene,x,.85,12,.12,1.7,.16,wood);
 }
+
 box(scene,-3.2,1.5,12,3.1,.14,.16,wood);
 box(scene,3.2,1.5,12,3.1,.14,.16,wood);
 
-// Estrada de entrada
 plane(scene,0,.005,35,9,85,road);
 
 for(let z=-5;z<75;z+=7){
@@ -473,63 +421,106 @@ for(let z=-5;z<75;z+=7){
   box(scene,4.55,.025,z,.13,.05,1.2,cream,false);
 }
 
-/* =====================================
-   BARRACÃO PRINCIPAL
-===================================== */
+/* =========================================
+   9. CONSTRUÇÕES
+========================================= */
+
+function building(x,z,w,d,wallMat,roofMat,doorMat=wood){
+  const group=new THREE.Group();
+  group.position.set(x,0,z);
+
+  box(group,0,1.6,0,w,3.2,d,wallMat);
+
+  const a=box(group,-w*.25,3.35,0,w*.58,.22,d+.5,roofMat);
+  a.rotation.z=-.48;
+
+  const b=box(group,w*.25,3.35,0,w*.58,.22,d+.5,roofMat);
+  b.rotation.z=.48;
+
+  box(group,0,1.05,-d/2-.06,w*.22,2.1,.12,doorMat);
+
+  box(group,-w*.28,1.4,-d/2-.07,1,1.1,.12,glass);
+  box(group,w*.28,1.4,-d/2-.07,1,1.1,.12,glass);
+
+  box(group,-w*.28,1.4,-d/2-.14,1.12,.08,.08,white);
+  box(group,w*.28,1.4,-d/2-.14,1.12,.08,.08,white);
+
+  scene.add(group);
+  addObstacle(x,z,w,d);
+
+  return group;
+}
+
+/* =========================================
+   10. SEDE DA FAZENDA
+========================================= */
+
+building(-16,-13,13,10,cream,red);
+
+box(scene,-16,.25,-7.4,14,.5,2,wood);
+
+for(let x=-22;x<=-10;x+=4){
+  box(scene,x,1.45,-6.6,.22,2.9,.22,cream);
+}
+
+box(scene,-16,.12,-5.9,4,.24,.8,road);
+box(scene,-16,.3,-6.35,3.4,.2,.5,wood);
+
+box(scene,-16,3.15,-7.78,5,.55,.15,wood);
+box(scene,-20,4,-13,1,2,1,roof);
+
+for(const x of [-21,-11]){
+  cylinder(scene,x,.35,-7.5,.28,.55,red,12);
+
+  const plant=new THREE.Mesh(
+    new THREE.SphereGeometry(.42,8,7),leaf
+  );
+  plant.position.set(x,.8,-7.5);
+  scene.add(plant);
+}
+
+plane(scene,-16,.015,-1,3,12,dirt);
+
+/* =========================================
+   11. BARRACÃO PRINCIPAL
+========================================= */
 
 building(17,-13,17,13,red,roof);
 
-// Portões do barracão
 for(let i=-1;i<=1;i++){
   box(scene,17+i*4.5,1.25,-19.58,3.5,2.5,.15,wood);
   box(scene,17+i*4.5,2.58,-19.68,3.7,.12,.18,metal);
 }
 
-// Faixa superior do barracão
 box(scene,17,3.05,-19.65,16,.25,.2,cream);
-
-// Plataforma de carregamento
 box(scene,17,.35,-4,20,.7,4,road);
 
 for(let i=0;i<4;i++){
   box(scene,9+i*5.3,.5,-1.8,4,.1,1.2,cream);
 }
 
-// Luminárias externas
-for(const x of [10,24]){
-  box(scene,x,3.2,-20,.18,.7,.18,metal);
-  const lamp=new THREE.Mesh(
-    new THREE.SphereGeometry(.18,8,8),
-    new THREE.MeshBasicMaterial({color:0xffe8a8})
-  );
-  lamp.position.set(x,2.8,-20);
-  scene.add(lamp);
-}
+/* =========================================
+   12. OFICINA
+========================================= */
 
-/* =====================================
-   OFICINA / GALPÃO MENOR
-===================================== */
+building(39,-4,10,9,mat(0x9b9b83),roof);
 
-building(39,-4,10,9,material(0x9b9b83),roof);
-
-// Porta lateral da oficina
 box(scene,39,1.1,-8.58,3,2.2,.15,metal);
 box(scene,39,2.25,-8.68,3.2,.12,.18,white);
 
-// Bancada externa
 box(scene,35,.9,-10,3,.18,1.1,wood);
 box(scene,35,.45,-10,.15,.9,.15,metal);
 box(scene,37,.45,-10,.15,.9,.15,metal);
 
-/* =====================================
-   SILOS
-===================================== */
+/* =========================================
+   13. SILOS
+========================================= */
 
 function silo(x,z){
   const group=new THREE.Group();
   group.position.set(x,0,z);
 
-  cylinder(group,0,3.5,0,2,7,material(0xb9c2bd,.65),24);
+  cylinder(group,0,3.5,0,2,7,mat(0xb9c2bd,.65),24);
 
   const cone=new THREE.Mesh(
     new THREE.ConeGeometry(2.2,1.7,24),roof
@@ -548,18 +539,20 @@ function silo(x,z){
 silo(29,-24);
 silo(35,-24);
 
-/* =====================================
-   CAIXAS E PALETES
-===================================== */
+/* =========================================
+   14. CAIXAS E PALETES
+========================================= */
 
 function crate(x,y,z,color=0x9b5e34){
   const g=new THREE.Group();
   g.position.set(x,y,z);
-  const m=material(color);
-  box(g,0,.35,0,1,.7,1,m);
+
+  box(g,0,.35,0,1,.7,1,mat(color));
+
   for(let i=-1;i<=1;i++){
     box(g,i*.3,.35,.51,.07,.7,.04,wood);
   }
+
   box(g,0,.35,-.51,1,.7,.04,wood);
   scene.add(g);
   return g;
@@ -569,17 +562,19 @@ for(let i=0;i<5;i++){
   crate(8+i*1.2,.05,-6);
   crate(8+i*1.2,.78,-6);
 }
+
 for(let i=0;i<3;i++){
   crate(26+i*1.2,.05,-5,0x9b7447);
 }
 
-/* =====================================
-   PLANTAÇÕES COM COLHEITA
-===================================== */
+/* =========================================
+   15. PLANTAÇÕES E SISTEMA DE COLHEITA
+========================================= */
 
 const fields=[];
 let tomatoCount=0;
 let potatoCount=0;
+let nearbyPlant=null;
 
 function cropField(cx,cz,rows,cols,spacingX,spacingZ,type){
   const width=cols*spacingX+2;
@@ -587,7 +582,6 @@ function cropField(cx,cz,rows,cols,spacingX,spacingZ,type){
 
   plane(scene,cx,.015,cz,width,depth,dirt);
 
-  // Caminhos entre as linhas
   for(let r=0;r<=rows;r++){
     const z=cz-depth/2+1+r*spacingZ;
     box(scene,cx,.025,z,width,.035,.12,road,false);
@@ -613,16 +607,17 @@ function cropField(cx,cz,rows,cols,spacingX,spacingZ,type){
         leaves.position.set(0,.88,0);
         plant.add(leaves);
 
-        // Tomates
         for(let k=0;k<4;k++){
           const fruit=new THREE.Mesh(
             new THREE.SphereGeometry(.17,8,7),tomato
           );
+
           fruit.position.set(
             (k%2)*.23-.11,
             .43+Math.floor(k/2)*.23,
             .15
           );
+
           fruit.castShadow=true;
           plant.add(fruit);
         }
@@ -643,14 +638,19 @@ function cropField(cx,cz,rows,cols,spacingX,spacingZ,type){
       }
 
       scene.add(plant);
-      plants.push(plant);
+
+      plants.push({
+        object:plant,
+        x,z,
+        harvested:false
+      });
     }
   }
 
   fields.push({
     x:cx,z:cz,type,plants,
-    harvested:0,
-    total:plants.length
+    total:plants.length,
+    harvested:0
   });
 }
 
@@ -658,13 +658,13 @@ cropField(-29,13,5,6,2,2.2,'tomato');
 cropField(29,17,5,6,2,2.2,'potato');
 cropField(-28,-35,4,6,2,2.1,'potato');
 
-/* =====================================
-   CERCAS
-===================================== */
+/* =========================================
+   16. CERCAS
+========================================= */
 
 function fenceLine(x1,z1,x2,z2){
   const distance=Math.hypot(x2-x1,z2-z1);
-  const count=Math.floor(distance/3);
+  const count=Math.max(1,Math.floor(distance/3));
 
   for(let i=0;i<=count;i++){
     const t=i/count;
@@ -684,15 +684,14 @@ function fenceLine(x1,z1,x2,z2){
   }
 }
 
-// Cercado da plantação de tomates
 fenceLine(-47,2,-9,2);
 fenceLine(-47,2,-47,24);
 fenceLine(-9,2,-9,24);
 fenceLine(-47,24,-9,24);
 
-/* =====================================
-   ÁRVORES
-===================================== */
+/* =========================================
+   17. ÁRVORES E ARBUSTOS
+========================================= */
 
 function tree(x,z,s=1){
   const group=new THREE.Group();
@@ -705,11 +704,13 @@ function tree(x,z,s=1){
       new THREE.SphereGeometry(1.25*s,9,7),
       i%2?darkGrass:green
     );
+
     crown.position.set(
       (i-1)*.55*s,
       2.5*s+(i===1?.55*s:0),
       0
     );
+
     crown.castShadow=true;
     group.add(crown);
   }
@@ -732,10 +733,6 @@ treePositions.forEach((p,i)=>{
   tree(p[0],p[1],.85+(i%3)*.15);
 });
 
-/* =====================================
-   ARBUSTOS
-===================================== */
-
 function bush(x,z,s=1){
   const group=new THREE.Group();
   group.position.set(x,0,z);
@@ -745,36 +742,38 @@ function bush(x,z,s=1){
       new THREE.SphereGeometry(.45*s,7,6),
       i%2?darkGrass:leaf
     );
+
     b.position.set((i-1)*.35*s,.4*s,0);
     group.add(b);
   }
+
   scene.add(group);
 }
 
 for(let i=0;i<38;i++){
   const x=Math.sin(i*14.2)*45;
   const z=Math.cos(i*8.4)*48;
+
   if(Math.abs(x)>6&&Math.abs(z)>5){
     bush(x,z,.7+(i%3)*.15);
   }
 }
 
-/* =====================================
-   TANQUE DE ÁGUA
-===================================== */
+/* =========================================
+   18. TANQUE DE ÁGUA
+========================================= */
 
 function waterTank(x,z){
   const g=new THREE.Group();
   g.position.set(x,0,z);
 
-  // Pernas de sustentação
   for(const dx of [-1,1]){
     for(const dz of [-1,1]){
       box(g,dx,2,dz,.16,4,.16,metal);
     }
   }
 
-  cylinder(g,0,4.2,0,1.7,1.6,material(0x477b9b),20);
+  cylinder(g,0,4.2,0,1.7,1.6,mat(0x477b9b),20);
   cylinder(g,0,5.05,0,1.72,.12,metal,20);
 
   const top=new THREE.Mesh(
@@ -789,15 +788,15 @@ function waterTank(x,z){
 
 waterTank(-39,-9);
 
-/* =====================================
-   CAMINHÕES E TRATOR
-===================================== */
+/* =========================================
+   19. CAMINHÕES E TRATOR
+========================================= */
 
 function vehicle(x,z,color,isTruck=false){
   const g=new THREE.Group();
   g.position.set(x,0,z);
 
-  const bodyMat=material(color,.65);
+  const bodyMat=mat(color,.65);
 
   box(g,0,.95,0,isTruck?5.2:2.8,.85,isTruck?2.1:1.7,bodyMat);
 
@@ -806,12 +805,10 @@ function vehicle(x,z,color,isTruck=false){
     box(g,-.9,2,.99,1.55,.8,.04,glass);
     box(g,1.7,1.75,0,1.5,1.1,1.95,cream);
 
-    // Faróis
     for(const side of [-.65,.65]){
       box(g,-2.55,1.05,side,.08,.25,.3,white);
     }
 
-    // Retrovisores
     box(g,-1.65,2.15,-1.15,.12,.45,.12,metal);
     box(g,-1.65,2.15,1.15,.12,.45,.12,metal);
   }else{
@@ -850,9 +847,9 @@ vehicle(8,-28,0xb72d2d,true);
 vehicle(20,-28,0x315d38,false);
 vehicle(-3,-29,0x315d38,true);
 
-/* =====================================
-   CAMINHOS INTERNOS
-===================================== */
+/* =========================================
+   20. CAMINHOS INTERNOS
+========================================= */
 
 plane(scene,0,.012,-3,42,5,dirt);
 plane(scene,0,.013,-18,5,35,dirt);
@@ -860,14 +857,15 @@ plane(scene,17,.014,-27,5,17,dirt);
 plane(scene,-28,.014,1,5,18,dirt);
 plane(scene,29,.014,4,5,18,dirt);
 
-/* =====================================
-   MORROS NO HORIZONTE
-===================================== */
+/* =========================================
+   21. MORROS E NUVENS
+========================================= */
 
 function hill(x,z,s,color){
   const h=new THREE.Mesh(
-    new THREE.SphereGeometry(1,14,10),material(color)
+    new THREE.SphereGeometry(1,14,10),mat(color)
   );
+
   h.scale.set(s*1.8,s*.65,s);
   h.position.set(x,s*.25,z);
   h.receiveShadow=true;
@@ -881,10 +879,6 @@ hill(78,-55,24,0x5e8745);
 hill(-80,20,22,0x6a934d);
 hill(80,30,25,0x608846);
 
-/* =====================================
-   NUVENS DECORATIVAS
-===================================== */
-
 const clouds=[];
 
 function cloud(x,y,z,s=1){
@@ -896,7 +890,8 @@ function cloud(x,y,z,s=1){
       new THREE.SphereGeometry(1,9,7),
       new THREE.MeshBasicMaterial({color:0xffffff})
     );
-    puff.scale.set(1.6*s, .65*s, .8*s);
+
+    puff.scale.set(1.6*s,.65*s,.8*s);
     puff.position.set((i-2)*.9*s,(i%2)*.25*s,0);
     group.add(puff);
   }
@@ -909,21 +904,22 @@ cloud(-35,35,-60,3);
 cloud(25,39,-75,3.5);
 cloud(65,32,-35,2.5);
 
-/* =====================================
-   MÃOS DO PERSONAGEM
-===================================== */
+/* =========================================
+   22. MÃOS DO PERSONAGEM
+========================================= */
 
 const hands=new THREE.Group();
 camera.add(hands);
 scene.add(camera);
 
-const sleeve=material(0x244f37);
-const skin=material(0xd9a47d);
+const sleeve=mat(0x244f37);
+const skin=mat(0xd9a47d);
 
 function hand(x,y,z,flip){
   const arm=new THREE.Mesh(
     new THREE.CylinderGeometry(.105,.13,.65,10),sleeve
   );
+
   arm.rotation.z=flip?-.25:.25;
   arm.position.set(x,y,z);
   hands.add(arm);
@@ -931,6 +927,7 @@ function hand(x,y,z,flip){
   const palm=new THREE.Mesh(
     new THREE.BoxGeometry(.22,.17,.2),skin
   );
+
   palm.position.set(x+(flip?-.03:.03),y+.34,z-.02);
   hands.add(palm);
 
@@ -938,10 +935,12 @@ function hand(x,y,z,flip){
     const finger=new THREE.Mesh(
       new THREE.CylinderGeometry(.035,.04,.15,7),skin
     );
+
     finger.position.set(
       x+(i-1.5)*.055+(flip?-.03:.03),
       y+.22,z-.1
     );
+
     finger.rotation.x=-.35;
     hands.add(finger);
   }
@@ -951,86 +950,114 @@ hand(-.38,-.62,-1.05,false);
 hand(.38,-.62,-1.05,true);
 hands.visible=false;
 
-/* =====================================
-   INTERFACE E COLHEITA
-===================================== */
+/* =========================================
+   23. INTERFACE, MENSAGENS E MISSÕES
+========================================= */
 
 const stats=document.getElementById('stats');
+const mission=document.getElementById('mission');
 const message=document.getElementById('message');
-const harvestButton=document.getElementById('harvest');
+const actionButton=document.getElementById('action');
 
 let messageTimer=null;
+let started=false;
 
 function showMessage(text){
   message.textContent=text;
   message.style.display='block';
+
   clearTimeout(messageTimer);
+
   messageTimer=setTimeout(()=>{
     message.style.display='none';
-  },2300);
+  },2400);
 }
 
 function updateStats(){
-  stats.innerHTML=`🍅 ${tomatoCount} tomates &nbsp; 🥔 ${potatoCount} batatas`;
+  stats.innerHTML=
+    `🍅 ${tomatoCount} tomates &nbsp; 🥔 ${potatoCount} batatas`;
+
+  mission.textContent=
+    `MISSÃO: ${Math.min(tomatoCount,5)}/5 TOMATES • ${Math.min(potatoCount,5)}/5 BATATAS`;
+
+  if(tomatoCount>=5&&potatoCount>=5){
+    mission.textContent='🏆 MISSÃO CONCLUÍDA! PARABÉNS!';
+  }
 }
 
-let nearbyField=null;
+/* =========================================
+   24. LOCALIZAR PLANTA PRÓXIMA
+========================================= */
 
-function findNearbyField(){
+function findNearbyPlant(){
   let closest=null;
   let best=Infinity;
 
   for(const field of fields){
-    const dx=camera.position.x-field.x;
-    const dz=camera.position.z-field.z;
-    const distance=Math.hypot(dx,dz);
+    for(const plant of field.plants){
+      if(plant.harvested)continue;
 
-    if(distance<8&&distance<best){
-      best=distance;
-      closest=field;
+      const dx=camera.position.x-plant.x;
+      const dz=camera.position.z-plant.z;
+      const distance=Math.hypot(dx,dz);
+
+      if(distance<3.2&&distance<best){
+        best=distance;
+        closest={field,plant,distance};
+      }
     }
   }
+
   return closest;
 }
 
+/* =========================================
+   25. COLHEITA
+========================================= */
+
 function harvestCrop(){
-  if(!started||!nearbyField)return;
+  if(!started)return;
 
-  const field=nearbyField;
-  const plant=field.plants.find(p=>p.visible);
-
-  if(!plant){
-    showMessage('Essa plantação já foi colhida!');
+  if(!nearbyPlant){
+    showMessage('Chegue mais perto de uma planta para colher!');
     return;
   }
 
-  plant.visible=false;
+  const {field,plant}=nearbyPlant;
+
+  plant.harvested=true;
+  plant.object.visible=false;
   field.harvested++;
 
   if(field.type==='tomato'){
     tomatoCount++;
-    showMessage('🍅 Tomate colhido! Muito bem!');
+    showMessage('🍅 Tomate colhido! Produto adicionado à produção.');
   }else{
     potatoCount++;
-    showMessage('🥔 Batata colhida! Muito bem!');
+    showMessage('🥔 Batata colhida! Produto adicionado à produção.');
   }
 
   updateStats();
+
+  if(tomatoCount>=5&&potatoCount>=5){
+    showMessage('🏆 PARABÉNS! Você concluiu sua primeira missão!');
+  }
+
+  nearbyPlant=findNearbyPlant();
 }
 
-harvestButton.addEventListener('click',harvestCrop);
+actionButton.addEventListener('click',harvestCrop);
 
 addEventListener('keydown',e=>{
   if(e.code==='KeyE')harvestCrop();
 });
 
-/* =====================================
-   MOVIMENTAÇÃO
-===================================== */
+/* =========================================
+   26. MOVIMENTAÇÃO
+========================================= */
 
 let yaw=0;
 let pitch=0;
-let started=false;
 const keys={};
 
 addEventListener('keydown',e=>{
@@ -1068,8 +1095,10 @@ controls.addEventListener('pointermove',e=>{
 
 function updateJoy(e){
   const r=controls.getBoundingClientRect();
+
   let dx=e.clientX-(r.left+r.width/2);
   let dy=e.clientY-(r.top+r.height/2);
+
   const len=Math.hypot(dx,dy);
   const max=36;
 
@@ -1080,6 +1109,7 @@ function updateJoy(e){
 
   joy.x=dx/max;
   joy.y=dy/max;
+
   stick.style.transform=`translate(${dx}px,${dy}px)`;
 }
 
@@ -1092,19 +1122,23 @@ function resetJoy(){
 controls.addEventListener('pointerup',resetJoy);
 controls.addEventListener('pointercancel',resetJoy);
 
-/* =====================================
-   OLHAR AO REDOR
-===================================== */
+/* =========================================
+   27. OLHAR AO REDOR
+========================================= */
 
 renderer.domElement.addEventListener('pointerdown',e=>{
   if(!started)return;
 
-  if(e.pointerType==='touch'&&
-     e.clientX<150&&e.clientY>innerHeight-160)return;
+  if(
+    e.pointerType==='touch'&&
+    e.clientX<150&&
+    e.clientY>innerHeight-160
+  )return;
 
   dragLook=true;
   lastX=e.clientX;
   lastY=e.clientY;
+
   renderer.domElement.setPointerCapture(e.pointerId);
 });
 
@@ -1113,6 +1147,7 @@ renderer.domElement.addEventListener('pointermove',e=>{
 
   const dx=e.clientX-lastX;
   const dy=e.clientY-lastY;
+
   lastX=e.clientX;
   lastY=e.clientY;
 
@@ -1123,35 +1158,44 @@ renderer.domElement.addEventListener('pointermove',e=>{
 renderer.domElement.addEventListener('pointerup',()=>{
   dragLook=false;
 });
+
 renderer.domElement.addEventListener('pointercancel',()=>{
   dragLook=false;
 });
 
-/* =====================================
-   ENTRAR NA FAZENDA
-===================================== */
+/* =========================================
+   28. ENTRAR NA FAZENDA
+========================================= */
 
 document.getElementById('start').addEventListener('click',()=>{
   started=true;
+
   document.getElementById('welcome').style.display='none';
+
   hands.visible=true;
   stats.style.display='block';
+  mission.style.display='block';
 
   if(matchMedia('(pointer:fine)').matches){
     renderer.domElement.requestPointerLock?.();
   }
+
+  showMessage('Bem-vindo à Fazenda Santa Luzia!');
 });
 
 document.addEventListener('mousemove',e=>{
-  if(document.pointerLockElement===renderer.domElement&&started){
+  if(
+    document.pointerLockElement===renderer.domElement&&
+    started
+  ){
     yaw-=e.movementX*.0025;
     pitch=Math.max(-1.1,Math.min(1.1,pitch-e.movementY*.0025));
   }
 });
 
-/* =====================================
-   LOOP PRINCIPAL
-===================================== */
+/* =========================================
+   29. CICLO DE ANIMAÇÃO
+========================================= */
 
 const clock=new THREE.Clock();
 let walkTime=0;
@@ -1167,6 +1211,7 @@ function animate(){
     const forward=new THREE.Vector3(
       -Math.sin(yaw),0,-Math.cos(yaw)
     );
+
     const right=new THREE.Vector3(
       Math.cos(yaw),0,-Math.sin(yaw)
     );
@@ -1187,12 +1232,14 @@ function animate(){
       move.normalize();
 
       const speed=5.2*delta;
+
       const nextX=camera.position.x+move.x*speed;
       const nextZ=camera.position.z+move.z*speed;
 
       if(!collides(nextX,camera.position.z)){
         camera.position.x=nextX;
       }
+
       if(!collides(camera.position.x,nextZ)){
         camera.position.z=nextZ;
       }
@@ -1200,23 +1247,38 @@ function animate(){
       walkTime+=delta*9;
     }
 
-    camera.position.x=THREE.MathUtils.clamp(camera.position.x,-58,58);
-    camera.position.z=THREE.MathUtils.clamp(camera.position.z,-58,68);
+    camera.position.x=THREE.MathUtils.clamp(
+      camera.position.x,-58,58
+    );
+
+    camera.position.z=THREE.MathUtils.clamp(
+      camera.position.z,-58,68
+    );
+
     camera.position.y=1.7;
 
     const bob=moving?Math.sin(walkTime)*.025:0;
+
     hands.position.y=bob;
     hands.position.x=moving?Math.cos(walkTime*.5)*.012:0;
 
-    // Verifica se o jogador está perto de uma plantação
-    nearbyField=findNearbyField();
-    harvestButton.style.display=nearbyField?'block':'none';
+    nearbyPlant=findNearbyPlant();
+
+    if(nearbyPlant){
+      actionButton.style.display='block';
+      actionButton.textContent=
+        nearbyPlant.field.type==='tomato'?'🍅 COLHER TOMATE':'🥔 COLHER BATATA';
+    }else{
+      actionButton.style.display='none';
+    }
   }
 
-  // Movimento suave das nuvens
   for(const c of clouds){
     c.position.x+=delta*.18;
-    if(c.position.x>100)c.position.x=-100;
+
+    if(c.position.x>100){
+      c.position.x=-100;
+    }
   }
 
   renderer.render(scene,camera);
@@ -1224,13 +1286,14 @@ function animate(){
 
 animate();
 
-/* =====================================
-   AJUSTE DE TELA
-===================================== */
+/* =========================================
+   30. AJUSTE DE TELA
+========================================= */
 
 addEventListener('resize',()=>{
   camera.aspect=innerWidth/innerHeight;
   camera.updateProjectionMatrix();
+
   renderer.setSize(innerWidth,innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.35));
 });
