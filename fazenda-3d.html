@@ -5,22 +5,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#173d29">
-<title>Fazenda Santa Luzia • Realista</title>
-
+<title>Fazenda Santa Luzia • Simulador Rural</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#17251b;font-family:Arial,sans-serif;touch-action:none}
 #game{position:fixed;inset:0}
 canvas{display:block;width:100%;height:100%}
-button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
+button{font-family:Arial;cursor:pointer;touch-action:none}
 #hud{position:fixed;inset:0;color:white;text-shadow:0 2px 4px #000b;pointer-events:none}
-.panel{background:linear-gradient(145deg,#102c20ed,#173d29d9);border:1px solid #ffffff38;border-radius:12px;padding:8px 11px;box-shadow:0 3px 12px #0004}
-#brand{position:absolute;top:10px;left:10px;font-size:12px;font-weight:900;letter-spacing:.5px}
+.panel{background:linear-gradient(145deg,#102c20ed,#173d29dc);border:1px solid #ffffff38;border-radius:12px;padding:8px 11px;box-shadow:0 3px 12px #0004}
+#brand{position:absolute;top:10px;left:10px;font-size:12px;font-weight:900}
 #brand small{display:block;font-size:8px;color:#d5e8d5;letter-spacing:1.3px;margin-top:3px}
 #stats{position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:bold;white-space:nowrap}
-#mission{position:absolute;top:54px;left:50%;transform:translateX(-50%);font-size:10px;white-space:nowrap}
+#mission{position:absolute;top:53px;left:50%;transform:translateX(-50%);font-size:10px;white-space:nowrap}
 #hint{position:absolute;right:10px;top:10px;text-align:right;font-size:9px;line-height:1.5}
-#crosshair{position:absolute;left:50%;top:50%;width:7px;height:7px;border:1px solid #fff;border-radius:50%;transform:translate(-50%,-50%);opacity:.8}
+#crosshair{position:absolute;left:50%;top:50%;width:7px;height:7px;border:1px solid white;border-radius:50%;transform:translate(-50%,-50%);opacity:.8}
 #message{position:absolute;left:50%;bottom:105px;transform:translateX(-50%);display:none;text-align:center;font-size:12px;max-width:85%;padding:10px 14px;background:#102c20ed;border:1px solid #ffffff44;border-radius:12px}
 #footer{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:8px;white-space:nowrap;color:#ffffffbb}
 #menu{position:absolute;right:10px;top:68px;display:flex;flex-direction:column;gap:5px;pointer-events:auto}
@@ -30,10 +29,9 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
 #looktip{position:absolute;right:12px;bottom:12px;font-size:9px;padding:7px 10px;background:#102f2277;border-radius:10px}
 #action,#secondary{position:absolute;right:18px;bottom:80px;min-width:132px;padding:13px 15px;border:1px solid #ffffff55;border-radius:28px;background:#bd292c;color:white;font-weight:900;font-size:11px;pointer-events:auto;display:none}
 #secondary{bottom:137px;background:#173d29}
-#inventory,#mapPanel,#pausePanel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90%,380px);padding:18px;background:#102f22f5;border:1px solid #ffffff55;border-radius:17px;display:none;pointer-events:auto}
-#inventory h2,#mapPanel h2,#pausePanel h2{margin:0 0 12px;font-size:19px}
-#inventory p,#mapPanel p{font-size:12px;line-height:1.7;margin:6px 0}
-#inventory button,#mapPanel button,#pausePanel button{margin:5px 3px 0 0}
+#inventory,#property,#pausePanel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90%,390px);padding:18px;background:#102f22f5;border:1px solid #ffffff55;border-radius:17px;display:none;pointer-events:auto}
+#inventory h2,#property h2,#pausePanel h2{margin:0 0 12px;font-size:19px}
+#inventory p,#property p,#pausePanel p{font-size:12px;line-height:1.7;margin:6px 0}
 #welcome{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92%,460px);padding:22px;text-align:center;border-radius:20px;background:#102f22f5;border:1px solid #ffffff55;box-shadow:0 12px 40px #0009;pointer-events:auto}
 #welcome h1{font-size:clamp(22px,4vw,34px);margin:0 0 9px}
 #welcome p{font-size:12px;line-height:1.6;color:#e2eee3}
@@ -44,25 +42,23 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
 #orientation{display:none;position:fixed;inset:0;z-index:100;background:linear-gradient(145deg,#102f22,#1b5637);color:white;align-items:center;justify-content:center;text-align:center;padding:25px}
 #orientation .rotate{font-size:55px;display:block;margin-bottom:15px;animation:turn 2s infinite}
 @keyframes turn{0%,100%{transform:rotate(0)}50%{transform:rotate(90deg)}}
-@media(orientation:portrait){
- #orientation{display:flex}
-}
+@media(orientation:portrait){#orientation{display:flex}}
 @media(orientation:landscape) and (max-height:500px){
- #brand{top:6px;left:7px;padding:6px 8px}
- #brand small{font-size:7px}
- #stats{top:6px;font-size:10px}
- #mission{top:42px;font-size:9px}
- #hint{top:6px;right:7px;padding:6px 8px}
- #menu{top:60px;right:7px}
- #controls{left:12px;bottom:10px;width:95px;height:95px}
- #stick{left:27px;top:27px;width:41px;height:41px}
- #action{right:12px;bottom:58px;padding:10px 12px}
- #secondary{right:12px;bottom:108px;padding:9px 12px}
- #message{bottom:55px}
- #driveControls{right:10px;bottom:8px}
- .driveBtn{padding:10px}
- #vehicleHud{bottom:8px;left:45%}
- #footer,#looktip{display:none}
+#brand{top:6px;left:7px;padding:6px 8px}
+#brand small{font-size:7px}
+#stats{top:6px;font-size:10px}
+#mission{top:42px;font-size:9px}
+#hint{top:6px;right:7px;padding:6px 8px}
+#menu{top:60px;right:7px}
+#controls{left:12px;bottom:10px;width:95px;height:95px}
+#stick{left:27px;top:27px;width:41px;height:41px}
+#action{right:12px;bottom:58px;padding:10px 12px}
+#secondary{right:12px;bottom:108px;padding:9px 12px}
+#message{bottom:55px}
+#driveControls{right:10px;bottom:8px}
+.driveBtn{padding:10px}
+#vehicleHud{bottom:8px;left:45%}
+#footer,#looktip{display:none}
 }
 </style>
 </head>
@@ -74,7 +70,7 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
   <span class="rotate">📱</span>
   <h2>FAZENDA SANTA LUZIA</h2>
   <p>Vire o celular para a horizontal para jogar.</p>
-  <small>O simulador foi preparado para tela deitada.</small>
+  <small>Simulador preparado para tela deitada.</small>
  </div>
 </div>
 
@@ -82,7 +78,7 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
  <div id="brand" class="panel">🍅 FAZENDA SANTA LUZIA
   <small>TOMATES • BATATAS • SIMULADOR RURAL</small>
  </div>
- <div id="stats" class="panel">🍅 0 &nbsp; 🥔 0 &nbsp; 💰 R$ 500</div>
+ <div id="stats" class="panel">🍅 0 • 🥔 0 • 💰 R$ 500</div>
  <div id="mission" class="panel">MISSÃO: conheça sua fazenda</div>
  <div id="hint" class="panel">Explore a propriedade<br>Entre nos veículos<br>Cuide das plantações</div>
  <div id="crosshair"></div>
@@ -90,7 +86,7 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
 
  <div id="menu">
   <button class="menuBtn" id="inventoryBtn">🎒 INVENTÁRIO</button>
-  <button class="menuBtn" id="mapBtn">📍 PROPRIEDADE</button>
+  <button class="menuBtn" id="propertyBtn">🏡 FAZENDA</button>
   <button class="menuBtn" id="weatherBtn">🌦️ CLIMA</button>
   <button class="menuBtn" id="pauseBtn">Ⅱ PAUSAR</button>
  </div>
@@ -103,15 +99,15 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
   <button class="menuBtn" id="closeInventory">FECHAR</button>
  </div>
 
- <div id="mapPanel">
-  <h2>📍 SUA PROPRIEDADE</h2>
+ <div id="property">
+  <h2>🏡 Fazenda Santa Luzia</h2>
   <p>🏠 Sede administrativa: região esquerda.</p>
   <p>🏭 Barracão e veículos: região central.</p>
   <p>🔧 Oficina: lado direito.</p>
   <p>🍅 Tomates: campo esquerdo.</p>
   <p>🥔 Batatas: campos direito e fundos.</p>
-  <p>🚜 Explore, plante, colha e transporte sua produção.</p>
-  <button class="menuBtn" id="closeMap">FECHAR</button>
+  <p>🌳 Explore os arredores e conheça sua propriedade.</p>
+  <button class="menuBtn" id="closeProperty">FECHAR</button>
  </div>
 
  <div id="pausePanel">
@@ -134,7 +130,6 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
  <div id="looktip">Arraste o lado direito para olhar</div>
  <button id="action">INTERAGIR</button>
  <button id="secondary">CUIDAR DA PLANTA</button>
-
  <div id="vehicleHud">🚛 VEÍCULO • 0 KM/H</div>
  <div id="driveControls">
   <button class="driveBtn" id="brake">FREIO</button>
@@ -147,10 +142,11 @@ button{font-family:Arial,sans-serif;cursor:pointer;touch-action:none}
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 
-/* =====================================================
-   FAZENDA SANTA LUZIA - REALISTA
-   Three.js | navegador | controles mobile
-===================================================== */
+/* ================================================
+   FAZENDA SANTA LUZIA - EXPANSÃO REALISTA
+   Terreno, vegetação, construções, plantações,
+   veículos, clima e ambiente vivo.
+================================================ */
 
 const host=document.getElementById('game');
 const scene=new THREE.Scene();
@@ -161,34 +157,30 @@ const camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.1,500);
 camera.position.set(0,1.7,48);
 camera.rotation.order='YXZ';
 
+const isMobile=matchMedia('(pointer:coarse)').matches;
 const renderer=new THREE.WebGLRenderer({
- antialias:innerWidth>700,
+ antialias:!isMobile,
  powerPreference:'high-performance'
 });
 renderer.setSize(innerWidth,innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio,1.35));
+renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.15:1.35));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure=1.12;
-renderer.shadowMap.enabled=true;
+renderer.shadowMap.enabled=!isMobile;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 host.appendChild(renderer.domElement);
 
 const clock=new THREE.Clock();
-const isMobile=matchMedia('(pointer:coarse)').matches;
-if(isMobile){
- renderer.shadowMap.enabled=false;
- renderer.setPixelRatio(Math.min(devicePixelRatio,1.15));
-}
 
-/* ---------- TEXTURAS PROCEDURAIS ---------- */
+/* TEXTURAS NATURAIS */
 
 function makeTexture(base,spots,repeat=8){
  const c=document.createElement('canvas');
  c.width=512;c.height=512;
  const ctx=c.getContext('2d');
- ctx.fillStyle=base;ctx.fillRect(0,0,512,512);
-
+ ctx.fillStyle=base;
+ ctx.fillRect(0,0,512,512);
  for(let i=0;i<8500;i++){
   const x=Math.random()*512,y=Math.random()*512;
   const r=Math.random()*2.4+.3;
@@ -197,7 +189,6 @@ function makeTexture(base,spots,repeat=8){
   ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
  }
  ctx.globalAlpha=1;
-
  const t=new THREE.CanvasTexture(c);
  t.colorSpace=THREE.SRGBColorSpace;
  t.wrapS=t.wrapT=THREE.RepeatWrapping;
@@ -212,36 +203,34 @@ const roadTex=makeTexture('#77634a',['#927c5c','#62533e','#a28c69'],12);
 const wallTex=makeTexture('#a58c70',['#c2ad8c','#8e785e','#d0bd9e'],4);
 const woodTex=makeTexture('#68452d',['#8b603d','#4d3324','#a17449'],4);
 
-function material(color,rough=1,metal=0,texture=null){
- return new THREE.MeshStandardMaterial({
-  color,roughness:rough,metalness:metal,map:texture||null
- });
+function mat(color,rough=1,metal=0,texture=null){
+ return new THREE.MeshStandardMaterial({color,roughness:rough,metalness:metal,map:texture||null});
 }
 
 const M={
- grass:material(0xffffff,1,0,grassTex),
- dirt:material(0xffffff,1,0,dirtTex),
- road:material(0xffffff,1,0,roadTex),
- wall:material(0xb6a184,.95,0,wallTex),
- brick:material(0x98634c,.95),
- roof:material(0x343d3a,.85),
- wood:material(0xffffff,.95,0,woodTex),
- green:material(0x245b35,.8),
- leaf:material(0x477c3d,1),
- leaf2:material(0x668d43,1),
- red:material(0xb9272d,.5),
- tomato:material(0xd62c25,.35),
- potato:material(0x99744b,.9),
- metal:material(0x77858a,.45,.5),
- tire:material(0x171a19,.95),
- white:material(0xe8e4d8,.7),
- glass:material(0x78a9b8,.2,.2),
- gold:material(0xb99854,.4,.45),
- dark:material(0x242b29,.8),
- water:material(0x398ab2,.22,.1)
+ grass:mat(0xffffff,1,0,grassTex),
+ dirt:mat(0xffffff,1,0,dirtTex),
+ road:mat(0xffffff,1,0,roadTex),
+ wall:mat(0xb6a184,.95,0,wallTex),
+ brick:mat(0x98634c,.95),
+ roof:mat(0x343d3a,.85),
+ wood:mat(0xffffff,.95,0,woodTex),
+ green:mat(0x245b35,.8),
+ leaf:mat(0x477c3d,1),
+ leaf2:mat(0x668d43,1),
+ red:mat(0xb9272d,.5),
+ tomato:mat(0xd62c25,.35),
+ potato:mat(0x99744b,.9),
+ metal:mat(0x77858a,.45,.5),
+ tire:mat(0x171a19,.95),
+ white:mat(0xe8e4d8,.7),
+ glass:mat(0x78a9b8,.2,.2),
+ gold:mat(0xb99854,.4,.45),
+ dark:mat(0x242b29,.8),
+ water:mat(0x398ab2,.22,.1)
 };
 
-/* ---------- LUZ E CÉU ---------- */
+/* ILUMINAÇÃO */
 
 const hemi=new THREE.HemisphereLight(0xe9f5ff,0x5b4932,1.65);
 scene.add(hemi);
@@ -267,32 +256,34 @@ const skyDome=new THREE.Mesh(
 );
 scene.add(skyDome);
 
-/* ---------- FUNÇÕES 3D ---------- */
+/* FUNÇÕES DE CONSTRUÇÃO */
 
-function box(parent,x,y,z,w,h,d,mat,shadow=true){
- const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);
+function box(parent,x,y,z,w,h,d,material,shadow=true){
+ const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);
  o.position.set(x,y,z);
  o.castShadow=shadow;
  o.receiveShadow=true;
  parent.add(o);
  return o;
 }
-function cylinder(parent,x,y,z,r1,r2,h,mat,n=16){
- const o=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,n),mat);
+function cylinder(parent,x,y,z,r1,r2,h,material,n=16){
+ const o=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,n),material);
  o.position.set(x,y,z);
  o.castShadow=true;o.receiveShadow=true;
  parent.add(o);return o;
 }
-function sphere(parent,x,y,z,r,mat,scale=[1,1,1]){
- const o=new THREE.Mesh(new THREE.SphereGeometry(r,12,9),mat);
+function sphere(parent,x,y,z,r,material,scale=[1,1,1]){
+ const o=new THREE.Mesh(new THREE.SphereGeometry(r,12,9),material);
  o.position.set(x,y,z);o.scale.set(...scale);
  o.castShadow=true;o.receiveShadow=true;
  parent.add(o);return o;
 }
-function ground(parent,x,y,z,w,d,mat){
- const o=new THREE.Mesh(new THREE.PlaneGeometry(w,d),mat);
- o.rotation.x=-Math.PI/2;o.position.set(x,y,z);
- o.receiveShadow=true;parent.add(o);return o;
+function ground(parent,x,y,z,w,d,material){
+ const o=new THREE.Mesh(new THREE.PlaneGeometry(w,d),material);
+ o.rotation.x=-Math.PI/2;
+ o.position.set(x,y,z);
+ o.receiveShadow=true;
+ parent.add(o);return o;
 }
 function labelTexture(lines){
  const c=document.createElement('canvas');
@@ -306,10 +297,12 @@ function labelTexture(lines){
  x.fillText(lines[1]||'',450,170);
  x.fillStyle='#d8e7d6';x.font='bold 25px Arial';
  x.fillText(lines[2]||'',450,220);
- const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
+ const t=new THREE.CanvasTexture(c);
+ t.colorSpace=THREE.SRGBColorSpace;
+ return t;
 }
 
-/* ---------- TERRENO COM RELEVO ---------- */
+/* TERRENO - MANTIDO COM RELEVO */
 
 function heightAt(x,z){
  return Math.sin(x*.035)*.65+
@@ -327,13 +320,12 @@ terrainGeo.computeVertexNormals();
 const terrain=new THREE.Mesh(terrainGeo,M.grass);
 terrain.receiveShadow=true;
 scene.add(terrain);
-
 function surface(x,z){return heightAt(x,z)}
 
-/* Caminhos principais */
+/* ESTRADAS */
+
 function road(x,z,w,d){
  const p=ground(scene,x,surface(x,z)+.035,z,w,d,M.road);
- p.rotation.z=0;
  return p;
 }
 road(0,0,10,180);
@@ -344,15 +336,22 @@ road(-30,0,7,30);
 road(30,5,7,30);
 road(0,-50,105,6);
 
-/* Faixas discretas de estrada */
-for(let z=-80;z<85;z+=8){
- box(scene,0,surface(0,z)+.05,z,.12,.025,2.5,M.gold,false);
+/* CAMINHO DE PEDRAS E MARCAS */
+
+for(let i=0;i<35;i++){
+ const z=38-i*3.2;
+ for(const side of [-1,1]){
+  const x=side*(5.7+Math.sin(i*.5)*.4);
+  const stone=box(scene,x,surface(x,z)+.07,z,.25,.06,.45,M.gold,false);
+  stone.rotation.y=(Math.random()-.5)*.4;
+ }
 }
 
-/* ---------- PLACA DE ENTRADA ---------- */
+/* ENTRADA */
 
 function entranceSign(){
- const g=new THREE.Group();g.position.set(0,0,34);
+ const g=new THREE.Group();
+ g.position.set(0,0,34);
  for(const x of [-7,7]){
   box(g,x,2.1,0,.55,4.2,.65,M.wood);
   box(g,x,4.25,0,.9,.22,.9,M.gold);
@@ -369,7 +368,7 @@ function entranceSign(){
 }
 entranceSign();
 
-/* ---------- COLISÕES ---------- */
+/* COLISÕES */
 
 const obstacles=[];
 function obstacle(x,z,w,d){obstacles.push({x,z,w,d})}
@@ -382,31 +381,44 @@ function collides(x,z,r=.48){
  return false;
 }
 
-/* ---------- SEDE DA FAZENDA ---------- */
+/* CONSTRUÇÕES - SEDE */
 
 function farmhouse(){
  const x=-19,z=-13,w=15,d=11;
  box(scene,x,1.65,z,w,3.3,d,M.wall);
- const roof1=box(scene,x-w*.25,3.55,z,w*.58,.28,d+.8,M.red);
+ box(scene,x,3.25,z-d/2,w+.3,.25,.3,M.wood);
+ box(scene,x,3.25,z+d/2,w+.3,.25,.3,M.wood);
+
+ const roof1=box(scene,x-w*.25,3.65,z,w*.58,.3,d+1,M.red);
  roof1.rotation.z=-.35;
- const roof2=box(scene,x+w*.25,3.55,z,w*.58,.28,d+.8,M.red);
+ const roof2=box(scene,x+w*.25,3.65,z,w*.58,.3,d+1,M.red);
  roof2.rotation.z=.35;
 
+ /* Fachada */
+ box(scene,x,1.6,z+d/2,5,3.2,.25,M.wall);
  box(scene,x-5,1.6,z+d/2,5,3.2,.25,M.wall);
  box(scene,x+5,1.6,z+d/2,5,3.2,.25,M.wall);
- box(scene,x,2.8,z+d/2,5,.8,.25,M.wall);
- box(scene,x,1.15,z+d/2+.12,1.8,2.3,.14,M.wood);
- box(scene,x-4,1.5,z+d/2+.15,2,1.2,.1,M.glass);
- box(scene,x+4,1.5,z+d/2+.15,2,1.2,.1,M.glass);
- box(scene,x+.62,1.1,z+d/2+.2,.08,.12,.08,M.gold);
+ box(scene,x,1.15,z+d/2+.16,1.8,2.3,.14,M.wood);
+ box(scene,x-4,1.5,z+d/2+.17,2,1.2,.1,M.glass);
+ box(scene,x+4,1.5,z+d/2+.17,2,1.2,.1,M.glass);
+
+ /* Molduras das janelas */
+ for(const wx of [-4,4]){
+  box(scene,x+wx,1.5,z+d/2+.23,2.2,.1,.1,M.white);
+  box(scene,x+wx,1.5,z+d/2+.23,.1,1.3,.1,M.white);
+ }
+ box(scene,x+.62,1.1,z+d/2+.25,.08,.12,.08,M.gold);
 
  box(scene,x,3.7,z+d/2+.2,5,.55,.15,M.green);
  const plaque=new THREE.Mesh(new THREE.PlaneGeometry(4.8,.48),
   new THREE.MeshBasicMaterial({map:labelTexture(['SEDE SANTA LUZIA','ADMINISTRAÇÃO',''])}));
- plaque.position.set(x,3.7,z+d/2+.29);scene.add(plaque);
+ plaque.position.set(x,3.7,z+d/2+.29);
+ scene.add(plaque);
 
+ /* Varanda */
+ box(scene,x, .2,z+d/2+1.1,12,.2,2.2,M.wood);
  for(const wx of [-5,5]){
-  box(scene,x+wx,1.05,z+d/2+.2,.25,2.1,.2,M.wood);
+  box(scene,x+wx,1.05,z+d/2+1.1,.18,2.1,.18,M.wood);
  }
  obstacle(x-5.4,z,4,.5);
  obstacle(x+5.4,z,4,.5);
@@ -416,7 +428,7 @@ function farmhouse(){
 }
 farmhouse();
 
-/* ---------- BARRACÃO ---------- */
+/* BARRACÃO */
 
 function mainShed(){
  const x=19,z=-15,w=25,d=19;
@@ -436,8 +448,15 @@ function mainShed(){
   box(scene,x+xx,2.5,z+d/2-.2,.25,5.1,.25,M.metal);
  }
  const sign=new THREE.Mesh(new THREE.PlaneGeometry(5,1.4),
-  new THREE.MeshBasicMaterial({map:labelTexture(['SANTA LUZIA','TOMATES',''] )}));
- sign.position.set(x,4.05,z+d/2+.31);scene.add(sign);
+  new THREE.MeshBasicMaterial({map:labelTexture(['SANTA LUZIA','TOMATES',''])}));
+ sign.position.set(x,4.05,z+d/2+.31);
+ scene.add(sign);
+
+ /* Portão */
+ box(scene,x-4,2,z+d/2+.34,.12,3.8,.12,M.metal);
+ box(scene,x+4,2,z+d/2+.34,.12,3.8,.12,M.metal);
+ for(let y=.5;y<4;y+=.55)
+  box(scene,x, y,z+d/2+.34,8,.07,.1,M.metal);
 
  ground(scene,x,.03,z,w-1,d-1,M.dirt);
  obstacle(x,z-d/2,w,.6);
@@ -446,13 +465,15 @@ function mainShed(){
 }
 mainShed();
 
-/* Prateleiras internas visíveis */
+/* PRATELEIRAS E EQUIPAMENTOS */
+
 for(let i=0;i<5;i++){
  box(scene,10+i*4.5,.55,-19,2.4,1.1,1.5,M.wood);
- for(let j=0;j<3;j++)box(scene,10+i*4.5,.55+j*.38,-19,2.2,.06,1.3,M.gold,false);
+ for(let j=0;j<3;j++)
+  box(scene,10+i*4.5,.55+j*.38,-19,2.2,.06,1.3,M.gold,false);
 }
 
-/* ---------- OFICINA ---------- */
+/* OFICINA */
 
 function workshop(){
  const x=45,z=-5;
@@ -460,46 +481,68 @@ function workshop(){
  box(scene,x,3.8,z,13,.25,11,M.roof);
  box(scene,x,1.2,z+5,3,2.4,.2,M.metal);
  box(scene,x-3,.9,z+5,2,.2,1,M.wood);
+
+ /* Portão e placa */
+ box(scene,x,2.3,z+5.15,6,.15,.18,M.green);
+ const sign=new THREE.Mesh(new THREE.PlaneGeometry(4,.65),
+  new THREE.MeshBasicMaterial({map:labelTexture(['OFICINA','SANTA LUZIA',''])}));
+ sign.position.set(x,3.15,z+5.16);
+ scene.add(sign);
+
+ /* Ferramentas decorativas */
+ box(scene,x-4,1.1,z+4.6,.12,1.4,.12,M.gold);
+ box(scene,x-3.5,1.1,z+4.6,.12,1.4,.12,M.gold);
  obstacle(x,z-5,12,.5);
  obstacle(x-6,z,.5,10);
  obstacle(x+6,z,.5,10);
 }
 workshop();
 
-/* ---------- SILOS E RESERVATÓRIO ---------- */
+/* SILOS E CAIXA D'ÁGUA */
 
 function silo(x,z){
  cylinder(scene,x,3.6,z,2,2,7.2,M.metal,24);
  cylinder(scene,x,.2,z,2.05,2.05,.35,M.roof,24);
  const roof=new THREE.Mesh(new THREE.ConeGeometry(2.2,1.6,24),M.roof);
- roof.position.set(x,8,z);roof.castShadow=true;scene.add(roof);
+ roof.position.set(x,8,z);
+ roof.castShadow=true;
+ scene.add(roof);
  cylinder(scene,x,5,z,2.04,2.04,.12,M.gold,24);
  obstacle(x,z,4.5,4.5);
 }
-silo(39,-31);silo(46,-31);
+silo(39,-31);
+silo(46,-31);
 
 function waterTank(x,z){
  for(const dx of [-1,1])for(const dz of [-1,1])
   box(scene,x+dx,2,z+dz,.15,4,.15,M.metal);
  cylinder(scene,x,4.2,z,1.7,1.7,1.6,M.water,20);
  const top=new THREE.Mesh(new THREE.ConeGeometry(1.8,.7,20),M.roof);
- top.position.set(x,5.35,z);scene.add(top);
+ top.position.set(x,5.35,z);
+ scene.add(top);
  obstacle(x,z,3.5,3.5);
 }
 waterTank(-43,-18);
 
-/* ---------- ÁRVORES MAIS NATURAIS ---------- */
+/* ÁRVORES COM FOLHAS ANIMADAS */
 
+const movingLeaves=[];
 function tree(x,z,s=1){
- const g=new THREE.Group();g.position.set(x,surface(x,z),z);
+ const g=new THREE.Group();
+ g.position.set(x,surface(x,z),z);
  cylinder(g,0,1.2*s,0,.22*s,.28*s,2.4*s,M.wood,10);
- for(let i=0;i<5;i++){
-  const a=i*Math.PI*2/5;
-  sphere(g,Math.cos(a)*.48*s,2.3*s+(i%2)*.35*s,Math.sin(a)*.48*s,
+
+ const crown=new THREE.Group();
+ crown.position.y=2.3*s;
+ for(let i=0;i<6;i++){
+  const a=i*Math.PI*2/6;
+  sphere(crown,Math.cos(a)*.48*s,(i%2)*.35*s,Math.sin(a)*.48*s,
    .95*s,i%2?M.leaf:M.leaf2,[1,.9,1]);
  }
- sphere(g,0,3.05*s,0,1.05*s,M.leaf,[1,1.1,1]);
+ sphere(crown,0,.75*s,0,1.05*s,M.leaf,[1,1.1,1]);
+ g.add(crown);
  scene.add(g);
+ movingLeaves.push({object:crown,phase:Math.random()*6,speed:.5+Math.random()*.7,amount:.025+Math.random()*.025});
  obstacle(x,z,1.4*s,1.4*s);
 }
 
@@ -511,67 +554,124 @@ const treePositions=[
 ];
 treePositions.forEach((p,i)=>tree(p[0],p[1],.85+(i%3)*.12));
 
+/* ARBUSTOS */
+
 function bush(x,z,s=1){
- for(let i=0;i<4;i++){
-  sphere(scene,x+(i-1.5)*.3*s,surface(x,z)+.3*s,z+(i%2)*.18*s,
+ const g=new THREE.Group();
+ g.position.set(x,surface(x,z),z);
+ for(let i=0;i<5;i++){
+  sphere(g,(i-2)*.3*s,(i%2)*.12*s,Math.sin(i)*.15*s,
    .38*s,i%2?M.leaf:M.leaf2,[1,.8,1]);
  }
+ scene.add(g);
+ movingLeaves.push({object:g,phase:Math.random()*6,speed:.6,amount:.012});
 }
-for(let i=0;i<70;i++){
- const x=Math.sin(i*14.2)*75,z=Math.cos(i*8.4)*80;
+for(let i=0;i<85;i++){
+ const x=Math.sin(i*14.2)*75;
+ const z=Math.cos(i*8.4)*80;
  if(Math.abs(x)>11&&Math.abs(z)>9)bush(x,z,.7+(i%3)*.12);
 }
 
-/* ---------- CERCAS ---------- */
+/* CERCAS */
 
 function fenceLine(x1,z1,x2,z2){
  const len=Math.hypot(x2-x1,z2-z1);
  const n=Math.max(1,Math.floor(len/3));
  for(let i=0;i<=n;i++){
-  const t=i/n,x=x1+(x2-x1)*t,z=z1+(z2-z1)*t;
+  const t=i/n;
+  const x=x1+(x2-x1)*t,z=z1+(z2-z1)*t;
   box(scene,x,surface(x,z)+.6,z,.13,1.2,.13,M.wood,false);
  }
  const rail1=box(scene,(x1+x2)/2,.4,(z1+z2)/2,len,.12,.12,M.wood,false);
  const rail2=box(scene,(x1+x2)/2,.85,(z1+z2)/2,len,.12,.12,M.wood,false);
  const angle=-Math.atan2(z2-z1,x2-x1);
- rail1.rotation.y=angle;rail2.rotation.y=angle;
+ rail1.rotation.y=angle;
+ rail2.rotation.y=angle;
 }
 fenceLine(-75,45,-15,45);
 fenceLine(-75,45,-75,-55);
 fenceLine(-75,-55,-15,-55);
 
-/* ---------- PLANTAÇÕES ---------- */
+/* VEGETAÇÃO BAIXA */
 
-let tomatoes=0,potatoes=0,seedsTomato=12,seedsPotato=12;
+const grassBlades=[];
+const bladeMat=mat(0x718f43,1);
+const bladeMat2=mat(0x91a34e,1);
+for(let i=0;i<260;i++){
+ const x=(Math.random()-.5)*180;
+ const z=(Math.random()-.5)*180;
+ if(Math.abs(x)<12&&Math.abs(z)<12)continue;
+ if(Math.abs(x)<9&&Math.abs(z)<45)continue;
+ const g=new THREE.Group();
+ g.position.set(x,surface(x,z),z);
+ for(let j=0;j<3;j++){
+  const blade=box(g,(Math.random()-.5)*.2,.25,0,.055,.5,.045,j%2?bladeMat:bladeMat2,false);
+  blade.rotation.z=(Math.random()-.5)*.5;
+ }
+ scene.add(g);
+ grassBlades.push({object:g,phase:Math.random()*5});
+}
+
+/* PLANTAÇÕES */
+
+let tomatoes=0,potatoes=0;
+let seedsTomato=12,seedsPotato=12;
 let money=500,xp=0,water=8;
 const fields=[];
 let nearbyCrop=null;
 
 function cropVisual(type,stage){
  const g=new THREE.Group();
+
  if(type==='tomato'){
-  cylinder(g,0,.42,0,.055,.055,.8,M.green,7);
-  sphere(g,0,.78,0,.4*stage,M.leaf,[1,.45,.8]);
-  for(let i=0;i<Math.min(stage+1,4);i++){
-   sphere(g,Math.sin(i*2)*.2,.5+(i%2)*.2,.16,.13,
-    stage>=3?M.tomato:M.leaf2);
+  /* Caule e ramificações */
+  cylinder(g,0,.48,0,.055,.07,.95,M.green,8);
+  for(let i=0;i<5;i++){
+   const a=i*Math.PI*2/5;
+   const leaf=sphere(g,Math.cos(a)*.25,.48+(i%2)*.16,Math.sin(a)*.25,
+    .27,M.leaf2,[1.5,.22,.7]);
+   leaf.rotation.y=a;
+  }
+  if(stage>=2){
+   for(let i=0;i<4;i++){
+    const a=i*Math.PI/2;
+    sphere(g,Math.cos(a)*.3,.8,Math.sin(a)*.3,.24,M.leaf,[1.4,.25,.8]);
+   }
+  }
+  if(stage>=3){
+   for(let i=0;i<5;i++){
+    const a=i*Math.PI*2/5;
+    sphere(g,Math.cos(a)*.25,.45+(i%3)*.17,Math.sin(a)*.25,.12,M.tomato);
+   }
   }
  }else{
-  sphere(g,0,.15,0,.45,M.potato,[1,.3,.7]);
+  /* Camalhão e folhas da batata */
+  sphere(g,0,.12,0,.5,M.potato,[1,.25,.8]);
   if(stage>=2){
-   for(let i=0;i<4;i++)sphere(g,Math.sin(i*2)*.2,.42,.1,.22,M.leaf2,[1,.5,1]);
+   for(let i=0;i<7;i++){
+    const a=i*Math.PI*2/7;
+    const leaf=sphere(g,Math.cos(a)*.28,.35+(i%2)*.1,Math.sin(a)*.28,
+     .3,M.leaf2,[1.3,.3,.8]);
+    leaf.rotation.y=a;
+   }
+  }
+  if(stage>=3){
+   for(let i=0;i<3;i++)
+    sphere(g,Math.sin(i*2)*.2,.1,.18,.12,M.potato,[1,.8,1]);
   }
  }
  return g;
 }
 
 function makeField(cx,cz,rows,cols,spacing,type){
- const width=cols*spacing+3,depth=rows*spacing+3;
+ const width=cols*spacing+3;
+ const depth=rows*spacing+3;
  ground(scene,cx,surface(cx,cz)+.025,cz,width,depth,M.dirt);
  const plots=[];
- for(let c=0;c<=cols;c++){
-  const x=cx-width/2+1.5+c*spacing;
-  box(scene,x,surface(x,cz)+.05,cz,.08,.035,depth,M.road,false);
+
+ /* Bordas do terreno agrícola */
+ for(const side of [-1,1]){
+  box(scene,cx+side*width/2,surface(cx,cz)+.08,cz,.18,.1,depth,M.wood,false);
  }
  for(let r=0;r<rows;r++){
   for(let c=0;c<cols;c++){
@@ -591,7 +691,10 @@ function nearbyPlot(){
  let best=null,dist=999;
  for(const f of fields)for(const p of f.plots){
   const d=Math.hypot(camera.position.x-p.x,camera.position.z-p.z);
-  if(d<2.6&&d<dist){best={field:f,plot:p,d};dist=d;}
+  if(d<2.6&&d<dist){
+   best={field:f,plot:p,d};
+   dist=d;
+  }
  }
  return best;
 }
@@ -599,29 +702,38 @@ function nearbyPlot(){
 function plantAction(){
  if(!nearbyCrop)return;
  const p=nearbyCrop.plot;
+
  if(p.stage===0){
   if(p.type==='tomato'&&seedsTomato<=0)return showMessage('Sem sementes de tomate.');
   if(p.type==='potato'&&seedsPotato<=0)return showMessage('Sem sementes de batata.');
-  if(p.type==='tomato')seedsTomato--;else seedsPotato--;
+  if(p.type==='tomato')seedsTomato--;
+  else seedsPotato--;
   p.stage=1;p.growth=0;
   p.object=cropVisual(p.type,1);
   p.object.position.set(p.x,surface(p.x,p.z),p.z);
-  scene.add(p.object);p.marker.visible=false;
-  showMessage('🌱 Plantio realizado! Agora cuide da plantação.');
+  scene.add(p.object);
+  p.marker.visible=false;
+  showMessage('🌱 Plantio realizado! Cuide da plantação.');
  }else if(p.stage<3){
   if(!p.watered){
    if(water<=0)return showMessage('Reservatório vazio. Compre água.');
-   water--;p.watered=true;
+   water--;
+   p.watered=true;
    showMessage('💧 Plantação regada! Crescimento acelerado.');
-  }else showMessage('A planta já recebeu água. Aguarde crescer.');
+  }else{
+   showMessage('A planta já recebeu água. Aguarde crescer.');
+  }
  }else{
-  if(p.type==='tomato')tomatoes+=3;else potatoes+=3;
+  if(p.type==='tomato')tomatoes+=3;
+  else potatoes+=3;
   money+=15;xp+=10;
-  scene.remove(p.object);p.object=null;p.stage=0;p.growth=0;p.watered=false;
+  scene.remove(p.object);
+  p.object=null;p.stage=0;p.growth=0;p.watered=false;
   p.marker.visible=true;
   showMessage('✅ Colheita! +3 produtos, R$ 15 e 10 XP.');
  }
- updateStats();saveGame();
+ updateStats();
+ saveGame();
 }
 
 function growCrops(dt){
@@ -630,7 +742,8 @@ function growCrops(dt){
    p.growth+=dt*(p.watered?2.5:.65);
    const needed=p.stage===1?28:45;
    if(p.growth>=needed){
-    p.growth=0;p.stage++;
+    p.growth=0;
+    p.stage++;
     scene.remove(p.object);
     p.object=cropVisual(p.type,p.stage);
     p.object.position.set(p.x,surface(p.x,p.z),p.z);
@@ -640,46 +753,85 @@ function growCrops(dt){
  }
 }
 
-/* ---------- CAIXAS DE PRODUÇÃO ---------- */
+/* CAIXAS DE PRODUÇÃO */
 
 function crate(x,z,color=0x9b5e34){
- const g=new THREE.Group();g.position.set(x,surface(x,z),z);
- const wood=material(color,.9);
+ const g=new THREE.Group();
+ g.position.set(x,surface(x,z),z);
+ const wood=mat(color,.9);
  box(g,0,.45,0,1.2,.9,1.2,wood);
- for(let i=-1;i<=1;i++)box(g,i*.35,.45,.62,.06,.9,.05,M.wood);
- scene.add(g);return g;
+ for(let i=-1;i<=1;i++)
+  box(g,i*.35,.45,.62,.06,.9,.05,M.wood);
+ for(let y=.2;y<.8;y+=.3)
+  box(g,0,y,-.62,1.1,.05,.05,M.wood);
+ scene.add(g);
+ return g;
 }
-for(let i=0;i<7;i++){crate(8+i*1.35,-6);crate(8+i*1.35,-4.7,0x8c7048);}
+for(let i=0;i<7;i++){
+ crate(8+i*1.35,-6);
+ crate(8+i*1.35,-4.7,0x8c7048);
+}
 
-/* ---------- VEÍCULOS ---------- */
+/* VEÍCULOS MELHORADOS */
 
 const vehicles=[];
+
+function makeWheel(parent,x,y,z,r,width){
+ const wheel=new THREE.Mesh(
+  new THREE.CylinderGeometry(r,r,width,20),
+  M.tire
+ );
+ wheel.rotation.z=Math.PI/2;
+ wheel.position.set(x,y,z);
+ wheel.castShadow=true;
+ parent.add(wheel);
+
+ const hub=new THREE.Mesh(
+  new THREE.CylinderGeometry(r*.45,r*.45,width+.02,16),
+  M.metal
+ );
+ hub.rotation.z=Math.PI/2;
+ hub.position.copy(wheel.position);
+ parent.add(hub);
+ return wheel;
+}
+
 function makeVehicle(x,z,type,color){
- const g=new THREE.Group();g.position.set(x,surface(x,z),z);
+ const g=new THREE.Group();
+ g.position.set(x,surface(x,z),z);
  const truck=type==='truck';
- const paint=material(color,.42,.18);
- const chrome=M.metal;
+ const paint=mat(color,.42,.18);
  const wheels=[];
 
  if(truck){
+  /* Chassi */
   box(g,0,.78,0,2.35,.38,7.5,M.metal);
+  box(g,0,.95,0,2.25,.18,7.2,M.dark);
+
+  /* Cabine */
   box(g,0,1.75,-2.45,2.3,1.75,2.35,paint);
   box(g,0,2.35,-2.45,2.25,.25,2.25,M.dark);
   box(g,0,1.95,-3.64,1.92,.88,.055,M.glass);
+
   for(const side of [-1,1]){
    box(g,side*1.17,1.9,-2.4,.055,.85,1.35,M.glass);
-   box(g,side*1.18,1.25,-2.3,.08,.75,.1,chrome);
+   box(g,side*1.18,1.25,-2.3,.08,.75,.1,M.metal);
    box(g,side*1.32,1.8,-3.1,.12,.45,.12,M.dark);
+   box(g,side*1.17,2.15,-2.4,.07,.12,1.35,M.white);
   }
+
   box(g,0,2.72,-2.45,2.4,.16,2.45,paint);
   box(g,0,1.05,-3.7,1.9,.5,.12,M.dark);
-  box(g,0,1.1,-3.78,1.3,.08,.04,chrome);
+  box(g,0,1.1,-3.78,1.3,.08,.04,M.metal);
+
   for(const side of [-1,1]){
    box(g,side*.88,.95,-3.76,.38,.35,.09,M.white);
    box(g,side*.88,.55,-3.68,.42,.12,.08,M.red);
+   box(g,side*1.2,1.3,-3.2,.08,.08,.08,M.gold);
   }
-  box(g,0,.45,-3.78,2.45,.2,.25,chrome);
+  box(g,0,.45,-3.78,2.45,.2,.25,M.metal);
 
+  /* Carroceria */
   box(g,0,1.05,1.45,2.35,.18,3.65,M.dark);
   box(g,-1.12,1.55,1.45,.12,.9,3.65,paint);
   box(g,1.12,1.55,1.45,.12,.9,3.65,paint);
@@ -687,79 +839,99 @@ function makeVehicle(x,z,type,color){
   box(g,-1.19,1.55,1.4,.035,.55,3.3,M.gold);
   box(g,1.19,1.55,1.4,.035,.55,3.3,M.gold);
 
+  /* Faixas da empresa */
+  box(g,-1.2,1.25,1.4,.04,.09,3.2,M.white);
+  box(g,1.2,1.25,1.4,.04,.09,3.2,M.white);
+
   const sign=new THREE.Mesh(new THREE.PlaneGeometry(1.65,.28),
    new THREE.MeshBasicMaterial({map:labelTexture(['SANTA LUZIA','TOMATES',''])}));
-  sign.position.set(0,2.25,-3.68);g.add(sign);
+  sign.position.set(0,2.25,-3.68);
+  g.add(sign);
 
-  /* Caixas com tomates */
-  for(let row=0;row<3;row++)for(let col=0;col<2;col++){
-   const cx=col===0?-.52:.52,cz=-.05+row*.95;
-   box(g,cx,1.42,cz,.9,.65,.85,M.wood);
-   for(const yy of [1.18,1.48,1.75]){
-    box(g,cx,yy,cz+.43,.84,.045,.045,M.wood);
-    box(g,cx,yy,cz-.43,.84,.045,.045,M.wood);
+  /* Caixas de tomate na carroceria */
+  for(let row=0;row<3;row++){
+   for(let col=0;col<2;col++){
+    const cx=col===0?-.52:.52;
+    const cz=-.05+row*.95;
+    box(g,cx,1.42,cz,.9,.65,.85,M.wood);
+    for(const yy of [1.18,1.48,1.75]){
+     box(g,cx,yy,cz+.43,.84,.045,.045,M.wood);
+     box(g,cx,yy,cz-.43,.84,.045,.045,M.wood);
+    }
+    for(let a=0;a<3;a++)
+     sphere(g,cx-.25+a*.25,1.83,cz,.13,M.tomato);
    }
-   for(let a=0;a<3;a++)sphere(g,cx-.25+a*.25,1.83,cz,.13,M.tomato);
   }
 
-  cylinder(g,1.35,.85,.1,.38,.38,1.35,chrome,12);
+  /* Retrovisores, escapamento e rodas */
+  cylinder(g,1.35,.85,.1,.38,.38,1.35,M.metal,12);
   cylinder(g,.9,2.1,1.7,.07,.07,1.3,M.metal,8);
 
-  const positions=[[-1.25,-2.5],[1.25,-2.5],[-1.25,.65],[1.25,.65],[-1.25,2.45],[1.25,2.45]];
-  for(const [wx,wz] of positions){
-   const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.57,.57,.34,20),M.tire);
-   wheel.rotation.z=Math.PI/2;wheel.position.set(wx,.58,wz);g.add(wheel);wheels.push(wheel);
-   const hub=new THREE.Mesh(new THREE.CylinderGeometry(.25,.25,.37,16),chrome);
-   hub.rotation.z=Math.PI/2;hub.position.copy(wheel.position);g.add(hub);
-  }
+  const positions=[
+   [-1.25,-2.5],[1.25,-2.5],
+   [-1.25,.65],[1.25,.65],
+   [-1.25,2.45],[1.25,2.45]
+  ];
+  for(const [wx,wz] of positions)
+   wheels.push(makeWheel(g,wx,.58,wz,.57,.34));
+
  }else{
+  /* Trator verde */
   box(g,0,.75,0,2.15,.4,3.8,M.metal);
   box(g,0,1.2,-.3,2.1,.9,2.2,paint);
   box(g,0,1.95,-.55,1.75,1.05,1.7,M.glass);
   box(g,0,2.52,-.55,1.9,.15,paint);
   box(g,0,1.25,-1.55,1.7,.85,1.25,paint);
-  box(g,0,1.15,-2.2,1.5,.35,.15,chrome);
-  for(const side of [-1,1])for(const [z,r] of [[1.15,.72],[-1.65,.43]]){
-   const wheel=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.38,18),M.tire);
-   wheel.rotation.z=Math.PI/2;wheel.position.set(side*1.15,r,z);
-   g.add(wheel);wheels.push(wheel);
+  box(g,0,1.15,-2.2,1.5,.35,.15,M.metal);
+  box(g,0,.9,1.95,1.2,.2,.5,M.dark);
+
+  for(const side of [-1,1]){
+   wheels.push(makeWheel(g,side*1.15,.72,1.15,.72,.38));
+   wheels.push(makeWheel(g,side*1.15,.43,-1.65,.43,.3));
   }
+  box(g,0,2.65,-.55,2,.12,1.9,M.green);
+  box(g,0,1.1,-2.3,1.3,.15,.1,M.white);
  }
+
  scene.add(g);
  const v={group:g,type,speed:0,wheels,occupied:false};
- vehicles.push(v);return v;
+ vehicles.push(v);
+ return v;
 }
+
 makeVehicle(19,-1.5,'truck',0xb9272d);
 makeVehicle(-1,-29,'truck',0x315d38);
 makeVehicle(29,-29,'tractor',0x28623b);
 
-let currentVehicle=null,throttle=0,brake=0;
-function nearestVehicle(){
- let found=null,best=5;
- for(const v of vehicles){
-  const d=Math.hypot(camera.position.x-v.group.position.x,camera.position.z-v.group.position.z);
-  if(d<best){best=d;found=v;}
- }
- return found;
-}
+/* MÃOS DO PERSONAGEM */
 
-/* ---------- MÃOS EM PRIMEIRA PESSOA ---------- */
+const hands=new THREE.Group();
+camera.add(hands);
+scene.add(camera);
+const sleeve=mat(0x244f37,.9);
+const skin=mat(0xd9a47d,.85);
 
-const hands=new THREE.Group();camera.add(hands);scene.add(camera);
-const sleeve=material(0x244f37,.9),skin=material(0xd9a47d,.85);
 function hand(x,flip){
  const arm=new THREE.Mesh(new THREE.CylinderGeometry(.11,.14,.62,10),sleeve);
- arm.rotation.z=flip?-.25:.25;arm.position.set(x,-.62,-1.05);hands.add(arm);
+ arm.rotation.z=flip?-.25:.25;
+ arm.position.set(x,-.62,-1.05);
+ hands.add(arm);
+
  const palm=new THREE.Mesh(new THREE.BoxGeometry(.22,.17,.2),skin);
- palm.position.set(x,-.27,-1.08);hands.add(palm);
+ palm.position.set(x,-.27,-1.08);
+ hands.add(palm);
+
  for(let i=0;i<4;i++){
   const f=new THREE.Mesh(new THREE.CylinderGeometry(.035,.04,.15,7),skin);
-  f.position.set(x+(i-1.5)*.055,-.39,-1.17);hands.add(f);
+  f.position.set(x+(i-1.5)*.055,-.39,-1.17);
+  hands.add(f);
  }
 }
-hand(-.38,false);hand(.38,true);hands.visible=false;
+hand(-.38,false);
+hand(.38,true);
+hands.visible=false;
 
-/* ---------- INTERIORES ---------- */
+/* INTERIORES SIMPLES */
 
 const interiors=[];
 function room(x,z,title){
@@ -773,7 +945,8 @@ function room(x,z,title){
  box(scene,x+4,1,z-3,3,.5,2,M.wood);
  const sign=new THREE.Mesh(new THREE.PlaneGeometry(7,1.5),
   new THREE.MeshBasicMaterial({map:labelTexture([title,'SANTA LUZIA',''])}));
- sign.position.set(x,3.3,z-7.75);scene.add(sign);
+ sign.position.set(x,3.3,z-7.75);
+ scene.add(sign);
  interiors.push({x,z,title});
 }
 room(110,0,'SEDE ADMINISTRATIVA');
@@ -784,6 +957,7 @@ const doors=[
  {x:-19,z:-7.2,type:'house',target:0,label:'🚪 ENTRAR NA SEDE'},
  {x:19,z:-5.1,type:'shed',target:1,label:'🚪 ENTRAR NO BARRACÃO'}
 ];
+
 let yaw=0,pitch=0,started=false,paused=false;
 
 function enterRoom(d){
@@ -796,46 +970,60 @@ function enterRoom(d){
 function exitRoom(){
  if(!inside)return;
  camera.position.set(inside==='house'?-19:19,1.7,inside==='house'?-5:-3);
- inside=null;showMessage('Você voltou para a fazenda.');
+ inside=null;
+ showMessage('Você voltou para a fazenda.');
 }
 
-/* ---------- SALVAMENTO ---------- */
+/* SALVAMENTO */
 
-const saveKey='santa_luzia_fazenda_realista_v3';
+const saveKey='santa_luzia_fazenda_realista_v4';
+
 function loadGame(){
  try{
   const s=JSON.parse(localStorage.getItem(saveKey)||'null');
   if(!s)return;
-  tomatoes=s.tomatoes||0;potatoes=s.potatoes||0;
-  money=s.money??500;xp=s.xp||0;
-  seedsTomato=s.seedsTomato??12;seedsPotato=s.seedsPotato??12;
+
+  tomatoes=s.tomatoes||0;
+  potatoes=s.potatoes||0;
+  money=s.money??500;
+  xp=s.xp||0;
+  seedsTomato=s.seedsTomato??12;
+  seedsPotato=s.seedsPotato??12;
   water=s.water??8;
+
   if(Array.isArray(s.plots)){
    let index=0;
    for(const f of fields)for(const p of f.plots){
     const saved=s.plots[index++];
     if(saved){
-     p.stage=saved.stage||0;p.growth=saved.growth||0;p.watered=!!saved.watered;
+     p.stage=saved.stage||0;
+     p.growth=saved.growth||0;
+     p.watered=!!saved.watered;
      if(p.stage>0){
       p.marker.visible=false;
       p.object=cropVisual(p.type,p.stage);
-      p.object.position.set(p.x,surface(p.x,p.z),p.z);scene.add(p.object);
+      p.object.position.set(p.x,surface(p.x,p.z),p.z);
+      scene.add(p.object);
      }
     }
    }
   }
  }catch(e){}
 }
+
 function saveGame(){
  try{
   const plots=[];
-  for(const f of fields)for(const p of f.plots)
+  for(const f of fields)for(const p of f.plots){
    plots.push({stage:p.stage,growth:p.growth,watered:p.watered});
+  }
   localStorage.setItem(saveKey,JSON.stringify({
    tomatoes,potatoes,money,xp,seedsTomato,seedsPotato,water,plots
   }));
  }catch(e){}
 }
+
+/* INTERFACE E MENSAGENS */
 
 const stats=document.getElementById('stats');
 const mission=document.getElementById('mission');
@@ -845,60 +1033,97 @@ const secondaryButton=document.getElementById('secondary');
 let messageTimer;
 
 function showMessage(t){
- message.textContent=t;message.style.display='block';
+ message.textContent=t;
+ message.style.display='block';
  clearTimeout(messageTimer);
  messageTimer=setTimeout(()=>message.style.display='none',2800);
 }
+
 function updateStats(){
  stats.textContent=`🍅 ${tomatoes}  🥔 ${potatoes}  💰 R$ ${money}  ⭐ ${xp} XP`;
- mission.textContent=`MISSÃO: plante, cuide e colha • Nível ${1+Math.floor(xp/100)}`;
+ const level=1+Math.floor(xp/100);
+ mission.textContent=`MISSÃO: plante, cuide e colha • Nível ${level}`;
 }
+
 function openInventory(){
  document.getElementById('inventoryText').innerHTML=
- `🍅 Tomates: <b>${tomatoes}</b><br>🥔 Batatas: <b>${potatoes}</b><br>
+ `🍅 Tomates: <b>${tomatoes}</b><br>
+ 🥔 Batatas: <b>${potatoes}</b><br>
  🌱 Sementes de tomate: <b>${seedsTomato}</b><br>
  🌱 Sementes de batata: <b>${seedsPotato}</b><br>
- 💧 Água: <b>${water}</b><br>💰 Dinheiro: <b>R$ ${money}</b><br>⭐ Experiência: <b>${xp} XP</b>`;
+ 💧 Água: <b>${water}</b><br>
+ 💰 Dinheiro: <b>R$ ${money}</b><br>
+ ⭐ Experiência: <b>${xp} XP</b>`;
  document.getElementById('inventory').style.display='block';
 }
+
 document.getElementById('inventoryBtn').onclick=openInventory;
-document.getElementById('closeInventory').onclick=()=>document.getElementById('inventory').style.display='none';
+document.getElementById('closeInventory').onclick=()=>{
+ document.getElementById('inventory').style.display='none';
+};
+
 document.getElementById('sellBtn').onclick=()=>{
  const total=tomatoes*8+potatoes*6;
  if(total<=0)return showMessage('Você ainda não tem produtos para vender.');
- money+=total;tomatoes=0;potatoes=0;xp+=5;
- saveGame();updateStats();openInventory();
+ money+=total;
+ tomatoes=0;
+ potatoes=0;
+ xp+=5;
+ saveGame();
+ updateStats();
+ openInventory();
  showMessage(`📦 Venda realizada! Você recebeu R$ ${total}.`);
 };
+
 document.getElementById('buySeedBtn').onclick=()=>{
  if(money<30)return showMessage('Você precisa de R$ 30 para comprar sementes.');
- money-=30;seedsTomato+=5;seedsPotato+=5;water+=2;
- saveGame();updateStats();openInventory();
+ money-=30;
+ seedsTomato+=5;
+ seedsPotato+=5;
+ water+=2;
+ saveGame();
+ updateStats();
+ openInventory();
  showMessage('🌱 Compra realizada! +5 sementes de cada tipo e água.');
 };
-document.getElementById('mapBtn').onclick=()=>document.getElementById('mapPanel').style.display='block';
-document.getElementById('closeMap').onclick=()=>document.getElementById('mapPanel').style.display='none';
 
-/* ---------- CLIMA ---------- */
+document.getElementById('propertyBtn').onclick=()=>{
+ document.getElementById('property').style.display='block';
+};
+document.getElementById('closeProperty').onclick=()=>{
+ document.getElementById('property').style.display='none';
+};
+
+/* CLIMA E CHUVA */
 
 let rain=false,dayTime=9;
+
 document.getElementById('weatherBtn').onclick=()=>{
  rain=!rain;
  showMessage(rain?'🌧️ Começou a chover na Fazenda Santa Luzia.':'☀️ A chuva parou.');
 };
+
 const rainCount=isMobile?100:260;
 const rainPositions=new Float32Array(rainCount*3);
+
 for(let i=0;i<rainCount;i++){
  rainPositions[i*3]=(Math.random()-.5)*100;
  rainPositions[i*3+1]=Math.random()*35;
  rainPositions[i*3+2]=(Math.random()-.5)*100;
 }
+
 const rainGeo=new THREE.BufferGeometry();
 rainGeo.setAttribute('position',new THREE.BufferAttribute(rainPositions,3));
-const rainMat=new THREE.PointsMaterial({color:0xcce6ff,size:.12,transparent:true,opacity:.7});
-const rainPoints=new THREE.Points(rainGeo,rainMat);scene.add(rainPoints);rainPoints.visible=false;
+const rainMat=new THREE.PointsMaterial({
+ color:0xcce6ff,size:.12,transparent:true,opacity:.7
+});
+const rainPoints=new THREE.Points(rainGeo,rainMat);
+scene.add(rainPoints);
+rainPoints.visible=false;
+
 function updateRain(dt){
- rainPoints.visible=rain;if(!rain)return;
+ rainPoints.visible=rain;
+ if(!rain)return;
  const a=rainGeo.attributes.position.array;
  for(let i=0;i<rainCount;i++){
   a[i*3+1]-=dt*19;
@@ -911,27 +1136,71 @@ function updateRain(dt){
  rainGeo.attributes.position.needsUpdate=true;
 }
 
-/* ---------- INTERAÇÃO ---------- */
+/* SONS AMBIENTES */
+
+let audioContext=null;
+let soundStarted=false;
+
+function startAmbientSound(){
+ if(soundStarted)return;
+ try{
+  audioContext=new (window.AudioContext||window.webkitAudioContext)();
+  const oscillator=audioContext.createOscillator();
+  const gain=audioContext.createGain();
+  oscillator.type='sine';
+  oscillator.frequency.value=180;
+  gain.gain.value=.008;
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start();
+  soundStarted=true;
+ }catch(e){}
+}
+
+/* INTERAÇÃO E VEÍCULOS */
 
 let nearbyVehicleRef=null,nearbyDoor=null;
+let currentVehicle=null,throttle=0,brake=0;
+
+function nearestVehicle(){
+ let found=null,best=5;
+ for(const v of vehicles){
+  const d=Math.hypot(
+   camera.position.x-v.group.position.x,
+   camera.position.z-v.group.position.z
+  );
+  if(d<best){best=d;found=v;}
+ }
+ return found;
+}
+
 function enterVehicle(v){
- currentVehicle=v;v.occupied=true;hands.visible=false;
+ currentVehicle=v;
+ v.occupied=true;
+ hands.visible=false;
  document.getElementById('vehicleHud').style.display='block';
  document.getElementById('driveControls').style.display='flex';
- actionButton.style.display='none';secondaryButton.style.display='none';
+ actionButton.style.display='none';
+ secondaryButton.style.display='none';
  camera.position.set(v.group.position.x,2.5,v.group.position.z+7);
- yaw=v.group.rotation.y;pitch=-.12;
+ yaw=v.group.rotation.y;
+ pitch=-.12;
  showMessage('🚛 Você entrou no veículo! Use os controles para dirigir.');
 }
+
 function leaveVehicle(){
  if(!currentVehicle)return;
- const v=currentVehicle;v.occupied=false;v.speed=0;
+ const v=currentVehicle;
+ v.occupied=false;
+ v.speed=0;
  camera.position.set(v.group.position.x+3,1.7,v.group.position.z+3);
- currentVehicle=null;hands.visible=true;
+ currentVehicle=null;
+ hands.visible=true;
  document.getElementById('vehicleHud').style.display='none';
  document.getElementById('driveControls').style.display='none';
  showMessage('Você saiu do veículo.');
 }
+
 function interact(){
  if(!started||paused)return;
  if(currentVehicle){leaveVehicle();return;}
@@ -941,8 +1210,11 @@ function interact(){
  if(nearbyCrop){plantAction();return;}
  showMessage('Não há nada para interagir aqui. Explore a fazenda!');
 }
+
 actionButton.addEventListener('click',interact);
-secondaryButton.addEventListener('click',()=>{if(nearbyCrop)plantAction();});
+secondaryButton.addEventListener('click',()=>{
+ if(nearbyCrop)plantAction();
+});
 
 addEventListener('keydown',e=>{
  if(e.code==='KeyE')interact();
@@ -953,12 +1225,13 @@ addEventListener('keydown',e=>{
  }
 });
 
-/* ---------- TECLADO E JOYSTICK ---------- */
+/* TECLADO E JOYSTICK */
 
 const keys={};
 addEventListener('keydown',e=>{
  keys[e.code]=true;
- if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();
+ if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))
+  e.preventDefault();
 });
 addEventListener('keyup',e=>keys[e.code]=false);
 
@@ -967,45 +1240,66 @@ const controls=document.getElementById('controls');
 const stick=document.getElementById('stick');
 
 controls.addEventListener('pointerdown',e=>{
- joyId=e.pointerId;controls.setPointerCapture(joyId);updateJoy(e);
+ joyId=e.pointerId;
+ controls.setPointerCapture(joyId);
+ updateJoy(e);
 });
-controls.addEventListener('pointermove',e=>{if(e.pointerId===joyId)updateJoy(e);});
+controls.addEventListener('pointermove',e=>{
+ if(e.pointerId===joyId)updateJoy(e);
+});
+
 function updateJoy(e){
  const r=controls.getBoundingClientRect();
- let dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+ let dx=e.clientX-(r.left+r.width/2);
+ let dy=e.clientY-(r.top+r.height/2);
  const len=Math.hypot(dx,dy),max=34;
  if(len>max){dx=dx/len*max;dy=dy/len*max;}
- joy.x=dx/max;joy.y=dy/max;
+ joy.x=dx/max;
+ joy.y=dy/max;
  stick.style.transform=`translate(${dx}px,${dy}px)`;
 }
 function resetJoy(){
- joy={x:0,y:0};joyId=null;stick.style.transform='translate(0,0)';
+ joy={x:0,y:0};
+ joyId=null;
+ stick.style.transform='translate(0,0)';
 }
 controls.addEventListener('pointerup',resetJoy);
 controls.addEventListener('pointercancel',resetJoy);
 
-/* Olhar: lado direito da tela */
+/* OLHAR COM O LADO DIREITO */
+
 let dragLook=false,lastX=0,lastY=0,lookPointer=null;
+
 renderer.domElement.addEventListener('pointerdown',e=>{
  if(!started||paused||currentVehicle)return;
  if(e.clientX<innerWidth*.36)return;
- dragLook=true;lookPointer=e.pointerId;lastX=e.clientX;lastY=e.clientY;
+ dragLook=true;
+ lookPointer=e.pointerId;
+ lastX=e.clientX;
+ lastY=e.clientY;
  renderer.domElement.setPointerCapture(e.pointerId);
 });
+
 renderer.domElement.addEventListener('pointermove',e=>{
  if(!dragLook||e.pointerId!==lookPointer)return;
- const dx=e.clientX-lastX,dy=e.clientY-lastY;
- lastX=e.clientX;lastY=e.clientY;
+ const dx=e.clientX-lastX;
+ const dy=e.clientY-lastY;
+ lastX=e.clientX;
+ lastY=e.clientY;
  yaw-=dx*.004;
  pitch=Math.max(-1.15,Math.min(1.15,pitch-dy*.004));
 });
 renderer.domElement.addEventListener('pointerup',()=>dragLook=false);
 renderer.domElement.addEventListener('pointercancel',()=>dragLook=false);
 
-/* Controles do veículo */
+/* CONTROLES DO VEÍCULO */
+
 function holdButton(id,set){
  const b=document.getElementById(id);
- b.addEventListener('pointerdown',e=>{e.preventDefault();set(1);});
+ b.addEventListener('pointerdown',e=>{
+  e.preventDefault();
+  set(1);
+ });
  b.addEventListener('pointerup',()=>set(0));
  b.addEventListener('pointercancel',()=>set(0));
  b.addEventListener('pointerleave',()=>set(0));
@@ -1014,7 +1308,7 @@ holdButton('accelerate',v=>throttle=v);
 holdButton('brake',v=>brake=v);
 document.getElementById('exitVehicle').onclick=leaveVehicle;
 
-/* ---------- DIRIGIR ---------- */
+/* DIRIGIR */
 
 function drive(v,dt){
  const forward=keys.KeyW||keys.ArrowUp||throttle>0;
@@ -1025,18 +1319,25 @@ function drive(v,dt){
  if(forward)v.speed=Math.min(max,v.speed+dt*5);
  else if(reverse)v.speed=Math.max(-max*.35,v.speed-dt*4);
  else v.speed*=Math.pow(.94,dt*10);
+
  if(braking)v.speed*=Math.pow(.75,dt*10);
 
  const steer=(keys.KeyA||keys.ArrowLeft?-1:0)+
              (keys.KeyD||keys.ArrowRight?1:0)+joy.x;
+
  v.group.rotation.y+=steer*dt*(.9+Math.abs(v.speed)*.04)*Math.sign(v.speed||1);
 
- const dir=new THREE.Vector3(-Math.sin(v.group.rotation.y),0,-Math.cos(v.group.rotation.y));
+ const dir=new THREE.Vector3(
+  -Math.sin(v.group.rotation.y),0,-Math.cos(v.group.rotation.y)
+ );
  const nx=v.group.position.x+dir.x*v.speed*dt;
  const nz=v.group.position.z+dir.z*v.speed*dt;
+
  if(Math.abs(nx)<140&&Math.abs(nz)<140&&!collides(nx,nz,1.6)){
-  v.group.position.x=nx;v.group.position.z=nz;
+  v.group.position.x=nx;
+  v.group.position.z=nz;
  }
+
  v.group.position.y=surface(v.group.position.x,v.group.position.z);
  v.wheels.forEach(w=>w.rotation.x+=v.speed*dt*1.8);
 
@@ -1045,98 +1346,133 @@ function drive(v,dt){
   v.group.position.y+3.1,
   v.group.position.z+Math.cos(v.group.rotation.y)*7
  );
+
  yaw=v.group.rotation.y;
  camera.lookAt(
   v.group.position.x-Math.sin(yaw)*4,
   v.group.position.y+1.5,
   v.group.position.z-Math.cos(yaw)*4
  );
+
  document.getElementById('vehicleHud').textContent=
   `🚛 ${v.type==='truck'?'CAMINHÃO':'TRATOR'} • ${Math.round(Math.abs(v.speed)*3.6)} KM/H`;
 }
 
-/* ---------- DIA E NOITE ---------- */
+/* DIA E NOITE */
 
 function updateDay(dt){
- dayTime+=dt*.018;if(dayTime>=24)dayTime=0;
+ dayTime+=dt*.018;
+ if(dayTime>=24)dayTime=0;
+
  const daylight=Math.max(.16,Math.sin((dayTime-6)/12*Math.PI));
  sun.intensity=.35+daylight*2;
  hemi.intensity=.45+daylight*1.5;
+
  const sky=new THREE.Color().setHSL(.56,.35,.18+daylight*.36);
- scene.background=sky;skyDome.material.color.copy(sky);scene.fog.color.copy(sky);
- sun.position.set(Math.cos(dayTime/24*Math.PI*2)*65,20+daylight*65,35);
+ scene.background=sky;
+ skyDome.material.color.copy(sky);
+ scene.fog.color.copy(sky);
+ sun.position.set(
+  Math.cos(dayTime/24*Math.PI*2)*65,
+  20+daylight*65,
+  35
+ );
 }
 
-/* ---------- PAUSA ---------- */
+/* PAUSA */
 
 function togglePause(){
  if(!started)return;
  paused=!paused;
  document.getElementById('pausePanel').style.display=paused?'block':'none';
- if(paused){saveGame();showMessage('Jogo pausado.');}
+ if(paused){
+  saveGame();
+  showMessage('Jogo pausado.');
+ }
 }
+
 document.getElementById('pauseBtn').onclick=togglePause;
 document.getElementById('resumeBtn').onclick=()=>{
- paused=false;document.getElementById('pausePanel').style.display='none';
+ paused=false;
+ document.getElementById('pausePanel').style.display='none';
 };
 document.getElementById('saveBtn').onclick=()=>{
- saveGame();showMessage('💾 Progresso salvo neste aparelho.');
+ saveGame();
+ showMessage('💾 Progresso salvo neste aparelho.');
 };
 
-/* ---------- INÍCIO ---------- */
+/* INÍCIO */
 
 document.getElementById('start').addEventListener('click',async()=>{
  started=true;
  document.getElementById('welcome').style.display='none';
  hands.visible=true;
+ startAmbientSound();
+
  try{
-  if(screen.orientation&&screen.orientation.lock){
+  if(screen.orientation&&screen.orientation.lock)
    await screen.orientation.lock('landscape');
-  }
  }catch(e){}
- if(matchMedia('(pointer:fine)').matches)renderer.domElement.requestPointerLock?.();
+
+ if(matchMedia('(pointer:fine)').matches)
+  renderer.domElement.requestPointerLock?.();
+
  updateStats();
  showMessage('Bem-vindo à Fazenda Santa Luzia! Use E para interagir.');
 });
 
-/* ---------- ATUALIZAÇÃO DAS INTERAÇÕES ---------- */
+/* ATUALIZAÇÃO DAS INTERAÇÕES */
 
 function updateNearby(){
  nearbyVehicleRef=nearestVehicle();
- nearbyDoor=null;nearbyCrop=nearbyPlot();
+ nearbyDoor=null;
+ nearbyCrop=nearbyPlot();
 
  if(inside){
   const r=interiors.find(i=>i.title.includes(inside==='house'?'SEDE':'BARRACÃO'));
   if(r&&Math.hypot(camera.position.x-r.x,camera.position.z-(r.z+7))<4){
-   actionButton.style.display='block';actionButton.textContent='🚪 SAIR DO INTERIOR';
-  }else actionButton.style.display='none';
-  secondaryButton.style.display='none';return;
+   actionButton.style.display='block';
+   actionButton.textContent='🚪 SAIR DO INTERIOR';
+  }else{
+   actionButton.style.display='none';
+  }
+  secondaryButton.style.display='none';
+  return;
  }
 
  let doorBest=999;
  for(const d of doors){
   const dist=Math.hypot(camera.position.x-d.x,camera.position.z-d.z);
-  if(dist<3.5&&dist<doorBest){doorBest=dist;nearbyDoor=d;}
+  if(dist<3.5&&dist<doorBest){
+   doorBest=dist;
+   nearbyDoor=d;
+  }
  }
 
  let label='';
- if(nearbyVehicleRef)label=nearbyVehicleRef.type==='truck'?'🚛 ENTRAR NO CAMINHÃO':'🚜 ENTRAR NO TRATOR';
- else if(nearbyDoor)label=nearbyDoor.label;
- else if(nearbyCrop){
+ if(nearbyVehicleRef){
+  label=nearbyVehicleRef.type==='truck'?'🚛 ENTRAR NO CAMINHÃO':'🚜 ENTRAR NO TRATOR';
+ }else if(nearbyDoor){
+  label=nearbyDoor.label;
+ }else if(nearbyCrop){
   const p=nearbyCrop.plot;
   label=p.stage===0?'🌱 PLANTAR':p.stage>=3?'🌾 COLHER':'💧 REGAR / CUIDAR';
  }
+
  actionButton.style.display=label?'block':'none';
  actionButton.textContent=label||'INTERAGIR';
+
  secondaryButton.style.display=nearbyCrop&&nearbyCrop.plot.stage>0?'block':'none';
  secondaryButton.textContent='🌱 CUIDAR DA PLANTA';
 }
 
-/* ---------- MOVIMENTO DO PERSONAGEM ---------- */
+/* MOVIMENTO DO PERSONAGEM */
 
 let walkTime=0;
+
 function updatePlayer(dt){
  camera.rotation.set(pitch,yaw,0);
+
  const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
  const right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
  const move=new THREE.Vector3();
@@ -1145,6 +1481,7 @@ function updatePlayer(dt){
  if(keys.KeyS||keys.ArrowDown)move.sub(forward);
  if(keys.KeyD||keys.ArrowRight)move.add(right);
  if(keys.KeyA||keys.ArrowLeft)move.sub(right);
+
  move.addScaledVector(forward,-joy.y);
  move.addScaledVector(right,joy.x);
 
@@ -1153,53 +1490,98 @@ function updatePlayer(dt){
   const speed=5.2*dt;
   const nx=camera.position.x+move.x*speed;
   const nz=camera.position.z+move.z*speed;
+
   if(!collides(nx,camera.position.z))camera.position.x=nx;
   if(!collides(camera.position.x,nz))camera.position.z=nz;
+
   walkTime+=dt*9;
  }
+
  camera.position.x=THREE.MathUtils.clamp(camera.position.x,-135,135);
  camera.position.z=THREE.MathUtils.clamp(camera.position.z,-135,135);
  camera.position.y=surface(camera.position.x,camera.position.z)+1.7;
+
  hands.position.y=move.lengthSq()>0?Math.sin(walkTime)*.025:0;
 }
 
-/* ---------- LOOP ---------- */
+/* ANIMAÇÃO AMBIENTAL */
+
+let ambientTime=0;
+
+function updateEnvironment(dt){
+ ambientTime+=dt;
+
+ for(const item of movingLeaves){
+  item.object.rotation.z=Math.sin(ambientTime*item.speed+item.phase)*item.amount;
+  item.object.rotation.x=Math.cos(ambientTime*item.speed*.8+item.phase)*item.amount;
+ }
+
+ for(const item of grassBlades){
+  item.object.rotation.z=Math.sin(ambientTime*1.6+item.phase)*.035;
+ }
+}
+
+/* LOOP PRINCIPAL */
 
 let saveTimer=0;
+
 function animate(){
  requestAnimationFrame(animate);
  const dt=Math.min(clock.getDelta(),.05);
 
  if(started&&!paused){
-  if(currentVehicle)drive(currentVehicle,dt);
-  else if(inside){
+  if(currentVehicle){
+   drive(currentVehicle,dt);
+  }else if(inside){
    camera.rotation.set(pitch,yaw,0);
+
    const forward=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw));
    const right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw));
    const move=new THREE.Vector3();
+
    if(keys.KeyW||keys.ArrowUp)move.add(forward);
    if(keys.KeyS||keys.ArrowDown)move.sub(forward);
    if(keys.KeyA||keys.ArrowLeft)move.sub(right);
    if(keys.KeyD||keys.ArrowRight)move.add(right);
+
    move.addScaledVector(forward,-joy.y);
    move.addScaledVector(right,joy.x);
-   if(move.lengthSq()>0){move.normalize();camera.position.addScaledVector(move,dt*4);}
+
+   if(move.lengthSq()>0){
+    move.normalize();
+    camera.position.addScaledVector(move,dt*4);
+   }
+
    const r=interiors.find(i=>i.title.includes(inside==='house'?'SEDE':'BARRACÃO'));
    if(r&&Math.hypot(camera.position.x-r.x,camera.position.z-(r.z+7))<3.2){
-    actionButton.style.display='block';actionButton.textContent='🚪 SAIR';
-   }else actionButton.style.display='none';
-  }else updatePlayer(dt);
+    actionButton.style.display='block';
+    actionButton.textContent='🚪 SAIR';
+   }else{
+    actionButton.style.display='none';
+   }
+  }else{
+   updatePlayer(dt);
+  }
 
   if(!currentVehicle&&!inside)updateNearby();
-  growCrops(dt);updateDay(dt);updateRain(dt);
+
+  growCrops(dt);
+  updateDay(dt);
+  updateRain(dt);
+  updateEnvironment(dt);
+
   saveTimer+=dt;
-  if(saveTimer>15){saveGame();saveTimer=0;}
+  if(saveTimer>15){
+   saveGame();
+   saveTimer=0;
+  }
  }
+
  renderer.render(scene,camera);
 }
 animate();
 
-/* ---------- AJUSTE DE TELA ---------- */
+/* AJUSTE DE TELA */
 
 addEventListener('resize',()=>{
  camera.aspect=innerWidth/innerHeight;
@@ -1208,10 +1590,11 @@ addEventListener('resize',()=>{
  renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.15:1.35));
 });
 
+/* CARREGAR E SALVAR */
+
 loadGame();
 updateStats();
 
-/* Evita perder o progresso ao sair ou atualizar */
 addEventListener('pagehide',saveGame);
 document.addEventListener('visibilitychange',()=>{
  if(document.hidden)saveGame();
