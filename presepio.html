@@ -3,808 +3,534 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#080d18">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#090806">
 <title>Presépio Santa Luzia 2026</title>
 
 <style>
-* { box-sizing: border-box; }
-
-body {
+* {
   margin: 0;
-  overflow: hidden;
-  background: #080d18;
-  color: #fff;
-  font-family: Georgia, serif;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#scene {
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #090806;
+  font-family: Georgia, serif;
+  color: #fff5df;
+  overscroll-behavior: none;
+}
+
+#app {
   position: fixed;
   inset: 0;
+  overflow: hidden;
+  background: #090806;
 }
 
-canvas {
+/* FUNDO ILUMINADO */
+#background {
+  position: absolute;
+  inset: -35px;
+  background-image: url("96007E48-E8C4-4994-8F9C-0F4466CCF417.png");
+  background-position: center;
+  background-size: cover;
+  filter: blur(28px) brightness(.43);
+  transform: scale(1.08);
+}
+
+/* LUZ AMBIENTE */
+#light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 48%,
+    rgba(255,194,102,.12),
+    transparent 55%),
+    linear-gradient(
+    to bottom,
+    rgba(0,0,0,.12),
+    transparent 35%,
+    rgba(0,0,0,.22));
+}
+
+/* ÁREA DA PINTURA */
+#stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#painting {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.top {
-  position: fixed;
-  top: 18px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  pointer-events: none;
+  object-fit: contain;
+  position: relative;
   z-index: 2;
-  text-shadow: 0 2px 12px #000;
-}
-
-.top small {
-  color: #e4c78c;
-  letter-spacing: 4px;
-  font-size: 10px;
-}
-
-.top h1 {
-  font-weight: normal;
-  font-size: clamp(28px, 7vw, 42px);
-  margin: 7px 0;
-  color: #f6e5c3;
-}
-
-.top p {
-  margin: 0;
-  font-size: 12px;
-  color: #e2d7c5;
-}
-
-.controls {
-  position: fixed;
-  z-index: 3;
-  bottom: 18px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  padding: 0 12px;
-}
-
-.controls button {
-  border: 1px solid #c6a66d;
-  background: #302719dd;
-  color: #f7e8c8;
-  border-radius: 30px;
-  padding: 12px 18px;
-  font-family: Georgia, serif;
-  font-size: 12px;
-}
-
-.hint {
-  position: fixed;
-  z-index: 2;
-  bottom: 75px;
-  width: 100%;
-  text-align: center;
-  font-size: 11px;
-  color: #eee0c4;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
   pointer-events: none;
-  text-shadow: 0 2px 8px #000;
 }
 
-#loading {
-  position: fixed;
-  z-index: 5;
+/* BRILHO SUAVE */
+.glow {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255,190,100,.08);
+  filter: blur(65px);
+  pointer-events: none;
+  animation: breathe 5s ease-in-out infinite alternate;
+}
+
+.glow.one {
+  top: 22%;
+  left: 34%;
+}
+
+.glow.two {
+  bottom: 15%;
+  right: 12%;
+  animation-delay: 2s;
+}
+
+@keyframes breathe {
+  from { opacity: .35; transform: scale(.85); }
+  to { opacity: .8; transform: scale(1.18); }
+}
+
+/* ESTRELAS */
+.stars {
+  position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  background: #080d18;
-  color: #e8d4a8;
-  font-size: 15px;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-@media (max-height: 600px) {
-  .top { top: 7px; }
-  .top h1 { font-size: 25px; }
-  .hint { bottom: 65px; }
-  .controls { bottom: 8px; }
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffe7ad;
+  box-shadow: 0 0 9px 2px rgba(255,218,151,.65);
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: .15; transform: scale(.7); }
+  to { opacity: .85; transform: scale(1.3); }
+}
+
+/* CONTROLES */
+.controls {
+  position: absolute;
+  z-index: 10;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,225,175,.35);
+  background: rgba(15,12,9,.66);
+  color: #fff0d2;
+  font-size: 21px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.control:active {
+  transform: scale(.92);
+}
+
+/* TÍTULO DISCRETO */
+.brand {
+  position: absolute;
+  z-index: 8;
+  top: max(22px, env(safe-area-inset-top));
+  left: 0;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 2px 12px #000;
+  transition: opacity .4s;
+}
+
+.brand small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: #e8c68c;
+  margin-bottom: 5px;
+}
+
+.brand h1 {
+  font-size: 19px;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+
+/* BOTÃO DA HISTÓRIA */
+.story-button {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  bottom: max(26px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  padding: 12px 19px;
+  border: 1px solid rgba(255,224,176,.42);
+  border-radius: 30px;
+  color: #fff1d7;
+  background: rgba(18,13,8,.72);
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: .5px;
+  backdrop-filter: blur(12px);
+  white-space: nowrap;
+}
+
+.story-button:active {
+  transform: translateX(-50%) scale(.96);
+}
+
+/* HISTÓRIA */
+#story {
+  display: none;
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  background: rgba(8,6,4,.94);
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+#story.show {
+  display: flex;
+}
+
+.story-content {
+  max-width: 420px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.story-content .cross {
+  font-size: 38px;
+  color: #e5bd7c;
+  margin-bottom: 15px;
+}
+
+.story-content h2 {
+  font-weight: normal;
+  font-size: 25px;
+  color: #f0d3a0;
+  margin-bottom: 20px;
+}
+
+.story-content p {
+  font-size: 15px;
+  color: #e8ddca;
+  margin-bottom: 14px;
+}
+
+.close-story {
+  margin-top: 17px;
+  padding: 11px 25px;
+  border: 1px solid #b99762;
+  border-radius: 25px;
+  color: #f5dfb9;
+  background: transparent;
+  font-family: Georgia, serif;
+  font-size: 14px;
+}
+
+/* AVISO DE IMAGEM */
+#error {
+  display: none;
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  color: #fff;
+  background: #100d09;
+  line-height: 1.7;
+}
+
+#error.show {
+  display: flex;
+}
+
+/* OCULTAR INTERFACE */
+#app.clean .brand,
+#app.clean .controls,
+#app.clean .story-button {
+  opacity: 0;
+  pointer-events: none;
 }
 </style>
 </head>
 
 <body>
 
-<div id="loading">Preparando o Presépio Santa Luzia...</div>
+<div id="app">
 
-<div class="top">
-  <small>SANTA LUZIA APRESENTA</small>
-  <h1>O Nascimento de Jesus</h1>
-  <p>Presépio Santa Luzia 2026</p>
+  <div id="background"></div>
+  <div id="light"></div>
+
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <div id="stage">
+    <img
+      id="painting"
+      src="96007E48-E8C4-4994-8F9C-0F4466CCF417.png"
+      alt="Nascimento de Jesus em Belém"
+    >
+  </div>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="brand">
+    <small>SANTA LUZIA APRESENTA</small>
+    <h1>O NASCIMENTO DE JESUS</h1>
+  </div>
+
+  <button class="story-button" id="openStory">
+    Conheça a história ✨
+  </button>
+
+  <div class="controls">
+    <button class="control" id="zoomIn" aria-label="Aumentar zoom">+</button>
+    <button class="control" id="zoomOut" aria-label="Diminuir zoom">−</button>
+    <button class="control" id="reset" aria-label="Restaurar imagem">↺</button>
+    <button class="control" id="hideUI" aria-label="Ocultar controles">◉</button>
+  </div>
+
+  <div id="story">
+    <div class="story-content">
+      <div class="cross">✝</div>
+      <h2>Uma noite que mudou o mundo</h2>
+
+      <p>
+        Em Belém, numa noite simples e silenciosa,
+        nasceu Jesus Cristo.
+      </p>
+
+      <p>
+        Maria e José acolheram o menino numa
+        manjedoura, pois não havia lugar para eles
+        na hospedaria.
+      </p>
+
+      <p>
+        Pastores receberam a notícia do nascimento
+        do Salvador e foram ao seu encontro.
+        Mais tarde, os Reis Magos também vieram
+        adorá-lo e oferecer seus presentes.
+      </p>
+
+      <p>
+        Aquele pequeno menino trouxe ao mundo
+        uma mensagem de amor, esperança e salvação.
+      </p>
+
+      <p>
+        <strong>Jesus é o verdadeiro sentido do Natal.</strong>
+      </p>
+
+      <button class="close-story" id="closeStory">
+        Voltar ao Presépio
+      </button>
+    </div>
+  </div>
+
+  <div id="error">
+    <div>
+      <h2>Não foi possível carregar a pintura</h2>
+      <p>
+        Confira se a imagem está na mesma pasta
+        deste arquivo e se o nome está correto.
+      </p>
+    </div>
+  </div>
+
 </div>
 
-<div class="hint">Arraste para observar • Use dois dedos para aproximar</div>
+<script>
+const app = document.getElementById("app");
+const image = document.getElementById("painting");
+const stage = document.getElementById("stage");
 
-<div class="controls">
-  <button id="reset">Centralizar visão</button>
-  <button id="light">Acender luzes</button>
-</div>
+let scale = 1;
+let x = 0;
+let y = 0;
 
-<div id="scene"></div>
+function updateImage() {
+  image.style.transform =
+    `translate(${x}px, ${y}px) scale(${scale})`;
+}
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+function zoom(amount) {
+  scale = Math.max(1, Math.min(4, scale + amount));
+
+  if (scale === 1) {
+    x = 0;
+    y = 0;
   }
+
+  updateImage();
+}
+
+document.getElementById("zoomIn").onclick = () => zoom(.25);
+document.getElementById("zoomOut").onclick = () => zoom(-.25);
+
+document.getElementById("reset").onclick = () => {
+  scale = 1;
+  x = 0;
+  y = 0;
+  updateImage();
+};
+
+document.getElementById("hideUI").onclick = () => {
+  app.classList.toggle("clean");
+};
+
+/* HISTÓRIA */
+const story = document.getElementById("story");
+
+document.getElementById("openStory").onclick = () => {
+  story.classList.add("show");
+};
+
+document.getElementById("closeStory").onclick = () => {
+  story.classList.remove("show");
+};
+
+/* VERIFICAR IMAGEM */
+image.onload = () => {
+  document.getElementById("error").classList.remove("show");
+};
+
+image.onerror = () => {
+  document.getElementById("error").classList.add("show");
+};
+
+/* MOVIMENTO COM O DEDO E ZOOM DE DOIS DEDOS */
+const pointers = new Map();
+let startX = 0;
+let startY = 0;
+let startDistance = 0;
+let startScale = 1;
+let startPanX = 0;
+let startPanY = 0;
+
+function distance(a, b) {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}
+
+stage.addEventListener("pointerdown", e => {
+  stage.setPointerCapture(e.pointerId);
+
+  pointers.set(e.pointerId, {
+    x: e.clientX,
+    y: e.clientY
+  });
+
+  if (pointers.size === 1) {
+    startX = e.clientX;
+    startY = e.clientY;
+    startPanX = x;
+    startPanY = y;
+  }
+
+  if (pointers.size === 2) {
+    const p = [...pointers.values()];
+    startDistance = distance(p[0], p[1]);
+    startScale = scale;
+  }
+});
+
+stage.addEventListener("pointermove", e => {
+  if (!pointers.has(e.pointerId)) return;
+
+  pointers.set(e.pointerId, {
+    x: e.clientX,
+    y: e.clientY
+  });
+
+  if (pointers.size === 1 && scale > 1) {
+    x = startPanX + (e.clientX - startX);
+    y = startPanY + (e.clientY - startY);
+    updateImage();
+  }
+
+  if (pointers.size === 2) {
+    const p = [...pointers.values()];
+    const currentDistance = distance(p[0], p[1]);
+
+    scale = Math.max(
+      1,
+      Math.min(4, startScale * currentDistance / startDistance)
+    );
+
+    if (scale === 1) {
+      x = 0;
+      y = 0;
+    }
+
+    updateImage();
+  }
+});
+
+function releasePointer(e) {
+  pointers.delete(e.pointerId);
+  if (pointers.size === 1) {
+    const p = [...pointers.values()][0];
+    startX = p.x;
+    startY = p.y;
+    startPanX = x;
+    startPanY = y;
+  }
+}
+
+stage.addEventListener("pointerup", releasePointer);
+stage.addEventListener("pointercancel", releasePointer);
+
+/* ESTRELAS DISCRETAS */
+const stars = document.getElementById("stars");
+
+for (let i = 0; i < 24; i++) {
+  const star = document.createElement("div");
+  star.className = "star";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.top = Math.random() * 100 + "%";
+  star.style.animationDelay = Math.random() * 4 + "s";
+  star.style.animationDuration = (2 + Math.random() * 3) + "s";
+  stars.appendChild(star);
 }
 </script>
 
-<script type="module">
-import * as THREE from
-"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-
-import { OrbitControls } from
-"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js";
-
-// ==================================
-// CENA PRINCIPAL
-// ==================================
-
-const container = document.getElementById("scene");
-
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x080d1c);
-scene.fog = new THREE.Fog(0x111827, 24, 65);
-
-const camera = new THREE.PerspectiveCamera(
-  48,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  150
-);
-
-camera.position.set(13, 10, 18);
-
-const renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  powerPreference: "high-performance"
-});
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.15;
-
-container.appendChild(renderer.domElement);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 2, 0);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
-controls.minDistance = 7;
-controls.maxDistance = 32;
-controls.maxPolarAngle = Math.PI * 0.48;
-
-// ==================================
-// MATERIAIS
-// ==================================
-
-function material(color, roughness = 1) {
-  return new THREE.MeshStandardMaterial({
-    color,
-    roughness
-  });
-}
-
-const stone = material(0x88745d);
-const darkStone = material(0x51483e);
-const wood = material(0x543824);
-const oldWood = material(0x76502f);
-const straw = material(0xc3a05d);
-const earth = material(0x65503d);
-const cloth = material(0x9d7750);
-const blueCloth = material(0x344d77);
-const whiteCloth = material(0xe0d5bd);
-const skin = material(0xb88765);
-const gold = material(0xc59b42, 0.45);
-
-// ==================================
-// LUZES
-// ==================================
-
-const ambient = new THREE.HemisphereLight(
-  0x9caedb,
-  0x443020,
-  2
-);
-scene.add(ambient);
-
-const moonLight = new THREE.DirectionalLight(0x9caedb, 2);
-moonLight.position.set(-10, 16, -8);
-scene.add(moonLight);
-
-const stableLight = new THREE.PointLight(0xffbd69, 45, 18);
-stableLight.position.set(0, 5, 1);
-scene.add(stableLight);
-
-const starLight = new THREE.PointLight(0xffe5a3, 30, 28);
-starLight.position.set(1, 12, -5);
-scene.add(starLight);
-
-const lanternLights = [];
-
-function addLantern(x, y, z) {
-  const lamp = new THREE.Group();
-
-  const base = new THREE.Mesh(
-    new THREE.BoxGeometry(0.3, 0.35, 0.3),
-    wood
-  );
-  lamp.add(base);
-
-  const glow = new THREE.Mesh(
-    new THREE.SphereGeometry(0.12, 12, 12),
-    new THREE.MeshBasicMaterial({ color: 0xffc66e })
-  );
-  glow.position.y = 0.12;
-  lamp.add(glow);
-
-  lamp.position.set(x, y, z);
-  scene.add(lamp);
-
-  const light = new THREE.PointLight(0xffbd65, 5, 7);
-  light.position.set(x, y + 0.2, z);
-  scene.add(light);
-  lanternLights.push(light);
-}
-
-// ==================================
-// FUNÇÕES DE CONSTRUÇÃO
-// ==================================
-
-function box(w, h, d, mat, x, y, z, parent = scene) {
-  const mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(w, h, d),
-    mat
-  );
-
-  mesh.position.set(x, y, z);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  parent.add(mesh);
-  return mesh;
-}
-
-function sphere(radius, mat, x, y, z, parent = scene) {
-  const mesh = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 20, 16),
-    mat
-  );
-  mesh.position.set(x, y, z);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  parent.add(mesh);
-  return mesh;
-}
-
-function cylinder(rt, rb, h, mat, x, y, z, parent = scene) {
-  const mesh = new THREE.Mesh(
-    new THREE.CylinderGeometry(rt, rb, h, 12),
-    mat
-  );
-  mesh.position.set(x, y, z);
-  mesh.castShadow = true;
-  parent.add(mesh);
-  return mesh;
-}
-
-// ==================================
-// TERRENO
-// ==================================
-
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(70, 70),
-  earth
-);
-ground.rotation.x = -Math.PI / 2;
-ground.position.y = -0.1;
-ground.receiveShadow = true;
-scene.add(ground);
-
-// Base da maquete
-const base = new THREE.Mesh(
-  new THREE.CylinderGeometry(15, 15, 0.6, 64),
-  material(0x493a2e)
-);
-base.position.y = -0.45;
-base.receiveShadow = true;
-scene.add(base);
-
-// Pequenas elevações
-for (let i = 0; i < 13; i++) {
-  const hill = new THREE.Mesh(
-    new THREE.SphereGeometry(1, 16, 12),
-    material(i % 2 ? 0x514738 : 0x65513e)
-  );
-
-  hill.scale.set(
-    3 + Math.random() * 3,
-    0.8 + Math.random(),
-    2 + Math.random() * 2
-  );
-
-  const angle = Math.random() * Math.PI * 2;
-  const radius = 12 + Math.random() * 5;
-
-  hill.position.set(
-    Math.cos(angle) * radius,
-    -0.4,
-    Math.sin(angle) * radius
-  );
-
-  scene.add(hill);
-}
-
-// ==================================
-// MONTANHAS AO FUNDO
-// ==================================
-
-for (let i = 0; i < 9; i++) {
-  const mountain = new THREE.Mesh(
-    new THREE.ConeGeometry(
-      3 + Math.random() * 2,
-      5 + Math.random() * 4,
-      6
-    ),
-    material(0x34394a)
-  );
-
-  mountain.position.set(
-    -19 + i * 4.8,
-    1.5,
-    -16 - Math.random() * 4
-  );
-
-  mountain.rotation.y = Math.random();
-  scene.add(mountain);
-}
-
-// ==================================
-// ESTRELAS NO CÉU
-// ==================================
-
-for (let i = 0; i < 180; i++) {
-  const star = sphere(
-    0.035 + Math.random() * 0.035,
-    new THREE.MeshBasicMaterial({ color: 0xffffff }),
-    (Math.random() - 0.5) * 50,
-    8 + Math.random() * 17,
-    -15 - Math.random() * 15
-  );
-}
-
-// Estrela principal
-const mainStar = new THREE.Group();
-
-const starShape = new THREE.Mesh(
-  new THREE.OctahedronGeometry(0.65, 0),
-  new THREE.MeshBasicMaterial({
-    color: 0xffe5a0
-  })
-);
-mainStar.add(starShape);
-
-const starHalo = new THREE.PointLight(0xffd77c, 65, 30);
-mainStar.add(starHalo);
-
-mainStar.position.set(1, 12, -7);
-scene.add(mainStar);
-
-// ==================================
-// CASAS DE BELÉM
-// ==================================
-
-function createHouse(x, z, size = 1) {
-  const group = new THREE.Group();
-
-  const width = 2.2 * size;
-  const height = 1.8 * size;
-  const depth = 1.8 * size;
-
-  box(width, height, depth, stone, 0, height / 2, 0, group);
-
-  // Telhado plano antigo
-  box(width + 0.3, 0.18, depth + 0.3,
-      darkStone, 0, height + 0.08, 0, group);
-
-  // Porta
-  box(0.48 * size, 1.1 * size, 0.12,
-      wood, 0, 0.55 * size, depth / 2 + 0.07, group);
-
-  // Janela iluminada
-  box(0.32 * size, 0.42 * size, 0.1,
-      material(0xffc66e), -0.65 * size,
-      1.15 * size, depth / 2 + 0.08, group);
-
-  // Detalhes das pedras
-  for (let j = 0; j < 4; j++) {
-    box(
-      width + 0.04,
-      0.06,
-      0.05,
-      darkStone,
-      0,
-      0.35 + j * 0.38,
-      depth / 2 + 0.03,
-      group
-    );
-  }
-
-  group.position.set(x, 0, z);
-  scene.add(group);
-
-  const light = new THREE.PointLight(0xffb85e, 3, 5);
-  light.position.set(x, 1.4 * size, z + 1.2);
-  scene.add(light);
-}
-
-createHouse(-8, -7, 1.2);
-createHouse(-5, -9, 0.9);
-createHouse(-2, -10, 1.1);
-createHouse(3, -10, 1.2);
-createHouse(7, -7, 1.1);
-createHouse(10, -4, 0.9);
-createHouse(-10, -3, 0.9);
-
-// ==================================
-// ESTÁBULO
-// ==================================
-
-const stable = new THREE.Group();
-
-// Piso
-box(8, 0.3, 6, material(0x755638), 0, 0.15, 0, stable);
-
-// Paredes de pedra laterais
-box(0.4, 3.2, 6, stone, -3.8, 1.7, 0, stable);
-box(0.4, 3.2, 6, stone, 3.8, 1.7, 0, stable);
-box(8, 3.2, 0.4, stone, 0, 1.7, -2.8, stable);
-
-// Pilares de madeira
-for (const x of [-3.5, -1.2, 1.2, 3.5]) {
-  box(0.25, 4, 0.25, oldWood, x, 2, 2.8, stable);
-}
-
-// Vigas superiores
-box(8.5, 0.25, 0.3, wood, 0, 4, 2.8, stable);
-box(8.5, 0.25, 0.3, wood, 0, 4, -2.8, stable);
-box(0.25, 0.2, 5.8, wood, -3.8, 4, 0, stable);
-box(0.25, 0.2, 5.8, wood, 3.8, 4, 0, stable);
-
-// Telhado em duas águas
-const roofLeft = box(4.7, 0.22, 6.5, oldWood, -1.8, 4.6, 0, stable);
-roofLeft.rotation.z = -0.35;
-
-const roofRight = box(4.7, 0.22, 6.5, oldWood, 1.8, 4.6, 0, stable);
-roofRight.rotation.z = 0.35;
-
-// Palha do telhado
-for (let i = 0; i < 35; i++) {
-  const strawPiece = box(
-    0.12,
-    0.08,
-    2.5 + Math.random() * 2,
-    straw,
-    (Math.random() - 0.5) * 7,
-    4.7 + Math.random() * 0.35,
-    (Math.random() - 0.5) * 4,
-    stable
-  );
-  strawPiece.rotation.z = (Math.random() - 0.5) * 0.5;
-}
-
-stable.position.set(0, 0, 2);
-scene.add(stable);
-
-// ==================================
-// MANJEDOURA
-// ==================================
-
-const manger = new THREE.Group();
-
-box(1.7, 0.15, 0.7, wood, 0, 0.75, 0, manger);
-box(0.12, 0.6, 0.12, oldWood, -0.7, 0.4, -0.25, manger);
-box(0.12, 0.6, 0.12, oldWood, 0.7, 0.4, -0.25, manger);
-box(0.12, 0.6, 0.12, oldWood, -0.7, 0.4, 0.25, manger);
-box(0.12, 0.6, 0.12, oldWood, 0.7, 0.4, 0.25, manger);
-
-// Palha
-for (let i = 0; i < 18; i++) {
-  const piece = box(
-    0.65, 0.025, 0.035,
-    straw,
-    (Math.random() - 0.5) * 0.8,
-    0.86 + Math.random() * 0.08,
-    (Math.random() - 0.5) * 0.3,
-    manger
-  );
-  piece.rotation.y = Math.random();
-}
-
-// Jesus
-sphere(0.22, skin, 0, 1.15, 0, manger);
-const babyBody = sphere(0.3, whiteCloth, 0, 1, 0.18, manger);
-babyBody.scale.set(1, 0.55, 1.2);
-
-manger.position.set(0, 0, 2.5);
-scene.add(manger);
-
-// ==================================
-// PERSONAGENS
-// ==================================
-
-function createPerson(x, z, bodyMat, scale = 1, rotation = 0) {
-  const person = new THREE.Group();
-
-  // Corpo
-  const body = new THREE.Mesh(
-    new THREE.CylinderGeometry(
-      0.28 * scale,
-      0.48 * scale,
-      1.35 * scale,
-      16
-    ),
-    bodyMat
-  );
-  body.position.y = 0.95 * scale;
-  body.castShadow = true;
-  person.add(body);
-
-  // Cabeça
-  const head = sphere(
-    0.25 * scale,
-    skin,
-    0,
-    1.85 * scale,
-    0,
-    person
-  );
-
-  // Manto/cobertura da cabeça
-  const hood = sphere(
-    0.27 * scale,
-    whiteCloth,
-    0,
-    2.03 * scale,
-    -0.03,
-    person
-  );
-  hood.scale.set(1, 0.65, 1);
-
-  person.position.set(x, 0, z);
-  person.rotation.y = rotation;
-  scene.add(person);
-
-  return person;
-}
-
-// Maria
-createPerson(-1.1, 1.2, blueCloth, 1, 0.3);
-
-// José
-const jose = createPerson(1.2, 0.8, cloth, 1.12, -0.3);
-
-// Manto de José
-cylinder(0.08, 0.08, 1.9, wood, 1.9, 0.95, 1.1);
-
-// Pastores
-createPerson(-4.5, 1.5, material(0x776044), 1.05, 0.5);
-createPerson(4.5, 1.5, material(0x8b6946), 1.05, -0.5);
-
-// Reis Magos
-createPerson(-5.5, 3.5, material(0x803e35), 1.15, 0.2);
-createPerson(-3.8, 4.5, material(0x34465f), 1.15, 0.4);
-createPerson(5.3, 3.5, material(0x98712f), 1.15, -0.4);
-
-// Presentes
-function gift(x, z) {
-  const g = box(0.55, 0.35, 0.5, gold, x, 0.3, z);
-  const ribbon = box(0.1, 0.38, 0.52, material(0xe5c87c), x, 0.3, z);
-  return g;
-}
-
-gift(-5.5, 2.5);
-gift(-3.8, 3.5);
-gift(5.3, 2.5);
-
-// ==================================
-// ANIMAIS
-// ==================================
-
-function sheep(x, z, scale = 1) {
-  const animal = new THREE.Group();
-
-  for (let i = 0; i < 6; i++) {
-    const angle = i * Math.PI / 3;
-    sphere(
-      0.27 * scale,
-      whiteCloth,
-      Math.cos(angle) * 0.23 * scale,
-      0.48 * scale,
-      Math.sin(angle) * 0.22 * scale,
-      animal
-    );
-  }
-
-  sphere(0.25 * scale, whiteCloth, 0, 0.5 * scale, 0, animal);
-  sphere(0.17 * scale, skin, 0.2 * scale, 0.55 * scale, 0.1, animal);
-
-  for (const dx of [-0.17, 0.17]) {
-    for (const dz of [-0.13, 0.13]) {
-      cylinder(
-        0.045 * scale,
-        0.045 * scale,
-        0.38 * scale,
-        darkStone,
-        dx * scale,
-        0.18 * scale,
-        dz * scale,
-        animal
-      );
-    }
-  }
-
-  animal.position.set(x, 0, z);
-  scene.add(animal);
-}
-
-function ox(x, z) {
-  const animal = new THREE.Group();
-
-  const brown = material(0x65422f);
-
-  const body = sphere(0.7, brown, 0, 0.85, 0, animal);
-  body.scale.set(1.3, 0.85, 0.85);
-
-  sphere(0.38, brown, 0.8, 1, 0, animal);
-
-  // Chifres
-  const horn1 = cylinder(0.04, 0.09, 0.45, whiteCloth, 0.9, 1.45, -0.2, animal);
-  const horn2 = cylinder(0.04, 0.09, 0.45, whiteCloth, 0.9, 1.45, 0.2, animal);
-  horn1.rotation.z = -0.5;
-  horn2.rotation.z = -0.5;
-
-  for (const dx of [-0.45, 0.45]) {
-    for (const dz of [-0.4, 0.4]) {
-      cylinder(0.08, 0.08, 0.7, brown, dx, 0.35, dz, animal);
-    }
-  }
-
-  animal.position.set(x, 0, z);
-  scene.add(animal);
-}
-
-sheep(5, 2, 1.1);
-sheep(6.2, 3, 0.8);
-sheep(-6, 2.5, 0.9);
-sheep(-7, 3.5, 0.7);
-
-ox(2.6, -0.2);
-
-// ==================================
-// TOCHAS E LANTERNAS
-// ==================================
-
-addLantern(-3.3, 2.8, 3);
-addLantern(3.3, 2.8, 3);
-addLantern(-7, 1.5, 0);
-addLantern(7, 1.5, 0);
-
-// ==================================
-// CAMINHO DE PEDRAS
-// ==================================
-
-for (let i = 0; i < 18; i++) {
-  const stonePiece = new THREE.Mesh(
-    new THREE.CylinderGeometry(
-      0.35 + Math.random() * 0.2,
-      0.4,
-      0.12,
-      6
-    ),
-    darkStone
-  );
-
-  stonePiece.position.set(
-    (Math.random() - 0.5) * 5,
-    0.03,
-    6 + i * 0.35
-  );
-
-  stonePiece.rotation.y = Math.random();
-  stonePiece.receiveShadow = true;
-  scene.add(stonePiece);
-}
-
-// ==================================
-// ESTRELA E ILUMINAÇÃO ANIMADAS
-// ==================================
-
-let lightsOn = true;
-
-document.getElementById("light").addEventListener("click", () => {
-  lightsOn = !lightsOn;
-  stableLight.intensity = lightsOn ? 45 : 8;
-
-  lanternLights.forEach(light => {
-    light.intensity = lightsOn ? 5 : 0.5;
-  });
-
-  starLight.intensity = lightsOn ? 30 : 12;
-});
-
-document.getElementById("reset").addEventListener("click", () => {
-  camera.position.set(13, 10, 18);
-  controls.target.set(0, 2, 0);
-  controls.update();
-});
-
-// ==================================
-// SOMBRAS E CONFIGURAÇÕES FINAIS
-// ==================================
-
-moonLight.castShadow = true;
-moonLight.shadow.mapSize.set(1024, 1024);
-
-scene.traverse(object => {
-  if (object.isMesh) {
-    object.castShadow = true;
-    object.receiveShadow = true;
-  }
-});
-
-// ==================================
-// RESPONSIVIDADE
-// ==================================
-
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
-});
-
-// ==================================
-// ANIMAÇÃO
-// ==================================
-
-let time = 0;
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  time += 0.01;
-
-  mainStar.rotation.y += 0.003;
-  mainStar.scale.setScalar(1 + Math.sin(time * 2) * 0.035);
-
-  stableLight.intensity = lightsOn
-    ? 45 + Math.sin(time * 3) * 2
-    : 8;
-
-  controls.update();
-  renderer.render(scene, camera);
-}
-
-animate();
-
-document.getElementById("loading").style.display = "none";
-
-</script>
 </body>
 </html>
