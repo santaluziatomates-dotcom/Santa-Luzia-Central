@@ -16,168 +16,228 @@
 
 body {
   background: #080d1b;
-  color: white;
+  color: #fff;
   font-family: Georgia, serif;
-  overflow-x: hidden;
 }
 
 .scene {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100svh;
+  min-height: 680px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 75% 12%, #29314d 0%, transparent 32%),
-    linear-gradient(#080d1b 0%, #17213a 55%, #453a38 100%);
+    radial-gradient(ellipse at 75% 20%, #39405a 0%, transparent 35%),
+    linear-gradient(180deg, #080d1b 0%, #151d33 55%, #393039 100%);
 }
+
+/* CÉU */
 
 .stars {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(2px 2px at 10% 15%, white 90%, transparent),
-    radial-gradient(2px 2px at 25% 35%, white 90%, transparent),
-    radial-gradient(1px 1px at 40% 12%, white 90%, transparent),
-    radial-gradient(2px 2px at 65% 22%, white 90%, transparent),
-    radial-gradient(1px 1px at 80% 10%, white 90%, transparent),
-    radial-gradient(2px 2px at 90% 38%, white 90%, transparent),
-    radial-gradient(1px 1px at 55% 43%, white 90%, transparent),
-    radial-gradient(2px 2px at 15% 48%, white 90%, transparent);
-  background-size: 350px 250px;
-  animation: brilho 4s infinite alternate;
+    radial-gradient(2px 2px at 10% 15%, #fff 90%, transparent),
+    radial-gradient(2px 2px at 25% 35%, #fff 90%, transparent),
+    radial-gradient(1px 1px at 40% 12%, #fff 90%, transparent),
+    radial-gradient(2px 2px at 65% 22%, #fff 90%, transparent),
+    radial-gradient(1px 1px at 80% 10%, #fff 90%, transparent),
+    radial-gradient(2px 2px at 90% 38%, #fff 90%, transparent),
+    radial-gradient(1px 1px at 55% 43%, #fff 90%, transparent);
+  background-size: 300px 250px;
+  animation: twinkle 5s infinite alternate;
 }
 
-@keyframes brilho {
-  from { opacity: .45; }
+@keyframes twinkle {
+  from { opacity: .4; }
   to { opacity: 1; }
 }
 
 .moon {
   position: absolute;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  top: 8%;
+  top: 11%;
   left: 12%;
-  background: #f4e6bb;
-  box-shadow: 0 0 30px #f4e6bb88, 0 0 80px #f4e6bb44;
-}
-
-.star-of-bethlehem {
-  position: absolute;
-  top: 12%;
-  right: 17%;
   width: 48px;
   height: 48px;
-  background: #fff2c2;
+  border-radius: 50%;
+  background: #f4e8c5;
+  box-shadow: 0 0 35px #f4e8c577;
+}
+
+/* ESTRELA DE BELÉM */
+
+.star-glow {
+  position: absolute;
+  top: 12%;
+  right: 16%;
+  width: 100px;
+  height: 100px;
+  background: #ffe7a2;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: .55;
+  animation: glow 3s infinite alternate;
+}
+
+.star {
+  position: absolute;
+  top: 14%;
+  right: calc(16% + 28px);
+  width: 44px;
+  height: 44px;
+  background: #fff0bc;
   clip-path: polygon(
-    50% 0%, 61% 37%, 100% 50%,
-    61% 63%, 50% 100%, 39% 63%,
-    0% 50%, 39% 37%
+    50% 0%, 61% 38%, 100% 50%,
+    61% 62%, 50% 100%, 39% 62%,
+    0% 50%, 39% 38%
   );
-  filter: drop-shadow(0 0 15px #ffe7a0);
-  animation: estrela 3s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 15px #ffe7a2);
+  animation: starshine 3s infinite alternate;
 }
 
-@keyframes estrela {
-  from { transform: scale(.85); opacity: .8; }
-  to { transform: scale(1.15); opacity: 1; }
+@keyframes starshine {
+  from { transform: scale(.9); }
+  to { transform: scale(1.15); }
 }
 
-.star-ray {
+@keyframes glow {
+  from { opacity: .3; }
+  to { opacity: .7; }
+}
+
+/* TÍTULO */
+
+.intro {
   position: absolute;
-  top: 16%;
-  right: 18.7%;
-  width: 2px;
-  height: 52%;
-  background: linear-gradient(#ffe9a0, transparent);
-  opacity: .35;
-  transform: rotate(8deg);
-  transform-origin: top;
-}
-
-.mountains {
-  position: absolute;
-  bottom: 24%;
+  z-index: 10;
+  top: 5%;
   width: 100%;
-  height: 37%;
-  background: #242b38;
+  text-align: center;
+  padding: 15px;
+  text-shadow: 0 2px 15px #000;
+}
+
+.intro small {
+  color: #e5c88e;
+  letter-spacing: 4px;
+  font-size: 10px;
+}
+
+.intro h1 {
+  margin-top: 12px;
+  color: #f3dfb8;
+  font-size: clamp(32px, 8vw, 45px);
+  font-weight: normal;
+}
+
+.intro p {
+  margin-top: 9px;
+  font-size: 13px;
+  color: #ddd2c0;
+}
+
+/* MONTANHAS */
+
+.mountain {
+  position: absolute;
+  bottom: 27%;
+  width: 120%;
+  left: -10%;
+  height: 32%;
   clip-path: polygon(
-    0 65%, 12% 35%, 25% 60%, 39% 20%,
-    52% 55%, 70% 24%, 85% 58%, 100% 30%,
-    100% 100%, 0 100%
+    0 70%, 12% 35%, 22% 60%, 35% 15%,
+    48% 65%, 62% 22%, 75% 60%, 88% 30%,
+    100% 65%, 100% 100%, 0 100%
   );
 }
 
-.mountains-back {
-  bottom: 28%;
-  height: 35%;
-  background: #343746;
-  opacity: .65;
+.mountain.back {
+  background: #252c3c;
+  bottom: 30%;
+  opacity: .8;
   transform: scaleX(-1);
 }
 
-.ground {
+.mountain.front {
+  background: linear-gradient(90deg, #303344, #222838);
+}
+
+/* TERRENO DA CIDADE */
+
+.hill {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  height: 31%;
-  background: linear-gradient(#51433b, #211d20);
-  border-radius: 50% 50% 0 0 / 12% 12% 0 0;
+  width: 120%;
+  left: -10%;
+  height: 43%;
+  background: linear-gradient(180deg, #68513f, #302725);
+  border-radius: 50% 50% 0 0 / 15% 15% 0 0;
 }
+
+/* CIDADE */
 
 .city {
   position: absolute;
-  bottom: 24%;
+  z-index: 3;
+  bottom: 29%;
   width: 100%;
-  height: 32%;
+  height: 31%;
   display: flex;
-  align-items: end;
   justify-content: center;
-  gap: 3px;
-  padding: 0 5px;
+  align-items: end;
+  gap: 5px;
+  padding: 0 7px;
 }
 
 .house {
   position: relative;
-  width: 13%;
-  max-width: 85px;
+  width: 14%;
+  max-width: 88px;
   height: 65%;
-  background: linear-gradient(90deg, #675044, #a17b5e, #654a3c);
-  border: 1px solid #bd9870;
+  background:
+    linear-gradient(90deg, #59483d, #9a7658 48%, #614a3c);
+  border: 1px solid #a68a69;
   border-bottom: 0;
-  box-shadow: inset 0 0 15px #241a17;
+  box-shadow: inset 0 0 15px #291d19;
 }
 
-.house:nth-child(2n) {
-  height: 80%;
-}
+.house.tall { height: 82%; }
+.house.short { height: 52%; }
+.house.medium { height: 70%; }
 
-.house:nth-child(3n) {
-  height: 55%;
-}
-
-.roof {
+.house::before {
+  content: "";
   position: absolute;
-  top: -16px;
-  left: -5px;
-  width: calc(100% + 10px);
-  height: 18px;
-  background: #49382f;
+  top: -20px;
+  left: -7px;
+  width: calc(100% + 14px);
+  height: 22px;
+  background: linear-gradient(180deg, #5a4132, #392b26);
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  border-bottom: 2px solid #a17a57;
+}
+
+.house::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  height: 3px;
+  background: #b08a65;
+  opacity: .35;
 }
 
 .window {
   position: absolute;
-  width: 12px;
-  height: 18px;
-  background: #ffd58a;
-  box-shadow: 0 0 14px #ffbc58;
+  top: 34%;
   left: 50%;
-  top: 35%;
   transform: translateX(-50%);
-  border-radius: 5px 5px 0 0;
+  width: 13px;
+  height: 20px;
+  border-radius: 7px 7px 0 0;
+  background: #ffd17b;
+  box-shadow: 0 0 18px 5px #ffc56a77;
 }
 
 .door {
@@ -185,100 +245,118 @@ body {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 23px;
-  height: 38px;
-  background: #33231e;
+  width: 24px;
+  height: 36px;
+  background: linear-gradient(90deg, #35241c, #694632);
+  border: 2px solid #4a3428;
+  border-bottom: 0;
   border-radius: 10px 10px 0 0;
 }
 
+.door::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  top: 18px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #d7ae69;
+}
+
+.roof-detail {
+  position: absolute;
+  z-index: 2;
+  top: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #b08b68;
+}
+
+/* CAMINHO */
+
 .path {
   position: absolute;
+  z-index: 4;
   bottom: 0;
-  left: 35%;
-  width: 30%;
-  height: 28%;
-  background: linear-gradient(90deg, #53433a, #8a6c52, #53433a);
+  left: 31%;
+  width: 38%;
+  height: 34%;
+  background:
+    linear-gradient(90deg, #554334, #9b7957 50%, #554334);
   clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
-  opacity: .8;
+  opacity: .9;
 }
 
-.lantern {
+.path::after {
+  content: "";
   position: absolute;
-  bottom: 22%;
-  width: 9px;
-  height: 14px;
-  background: #ffc66e;
-  border-radius: 3px;
-  box-shadow: 0 0 18px 6px #ffbd5a88;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 45px,
+    #3f312b 47px 49px
+  );
 }
 
-.lantern.one { left: 18%; }
-.lantern.two { right: 18%; }
-.lantern.three { left: 75%; bottom: 31%; }
+/* TOCHAS */
 
-.intro {
+.torch {
   position: absolute;
   z-index: 5;
-  top: 5%;
-  width: 100%;
-  text-align: center;
-  padding: 20px;
-  text-shadow: 0 2px 15px #000;
+  bottom: 25%;
+  width: 8px;
+  height: 17px;
+  background: #ffd17b;
+  border-radius: 50%;
+  box-shadow: 0 0 18px 7px #ffbd5a66;
+  animation: fire 1.5s infinite alternate;
 }
 
-.intro small {
-  color: #e8c98b;
-  letter-spacing: 4px;
-  font-size: 10px;
+.torch.left { left: 13%; }
+.torch.right { right: 13%; }
+
+@keyframes fire {
+  from { opacity: .65; transform: scale(.9); }
+  to { opacity: 1; transform: scale(1.1); }
 }
 
-.intro h1 {
-  margin-top: 12px;
-  font-size: clamp(28px, 7vw, 43px);
-  font-weight: normal;
-  color: #f4dfb4;
-}
-
-.intro p {
-  margin-top: 9px;
-  font-size: 14px;
-  color: #ded5c5;
-}
+/* FINAL */
 
 .footer {
   position: absolute;
-  z-index: 5;
+  z-index: 10;
   bottom: 4%;
   width: 100%;
   text-align: center;
+  padding: 10px;
+  text-shadow: 0 2px 10px #000;
 }
 
 .footer p {
-  color: #e8d9bc;
   font-size: 13px;
-  margin-bottom: 15px;
+  color: #e8d9bc;
+  margin-bottom: 17px;
 }
 
 button {
+  padding: 14px 30px;
   border: 1px solid #d6b77d;
-  background: linear-gradient(135deg, #8b6840, #493b2b);
-  color: #fff3d5;
-  padding: 13px 28px;
   border-radius: 30px;
-  font-size: 14px;
+  background: linear-gradient(135deg, #98764d, #49382a);
+  color: #fff1d2;
   font-family: Georgia, serif;
-  cursor: pointer;
+  font-size: 14px;
 }
 
 button:active {
   transform: scale(.96);
 }
 
-@media (max-height: 650px) {
-  .intro { top: 2%; }
-  .intro h1 { font-size: 27px; }
-  .city { bottom: 20%; height: 35%; }
-  .mountains { bottom: 20%; }
+@media (max-height: 750px) {
+  .city { bottom: 27%; height: 29%; }
+  .mountain { bottom: 26%; }
   .footer { bottom: 2%; }
 }
 </style>
@@ -290,8 +368,9 @@ button:active {
 
   <div class="stars"></div>
   <div class="moon"></div>
-  <div class="star-of-bethlehem"></div>
-  <div class="star-ray"></div>
+
+  <div class="star-glow"></div>
+  <div class="star"></div>
 
   <div class="intro">
     <small>SANTA LUZIA APRESENTA</small>
@@ -299,53 +378,61 @@ button:active {
     <p>Uma noite que mudou a história da humanidade</p>
   </div>
 
-  <div class="mountains mountains-back"></div>
-  <div class="mountains"></div>
+  <div class="mountain back"></div>
+  <div class="mountain front"></div>
+
+  <div class="hill"></div>
 
   <div class="city">
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house short">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house tall">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house medium">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house tall">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house medium">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house short">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
-    <div class="house">
-      <div class="roof"></div>
+
+    <div class="house medium">
+      <div class="roof-detail"></div>
       <div class="window"></div>
       <div class="door"></div>
     </div>
+
   </div>
 
-  <div class="ground"></div>
   <div class="path"></div>
 
-  <div class="lantern one"></div>
-  <div class="lantern two"></div>
-  <div class="lantern three"></div>
+  <div class="torch left"></div>
+  <div class="torch right"></div>
 
   <div class="footer">
     <p>Prepare seu coração para conhecer essa história.</p>
