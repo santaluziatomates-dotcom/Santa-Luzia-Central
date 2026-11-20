@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#080705">
+
 <title>Presépio Santa Luzia 2026</title>
 
 <style>
@@ -19,26 +20,29 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: #080705;
-  color: #fff0d5;
   font-family: Georgia, serif;
+  color: #fff0d5;
   overscroll-behavior: none;
 }
 
 #app {
   position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
   overflow: hidden;
   background: #080705;
 }
 
-/* FUNDO */
+/* FUNDO DA CENA */
 #background {
   position: absolute;
-  inset: -35px;
+  inset: -30px;
   background-image: url("96007E48-E8C4-4994-8F9C-0F4466CCF417.png");
   background-position: center;
   background-size: cover;
-  filter: blur(28px) brightness(.38);
+  filter: blur(28px) brightness(.42);
   transform: scale(1.08);
 }
 
@@ -50,14 +54,14 @@ html, body {
   background:
     radial-gradient(ellipse at center,
       rgba(255,190,105,.14),
-      transparent 60%),
+      transparent 65%),
     linear-gradient(to bottom,
-      rgba(0,0,0,.12),
-      transparent 35%,
-      rgba(0,0,0,.22));
+      rgba(0,0,0,.13),
+      transparent 40%,
+      rgba(0,0,0,.20));
 }
 
-/* CENA */
+/* PALCO */
 #stage {
   position: absolute;
   inset: 0;
@@ -68,25 +72,24 @@ html, body {
   touch-action: none;
 }
 
+/* IMAGEM PANORÂMICA */
 #painting {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
   display: block;
-  position: relative;
-  z-index: 2;
-  pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
+  pointer-events: none;
   transform-origin: center center;
 }
 
-/* LUZES */
+/* LUZ SUAVE */
 .glow {
   position: absolute;
-  width: 240px;
-  height: 240px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   background: rgba(255,190,100,.08);
   filter: blur(65px);
@@ -96,7 +99,7 @@ html, body {
 
 .glow.one {
   top: 15%;
-  left: 35%;
+  left: 30%;
 }
 
 .glow.two {
@@ -106,8 +109,14 @@ html, body {
 }
 
 @keyframes breathe {
-  from { opacity: .3; transform: scale(.85); }
-  to { opacity: .8; transform: scale(1.2); }
+  from {
+    opacity: .3;
+    transform: scale(.85);
+  }
+  to {
+    opacity: .8;
+    transform: scale(1.2);
+  }
 }
 
 /* ESTRELAS */
@@ -129,15 +138,21 @@ html, body {
 }
 
 @keyframes twinkle {
-  from { opacity: .12; transform: scale(.7); }
-  to { opacity: .8; transform: scale(1.3); }
+  from {
+    opacity: .12;
+    transform: scale(.7);
+  }
+  to {
+    opacity: .8;
+    transform: scale(1.3);
+  }
 }
 
 /* IDENTIDADE */
 .brand {
   position: absolute;
   z-index: 8;
-  top: max(14px, env(safe-area-inset-top));
+  top: max(13px, env(safe-area-inset-top));
   left: 0;
   width: 100%;
   text-align: center;
@@ -155,7 +170,7 @@ html, body {
 }
 
 .brand h1 {
-  font-size: clamp(15px, 2.4vw, 22px);
+  font-size: clamp(14px, 2.4vw, 21px);
   font-weight: normal;
   letter-spacing: 2px;
 }
@@ -164,8 +179,8 @@ html, body {
 .controls {
   position: absolute;
   z-index: 10;
-  right: max(18px, env(safe-area-inset-right));
-  bottom: max(18px, env(safe-area-inset-bottom));
+  right: max(15px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -173,25 +188,24 @@ html, body {
 }
 
 .control {
-  width: 42px;
-  height: 42px;
+  width: 41px;
+  height: 41px;
   border-radius: 50%;
   border: 1px solid rgba(255,225,175,.4);
-  background: rgba(15,12,9,.72);
+  background: rgba(15,12,9,.75);
   color: #fff0d2;
   font-size: 21px;
   backdrop-filter: blur(10px);
-  cursor: pointer;
 }
 
-/* HISTÓRIA */
+/* BOTÃO DA HISTÓRIA */
 .story-button {
   position: absolute;
   z-index: 10;
   left: 50%;
-  bottom: max(20px, env(safe-area-inset-bottom));
+  bottom: max(18px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  padding: 11px 20px;
+  padding: 11px 19px;
   border: 1px solid rgba(255,224,176,.45);
   border-radius: 30px;
   color: #fff1d7;
@@ -203,7 +217,7 @@ html, body {
   transition: opacity .4s;
 }
 
-/* ESCONDER INTERFACE */
+/* MODO CONTEMPLAÇÃO */
 #app.clean .brand,
 #app.clean .controls,
 #app.clean .story-button {
@@ -211,7 +225,7 @@ html, body {
   pointer-events: none;
 }
 
-/* HISTÓRIA COMPLETA */
+/* HISTÓRIA */
 #story {
   display: none;
   position: absolute;
@@ -220,7 +234,7 @@ html, body {
   background: rgba(8,6,4,.96);
   align-items: center;
   justify-content: center;
-  padding: 25px;
+  padding: 24px;
   overflow-y: auto;
 }
 
@@ -232,11 +246,11 @@ html, body {
   max-width: 650px;
   text-align: center;
   line-height: 1.7;
-  padding: 20px;
+  padding: 18px;
 }
 
 .cross {
-  font-size: 34px;
+  font-size: 35px;
   color: #e5bd7c;
   margin-bottom: 10px;
 }
@@ -265,49 +279,7 @@ html, body {
   font-size: 14px;
 }
 
-/* AVISO DE ROTAÇÃO */
-#rotate {
-  display: none;
-  position: absolute;
-  z-index: 30;
-  inset: 0;
-  background: rgba(7,6,5,.96);
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 30px;
-}
-
-.rotate-content {
-  max-width: 300px;
-}
-
-.phone-icon {
-  font-size: 55px;
-  display: block;
-  margin-bottom: 20px;
-  animation: rotatePhone 2.5s ease-in-out infinite;
-}
-
-@keyframes rotatePhone {
-  0%, 20% { transform: rotate(0deg); }
-  70%, 100% { transform: rotate(90deg); }
-}
-
-#rotate h2 {
-  font-size: 23px;
-  font-weight: normal;
-  color: #f0d3a0;
-  margin-bottom: 12px;
-}
-
-#rotate p {
-  color: #d8cbb7;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* ERRO */
+/* ERRO DE IMAGEM */
 #error {
   display: none;
   position: absolute;
@@ -325,17 +297,27 @@ html, body {
   display: flex;
 }
 
-/* MODO PAISAGEM */
+/* AJUSTES PARA PAISAGEM */
 @media (orientation: landscape) {
-  #rotate {
-    display: none !important;
+  .brand {
+    top: max(8px, env(safe-area-inset-top));
   }
-}
 
-/* MODO RETRATO */
-@media (orientation: portrait) {
-  #rotate {
-    display: flex;
+  .brand small {
+    font-size: 8px;
+  }
+
+  .controls {
+    gap: 7px;
+  }
+
+  .control {
+    width: 38px;
+    height: 38px;
+  }
+
+  .story-button {
+    bottom: max(12px, env(safe-area-inset-bottom));
   }
 }
 </style>
@@ -371,15 +353,16 @@ html, body {
   </button>
 
   <div class="controls">
-    <button class="control" id="zoomIn">+</button>
-    <button class="control" id="zoomOut">−</button>
-    <button class="control" id="reset">↺</button>
-    <button class="control" id="hideUI">◉</button>
+    <button class="control" id="zoomIn" aria-label="Aumentar zoom">+</button>
+    <button class="control" id="zoomOut" aria-label="Diminuir zoom">−</button>
+    <button class="control" id="reset" aria-label="Restaurar imagem">↺</button>
+    <button class="control" id="hideUI" aria-label="Esconder controles">◉</button>
   </div>
 
   <div id="story">
     <div class="story-content">
       <div class="cross">✝</div>
+
       <h2>Uma noite que mudou o mundo</h2>
 
       <p>
@@ -412,17 +395,6 @@ html, body {
       <button class="close-story" id="closeStory">
         Voltar ao Presépio
       </button>
-    </div>
-  </div>
-
-  <div id="rotate">
-    <div class="rotate-content">
-      <span class="phone-icon">📱</span>
-      <h2>Prepare-se para contemplar</h2>
-      <p>
-        Gire seu celular para a horizontal
-        e entre na noite de Belém.
-      </p>
     </div>
   </div>
 
@@ -485,7 +457,7 @@ document.getElementById("closeStory").onclick = () => {
   document.getElementById("story").classList.remove("show");
 };
 
-/* VERIFICAR IMAGEM */
+/* VERIFICAÇÃO DA IMAGEM */
 image.onload = () => {
   document.getElementById("error").classList.remove("show");
 };
@@ -494,7 +466,7 @@ image.onerror = () => {
   document.getElementById("error").classList.add("show");
 };
 
-/* MOVIMENTO E ZOOM COM OS DEDOS */
+/* ZOOM E MOVIMENTO POR TOQUE */
 const pointers = new Map();
 
 let startX = 0;
@@ -586,7 +558,9 @@ for (let i = 0; i < 24; i++) {
   star.style.left = Math.random() * 100 + "%";
   star.style.top = Math.random() * 100 + "%";
   star.style.animationDelay = Math.random() * 4 + "s";
-  star.style.animationDuration = (2 + Math.random() * 3) + "s";
+  star.style.animationDuration =
+    (2 + Math.random() * 3) + "s";
+
   stars.appendChild(star);
 }
 </script>
