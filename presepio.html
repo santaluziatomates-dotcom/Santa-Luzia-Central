@@ -19,9 +19,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: #080705;
-  font-family: Georgia, serif;
-  color: #fff0d5;
-  overscroll-behavior: none;
+  touch-action: none;
 }
 
 #app {
@@ -34,106 +32,93 @@ html, body {
   background: #080705;
 }
 
-/* FUNDO ESCURO DISCRETO */
-#background {
-  position: absolute;
-  inset: 0;
-  background: #080705;
-}
-
-/* ILUMINAÇÃO SUAVE */
-#light {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at center,
-      rgba(255,190,105,.07),
-      transparent 70%),
-    linear-gradient(to bottom,
-      rgba(0,0,0,.08),
-      transparent 30%,
-      rgba(0,0,0,.10));
-}
-
-/* PALCO */
+/* CENA EM TELA CHEIA */
 #stage {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
-  touch-action: none;
   background: #080705;
+  touch-action: none;
 }
 
-/* PINTURA */
+/* PINTURA PANORÂMICA */
 #painting {
-  display: block;
-  width: 100%;
+  position: absolute;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  width: auto;
+  max-width: none;
+  object-fit: cover;
+  display: block;
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: none;
-  transform-origin: center center;
+  will-change: transform;
+}
+
+/* CAMADA CINEMATOGRÁFICA */
+#vignette {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,.25),
+      transparent 22%,
+      transparent 78%,
+      rgba(0,0,0,.25)),
+    radial-gradient(ellipse at center,
+      transparent 55%,
+      rgba(0,0,0,.25) 100%);
 }
 
 /* ESTRELA DE BELÉM */
-.bethlehem-star {
+#star {
   position: absolute;
   z-index: 5;
-  top: 8%;
+  top: 11%;
   left: 50%;
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #fff4c7;
+  background: #fff5ce;
   box-shadow:
-    0 0 8px 3px rgba(255,225,150,.8),
-    0 0 24px 9px rgba(255,194,95,.45),
-    0 0 55px 18px rgba(255,180,75,.18);
-  transform: translate(-50%, -50%);
-  animation: starGlow 4s ease-in-out infinite alternate;
+    0 0 10px 4px rgba(255,230,170,.8),
+    0 0 28px 12px rgba(255,190,90,.4),
+    0 0 60px 22px rgba(255,170,70,.2);
   pointer-events: none;
+  animation: star 4s ease-in-out infinite alternate;
 }
 
-.bethlehem-star::before,
-.bethlehem-star::after {
+#star::before,
+#star::after {
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  background: rgba(255,239,190,.85);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-50%);
+  background: rgba(255,240,195,.8);
   border-radius: 50%;
 }
 
-.bethlehem-star::before {
+#star::before {
   width: 2px;
-  height: 36px;
-  box-shadow: 0 0 8px rgba(255,220,150,.7);
+  height: 35px;
 }
 
-.bethlehem-star::after {
-  width: 36px;
+#star::after {
+  width: 35px;
   height: 2px;
-  box-shadow: 0 0 8px rgba(255,220,150,.7);
 }
 
-@keyframes starGlow {
+@keyframes star {
   from {
     opacity: .65;
-    filter: brightness(.85);
-    transform: translate(-50%, -50%) scale(.9);
+    transform: scale(.85);
   }
   to {
     opacity: 1;
-    filter: brightness(1.2);
-    transform: translate(-50%, -50%) scale(1.12);
+    transform: scale(1.2);
   }
 }
 
@@ -141,49 +126,67 @@ html, body {
 .brand {
   position: absolute;
   z-index: 8;
-  top: max(12px, env(safe-area-inset-top));
+  top: max(13px, env(safe-area-inset-top));
   left: 0;
   width: 100%;
   text-align: center;
+  color: #f4dfb9;
+  text-shadow: 0 2px 15px #000;
   pointer-events: none;
-  text-shadow: 0 2px 12px #000;
   transition: opacity .4s;
 }
 
 .brand small {
   display: block;
-  font-size: 9px;
+  font: 9px Georgia, serif;
   letter-spacing: 4px;
-  color: #e8c68c;
   margin-bottom: 4px;
+  color: #e8c68c;
 }
 
 .brand h1 {
-  font-size: clamp(14px, 2.4vw, 21px);
-  font-weight: normal;
+  font: normal 16px Georgia, serif;
   letter-spacing: 2px;
+}
+
+/* INDICADOR DISCRETO */
+.hint {
+  position: absolute;
+  z-index: 8;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,239,211,.85);
+  background: rgba(10,8,5,.48);
+  border: 1px solid rgba(255,225,175,.22);
+  border-radius: 30px;
+  padding: 10px 17px;
+  font: 12px Georgia, serif;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity .5s;
 }
 
 /* CONTROLES */
 .controls {
   position: absolute;
   z-index: 10;
-  right: max(15px, env(safe-area-inset-right));
-  bottom: max(16px, env(safe-area-inset-bottom));
+  right: max(13px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 8px;
   transition: opacity .4s;
 }
 
 .control {
-  width: 41px;
-  height: 41px;
+  width: 39px;
+  height: 39px;
   border-radius: 50%;
   border: 1px solid rgba(255,225,175,.4);
-  background: rgba(15,12,9,.75);
+  background: rgba(15,12,9,.7);
   color: #fff0d2;
-  font-size: 21px;
+  font-size: 20px;
   backdrop-filter: blur(10px);
 }
 
@@ -192,24 +195,22 @@ html, body {
   position: absolute;
   z-index: 10;
   left: 50%;
-  bottom: max(18px, env(safe-area-inset-bottom));
+  bottom: max(19px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  padding: 11px 19px;
-  border: 1px solid rgba(255,224,176,.45);
+  padding: 10px 17px;
+  border: 1px solid rgba(255,224,176,.4);
   border-radius: 30px;
   color: #fff1d7;
-  background: rgba(18,13,8,.78);
-  font-family: Georgia, serif;
-  font-size: 13px;
-  backdrop-filter: blur(12px);
+  background: rgba(18,13,8,.75);
+  font: 13px Georgia, serif;
   white-space: nowrap;
   transition: opacity .4s;
 }
 
-/* TELA LIMPA */
 #app.clean .brand,
 #app.clean .controls,
-#app.clean .story-button {
+#app.clean .story-button,
+#app.clean .hint {
   opacity: 0;
   pointer-events: none;
 }
@@ -225,6 +226,8 @@ html, body {
   justify-content: center;
   padding: 24px;
   overflow-y: auto;
+  color: #fff0d5;
+  font-family: Georgia, serif;
 }
 
 #story.show {
@@ -279,6 +282,8 @@ html, body {
   text-align: center;
   padding: 30px;
   background: #100d09;
+  color: white;
+  font-family: Georgia, serif;
   line-height: 1.7;
 }
 
@@ -286,14 +291,7 @@ html, body {
   display: flex;
 }
 
-/* CELULAR DEITADO */
 @media (orientation: landscape) {
-  #painting {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
   .brand {
     top: max(7px, env(safe-area-inset-top));
   }
@@ -303,34 +301,15 @@ html, body {
   }
 
   .brand h1 {
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .hint {
+    bottom: max(12px, env(safe-area-inset-bottom));
   }
 
   .controls {
-    gap: 7px;
-  }
-
-  .control {
-    width: 36px;
-    height: 36px;
-  }
-
-  .story-button {
-    bottom: max(10px, env(safe-area-inset-bottom));
-  }
-}
-
-/* CELULAR EM PÉ */
-@media (orientation: portrait) {
-  #painting {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-    object-fit: contain;
-  }
-
-  .bethlehem-star {
-    top: 18%;
+    bottom: max(12px, env(safe-area-inset-bottom));
   }
 }
 </style>
@@ -339,7 +318,6 @@ html, body {
 <body>
 
 <div id="app">
-  <div id="background"></div>
 
   <div id="stage">
     <img
@@ -349,12 +327,16 @@ html, body {
     >
   </div>
 
-  <div class="bethlehem-star"></div>
-  <div id="light"></div>
+  <div id="vignette"></div>
+  <div id="star"></div>
 
   <div class="brand">
     <small>SANTA LUZIA APRESENTA</small>
     <h1>O NASCIMENTO DE JESUS</h1>
+  </div>
+
+  <div class="hint" id="hint">
+    ← Deslize para explorar Belém →
   </div>
 
   <button class="story-button" id="openStory">
@@ -362,10 +344,10 @@ html, body {
   </button>
 
   <div class="controls">
-    <button class="control" id="zoomIn" aria-label="Aumentar zoom">+</button>
-    <button class="control" id="zoomOut" aria-label="Diminuir zoom">−</button>
-    <button class="control" id="reset" aria-label="Restaurar imagem">↺</button>
-    <button class="control" id="hideUI" aria-label="Esconder controles">◉</button>
+    <button class="control" id="zoomIn">+</button>
+    <button class="control" id="zoomOut">−</button>
+    <button class="control" id="reset">↺</button>
+    <button class="control" id="hideUI">◉</button>
   </div>
 
   <div id="story">
@@ -392,75 +374,98 @@ html, body {
   <div id="error">
     <div>
       <h2>Não foi possível carregar a pintura</h2>
-      <p>Confira se a imagem está na mesma pasta deste arquivo e se o nome está correto.</p>
+      <p>Confira se o nome da imagem está correto e se ela está na mesma pasta deste arquivo.</p>
     </div>
   </div>
+
 </div>
 
 <script>
 const app = document.getElementById("app");
-const image = document.getElementById("painting");
 const stage = document.getElementById("stage");
+const image = document.getElementById("painting");
+const hint = document.getElementById("hint");
 
 let scale = 1;
 let x = 0;
 let y = 0;
+let baseWidth = 0;
+let baseHeight = 0;
+let maxX = 0;
+let maxY = 0;
 
-function updateImage() {
-  image.style.transform =
-    `translate(${x}px, ${y}px) scale(${scale})`;
-}
+function calculateSize() {
+  if (!image.naturalWidth || !image.naturalHeight) return;
 
-function zoom(amount) {
-  scale = Math.max(1, Math.min(4, scale + amount));
+  const vw = stage.clientWidth;
+  const vh = stage.clientHeight;
 
-  if (scale === 1) {
-    x = 0;
-    y = 0;
-  }
+  // A pintura cobre toda a tela, sem deixar espaços vazios.
+  const fitScale = Math.max(
+    vw / image.naturalWidth,
+    vh / image.naturalHeight
+  );
 
-  updateImage();
-}
+  baseWidth = image.naturalWidth * fitScale;
+  baseHeight = image.naturalHeight * fitScale;
 
-document.getElementById("zoomIn").onclick = () => zoom(.25);
-document.getElementById("zoomOut").onclick = () => zoom(-.25);
-
-document.getElementById("reset").onclick = () => {
   scale = 1;
+
+  image.style.width = baseWidth + "px";
+  image.style.height = baseHeight + "px";
+
+  maxX = Math.max(0, (baseWidth - vw) / 2);
+  maxY = Math.max(0, (baseHeight - vh) / 2);
+
   x = 0;
   y = 0;
+
   updateImage();
-};
+}
 
-document.getElementById("hideUI").onclick = () => {
-  app.classList.toggle("clean");
-};
+function updateImage() {
+  const vw = stage.clientWidth;
+  const vh = stage.clientHeight;
 
-document.getElementById("openStory").onclick = () => {
-  document.getElementById("story").classList.add("show");
-};
+  const currentWidth = baseWidth * scale;
+  const currentHeight = baseHeight * scale;
 
-document.getElementById("closeStory").onclick = () => {
-  document.getElementById("story").classList.remove("show");
-};
+  const limitX = Math.max(0, (currentWidth - vw) / 2);
+  const limitY = Math.max(0, (currentHeight - vh) / 2);
+
+  x = Math.max(-limitX, Math.min(limitX, x));
+  y = Math.max(-limitY, Math.min(limitY, y));
+
+  image.style.transform =
+    `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+}
+
+image.style.left = "50%";
+image.style.top = "50%";
 
 image.onload = () => {
   document.getElementById("error").classList.remove("show");
+  calculateSize();
 };
 
 image.onerror = () => {
   document.getElementById("error").classList.add("show");
 };
 
-/* PINÇA PARA ZOOM E ARRASTO */
+window.addEventListener("resize", calculateSize);
+window.addEventListener("orientationchange", () => {
+  setTimeout(calculateSize, 250);
+});
+
+/* MOVIMENTO COM O DEDO */
 const pointers = new Map();
 
 let startX = 0;
 let startY = 0;
-let startDistance = 0;
-let startScale = 1;
 let startPanX = 0;
 let startPanY = 0;
+let startDistance = 0;
+let startScale = 1;
 
 function distance(a, b) {
   return Math.hypot(a.x - b.x, a.y - b.y);
@@ -474,12 +479,10 @@ stage.addEventListener("pointerdown", e => {
     y: e.clientY
   });
 
-  if (pointers.size === 1) {
-    startX = e.clientX;
-    startY = e.clientY;
-    startPanX = x;
-    startPanY = y;
-  }
+  startX = e.clientX;
+  startY = e.clientY;
+  startPanX = x;
+  startPanY = y;
 
   if (pointers.size === 2) {
     const p = [...pointers.values()];
@@ -496,10 +499,11 @@ stage.addEventListener("pointermove", e => {
     y: e.clientY
   });
 
-  if (pointers.size === 1 && scale > 1) {
+  if (pointers.size === 1) {
     x = startPanX + (e.clientX - startX);
     y = startPanY + (e.clientY - startY);
     updateImage();
+    hint.style.opacity = "0";
   }
 
   if (pointers.size === 2 && startDistance > 0) {
@@ -508,13 +512,8 @@ stage.addEventListener("pointermove", e => {
 
     scale = Math.max(
       1,
-      Math.min(4, startScale * currentDistance / startDistance)
+      Math.min(3, startScale * currentDistance / startDistance)
     );
-
-    if (scale === 1) {
-      x = 0;
-      y = 0;
-    }
 
     updateImage();
   }
@@ -538,6 +537,35 @@ function releasePointer(e) {
 
 stage.addEventListener("pointerup", releasePointer);
 stage.addEventListener("pointercancel", releasePointer);
+
+/* BOTÕES */
+function zoom(amount) {
+  scale = Math.max(1, Math.min(3, scale + amount));
+  updateImage();
+}
+
+document.getElementById("zoomIn").onclick = () => zoom(.25);
+document.getElementById("zoomOut").onclick = () => zoom(-.25);
+
+document.getElementById("reset").onclick = () => {
+  scale = 1;
+  x = 0;
+  y = 0;
+  calculateSize();
+  hint.style.opacity = "1";
+};
+
+document.getElementById("hideUI").onclick = () => {
+  app.classList.toggle("clean");
+};
+
+document.getElementById("openStory").onclick = () => {
+  document.getElementById("story").classList.add("show");
+};
+
+document.getElementById("closeStory").onclick = () => {
+  document.getElementById("story").classList.remove("show");
+};
 </script>
 
 </body>
