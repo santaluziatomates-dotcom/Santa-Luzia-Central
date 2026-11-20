@@ -500,13 +500,26 @@ display:flex;flex-direction:column;justify-content:center;transition:transform .
 </script>
 
 <script>
+/* CONFIGURAÇÃO SUPABASE */
 const SUPABASE_URL = "https://hqrtbtulzeqoylfpjmdk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_gDDVH5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
+/*
+  CORREÇÃO DO LOGIN:
+  O Supabase agora identifica e processa automaticamente
+  o retorno do Google quando o usuário volta para esta página.
+*/
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY,
-  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,flowType:"implicit"}}
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true,
+      flowType:"implicit"
+    }
+  }
 );
 
 /* ELEMENTOS */
@@ -553,70 +566,111 @@ function abrirCadastro(user){
   const campoNome=document.getElementById("cadastroNome");
   if(nomeGoogle&&!campoNome.value)campoNome.value=nomeGoogle;
 }
-function fecharCadastro(){cadastroOverlay.classList.remove("aberto")}
+function fecharCadastro(){
+  cadastroOverlay.classList.remove("aberto");
+}
 
 async function verificarCadastro(user){
   if(!user)return null;
+
   try{
     const resultado=await supabaseClient.from("motoristas")
       .select("id,codigo,nome,apelido,cargo,categoria,salario_ativo,status,user_id")
-      .eq("user_id",user.id).maybeSingle();
-    if(resultado.error){console.error("Erro ao verificar cadastro:",resultado.error);throw resultado.error}
+      .eq("user_id",user.id)
+      .maybeSingle();
+
+    if(resultado.error){
+      console.error("Erro ao verificar cadastro:",resultado.error);
+      throw resultado.error;
+    }
+
     return resultado.data||null;
-  }catch(erro){console.error("Falha na consulta do motorista:",erro);throw erro}
+
+  }catch(erro){
+    console.error("Falha na consulta do motorista:",erro);
+    throw erro;
+  }
 }
 
 /* CRIAR SANTA LUZIA ID */
 cadastroForm.addEventListener("submit",async function(event){
   event.preventDefault();
   esconderErroCadastro();
+
   const nome=document.getElementById("cadastroNome").value.trim();
   const apelido=document.getElementById("cadastroApelido").value.trim();
   const cargo=document.getElementById("cadastroCargo").value.trim();
   const categoria=document.getElementById("cadastroCategoria").value.trim();
 
   if(!nome||!apelido||!cargo||!categoria){
-    mostrarErroCadastro("Preencha todos os campos para continuar.");return;
+    mostrarErroCadastro("Preencha todos os campos para continuar.");
+    return;
   }
+
   botaoCadastrar.disabled=true;
   botaoCadastrar.textContent="VERIFICANDO SEU ID...";
 
   try{
     const sessao=await supabaseClient.auth.getSession();
     const user=sessao.data?.session?.user;
-    if(!user)throw new Error("Sua sessão expirou. Entre novamente com o Google.");
+
+    if(!user){
+      throw new Error("Sua sessão expirou. Entre novamente com o Google.");
+    }
 
     const cadastroExistente=await verificarCadastro(user);
+
     if(cadastroExistente){
-      mostrarCadastroConcluido(cadastroExistente.codigo,"Você já possui um Santa Luzia ID!","Este ID já está vinculado à sua conta Google.");
+      mostrarCadastroConcluido(
+        cadastroExistente.codigo,
+        "Você já possui um Santa Luzia ID!",
+        "Este ID já está vinculado à sua conta Google."
+      );
       return;
     }
 
     botaoCadastrar.textContent="CRIANDO SEU ID...";
+
     const resultado=await supabaseClient.rpc("criar_meu_cadastro",{
-      p_nome:nome,p_apelido:apelido,p_cargo:cargo,p_categoria:categoria
+      p_nome:nome,
+      p_apelido:apelido,
+      p_cargo:cargo,
+      p_categoria:categoria
     });
 
     if(resultado.error){
       const cadastroDepoisDoErro=await verificarCadastro(user);
+
       if(cadastroDepoisDoErro){
-        mostrarCadastroConcluido(cadastroDepoisDoErro.codigo,"Você já possui um Santa Luzia ID!","Seu ID já estava vinculado a esta conta.");
+        mostrarCadastroConcluido(
+          cadastroDepoisDoErro.codigo,
+          "Você já possui um Santa Luzia ID!",
+          "Seu ID já estava vinculado a esta conta."
+        );
         return;
       }
+
       throw resultado.error;
     }
 
     const dados=resultado.data;
-    if(!dados||!dados.sucesso)throw new Error("O cadastro não foi concluído. Verifique a função do banco.");
+
+    if(!dados||!dados.sucesso){
+      throw new Error("O cadastro não foi concluído. Verifique a função do banco.");
+    }
 
     mostrarCadastroConcluido(
       dados.codigo,
       dados.ja_existia?"Você já possui um Santa Luzia ID!":"Cadastro concluído!",
-      dados.ja_existia?"Este ID já estava vinculado à sua conta.":"Seu Santa Luzia ID foi criado com sucesso."
+      dados.ja_existia
+        ?"Este ID já estava vinculado à sua conta."
+        :"Seu Santa Luzia ID foi criado com sucesso."
     );
+
   }catch(erro){
     console.error("Erro no cadastro:",erro);
     mostrarErroCadastro(erro.message||"Não foi possível criar seu ID.");
+
   }finally{
     botaoCadastrar.disabled=false;
     botaoCadastrar.textContent="🪪 CRIAR MEU SANTA LUZIA ID";
@@ -627,8 +681,10 @@ function mostrarCadastroConcluido(codigo,titulo,texto){
   novoCodigo.textContent=codigo||"SEM CÓDIGO";
   document.getElementById("cadastroSucessoTitulo").textContent=titulo;
   document.getElementById("cadastroSucessoTexto").textContent=texto;
+
   cadastroFormArea.style.display="none";
   cadastroSucesso.style.display="block";
+
   loginStatus.textContent="✓ Santa Luzia ID • "+(codigo||"ID");
   loginStatus.className="login-status login-ok";
 }
@@ -636,27 +692,47 @@ function mostrarCadastroConcluido(codigo,titulo,texto){
 /* CONTINUAR */
 botaoContinuar.addEventListener("click",async function(){
   fecharCadastro();
+
   const resultado=await supabaseClient.auth.getSession();
   const user=resultado.data?.session?.user;
-  if(user)await mostrarUsuario(user);
+
+  if(user){
+    await mostrarUsuario(user);
+  }
 });
 
 /* STACOIN */
 async function carregarStacoin(user){
-  if(!user){stacoinTopo.style.display="none";return}
+  if(!user){
+    stacoinTopo.style.display="none";
+    return;
+  }
+
   try{
     const motoristaResultado=await supabaseClient.from("motoristas")
-      .select("id").eq("user_id",user.id).maybeSingle();
+      .select("id")
+      .eq("user_id",user.id)
+      .maybeSingle();
+
     if(motoristaResultado.error)throw motoristaResultado.error;
-    if(!motoristaResultado.data){stacoinTopo.style.display="none";return}
+
+    if(!motoristaResultado.data){
+      stacoinTopo.style.display="none";
+      return;
+    }
 
     const carteiraResultado=await supabaseClient.from("stacoin_carteiras")
-      .select("saldo").eq("motorista_id",motoristaResultado.data.id).maybeSingle();
+      .select("saldo")
+      .eq("motorista_id",motoristaResultado.data.id)
+      .maybeSingle();
+
     if(carteiraResultado.error)throw carteiraResultado.error;
 
     const saldo=carteiraResultado.data?.saldo||0;
+
     stacoinValor.textContent=Number(saldo).toLocaleString("pt-BR");
     stacoinTopo.style.display="flex";
+
   }catch(erro){
     console.error("Erro ao carregar STACOIN:",erro);
     stacoinTopo.style.display="none";
@@ -669,88 +745,53 @@ async function mostrarUsuario(user){
     loginIcone.textContent="👤";
     loginTitulo.textContent="Acesse sua conta";
     loginTexto.textContent="Entre com sua conta Google";
+
     botaoGoogle.textContent="Entrar com Google";
     botaoGoogle.className="botao-google";
     botaoGoogle.disabled=false;
     botaoGoogle.dataset.logado="false";
+
     loginStatus.textContent="";
     loginStatus.className="login-status";
+
     stacoinTopo.style.display="none";
     return;
   }
 
   const nome=user.user_metadata?.full_name||user.user_metadata?.name||"Usuário";
+
   loginIcone.textContent="👤";
   loginTitulo.textContent="Olá, "+nome;
   loginTexto.textContent=user.email||"";
+
   botaoGoogle.textContent="Sair";
   botaoGoogle.className="botao-sair";
   botaoGoogle.disabled=false;
   botaoGoogle.dataset.logado="true";
+
   loginStatus.textContent="Verificando seu Santa Luzia ID...";
   loginStatus.className="login-status";
 
   try{
     const motorista=await verificarCadastro(user);
+
     if(!motorista){
       loginStatus.textContent="🆔 Complete seu cadastro para criar seu Santa Luzia ID.";
       loginStatus.className="login-status";
       abrirCadastro(user);
       return;
     }
+
     loginStatus.textContent="✓ Conta conectada • "+motorista.codigo;
     loginStatus.className="login-status login-ok";
+
     await carregarStacoin(user);
+
   }catch(erro){
+    console.error("Erro ao carregar os dados do usuário:",erro);
+
     loginStatus.textContent="Não foi possível verificar seu cadastro. Tente novamente.";
     loginStatus.className="login-status login-erro";
-  }
-}
-
-/* RETORNO GOOGLE */
-async function processarRetornoGoogle(){
-  const hash=window.location.hash.substring(1);
-  if(!hash)return false;
-  const parametros=new URLSearchParams(hash);
-  const accessToken=parametros.get("access_token");
-  const refreshToken=parametros.get("refresh_token");
-  if(!accessToken||!refreshToken)return false;
-
-  loginStatus.textContent="🔐 Finalizando login...";
-  try{
-    const resultado=await supabaseClient.auth.setSession({
-      access_token:accessToken,refresh_token:refreshToken
-    });
-    if(resultado.error)throw resultado.error;
-    if(resultado.data?.session?.user){
-      await mostrarUsuario(resultado.data.session.user);
-      window.history.replaceState({},document.title,window.location.pathname+window.location.search);
-      return true;
-    }
-    return false;
-  }catch(erro){
-    console.error("Erro ao processar retorno Google:",erro);
-    loginStatus.textContent="❌ Erro ao finalizar login.";
-    loginStatus.className="login-status login-erro";
-    return false;
-  }
-}
-
-/* SESSÃO */
-async function verificarSessao(){
-  try{
-    const resultado=await supabaseClient.auth.getSession();
-    if(resultado.error)throw resultado.error;
-    if(resultado.data?.session?.user){
-      await mostrarUsuario(resultado.data.session.user);
-      return true;
-    }
-    mostrarUsuario(null);
-    return false;
-  }catch(erro){
-    console.error("Erro ao verificar sessão:",erro);
-    mostrarUsuario(null);
-    return false;
   }
 }
 
@@ -759,16 +800,26 @@ async function entrarGoogle(){
   botaoGoogle.disabled=true;
   botaoGoogle.textContent="Abrindo Google...";
   loginStatus.textContent="Abrindo login do Google...";
+  loginStatus.className="login-status";
+
   try{
     const resultado=await supabaseClient.auth.signInWithOAuth({
       provider:"google",
-      options:{redirectTo:"https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"}
+      options:{
+        redirectTo:"https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
+      }
     });
-    if(resultado.error)throw resultado.error;
+
+    if(resultado.error){
+      throw resultado.error;
+    }
+
   }catch(erro){
     console.error("Erro no login:",erro);
-    loginStatus.textContent="❌ "+erro.message;
+
+    loginStatus.textContent="❌ "+(erro.message||"Não foi possível iniciar o login.");
     loginStatus.className="login-status login-erro";
+
     botaoGoogle.disabled=false;
     botaoGoogle.textContent="Entrar com Google";
   }
@@ -778,26 +829,80 @@ async function entrarGoogle(){
 botaoGoogle.addEventListener("click",async function(){
   if(botaoGoogle.dataset.logado==="true"){
     botaoGoogle.disabled=true;
+
     try{
       const resultado=await supabaseClient.auth.signOut();
-      if(resultado.error)throw resultado.error;
+
+      if(resultado.error){
+        throw resultado.error;
+      }
+
       mostrarUsuario(null);
+
     }catch(erro){
       console.error("Erro ao sair:",erro);
+
       loginStatus.textContent="Não foi possível sair da conta.";
       loginStatus.className="login-status login-erro";
+
       botaoGoogle.disabled=false;
     }
+
     return;
   }
+
   await entrarGoogle();
 });
 
-/* INICIALIZAÇÃO */
-(async function(){
-  const processou=await processarRetornoGoogle();
-  if(!processou)await verificarSessao();
-  botaoGoogle.disabled=false;
+/*
+  MONITORAMENTO DA AUTENTICAÇÃO:
+  O Supabase avisa quando o usuário entra ou sai.
+*/
+supabaseClient.auth.onAuthStateChange((evento,sessao)=>{
+  if(evento==="SIGNED_IN"&&sessao?.user){
+    setTimeout(()=>{
+      mostrarUsuario(sessao.user);
+    },0);
+  }
+
+  if(evento==="SIGNED_OUT"){
+    setTimeout(()=>{
+      mostrarUsuario(null);
+    },0);
+  }
+});
+
+/* INICIALIZAÇÃO DA CENTRAL */
+(async function iniciarCentral(){
+  try{
+    botaoGoogle.disabled=true;
+    botaoGoogle.textContent="Verificando...";
+
+    const resultado=await supabaseClient.auth.getSession();
+
+    if(resultado.error){
+      throw resultado.error;
+    }
+
+    const user=resultado.data?.session?.user;
+
+    if(user){
+      await mostrarUsuario(user);
+    }else{
+      mostrarUsuario(null);
+    }
+
+  }catch(erro){
+    console.error("Erro ao iniciar a Santa Luzia Central:",erro);
+
+    mostrarUsuario(null);
+
+    loginStatus.textContent="Não foi possível verificar sua conta. Tente entrar novamente.";
+    loginStatus.className="login-status login-erro";
+
+  }finally{
+    botaoGoogle.disabled=false;
+  }
 })();
 </script>
 </body>
