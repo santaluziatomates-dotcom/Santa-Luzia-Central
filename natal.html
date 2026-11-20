@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#071b17">
+<meta name="description" content="Natal Encantado Santa Luzia 2026">
+<title>Natal Encantado | Santa Luzia</title>
+
+<style>
+:root {
+  --green:#0b3025;
+  --green2:#164b36;
+  --red:#a9272b;
+  --gold:#e7bd70;
+  --cream:#fff2d7;
+  --dark:#071713;
+}
+
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {
+  margin:0;
+  color:var(--cream);
+  background:var(--dark);
+  font-family:Georgia,'Times New Roman',serif;
+  overflow-x:hidden;
+}
+button,textarea,input {font:inherit}
+button {cursor:pointer}
+button:focus-visible {outline:2px solid var(--gold);outline-offset:4px}
+
+#snow {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:20;
+  overflow:hidden;
+}
+.snowflake {
+  position:absolute;
+  top:-20px;
+  color:white;
+  opacity:.8;
+  animation:fall linear infinite;
+  text-shadow:0 0 8px white;
+}
+@keyframes fall {
+  to {transform:translateY(110vh) translateX(35px) rotate(180deg)}
+}
+
+header {
+  position:relative;
+  min-height:90vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:70px 20px 55px;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 65%,rgba(225,167,77,.20),transparent 40%),
+    linear-gradient(180deg,#071b1d 0%,#10372d 65%,#081b16 100%);
+}
+header:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.5;
+  background:
+    radial-gradient(circle at 15% 20%,#fff 1px,transparent 2px),
+    radial-gradient(circle at 80% 30%,#fff 1px,transparent 2px),
+    radial-gradient(circle at 45% 12%,#fff 1px,transparent 2px),
+    radial-gradient(circle at 65% 65%,#fff 1px,transparent 2px);
+  background-size:130px 130px,190px 190px,160px 160px,220px 220px;
+}
+.header-content {position:relative;z-index:2;max-width:700px}
+.brand {
+  letter-spacing:5px;
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  color:var(--gold);
+  text-transform:uppercase;
+}
+.header-star {
+  font-size:46px;
+  color:#ffe9a6;
+  text-shadow:0 0 15px #ffd66d,0 0 45px #e5a63c;
+  animation:starPulse 3s infinite ease-in-out;
+  margin:28px 0 12px;
+}
+@keyframes starPulse {
+  50% {transform:scale(1.15);text-shadow:0 0 25px #ffe9a6,0 0 70px #e5a63c}
+}
+h1 {
+  font-size:clamp(38px,9vw,76px);
+  line-height:1.02;
+  margin:10px 0;
+  color:#fff2d4;
+  text-shadow:0 4px 25px #000;
+}
+.subtitle {
+  font-family:Arial,sans-serif;
+  color:#e8d9b8;
+  line-height:1.7;
+  font-size:15px;
+  max-width:490px;
+  margin:18px auto 28px;
+}
+.gold-button {
+  border:1px solid #f1d08c;
+  background:linear-gradient(135deg,#e9c77d,#b98943);
+  color:#27190a;
+  padding:15px 28px;
+  border-radius:30px;
+  font-weight:bold;
+  box-shadow:0 8px 25px #0006;
+  transition:.2s;
+}
+.gold-button:hover {transform:translateY(-3px);filter:brightness(1.1)}
+.outline-button {
+  background:#ffffff0c;
+  color:var(--cream);
+  border:1px solid #e8c98280;
+  border-radius:25px;
+  padding:12px 20px;
+}
+.hero-village {
+  position:relative;
+  z-index:2;
+  width:min(100%,650px);
+  margin:42px auto 0;
+  display:flex;
+  justify-content:center;
+  align-items:end;
+  gap:12px;
+  height:170px;
+  border-bottom:3px solid #d9bd83;
+  filter:drop-shadow(0 12px 12px #0008);
+}
+.house {
+  width:25%;
+  height:105px;
+  position:relative;
+  background:linear-gradient(90deg,#6d3528,#a55b3d);
+  border:2px solid #5a2d24;
+  border-radius:5px 5px 0 0;
+}
+.house:before {
+  content:"";
+  position:absolute;
+  left:-9px;
+  top:-35px;
+  width:calc(100% + 18px);
+  height:48px;
+  background:#7e2926;
+  clip-path:polygon(50% 0,100% 100%,0 100%);
+  border-bottom:4px solid #e7d4ac;
+}
+.house:after {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:38%;
+  width:24%;
+  height:43px;
+  background:#3b211c;
+  border:2px solid #d9b66c;
+  border-bottom:0;
+}
+.window {
+  position:absolute;
+  width:22px;height:25px;
+  background:#ffdc83;
+  box-shadow:0 0 18px #ffce62;
+  top:25px;left:12px;
+  border:2px solid #71422a;
+}
+.house:nth-child(2) {height:130px;background:#31513a}
+.house:nth-child(2):before {background:#21452e}
+.house:nth-child(3) {height:95px;background:#9a4936}
+.house:nth-child(3):before {background:#a12c2c}
+.tiny-tree {
+  font-size:75px;
+  line-height:1;
+  filter:drop-shadow(0 0 12px #e6b94d66);
+}
+.hero-ground {
+  position:absolute;
+  bottom:-1px;
+  width:100%;
+  height:28px;
+  background:linear-gradient(#f5ead0,#d3d0c1);
+  clip-path:polygon(0 45%,20% 20%,40% 48%,60% 15%,80% 50%,100% 22%,100% 100%,0 100%);
+}
+
+nav {
+  position:sticky;
+  top:0;
+  z-index:30;
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding:12px;
+  background:#071b17ed;
+  border-bottom:1px solid #d9b66c44;
+  scrollbar-width:none;
+  backdrop-filter:blur(12px);
+}
+nav::-webkit-scrollbar {display:none}
+nav button {
+  flex:0 0 auto;
+  padding:10px 14px;
+  border:1px solid #d8bd8044;
+  border-radius:25px;
+  background:#ffffff08;
+  color:#f5e8c8;
+  font-size:12px;
+}
+nav button:hover,nav button.active {
+  background:#b98b4c;
+  color:#20170b;
+}
+
+main {max-width:1050px;margin:auto;padding:20px 16px 80px}
+.section {
+  padding:60px 0;
+  scroll-margin-top:75px;
+}
+.section-heading {text-align:center;margin-bottom:30px}
+.eyebrow {
+  color:var(--gold);
+  font:11px Arial,sans-serif;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+h2 {
+  color:#fff0d0;
+  font-size:clamp(29px,6vw,44px);
+  margin:10px 0;
+}
+.section-heading p {
+  color:#c6c0aa;
+  font:14px/1.7 Arial,sans-serif;
+  max-width:570px;
+  margin:0 auto;
+}
+.divider {
+  width:70px;height:2px;
+  background:var(--gold);
+  margin:18px auto;
+}
+.card-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.place-card {
+  position:relative;
+  min-height:220px;
+  padding:22px;
+  overflow:hidden;
+  border:1px solid #d8bd8050;
+  border-radius:18px;
+  background:linear-gradient(145deg,#174536,#0b251e);
+  box-shadow:0 12px 30px #0003;
+  display:flex;
+  flex-direction:column;
+  justify-content:end;
+}
+.place-card:before {
+  content:"";
+  position:absolute;
+  width:170px;height:170px;
+  border-radius:50%;
+  right:-45px;top:-50px;
+  background:#e9bd6530;
+  filter:blur(3px);
+}
+.place-card .emoji {
+  position:absolute;
+  right:18px;top:12px;
+  font-size:68px;
+  filter:drop-shadow(0 4px 12px #0006);
+}
+.place-card h3 {font-size:23px;margin:0 0 8px;position:relative}
+.place-card p {
+  color:#d1d4c4;
+  font:13px/1.5 Arial,sans-serif;
+  margin:0 0 16px;
+  max-width:90%;
+  position:relative;
+}
+.small-button {
+  align-self:flex-start;
+  border:1px solid #e6c57b;
+  color:#f5dca4;
+  background:#0002;
+  border-radius:25px;
+  padding:10px 17px;
+  font:12px Arial,sans-serif;
+  position:relative;
+}
+.small-button:hover {background:#e6c57b;color:#21180b}
+
+.panel {
+  background:linear-gradient(145deg,#12372b,#0a211b);
+  border:1px solid #d6b86b55;
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 15px 40px #0003;
+}
+.panel h3 {font-size:24px;margin-top:0}
+.panel p {color:#d0c9b4;line-height:1.65;font:14px/1.7 Arial,sans-serif}
+.center {text-align:center}
+.gift-shelf {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:25px 0;
+}
+.gift {
+  border:1px solid #e1bd7655;
+  border-radius:14px;
+  padding:15px 5px;
+  background:#ffffff08;
+  text-align:center;
+  font-size:38px;
+  transition:.2s;
+}
+.gift.selected {
+  background:#c19a5140;
+  border-color:var(--gold);
+  transform:translateY(-4px);
+}
+.gift span {
+  display:block;
+  font:11px Arial,sans-serif;
+  color:#e8d9b8;
+  margin-top:8px;
+}
+.status {
+  min-height:24px;
+  color:#f2d58f;
+  font:13px Arial,sans-serif;
+  margin-top:14px;
+}
+textarea {
+  width:100%;
+  min-height:125px;
+  resize:vertical;
+  background:#061b16;
+  border:1px solid #d6b86b66;
+  border-radius:12px;
+  padding:14px;
+  color:#fff0d0;
+  line-height:1.5;
+  outline:none;
+}
+input {
+  width:100%;
+  padding:13px;
+  border-radius:10px;
+  background:#061b16;
+  border:1px solid #d6b86b66;
+  color:#fff0d0;
+  margin:8px 0 14px;
+}
+label {
+  display:block;
+  color:#e6cf9d;
+  font:12px Arial,sans-serif;
+  margin-top:12px;
+}
+.mail-list {
+  display:grid;
+  gap:10px;
+  margin-top:20px;
+}
+.mail-item {
+  padding:15px;
+  border-radius:12px;
+  background:#ffffff09;
+  border-left:3px solid var(--gold);
+}
+.mail-item strong {color:#f4d99e}
+.mail-item p {
+  margin:8px 0 0;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font:13px/1.6 Arial,sans-serif;
+  color:#d5d0c0;
+}
+.tree-area {
+  text-align:center;
+  padding:30px 10px;
+  border-radius:20px;
+  background:
+    radial-gradient(ellipse at center,#b68b3a30,transparent 65%),
+    linear-gradient(#102e25,#071b17);
+  border:1px solid #d6b86b44;
+}
+.big-tree {
+  display:block;
+  font-size:clamp(130px,35vw,220px);
+  line-height:1.2;
+  filter:drop-shadow(0 0 20px #e3b34a66);
+  animation:treeGlow 3s infinite alternate;
+}
+@keyframes treeGlow {
+  to {filter:drop-shadow(0 0 35px #e3b34aaa)}
+}
+.message-wall {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:25px;
+}
+.message-note {
+  background:#f2dfb5;
+  color:#42301b;
+  padding:14px;
+  border-radius:5px;
+  transform:rotate(-1deg);
+  box-shadow:0 5px 12px #0004;
+  text-align:left;
+}
+.message-note:nth-child(even) {transform:rotate(1deg)}
+.message-note strong {font-size:13px}
+.message-note p {
+  font:12px/1.5 Arial,sans-serif;
+  overflow-wrap:anywhere;
+  margin-bottom:0;
+}
+.sleigh-scene {
+  overflow:hidden;
+  position:relative;
+  height:210px;
+  border-radius:18px;
+  background:linear-gradient(#06172a,#173e4c 75%,#e7e6d9 76%);
+  border:1px solid #d9bd8355;
+}
+.moon {
+  position:absolute;
+  right:15%;top:25px;
+  width:48px;height:48px;
+  border-radius:50%;
+  background:#fff1bf;
+  box-shadow:0 0 45px #ffe7a3;
+}
+.sleigh {
+  position:absolute;
+  top:70px;left:-240px;
+  font-size:75px;
+  white-space:nowrap;
+}
+.sleigh.fly {animation:fly 7s linear forwards}
+@keyframes fly {
+  from {left:-240px;transform:translateY(0)}
+  50% {transform:translateY(-35px)}
+  to {left:110%;transform:translateY(-10px)}
+}
+.sleigh-ground {
+  position:absolute;bottom:0;width:100%;height:48px;
+  background:#f0eee0;
+  clip-path:polygon(0 35%,20% 10%,45% 40%,65% 0,100% 30%,100% 100%,0 100%);
+}
+.night-lights {
+  position:absolute;bottom:20px;left:10%;right:10%;
+  display:flex;justify-content:space-around;
+  font-size:25px;
+}
+.footer {
+  text-align:center;
+  padding:45px 20px;
+  background:#04110e;
+  border-top:1px solid #d6b86b44;
+}
+.footer .brand {margin-bottom:15px}
+.footer p {
+  color:#aaa997;
+  font:12px/1.7 Arial,sans-serif;
+}
+.modal {
+  display:none;
+  position:fixed;
+  z-index:100;
+  inset:0;
+  background:#000b;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.modal.open {display:flex}
+.modal-box {
+  width:min(100%,470px);
+  max-height:85vh;
+  overflow:auto;
+  padding:25px;
+  border-radius:18px;
+  border:1px solid #e4c57c;
+  background:linear-gradient(145deg,#174333,#071c16);
+  box-shadow:0 20px 80px #000b;
+  text-align:center;
+}
+.modal-box h3 {font-size:26px;color:#f4d99e}
+.close {
+  float:right;
+  border:0;
+  background:none;
+  color:#fff;
+  font-size:25px;
+}
+.hidden {display:none!important}
+@media(max-width:600px) {
+  header {min-height:85vh}
+  .hero-village {height:140px;gap:7px}
+  .house {height:85px}
+  .house:nth-child(2) {height:105px}
+  .house:nth-child(3) {height:75px}
+  .tiny-tree {font-size:55px}
+  .card-grid {grid-template-columns:1fr}
+  .place-card {min-height:190px}
+  .panel {padding:18px}
+  .gift-shelf {gap:7px}
+  .gift {font-size:32px;padding:12px 3px}
+}
+</style>
+</head>
+
+<body>
+<div id="snow"></div>
+
+<header id="inicio">
+  <div class="header-content">
+    <div class="brand">Santa Luzia apresenta</div>
+    <div class="header-star">✦</div>
+    <h1>Natal<br>Encantado</h1>
+    <div class="divider"></div>
+    <p class="subtitle">
+      Um lugar de magia, carinho e união.
+      Entre na nossa vila e viva uma experiência especial
+      neste Natal de 2026.
+    </p>
+    <button class="gold-button" onclick="goTo('vila')">ENTRAR NA VILA ✨</button>
+  </div>
+
+  <div class="hero-village">
+    <div class="tiny-tree">🎄</div>
+    <div class="house"><div class="window"></div></div>
+    <div class="house"><div class="window"></div></div>
+    <div class="house"><div class="window"></div></div>
+    <div class="tiny-tree">🎄</div>
+    <div class="hero-ground"></div>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="goTo('vila')">🏘️ Vila</button>
+  <button onclick="goTo('oficina')">🎁 Oficina</button>
+  <button onclick="goTo('correio')">✉️ Correio</button>
+  <button onclick="goTo('entrega')">🛷 Entrega</button>
+  <button onclick="goTo('arvore')">🎄 Árvore</button>
+  <button onclick="goTo('noite')">🌟 Noite de Natal</button>
+</nav>
+
+<main>
+
+<section class="section" id="vila">
+  <div class="section-heading">
+    <div class="eyebrow">Um mundo de encantamento</div>
+    <h2>Bem-vindo à Vila</h2>
+    <div class="divider"></div>
+    <p>As portas estão abertas! Escolha um lugar e descubra o que preparamos para você.</p>
+  </div>
+
+  <div class="card-grid">
+    <article class="place-card">
+      <div class="emoji">🎅</div>
+      <h3>Oficina do Noel</h3>
+      <p>Os presentes estão esperando para serem preparados.</p>
+      <button class="small-button" onclick="goTo('oficina')">Conhecer oficina</button>
+    </article>
+    <article class="place-card">
+      <div class="emoji">📮</div>
+      <h3>Correio de Natal</h3>
+      <p>Uma mensagem especial pode transformar o dia de alguém.</p>
+      <button class="small-button" onclick="goTo('correio')">Escrever cartinha</button>
+    </article>
+    <article class="place-card">
+      <div class="emoji">🛷</div>
+      <h3>Central de Entregas</h3>
+      <p>Ajude o Papai Noel a preparar sua entrega especial.</p>
+      <button class="small-button" onclick="goTo('entrega')">Começar missão</button>
+    </article>
+    <article class="place-card">
+      <div class="emoji">🎄</div>
+      <h3>Grande Árvore</h3>
+      <p>Deixe uma mensagem e faça parte da nossa árvore.</p>
+      <button class="small-button" onclick="goTo('arvore')">Visitar árvore</button>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="oficina">
+  <div class="section-heading">
+    <div class="eyebrow">Preparativos especiais</div>
+    <h2>Oficina do Papai Noel</h2>
+    <div class="divider"></div>
+    <p>Os ajudantes estão trabalhando. Escolha um presente para preparar!</p>
+  </div>
+
+  <div class="panel center">
+    <div style="font-size:65px">🧑‍🎄</div>
+    <h3>Hora de preparar os presentes!</h3>
+    <p>Escolha um dos presentes abaixo. Depois, clique em preparar para finalizar seu trabalho na oficina.</p>
+
+    <div class="gift-shelf">
+      <button class="gift" onclick="selectGift(this,'Brinquedo')">🧸<span>Brinquedo</span></button>
+      <button class="gift" onclick="selectGift(this,'Bicicleta')">🚲<span>Bicicleta</span></button>
+      <button class="gift" onclick="selectGift(this,'Presente surpresa')">🎁<span>Surpresa</span></button>
+    </div>
+    <button class="gold-button" onclick="prepareGift()">PREPARAR PRESENTE</button>
+    <div class="status" id="giftStatus">A oficina está esperando por você.</div>
+  </div>
+</section>
+
+<section class="section" id="correio">
+  <div class="section-heading">
+    <div class="eyebrow">Uma mensagem do coração</div>
+    <h2>Correio de Natal</h2>
+    <div class="divider"></div>
+    <p>Escreva uma cartinha, agradeça por algo especial ou deixe uma mensagem para alguém que você ama.</p>
+  </div>
+
+  <div class="panel">
+    <label for="letterName">Seu nome ou apelido</label>
+    <input id="letterName" maxlength="35" placeholder="Como podemos te chamar?">
+
+    <label for="letterText">Sua cartinha</label>
+    <textarea id="letterText" maxlength="1000" placeholder="Querido Papai Noel..."></textarea>
+
+    <div class="status" id="letterStatus">Sua cartinha ficará guardada neste aparelho.</div>
+    <button class="gold-button" onclick="saveLetter()">✉️ GUARDAR CARTINHA</button>
+    <button class="outline-button" onclick="clearLetter()">Limpar</button>
+
+    <div id="savedLetters" class="mail-list"></div>
+  </div>
+</section>
+
+<section class="section" id="entrega">
+  <div class="section-heading">
+    <div class="eyebrow">Missão especial</div>
+    <h2>Entrega de Presentes</h2>
+    <div class="divider"></div>
+    <p>O trenó está quase pronto. Ajude o Papai Noel a organizar os presentes!</p>
+  </div>
+
+  <div class="panel center">
+    <div style="font-size:65px">🛷</div>
+    <h3>Desafio da entrega</h3>
+    <p>Você precisa separar três presentes para completar a missão. Clique nos presentes para selecioná-los.</p>
+
+    <div class="gift-shelf" id="deliveryGifts">
+      <button class="gift" onclick="toggleDelivery(this)">🎁<span>Presente 1</span></button>
+      <button class="gift" onclick="toggleDelivery(this)">🧸<span>Presente 2</span></button>
+      <button class="gift" onclick="toggleDelivery(this)">🚂<span>Presente 3</span></button>
+      <button class="gift" onclick="toggleDelivery(this)">⚽<span>Presente 4</span></button>
+      <button class="gift" onclick="toggleDelivery(this)">🚲<span>Presente 5</span></button>
+      <button class="gift" onclick="toggleDelivery(this)">🎄<span>Presente 6</span></button>
+    </div>
+
+    <div class="status" id="deliveryStatus">0 de 3 presentes selecionados.</div>
+    <button class="gold-button" onclick="finishDelivery()">FINALIZAR ENTREGA</button>
+    <div id="deliveryResult" class="status"></div>
+  </div>
+</section>
+
+<section class="section" id="arvore">
+  <div class="section-heading">
+    <div class="eyebrow">Nossa comunidade</div>
+    <h2>A Grande Árvore</h2>
+    <div class="divider"></div>
+    <p>Uma árvore fica ainda mais bonita quando cada pessoa deixa um pouco de carinho nela.</p>
+  </div>
+
+  <div class="tree-area">
+    <div class="big-tree">🎄</div>
+    <div style="color:#f5d995;font-size:14px">✨ Árvore de Natal Santa Luzia ✨</div>
+    <p style="font:13px Arial;color:#d3cbb7">Cada mensagem é uma luz nesta celebração.</p>
+  </div>
+
+  <div class="panel" style="margin-top:18px">
+    <label for="treeName">Seu nome ou apelido</label>
+    <input id="treeName" maxlength="35" placeholder="Seu nome">
+
+    <label for="treeMessage">Sua mensagem para a comunidade</label>
+    <textarea id="treeMessage" maxlength="250" placeholder="Desejo a todos um Natal cheio de paz..."></textarea>
+
+    <button class="gold-button" onclick="addTreeMessage()">✨ COLOCAR MINHA MENSAGEM</button>
+    <div class="status" id="treeStatus"></div>
+    <div class="message-wall" id="messageWall"></div>
+  </div>
+</section>
+
+<section class="section" id="noite">
+  <div class="section-heading">
+    <div class="eyebrow">Uma noite inesquecível</div>
+    <h2>A Noite de Natal</h2>
+    <div class="divider"></div>
+    <p>Chegou o momento de olhar para o céu e sentir a magia desta noite especial.</p>
+  </div>
+
+  <div class="sleigh-scene" id="sleighScene">
+    <div class="moon"></div>
+    <div class="sleigh" id="sleigh">🦌🦌🛷🎅</div>
+    <div class="night-lights">🏠 🎄 🏠 🎄 🏠</div>
+    <div class="sleigh-ground"></div>
+  </div>
+
+  <div class="panel center" style="margin-top:18px">
+    <div style="font-size:42px">🌟</div>
+    <h3>Uma noite para guardar no coração</h3>
+    <p>Prepare-se para acompanhar a passagem do trenó pela nossa vila. Faça sua contagem e veja o céu ganhar vida!</p>
+    <button class="gold-button" onclick="startChristmasNight()">COMEÇAR A NOITE DE NATAL</button>
+    <div class="status" id="nightStatus">A vila está esperando por você...</div>
+  </div>
+
+  <div class="panel center" style="margin-top:20px">
+    <div style="font-size:40px">❤️</div>
+    <h3>O verdadeiro sentido do Natal</h3>
+    <p>
+      Entre luzes, presentes e celebrações, nunca podemos esquecer
+      o nascimento de Jesus. Que o amor, a fé, a esperança e a união
+      estejam presentes em cada família.
+    </p>
+    <div style="color:#f0d18a;font-size:18px">Feliz Natal!</div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="brand">Santa Luzia</div>
+  <div style="font-size:28px;margin:15px">🎄 ✨ 🎅</div>
+  <p>Natal Encantado Santa Luzia 2026</p>
+  <p>Um Natal para guardar na memória.</p>
+  <p style="margin-top:24px">Feito com carinho pela família Santa Luzia.</p>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <div style="font-size:55px">🎄</div>
+    <h3 id="modalTitle">Que lindo!</h3>
+    <p id="modalText" style="font:14px/1.7 Arial;color:#e2d7bd"></p>
+    <button class="gold-button" onclick="closeModal()">CONTINUAR</button>
+  </div>
+</div>
+
+<script>
+const STORAGE = {
+  letters:'santaLuziaNatal2026Letters',
+  messages:'santaLuziaNatal2026Messages',
+  gift:'santaLuziaNatal2026Gift',
+  delivery:'santaLuziaNatal2026Delivery'
+};
+
+let selectedGift = '';
+let selectedDelivery = new Set();
+
+function readStore(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || '[]');
+    return Array.isArray(value) ? value : [];
+  } catch(e) {
+    return [];
+  }
+}
+function writeStore(key,value) {
+  try {
+    localStorage.setItem(key,JSON.stringify(value));
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+function goTo(id) {
+  const target = document.getElementById(id);
+  if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+}
+function showModal(title,message) {
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalText').textContent=message;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+document.getElementById('modal').addEventListener('click',e=>{
+  if(e.target.id==='modal') closeModal();
+});
+
+// NEVE
+(function createSnow(){
+  const area=document.getElementById('snow');
+  for(let i=0;i<38;i++){
+    const flake=document.createElement('span');
+    flake.className='snowflake';
+    flake.textContent='❄';
+    flake.style.left=Math.random()*100+'%';
+    flake.style.fontSize=(8+Math.random()*12)+'px';
+    flake.style.animationDuration=(8+Math.random()*13)+'s';
+    flake.style.animationDelay=(-Math.random()*18)+'s';
+    area.appendChild(flake);
+  }
+})();
+
+// OFICINA
+function selectGift(button,name) {
+  document.querySelectorAll('#oficina .gift').forEach(g=>g.classList.remove('selected'));
+  button.classList.add('selected');
+  selectedGift=name;
+  document.getElementById('giftStatus').textContent='Você escolheu: '+name+'.';
+}
+function prepareGift() {
+  if(!selectedGift) {
+    document.getElementById('giftStatus').textContent='Escolha um presente primeiro!';
+    return;
+  }
+  const gifts=readStore(STORAGE.gift);
+  gifts.push({name:selectedGift,date:new Date().toISOString()});
+  writeStore(STORAGE.gift,gifts);
+  document.getElementById('giftStatus').textContent='🎁 '+selectedGift+' preparado com sucesso!';
+  showModal('Presente preparado!','Muito bem! Seu presente está pronto e já pode seguir para a entrega.');
+}
+
+// CORREIO
+function saveLetter() {
+  const name=document.getElementById('letterName').value.trim() || 'Visitante';
+  const message=document.getElementById('letterText').value.trim();
+  const status=document.getElementById('letterStatus');
+  if(!message) {
+    status.textContent='Escreva sua cartinha antes de guardar.';
+    return;
+  }
+  const letters=readStore(STORAGE.letters);
+  letters.unshift({name,message,date:new Date().toISOString()});
+  if(!writeStore(STORAGE.letters,letters)) {
+    status.textContent='Não foi possível salvar. Verifique o espaço disponível no aparelho.';
+    return;
+  }
+  document.getElementById('letterText').value='';
+  status.textContent='Sua cartinha foi guardada neste aparelho! ❤️';
+  renderLetters();
+  showModal('Cartinha guardada!','Sua mensagem foi guardada com carinho neste aparelho. Feliz Natal!');
+}
+function clearLetter() {
+  document.getElementById('letterText').value='';
+}
+function renderLetters() {
+  const box=document.getElementById('savedLetters');
+  const letters=readStore(STORAGE.letters);
+  box.innerHTML='';
+  if(!letters.length) {
+    box.innerHTML='<p style="color:#bfb8a5;font:13px Arial">Suas cartinhas guardadas aparecerão aqui.</p>';
+    return;
+  }
+  letters.slice(0,10).forEach(letter=>{
+    const item=document.createElement('div');
+    item.className='mail-item';
+    const name=document.createElement('strong');
+    name.textContent='✉️ '+letter.name;
+    const p=document.createElement('p');
+    p.textContent=letter.message;
+    item.append(name,p);
+    box.appendChild(item);
+  });
+}
+
+// ENTREGA
+function toggleDelivery(button) {
+  const buttons=[...document.querySelectorAll('#deliveryGifts .gift')];
+  const index=buttons.indexOf(button);
+  if(selectedDelivery.has(index)) {
+    selectedDelivery.delete(index);
+    button.classList.remove('selected');
+  } else if(selectedDelivery.size<3) {
+    selectedDelivery.add(index);
+    button.classList.add('selected');
+  }
+  document.getElementById('deliveryStatus').textContent=selectedDelivery.size+' de 3 presentes selecionados.';
+}
+function finishDelivery() {
+  const result=document.getElementById('deliveryResult');
+  if(selectedDelivery.size!==3) {
+    result.textContent='Você precisa selecionar exatamente 3 presentes!';
+    return;
+  }
+  const total=Number(localStorage.getItem(STORAGE.delivery)||0)+1;
+  localStorage.setItem(STORAGE.delivery,String(total));
+  result.textContent='🛷 Entrega preparada! Você completou a missão!';
+  showModal('Missão concluída!','Os três presentes estão no trenó. O Papai Noel agradece sua ajuda!');
+  selectedDelivery.clear();
+  document.querySelectorAll('#deliveryGifts .gift').forEach(g=>g.classList.remove('selected'));
+  document.getElementById('deliveryStatus').textContent='0 de 3 presentes selecionados.';
+}
+
+// ÁRVORE
+function addTreeMessage() {
+  const name=document.getElementById('treeName').value.trim() || 'Amigo Santa Luzia';
+  const message=document.getElementById('treeMessage').value.trim();
+  const status=document.getElementById('treeStatus');
+  if(!message) {
+    status.textContent='Escreva uma mensagem antes de colocar na árvore.';
+    return;
+  }
+  const messages=readStore(STORAGE.messages);
+  messages.unshift({name,message,date:new Date().toISOString()});
+  if(!writeStore(STORAGE.messages,messages)) {
+    status.textContent='Não foi possível guardar sua mensagem.';
+    return;
+  }
+  document.getElementById('treeMessage').value='';
+  status.textContent='✨ Sua mensagem agora faz parte da árvore deste aparelho!';
+  renderMessages();
+}
+function renderMessages() {
+  const wall=document.getElementById('messageWall');
+  const messages=readStore(STORAGE.messages);
+  wall.innerHTML='';
+  if(!messages.length) {
+    wall.innerHTML='<p style="color:#c6c0aa;font:13px Arial;grid-column:1/-1">A primeira mensagem pode ser a sua!</p>';
+    return;
+  }
+  messages.slice(0,30).forEach(m=>{
+    const note=document.createElement('article');
+    note.className='message-note';
+    const strong=document.createElement('strong');
+    strong.textContent='✨ '+m.name;
+    const p=document.createElement('p');
+    p.textContent=m.message;
+    note.append(strong,p);
+    wall.appendChild(note);
+  });
+}
+
+// NOITE DE NATAL
+function startChristmasNight() {
+  const sleigh=document.getElementById('sleigh');
+  const status=document.getElementById('nightStatus');
+  sleigh.classList.remove('fly');
+  void sleigh.offsetWidth;
+  sleigh.classList.add('fly');
+  status.textContent='🌟 Olhe para o céu... o trenó está passando pela vila!';
+  showModal('A Noite de Natal!','Que a alegria desta noite chegue a cada casa. Que Jesus ilumine os nossos caminhos e que nunca faltem amor, fé e esperança.');
+  setTimeout(()=>{
+    status.textContent='🎅 O trenó passou! Feliz Natal, família Santa Luzia!';
+    sleigh.classList.remove('fly');
+  },7200);
+}
+
+// CARREGAMENTO
+renderLetters();
+renderMessages();
+
+// Navegação ativa
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) {
+      document.querySelectorAll('nav button').forEach(b=>{
+        b.classList.toggle('active',b.getAttribute('onclick')?.includes("'"+entry.target.id+"'"));
+      });
+    }
+  });
+},{rootMargin:'-25% 0px -60% 0px'});
+document.querySelectorAll('main .section').forEach(section=>observer.observe(section));
+</script>
+</body>
+</html>
