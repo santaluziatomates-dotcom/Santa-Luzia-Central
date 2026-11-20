@@ -19,7 +19,18 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: #080705;
-  touch-action: none;
+  color: #fff0d5;
+  font-family: Georgia, serif;
+  overscroll-behavior: none;
+}
+
+button, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #app {
@@ -32,7 +43,10 @@ html, body {
   background: #080705;
 }
 
-/* CENA EM TELA CHEIA */
+/* =================================
+   CENA PANORÂMICA
+================================= */
+
 #stage {
   position: absolute;
   inset: 0;
@@ -41,45 +55,52 @@ html, body {
   touch-action: none;
 }
 
-/* PINTURA PANORÂMICA */
 #painting {
   position: absolute;
-  height: 100%;
-  width: auto;
-  max-width: none;
-  object-fit: cover;
+  top: 50%;
+  left: 50%;
   display: block;
+  max-width: none;
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: none;
+  transform-origin: center center;
   will-change: transform;
 }
 
-/* CAMADA CINEMATOGRÁFICA */
+/* SOMBRA CINEMATOGRÁFICA */
+
 #vignette {
   position: absolute;
   z-index: 2;
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom,
+    linear-gradient(
+      to bottom,
       rgba(0,0,0,.25),
       transparent 22%,
       transparent 78%,
-      rgba(0,0,0,.25)),
-    radial-gradient(ellipse at center,
+      rgba(0,0,0,.25)
+    ),
+    radial-gradient(
+      ellipse at center,
       transparent 55%,
-      rgba(0,0,0,.25) 100%);
+      rgba(0,0,0,.22) 100%
+    );
 }
 
-/* ESTRELA DE BELÉM */
+/* =================================
+   ESTRELA DE BELÉM
+================================= */
+
 #star {
   position: absolute;
   z-index: 5;
-  top: 11%;
+  top: 10%;
   left: 50%;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #fff5ce;
   box-shadow:
@@ -87,7 +108,7 @@ html, body {
     0 0 28px 12px rgba(255,190,90,.4),
     0 0 60px 22px rgba(255,170,70,.2);
   pointer-events: none;
-  animation: star 4s ease-in-out infinite alternate;
+  animation: starGlow 4s ease-in-out infinite alternate;
 }
 
 #star::before,
@@ -97,36 +118,41 @@ html, body {
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
-  background: rgba(255,240,195,.8);
+  background: rgba(255,240,195,.85);
   border-radius: 50%;
 }
 
 #star::before {
   width: 2px;
-  height: 35px;
+  height: 38px;
 }
 
 #star::after {
-  width: 35px;
+  width: 38px;
   height: 2px;
 }
 
-@keyframes star {
+@keyframes starGlow {
   from {
     opacity: .65;
+    filter: brightness(.85);
     transform: scale(.85);
   }
   to {
     opacity: 1;
-    transform: scale(1.2);
+    filter: brightness(1.2);
+    transform: scale(1.15);
   }
 }
 
-/* IDENTIDADE */
+/* =================================
+   IDENTIDADE
+================================= */
+
 .brand {
   position: absolute;
   z-index: 8;
-  top: max(13px, env(safe-area-inset-top));
+  top: max(12px, env(safe-area-inset-top));
   left: 0;
   width: 100%;
   text-align: center;
@@ -138,36 +164,43 @@ html, body {
 
 .brand small {
   display: block;
-  font: 9px Georgia, serif;
+  font-size: 9px;
   letter-spacing: 4px;
   margin-bottom: 4px;
   color: #e8c68c;
 }
 
 .brand h1 {
-  font: normal 16px Georgia, serif;
+  font-size: 16px;
+  font-weight: normal;
   letter-spacing: 2px;
 }
 
-/* INDICADOR DISCRETO */
+/* =================================
+   DICA DE MOVIMENTO
+================================= */
+
 .hint {
   position: absolute;
   z-index: 8;
   bottom: max(20px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(255,239,211,.85);
-  background: rgba(10,8,5,.48);
-  border: 1px solid rgba(255,225,175,.22);
+  color: rgba(255,239,211,.9);
+  background: rgba(10,8,5,.55);
+  border: 1px solid rgba(255,225,175,.25);
   border-radius: 30px;
   padding: 10px 17px;
-  font: 12px Georgia, serif;
+  font-size: 12px;
   white-space: nowrap;
   pointer-events: none;
   transition: opacity .5s;
 }
 
-/* CONTROLES */
+/* =================================
+   BOTÕES DA CENA
+================================= */
+
 .controls {
   position: absolute;
   z-index: 10;
@@ -184,98 +217,285 @@ html, body {
   height: 39px;
   border-radius: 50%;
   border: 1px solid rgba(255,225,175,.4);
-  background: rgba(15,12,9,.7);
+  background: rgba(15,12,9,.75);
   color: #fff0d2;
   font-size: 20px;
   backdrop-filter: blur(10px);
 }
 
-/* HISTÓRIA */
-.story-button {
+.menu-bottom {
   position: absolute;
   z-index: 10;
   left: 50%;
-  bottom: max(19px, env(safe-area-inset-bottom));
+  bottom: max(18px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
-  padding: 10px 17px;
-  border: 1px solid rgba(255,224,176,.4);
+  display: flex;
+  gap: 8px;
+  transition: opacity .4s;
+}
+
+.menu-button {
+  padding: 11px 16px;
+  border: 1px solid rgba(255,224,176,.45);
   border-radius: 30px;
   color: #fff1d7;
-  background: rgba(18,13,8,.75);
-  font: 13px Georgia, serif;
+  background: rgba(18,13,8,.82);
+  font-size: 12px;
   white-space: nowrap;
-  transition: opacity .4s;
+  backdrop-filter: blur(10px);
 }
 
 #app.clean .brand,
 #app.clean .controls,
-#app.clean .story-button,
+#app.clean .menu-bottom,
 #app.clean .hint {
   opacity: 0;
   pointer-events: none;
 }
 
-/* HISTÓRIA */
-#story {
-  display: none;
+/* =================================
+   ABERTURA
+================================= */
+
+#intro {
   position: absolute;
-  z-index: 20;
+  z-index: 30;
   inset: 0;
-  background: rgba(8,6,4,.97);
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  overflow-y: auto;
-  color: #fff0d5;
-  font-family: Georgia, serif;
-}
-
-#story.show {
-  display: flex;
-}
-
-.story-content {
-  max-width: 650px;
   text-align: center;
-  line-height: 1.7;
-  padding: 18px;
+  padding: 28px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(91,57,25,.38),
+      rgba(8,6,4,.98) 75%
+    );
+  transition: opacity 1s, visibility 1s;
 }
 
-.cross {
-  font-size: 35px;
-  color: #e5bd7c;
-  margin-bottom: 10px;
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.story-content h2 {
-  font-size: clamp(22px, 4vw, 30px);
-  font-weight: normal;
-  color: #f0d3a0;
+.intro-content {
+  max-width: 540px;
+  animation: introAppear 1.5s ease both;
+}
+
+.intro-star {
+  color: #ffe8ad;
+  font-size: 42px;
+  margin-bottom: 22px;
+  text-shadow: 0 0 25px rgba(255,208,120,.8);
+}
+
+.intro-kicker {
+  color: #d8b77f;
+  font-size: 10px;
+  letter-spacing: 5px;
   margin-bottom: 15px;
 }
 
-.story-content p {
-  font-size: clamp(13px, 2vw, 16px);
-  color: #e8ddca;
+.intro-content h2 {
+  color: #f4dfb9;
+  font-weight: normal;
+  font-size: clamp(27px, 5vw, 43px);
+  line-height: 1.25;
+  margin-bottom: 18px;
+}
+
+.intro-content p {
+  color: #e5d7c1;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 27px;
+}
+
+.enter-button {
+  padding: 14px 27px;
+  border: 1px solid #c5a16b;
+  border-radius: 35px;
+  background: linear-gradient(135deg, #8a6537, #49331d);
+  color: #fff1d7;
+  font-size: 14px;
+  letter-spacing: .5px;
+  box-shadow: 0 0 25px rgba(197,161,107,.15);
+}
+
+@keyframes introAppear {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =================================
+   JANELAS
+================================= */
+
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 25;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8,6,4,.96);
+  overflow-y: auto;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90%;
+  overflow-y: auto;
+  text-align: center;
+  padding: 25px 20px;
+}
+
+.modal-symbol {
+  color: #e5bd7c;
+  font-size: 34px;
   margin-bottom: 12px;
 }
 
-.close-story {
-  margin-top: 12px;
-  padding: 10px 24px;
+.modal h2 {
+  color: #f0d3a0;
+  font-size: clamp(23px, 4vw, 31px);
+  font-weight: normal;
+  margin-bottom: 15px;
+}
+
+.modal p {
+  color: #e8ddca;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.modal-kicker {
+  color: #c9a875;
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.action-button {
+  padding: 11px 20px;
   border: 1px solid #b99762;
   border-radius: 25px;
   color: #f5dfb9;
-  background: transparent;
-  font-family: Georgia, serif;
-  font-size: 14px;
+  background: rgba(60,42,23,.45);
+  font-size: 13px;
 }
 
-/* ERRO */
+.action-button.primary {
+  background: #79572f;
+  border-color: #c9a875;
+}
+
+/* =================================
+   HISTÓRIA EM ETAPAS
+================================= */
+
+#storyText {
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-progress {
+  color: #c9a875;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-top: 12px;
+}
+
+/* =================================
+   CARTA DE NATAL
+================================= */
+
+.letter-intro {
+  font-size: 13px !important;
+  color: #cfc0aa !important;
+}
+
+#letterText {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  border: 1px solid rgba(201,168,117,.55);
+  border-radius: 12px;
+  padding: 15px;
+  background: rgba(35,25,16,.75);
+  color: #fff0d5;
+  outline: none;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+#letterText::placeholder {
+  color: #a99a83;
+}
+
+.letter-note {
+  color: #bca987;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+/* AVISO */
+#toast {
+  position: absolute;
+  z-index: 50;
+  left: 50%;
+  bottom: max(75px, calc(env(safe-area-inset-bottom) + 65px));
+  transform: translateX(-50%);
+  padding: 11px 18px;
+  background: rgba(25,20,13,.95);
+  border: 1px solid rgba(201,168,117,.5);
+  border-radius: 25px;
+  color: #fff0d5;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  white-space: nowrap;
+}
+
+#toast.show {
+  opacity: 1;
+}
+
+/* ERRO DE IMAGEM */
 #error {
   display: none;
   position: absolute;
-  z-index: 40;
+  z-index: 60;
   inset: 0;
   align-items: center;
   justify-content: center;
@@ -283,7 +503,6 @@ html, body {
   padding: 30px;
   background: #100d09;
   color: white;
-  font-family: Georgia, serif;
   line-height: 1.7;
 }
 
@@ -291,6 +510,7 @@ html, body {
   display: flex;
 }
 
+/* PAISAGEM */
 @media (orientation: landscape) {
   .brand {
     top: max(7px, env(safe-area-inset-top));
@@ -304,11 +524,20 @@ html, body {
     font-size: 13px;
   }
 
-  .hint {
+  .controls {
     bottom: max(12px, env(safe-area-inset-bottom));
   }
 
-  .controls {
+  .menu-bottom {
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .control {
+    width: 35px;
+    height: 35px;
+  }
+
+  .hint {
     bottom: max(12px, env(safe-area-inset-bottom));
   }
 }
@@ -319,6 +548,7 @@ html, body {
 
 <div id="app">
 
+  <!-- PINTURA -->
   <div id="stage">
     <img
       id="painting"
@@ -330,6 +560,7 @@ html, body {
   <div id="vignette"></div>
   <div id="star"></div>
 
+  <!-- IDENTIDADE -->
   <div class="brand">
     <small>SANTA LUZIA APRESENTA</small>
     <h1>O NASCIMENTO DE JESUS</h1>
@@ -339,60 +570,150 @@ html, body {
     ← Deslize para explorar Belém →
   </div>
 
-  <button class="story-button" id="openStory">
-    Conheça a história ✨
-  </button>
-
-  <div class="controls">
-    <button class="control" id="zoomIn">+</button>
-    <button class="control" id="zoomOut">−</button>
-    <button class="control" id="reset">↺</button>
-    <button class="control" id="hideUI">◉</button>
+  <!-- MENU -->
+  <div class="menu-bottom">
+    <button class="menu-button" id="openStory">
+      ✨ História
+    </button>
+    <button class="menu-button" id="openLetter">
+      ✉ Carta de Natal
+    </button>
   </div>
 
-  <div id="story">
-    <div class="story-content">
-      <div class="cross">✝</div>
+  <!-- ZOOM E TELA LIMPA -->
+  <div class="controls">
+    <button class="control" id="zoomIn" aria-label="Aumentar zoom">+</button>
+    <button class="control" id="zoomOut" aria-label="Diminuir zoom">−</button>
+    <button class="control" id="reset" aria-label="Restaurar imagem">↺</button>
+    <button class="control" id="hideUI" aria-label="Esconder controles">◉</button>
+  </div>
+
+  <!-- ABERTURA -->
+  <section id="intro">
+    <div class="intro-content">
+      <div class="intro-star">✧</div>
+      <div class="intro-kicker">SANTA LUZIA APRESENTA</div>
+
       <h2>Uma noite que mudou o mundo</h2>
 
-      <p>Em Belém, numa noite simples e silenciosa, nasceu Jesus Cristo.</p>
+      <p>
+        Em uma pequena cidade chamada Belém,
+        nasceu aquele que trouxe ao mundo
+        a maior mensagem de amor e esperança.
+      </p>
 
-      <p>Maria e José acolheram o menino numa manjedoura, pois não havia lugar para eles na hospedaria.</p>
-
-      <p>Os pastores receberam a notícia do nascimento do Salvador e foram ao seu encontro. Mais tarde, os Reis Magos também vieram adorá-lo e oferecer seus presentes.</p>
-
-      <p>Aquele pequeno menino trouxe ao mundo uma mensagem de amor, esperança e salvação.</p>
-
-      <p><strong>Jesus é o verdadeiro sentido do Natal.</strong></p>
-
-      <button class="close-story" id="closeStory">
-        Voltar ao Presépio
+      <button class="enter-button" id="enter">
+        Entrar em Belém
       </button>
     </div>
-  </div>
+  </section>
 
+  <!-- HISTÓRIA -->
+  <section class="modal" id="story">
+    <div class="modal-content">
+      <div class="modal-symbol">✝</div>
+      <div class="modal-kicker">A HISTÓRIA DO NATAL</div>
+      <h2 id="storyTitle">A promessa</h2>
+
+      <div id="storyText">
+        <p></p>
+      </div>
+
+      <div class="story-progress" id="storyProgress">
+        1 DE 5
+      </div>
+
+      <div class="modal-actions">
+        <button class="action-button" id="storyBack">
+          Voltar
+        </button>
+        <button class="action-button primary" id="storyNext">
+          Continuar
+        </button>
+        <button class="action-button" id="closeStory">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTA -->
+  <section class="modal" id="letter">
+    <div class="modal-content">
+      <div class="modal-symbol">✉</div>
+      <div class="modal-kicker">UM MOMENTO DE FÉ</div>
+      <h2>Minha carta de Natal</h2>
+
+      <p class="letter-intro">
+        Escreva uma mensagem, um agradecimento,
+        um pedido ou uma oração a Jesus.
+      </p>
+
+      <textarea
+        id="letterText"
+        maxlength="3000"
+        placeholder="Querido Jesus...
+
+Neste Natal, quero agradecer por..."
+      ></textarea>
+
+      <div class="modal-actions">
+        <button class="action-button primary" id="saveLetter">
+          Guardar carta
+        </button>
+
+        <button class="action-button" id="copyLetter">
+          Copiar carta
+        </button>
+
+        <button class="action-button" id="closeLetter">
+          Fechar
+        </button>
+      </div>
+
+      <div class="letter-note">
+        Sua carta fica guardada neste aparelho.
+        Ela não é publicada nem enviada automaticamente.
+      </div>
+    </div>
+  </section>
+
+  <!-- AVISO -->
+  <div id="toast"></div>
+
+  <!-- ERRO -->
   <div id="error">
     <div>
       <h2>Não foi possível carregar a pintura</h2>
-      <p>Confira se o nome da imagem está correto e se ela está na mesma pasta deste arquivo.</p>
+      <p>
+        Confira se o nome da imagem está correto
+        e se ela está na mesma pasta deste arquivo.
+      </p>
     </div>
   </div>
 
 </div>
 
 <script>
+/* =================================
+   ELEMENTOS
+================================= */
+
 const app = document.getElementById("app");
 const stage = document.getElementById("stage");
 const image = document.getElementById("painting");
 const hint = document.getElementById("hint");
 
-let scale = 1;
+let scale = 1.22;
 let x = 0;
 let y = 0;
+
 let baseWidth = 0;
 let baseHeight = 0;
-let maxX = 0;
-let maxY = 0;
+
+/* =================================
+   TAMANHO DA PINTURA
+================================= */
 
 function calculateSize() {
   if (!image.naturalWidth || !image.naturalHeight) return;
@@ -400,7 +721,7 @@ function calculateSize() {
   const vw = stage.clientWidth;
   const vh = stage.clientHeight;
 
-  // A pintura cobre toda a tela, sem deixar espaços vazios.
+  // Preenche toda a tela, mesmo com cortes nas bordas.
   const fitScale = Math.max(
     vw / image.naturalWidth,
     vh / image.naturalHeight
@@ -409,13 +730,11 @@ function calculateSize() {
   baseWidth = image.naturalWidth * fitScale;
   baseHeight = image.naturalHeight * fitScale;
 
-  scale = 1;
-
   image.style.width = baseWidth + "px";
   image.style.height = baseHeight + "px";
 
-  maxX = Math.max(0, (baseWidth - vw) / 2);
-  maxY = Math.max(0, (baseHeight - vh) / 2);
+  // Ampliação inicial para permitir explorar a pintura.
+  scale = 1.22;
 
   x = 0;
   y = 0;
@@ -440,9 +759,6 @@ function updateImage() {
     `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
 }
 
-image.style.left = "50%";
-image.style.top = "50%";
-
 image.onload = () => {
   document.getElementById("error").classList.remove("show");
   calculateSize();
@@ -453,11 +769,15 @@ image.onerror = () => {
 };
 
 window.addEventListener("resize", calculateSize);
+
 window.addEventListener("orientationchange", () => {
-  setTimeout(calculateSize, 250);
+  setTimeout(calculateSize, 300);
 });
 
-/* MOVIMENTO COM O DEDO */
+/* =================================
+   ARRASTAR E EXPLORAR
+================================= */
+
 const pointers = new Map();
 
 let startX = 0;
@@ -502,7 +822,9 @@ stage.addEventListener("pointermove", e => {
   if (pointers.size === 1) {
     x = startPanX + (e.clientX - startX);
     y = startPanY + (e.clientY - startY);
+
     updateImage();
+
     hint.style.opacity = "0";
   }
 
@@ -524,6 +846,7 @@ function releasePointer(e) {
 
   if (pointers.size === 1) {
     const p = [...pointers.values()][0];
+
     startX = p.x;
     startY = p.y;
     startPanX = x;
@@ -538,19 +861,24 @@ function releasePointer(e) {
 stage.addEventListener("pointerup", releasePointer);
 stage.addEventListener("pointercancel", releasePointer);
 
-/* BOTÕES */
+/* =================================
+   ZOOM
+================================= */
+
 function zoom(amount) {
   scale = Math.max(1, Math.min(3, scale + amount));
   updateImage();
 }
 
-document.getElementById("zoomIn").onclick = () => zoom(.25);
-document.getElementById("zoomOut").onclick = () => zoom(-.25);
+document.getElementById("zoomIn").onclick = () => {
+  zoom(.2);
+};
+
+document.getElementById("zoomOut").onclick = () => {
+  zoom(-.2);
+};
 
 document.getElementById("reset").onclick = () => {
-  scale = 1;
-  x = 0;
-  y = 0;
   calculateSize();
   hint.style.opacity = "1";
 };
@@ -559,13 +887,180 @@ document.getElementById("hideUI").onclick = () => {
   app.classList.toggle("clean");
 };
 
+/* =================================
+   ABERTURA
+================================= */
+
+document.getElementById("enter").onclick = () => {
+  document.getElementById("intro").classList.add("hidden");
+};
+
+/* =================================
+   HISTÓRIA EM ETAPAS
+================================= */
+
+const chapters = [
+  {
+    title: "A promessa",
+    text: "Durante muito tempo, o povo esperou pela chegada do Salvador. A promessa de Deus era de esperança, amor e redenção para toda a humanidade."
+  },
+  {
+    title: "A viagem até Belém",
+    text: "Maria e José viajaram até Belém. A cidade estava movimentada e, ao chegarem, não encontraram lugar disponível na hospedaria."
+  },
+  {
+    title: "O nascimento de Jesus",
+    text: "Na simplicidade de uma manjedoura, nasceu Jesus Cristo. Maria envolveu o menino em faixas e o colocou para descansar. O Filho de Deus veio ao mundo com humildade."
+  },
+  {
+    title: "Os pastores",
+    text: "Naquela região, pastores cuidavam de seus rebanhos. Um anjo anunciou a boa notícia: havia nascido o Salvador. Eles foram depressa até Belém para encontrar o menino."
+  },
+  {
+    title: "A luz para o mundo",
+    text: "Mais tarde, os Reis Magos chegaram para adorar Jesus e oferecer seus presentes. Aquele nascimento trouxe uma mensagem que atravessaria gerações: amor, fé, esperança e salvação. Jesus é o verdadeiro sentido do Natal."
+  }
+];
+
+let chapterIndex = 0;
+
+function renderChapter() {
+  const chapter = chapters[chapterIndex];
+
+  document.getElementById("storyTitle").textContent = chapter.title;
+  document.getElementById("storyText").innerHTML =
+    "<p>" + chapter.text + "</p>";
+
+  document.getElementById("storyProgress").textContent =
+    (chapterIndex + 1) + " DE " + chapters.length;
+
+  document.getElementById("storyBack").disabled =
+    chapterIndex === 0;
+
+  document.getElementById("storyBack").style.opacity =
+    chapterIndex === 0 ? ".35" : "1";
+
+  document.getElementById("storyNext").textContent =
+    chapterIndex === chapters.length - 1
+      ? "Concluir"
+      : "Continuar";
+}
+
 document.getElementById("openStory").onclick = () => {
+  chapterIndex = 0;
+  renderChapter();
   document.getElementById("story").classList.add("show");
+};
+
+document.getElementById("storyBack").onclick = () => {
+  if (chapterIndex > 0) {
+    chapterIndex--;
+    renderChapter();
+  }
+};
+
+document.getElementById("storyNext").onclick = () => {
+  if (chapterIndex < chapters.length - 1) {
+    chapterIndex++;
+    renderChapter();
+  } else {
+    document.getElementById("story").classList.remove("show");
+  }
 };
 
 document.getElementById("closeStory").onclick = () => {
   document.getElementById("story").classList.remove("show");
 };
+
+/* =================================
+   CARTA DE NATAL
+================================= */
+
+const letterText = document.getElementById("letterText");
+
+function loadLetter() {
+  try {
+    const saved = localStorage.getItem("santaLuziaCartaNatal2026");
+
+    if (saved) {
+      letterText.value = saved;
+    }
+  } catch (error) {
+    console.log("Não foi possível acessar o armazenamento local.");
+  }
+}
+
+document.getElementById("openLetter").onclick = () => {
+  loadLetter();
+  document.getElementById("letter").classList.add("show");
+};
+
+document.getElementById("closeLetter").onclick = () => {
+  document.getElementById("letter").classList.remove("show");
+};
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2600);
+}
+
+document.getElementById("saveLetter").onclick = () => {
+  const content = letterText.value.trim();
+
+  if (!content) {
+    showToast("Escreva sua carta primeiro.");
+    return;
+  }
+
+  try {
+    localStorage.setItem("santaLuziaCartaNatal2026", content);
+    showToast("Sua carta foi guardada neste aparelho ❤️");
+  } catch (error) {
+    showToast("Não foi possível guardar a carta neste aparelho.");
+  }
+};
+
+document.getElementById("copyLetter").onclick = async () => {
+  const content = letterText.value.trim();
+
+  if (!content) {
+    showToast("Escreva sua carta primeiro.");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(
+      "Minha carta de Natal — Presépio Santa Luzia 2026\n\n" +
+      content
+    );
+
+    showToast("Carta copiada com sucesso!");
+  } catch (error) {
+    letterText.focus();
+    letterText.select();
+
+    try {
+      document.execCommand("copy");
+      showToast("Carta copiada!");
+    } catch (copyError) {
+      showToast("Selecione e copie o texto da carta.");
+    }
+  }
+};
+
+/* =================================
+   INICIALIZAÇÃO
+================================= */
+
+renderChapter();
+loadLetter();
+
 </script>
 
 </body>
