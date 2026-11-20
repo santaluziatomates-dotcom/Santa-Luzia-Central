@@ -4,371 +4,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#081d17">
+<meta name="theme-color" content="#681d20">
 <meta name="description" content="Santa Luzia Central - Central oficial da empresa">
-
 <link rel="manifest" href="/Santa-Luzia-Central/manifest.json">
 <title>Santa Luzia Central</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-
 :root{
---verde:#174c32;
---verde-escuro:#0b261c;
---verde-medio:#226443;
---verde-claro:#e8f0e9;
---vermelho:#c93432;
---dourado:#d9b66c;
---dourado-claro:#f3d99c;
---fundo:#091b15;
---painel:#10271e;
---painel2:#142f24;
---branco:#fff;
---texto:#f2f1e8;
---cinza:#a6b2a7;
---borda:#ffffff16;
---sombra:0 12px 30px rgba(0,0,0,.22);
+--verde:#174c32;--verde2:#226443;--vermelho:#a9232b;--vermelho2:#d33b3b;
+--ouro:#e5bd69;--ouro2:#ffdf98;--fundo:#171311;--painel:#29201c;
+--painel2:#342722;--texto:#fff8ed;--cinza:#c4b8aa;
+--borda:#ffffff20;--sombra:0 12px 30px #0006;
 }
-
 html{scroll-behavior:smooth}
 body{
 background:
-radial-gradient(ellipse at 10% 10%,#1d593b35,transparent 35%),
-radial-gradient(ellipse at 95% 45%,#b72d2d10,transparent 30%),
-var(--fundo);
-color:var(--texto);
-min-height:100vh;
-overflow-x:hidden;
+radial-gradient(ellipse at 50% 0%,#a62b3029,transparent 38%),
+radial-gradient(ellipse at 5% 50%,#d6a64a12,transparent 35%),
+linear-gradient(160deg,#211715,#120f0e 65%,#1d1713);
+color:var(--texto);min-height:100vh;overflow-x:hidden
 }
 
 /* NEVE */
+#neve{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:100}
+.floco{position:absolute;top:-20px;color:white;opacity:.72;text-shadow:0 0 8px white;animation:cair linear infinite}
+@keyframes cair{to{transform:translate3d(35px,110vh,0) rotate(220deg)}}
 
-#neve{
-position:fixed;
-inset:0;
-pointer-events:none;
-overflow:hidden;
-z-index:100;
-}
-.floco{
-position:absolute;
-top:-20px;
-color:#fff;
-opacity:.65;
-text-shadow:0 0 8px #fff;
-animation:cair linear infinite;
-}
-@keyframes cair{
-to{transform:translate3d(35px,110vh,0) rotate(220deg)}
-}
-
-/* PISCA-PISCA */
-
+/* LUZES */
 .luzes-natal{
-height:24px;
-position:absolute;
-top:0;
-left:0;
-right:0;
-z-index:5;
-display:flex;
-justify-content:space-around;
-align-items:flex-start;
-padding:0 5px;
-pointer-events:none;
+height:31px;position:absolute;top:0;left:0;right:0;z-index:8;
+display:flex;justify-content:space-around;align-items:flex-start;
+padding:0 4px;pointer-events:none
 }
 .luzes-natal:before{
-content:"";
-position:absolute;
-top:5px;
-left:0;
-right:0;
-height:2px;
-background:#17251d;
+content:"";position:absolute;top:5px;left:0;right:0;height:3px;
+background:#211c17;border-radius:50%;
+box-shadow:0 2px 4px #000
 }
-.luz{
-position:relative;
-width:9px;
-height:13px;
-border-radius:50% 50% 45% 45%;
-margin-top:7px;
-animation:piscando 1.8s infinite alternate;
-}
-.luz:before{
-content:"";
-position:absolute;
-width:3px;
-height:5px;
-background:#354438;
-top:-4px;
-left:3px;
-}
-.luz:nth-child(4n+1){background:#ed4444;box-shadow:0 0 12px #ed4444}
-.luz:nth-child(4n+2){background:#f2d16f;box-shadow:0 0 12px #f2d16f;animation-delay:.4s}
-.luz:nth-child(4n+3){background:#60c68b;box-shadow:0 0 12px #60c68b;animation-delay:.8s}
-.luz:nth-child(4n){background:#75b7ef;box-shadow:0 0 12px #75b7ef;animation-delay:1.2s}
-@keyframes piscando{
-0%,100%{opacity:.55;filter:brightness(.8)}
-50%{opacity:1;filter:brightness(1.5)}
-}
+.luz{position:relative;width:11px;height:15px;border-radius:50% 50% 45% 45%;margin-top:8px;animation:piscando 1.5s infinite alternate}
+.luz:before{content:"";position:absolute;width:4px;height:5px;background:#514333;top:-4px;left:3px}
+.luz:nth-child(4n+1){background:#ff4242;box-shadow:0 0 8px #ff4242,0 0 18px #ff2424}
+.luz:nth-child(4n+2){background:#ffe17b;box-shadow:0 0 8px #ffe17b,0 0 18px #e9b53d;animation-delay:.3s}
+.luz:nth-child(4n+3){background:#5ee58d;box-shadow:0 0 8px #5ee58d,0 0 18px #2ebc64;animation-delay:.6s}
+.luz:nth-child(4n){background:#75c9ff;box-shadow:0 0 8px #75c9ff,0 0 18px #399bdf;animation-delay:.9s}
+@keyframes piscando{0%,100%{opacity:.55;filter:brightness(.8)}50%{opacity:1;filter:brightness(1.7)}}
 
 /* CABEÇALHO */
-
 .cabecalho{
-position:relative;
-overflow:hidden;
+position:relative;overflow:hidden;text-align:center;
+padding:54px 20px 31px;
 background:
-radial-gradient(ellipse at 50% 0%,#d5ad5720,transparent 55%),
-linear-gradient(145deg,#102e21,#071a13 75%);
-text-align:center;
-padding:48px 20px 28px;
-border-bottom:1px solid #d9b66c55;
-box-shadow:0 10px 35px #0003;
+radial-gradient(ellipse at 50% 0%,#e9b95c35,transparent 48%),
+radial-gradient(ellipse at 0% 100%,#c22e382b,transparent 48%),
+linear-gradient(145deg,#76252a,#3b1919 55%,#142c20);
+border-bottom:2px solid #d9ad5b;
+box-shadow:0 10px 35px #0008
+}
+.cabecalho:before{
+content:"";position:absolute;inset:0;pointer-events:none;
+background:linear-gradient(115deg,transparent 20%,#ffffff08 50%,transparent 75%)
 }
 .cabecalho:after{
-content:"";
-position:absolute;
-width:260px;
-height:260px;
-border-radius:50%;
-background:#d6b35b0b;
-right:-110px;
-bottom:-170px;
+content:"❄";position:absolute;right:12px;bottom:5px;font-size:80px;
+color:#fff;opacity:.08;transform:rotate(15deg)
 }
 .logo{
-width:94px;
-height:94px;
-object-fit:contain;
-padding:5px;
-background:#fff;
-border:2px solid var(--dourado);
-border-radius:23px;
-margin-bottom:13px;
-box-shadow:0 0 0 6px #d9b66c13,0 8px 25px #0006;
-position:relative;
-z-index:1;
+width:94px;height:94px;object-fit:contain;padding:5px;background:#fff;
+border:3px solid var(--ouro);border-radius:23px;margin-bottom:13px;
+box-shadow:0 0 0 6px #e5bd6920,0 0 30px #e5bd6940,0 8px 25px #0008;
+position:relative;z-index:1
 }
-.cabecalho h1{
-color:#fff1cf;
-font-size:25px;
-letter-spacing:1.5px;
-position:relative;
-z-index:1;
-}
-.subtitulo{
-color:#c4cbbb;
-font-size:13px;
-margin-top:7px;
-position:relative;
-z-index:1;
-}
+.cabecalho h1{color:#fff0d0;font-size:25px;letter-spacing:1.5px;position:relative;z-index:1;text-shadow:0 2px 8px #0008}
+.subtitulo{color:#f0d9c6;font-size:13px;margin-top:7px;position:relative;z-index:1}
 .selo{
-display:inline-block;
-margin-top:14px;
-padding:7px 14px;
-border-radius:30px;
-background:#d9b66c18;
-border:1px solid #d9b66c70;
-color:var(--dourado-claro);
-font-size:10px;
-font-weight:bold;
-letter-spacing:1.3px;
-position:relative;
-z-index:1;
+display:inline-block;margin-top:14px;padding:7px 14px;border-radius:30px;
+background:#e5bd6925;border:1px solid #f3d58d;color:#ffe6ae;
+font-size:10px;font-weight:bold;letter-spacing:1.3px;position:relative;z-index:1
 }
+.decoracao-topo{
+position:absolute;left:12px;right:12px;bottom:7px;
+display:flex;justify-content:space-between;pointer-events:none;
+font-size:21px;opacity:.8
+}
+.enfeite-canto{position:absolute;top:33px;font-size:29px;filter:drop-shadow(0 0 8px #f3c96b)}
+.enfeite-canto.esquerda{left:13px}.enfeite-canto.direita{right:13px}
 
 /* STACOIN */
-
 .stacoin-topo{
-position:absolute;
-top:34px;
-right:16px;
-display:none;
-align-items:center;
-gap:7px;
-background:#172a20;
-border:1px solid #d9b66c99;
-border-radius:14px;
-padding:7px 10px;
-text-decoration:none;
-color:#fff1cf;
-box-shadow:0 5px 18px #0005;
-z-index:10;
+position:absolute;top:36px;right:16px;display:none;align-items:center;gap:7px;
+background:#251b18;border:1px solid #e5bd69;border-radius:14px;
+padding:7px 10px;text-decoration:none;color:#fff1cf;
+box-shadow:0 5px 18px #0008;z-index:10
 }
 .stacoin-moeda{width:32px;height:32px;display:flex;align-items:center;justify-content:center}
 .stacoin-imagem{width:32px;height:32px;object-fit:contain}
 .stacoin-info{text-align:left;line-height:1.05}
 .stacoin-valor{display:block;font-size:13px;font-weight:bold}
-.stacoin-label{display:block;font-size:8px;color:#c2b99f;margin-top:3px}
+.stacoin-label{display:block;font-size:8px;color:#e4c98f;margin-top:3px}
 
 /* LOGIN */
-
 .area-login{max-width:850px;margin:0 auto;padding:17px 18px 0}
 .login-card{
-background:linear-gradient(145deg,#142f24,#0e241a);
-border:1px solid var(--borda);
-border-radius:18px;
-padding:13px 15px;
-display:flex;
-align-items:center;
-gap:12px;
-box-shadow:var(--sombra);
+background:linear-gradient(135deg,#3b2922,#251d19);
+border:1px solid #d8ad6266;border-radius:18px;padding:13px 15px;
+display:flex;align-items:center;gap:12px;box-shadow:var(--sombra)
 }
-.login-icone{
-width:43px;height:43px;
-border-radius:14px;
-background:#d9b66c19;
-border:1px solid #d9b66c30;
-display:flex;align-items:center;justify-content:center;
-font-size:21px;flex-shrink:0;
-}
+.login-icone{width:43px;height:43px;border-radius:14px;background:#b52c321c;border:1px solid #e5bd6940;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
 .login-info{flex:1;min-width:0;text-align:left}
-.login-info strong{display:block;font-size:14px;margin-bottom:3px;color:#f3dfb5}
+.login-info strong{display:block;font-size:14px;margin-bottom:3px;color:#ffe1a6}
 .login-info span{display:block;color:var(--cinza);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.botao-google,.botao-sair{
-border:none;background:linear-gradient(135deg,#1e6842,#174c32);
-color:white;border-radius:11px;padding:11px 14px;
-font-size:12px;font-weight:bold;cursor:pointer;white-space:nowrap;
-}
+.botao-google,.botao-sair{border:none;background:linear-gradient(135deg,#b52e34,#812127);color:white;border-radius:11px;padding:11px 14px;font-size:12px;font-weight:bold;cursor:pointer;white-space:nowrap}
 .botao-sair{background:#ffffff0b;color:#e8e5d9;border:1px solid var(--borda)}
 .login-status{font-size:10px;color:var(--cinza);margin-top:8px;text-align:center}
-.login-ok{color:#8bd7a5;font-weight:bold}
-.login-erro{color:#ff9690;font-weight:bold}
+.login-ok{color:#8bd7a5;font-weight:bold}.login-erro{color:#ff9690;font-weight:bold}
 
 /* CADASTRO */
-
-.cadastro-overlay{
-position:fixed;inset:0;background:#06130ee8;backdrop-filter:blur(7px);
-display:none;align-items:center;justify-content:center;padding:18px;z-index:9999;
-}
+.cadastro-overlay{position:fixed;inset:0;background:#100b0beF;backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
 .cadastro-overlay.aberto{display:flex}
-.cadastro-card{
-width:100%;max-width:430px;background:#10271e;
-border:1px solid #d9b66c66;border-radius:23px;
-padding:24px 21px 21px;max-height:92vh;overflow-y:auto;
-box-shadow:0 20px 70px #0009;
-}
+.cadastro-card{width:100%;max-width:430px;background:linear-gradient(145deg,#382720,#211a17);border:1px solid #d9b66c;border-radius:23px;padding:24px 21px 21px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 70px #000c}
 .cadastro-topo{text-align:center;margin-bottom:20px}
 .cadastro-logo{width:58px;height:58px;object-fit:contain;margin-bottom:8px;background:#fff;border-radius:13px}
-.cadastro-topo h2{color:#f3dfb5;font-size:21px;margin-bottom:6px}
+.cadastro-topo h2{color:#ffe1a6;font-size:21px;margin-bottom:6px}
 .cadastro-topo p{color:var(--cinza);font-size:12px;line-height:1.45}
 .cadastro-form{display:flex;flex-direction:column;gap:12px}
 .campo{display:flex;flex-direction:column;gap:5px}
-.campo label{color:#e5d09f;font-size:11px;font-weight:bold}
-.campo input,.campo select{
-width:100%;border:1px solid #ffffff22;background:#091c14;color:var(--texto);
-border-radius:12px;padding:12px;font-size:14px;outline:none;
-}
-.campo input:focus,.campo select:focus{border-color:var(--dourado)}
-.campo select option{background:#10271e}
+.campo label{color:#e5c88c;font-size:11px;font-weight:bold}
+.campo input,.campo select{width:100%;border:1px solid #ffffff22;background:#1a1512;color:var(--texto);border-radius:12px;padding:12px;font-size:14px;outline:none}
+.campo input:focus,.campo select:focus{border-color:var(--ouro)}
+.campo select option{background:#29201c}
 .cadastro-email{margin-bottom:13px;padding:11px 12px;background:#ffffff09;border-radius:11px;color:var(--cinza);font-size:10px;word-break:break-word}
-.botao-cadastrar,.botao-continuar{
-width:100%;border:none;background:linear-gradient(135deg,#1c6741,#174c32);
-color:white;border-radius:12px;padding:14px;margin-top:4px;font-size:13px;font-weight:bold;cursor:pointer;
-}
+.botao-cadastrar,.botao-continuar{width:100%;border:none;background:linear-gradient(135deg,#c3373d,#84232a);color:white;border-radius:12px;padding:14px;margin-top:4px;font-size:13px;font-weight:bold;cursor:pointer}
 .botao-cadastrar:disabled{opacity:.55}
 .cadastro-erro{display:none;background:#421e1d;border:1px solid #9d4640;color:#ffc4bf;border-radius:11px;padding:10px;font-size:10px;line-height:1.4;margin-bottom:10px}
 .cadastro-sucesso{display:none;text-align:center}
 .cadastro-sucesso-icone{font-size:45px;margin-bottom:8px}
-.cadastro-sucesso h3{color:#f3dfb5;font-size:21px;margin-bottom:7px}
+.cadastro-sucesso h3{color:#ffe1a6;font-size:21px;margin-bottom:7px}
 .cadastro-sucesso p{color:var(--cinza);font-size:12px;line-height:1.5;margin-bottom:14px}
 .cadastro-id-grande{background:#d9b66c14;border:1px solid #d9b66c99;color:#f3dfb5;border-radius:15px;padding:14px;margin-bottom:15px}
 .cadastro-id-grande small{display:block;color:#c2b99f;font-size:9px;margin-bottom:4px}
 .cadastro-id-grande strong{font-size:27px;letter-spacing:1px}
 
 /* CONTEÚDO */
-
 .conteudo{max-width:850px;margin:auto;padding:22px 18px 40px}
 .boas-vindas{
 position:relative;overflow:hidden;
 background:
-radial-gradient(circle at 90% 10%,#d9b66c27,transparent 35%),
-linear-gradient(125deg,#103b27,#174c32 65%,#226443);
-color:white;border:1px solid #d9b66c55;
-border-radius:21px;padding:25px 23px;margin-bottom:25px;
-box-shadow:0 12px 30px #0003;
+radial-gradient(circle at 90% 10%,#f1c66b35,transparent 34%),
+linear-gradient(120deg,#8e252c,#572126 58%,#17452f);
+border:1px solid #e7bd6d;border-radius:21px;padding:25px 23px;margin-bottom:25px;
+box-shadow:0 12px 30px #0005
 }
-.boas-vindas:after{
-content:"🍅";position:absolute;right:18px;bottom:-14px;
-font-size:75px;opacity:.13;
-}
+.boas-vindas:after{content:"🎄";position:absolute;right:16px;bottom:-12px;font-size:82px;opacity:.65;filter:drop-shadow(0 0 12px #e9c16d)}
+.boas-vindas:before{content:"✦  ✧  ✦";position:absolute;right:23px;top:12px;color:#ffe6a7;font-size:18px;letter-spacing:7px}
 .boas-vindas h2{font-size:20px;margin-bottom:7px;color:#fff0d0}
-.boas-vindas p{font-size:13px;line-height:1.5;opacity:.9;max-width:85%}
+.boas-vindas p{font-size:13px;line-height:1.5;opacity:.95;max-width:78%}
+
+/* ENFEITE DE ÁRVORE */
+.arvore-natal{
+position:relative;overflow:hidden;margin:0 0 23px;padding:18px 16px;
+border-radius:20px;border:1px solid #d8a84d88;
+background:
+radial-gradient(circle at 50% 0%,#f5d47b25,transparent 60%),
+linear-gradient(110deg,#35231c,#4a2422 55%,#302019);
+box-shadow:0 10px 28px #0005;text-align:center
+}
+.arvore-natal:before,.arvore-natal:after{content:"✨";position:absolute;top:15px;font-size:23px;animation:brilho 2s infinite alternate}
+.arvore-natal:before{left:17px}.arvore-natal:after{right:17px;animation-delay:.8s}
+.arvore-figura{font-size:55px;line-height:1.15;filter:drop-shadow(0 0 12px #e7bd5b88);animation:brilho 3s infinite alternate}
+.arvore-natal h2{font-family:Georgia,serif;color:#ffe4a9;font-size:19px;margin:7px 0 5px}
+.arvore-natal p{font-size:11px;color:#e4cdb5;line-height:1.5}
+@keyframes brilho{50%{transform:scale(1.08);opacity:.8}}
 
 /* SEÇÕES */
-
 .titulo-secao{display:flex;align-items:center;gap:10px;margin:25px 3px 13px}
-.titulo-secao h2{font-size:13px;color:#e9d5a8;letter-spacing:.8px;white-space:nowrap}
-.linha{flex:1;height:1px;background:linear-gradient(90deg,#d9b66c66,transparent)}
-
-/* CARDS */
-
-.cards-principais{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card-principal{
-min-height:155px;background:linear-gradient(145deg,#142f24,#0e241a);
-border:1px solid var(--borda);border-radius:19px;padding:18px 15px;
-text-decoration:none;color:var(--texto);box-shadow:var(--sombra);
-display:flex;flex-direction:column;justify-content:center;
-transition:transform .2s,border-color .2s;position:relative;overflow:hidden;
-}
-.card-principal:active{transform:scale(.98)}
-.card-principal.destaque{border-color:#d9b66c55}
-.card-principal.stacoin-card{border-color:#d9b66c99;background:linear-gradient(145deg,#2d2a1d,#14271d)}
-.icone-grande{font-size:31px;margin-bottom:10px}
-.card-principal h3{font-size:15px;margin-bottom:6px;color:#f2dfb7}
-.card-principal p{font-size:11px;color:var(--cinza);line-height:1.4}
-.badge{
-display:inline-block;width:fit-content;margin-top:10px;padding:5px 9px;
-border-radius:20px;background:#d9b66c19;color:#e8c982;
-border:1px solid #d9b66c35;font-size:9px;font-weight:bold;
-}
+.titulo-secao h2{font-size:13px;color:#f0ce8c;letter-spacing:.8px;white-space:nowrap}
+.linha{flex:1;height:1px;background:linear-gradient(90deg,#d9b66c99,transparent)}
 
 /* PRESÉPIO */
-
 .card-presepio{
-display:block;text-decoration:none;color:white;
-position:relative;overflow:hidden;
-border:1px solid #d9b66c88;border-radius:21px;
+display:block;text-decoration:none;color:white;position:relative;overflow:hidden;
+border:1px solid #f0ce8c;border-radius:21px;
 background:
-radial-gradient(circle at 85% 20%,#f1d38c2b,transparent 32%),
-linear-gradient(120deg,#172e25,#0b1b16 75%);
-padding:22px 20px;margin-bottom:22px;
-box-shadow:0 12px 30px #0004;
-transition:transform .2s;
+radial-gradient(circle at 88% 20%,#f1d38c40,transparent 32%),
+radial-gradient(circle at 5% 100%,#a52d342d,transparent 50%),
+linear-gradient(120deg,#42251f,#241917 75%);
+padding:22px 20px;margin-bottom:22px;box-shadow:0 12px 30px #0006;transition:transform .2s
 }
 .card-presepio:active{transform:scale(.985)}
 .presepio-conteudo{position:relative;z-index:2;max-width:78%}
-.presepio-selo{
-display:inline-block;padding:6px 10px;border-radius:20px;
-background:#d9b66c19;border:1px solid #d9b66c66;
-color:#f0d99f;font-size:9px;letter-spacing:1px;font-weight:bold;
-}
+.presepio-selo{display:inline-block;padding:6px 10px;border-radius:20px;background:#d9b66c25;border:1px solid #d9b66c88;color:#f0d99f;font-size:9px;letter-spacing:1px;font-weight:bold}
 .card-presepio h2{font-family:Georgia,serif;font-size:24px;color:#fff0d0;margin:12px 0 7px}
-.card-presepio p{font-size:12px;line-height:1.6;color:#c9c9b8}
+.card-presepio p{font-size:12px;line-height:1.6;color:#e3d2bd}
 .presepio-cta{display:inline-block;margin-top:13px;color:#f0d18a;font-size:11px;font-weight:bold}
-.presepio-estrela{
-position:absolute;right:22px;top:26px;font-size:53px;
-color:#f4d58a;text-shadow:0 0 14px #f4d58a,0 0 38px #d9a63f;
-animation:brilho 3s ease-in-out infinite;
+.presepio-estrela{position:absolute;right:22px;top:26px;font-size:53px;color:#f4d58a;text-shadow:0 0 14px #f4d58a,0 0 38px #d9a63f;animation:brilho 3s ease-in-out infinite}
+
+/* CARDS */
+.cards-principais{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card-principal{
+min-height:155px;background:linear-gradient(145deg,#382720,#251b18);
+border:1px solid #ffffff20;border-radius:19px;padding:18px 15px;
+text-decoration:none;color:var(--texto);box-shadow:var(--sombra);
+display:flex;flex-direction:column;justify-content:center;transition:transform .2s,border-color .2s;position:relative;overflow:hidden
 }
-@keyframes brilho{50%{transform:scale(1.16);opacity:.75}}
+.card-principal:before{content:"✦";position:absolute;right:13px;top:10px;color:#e6bf72;font-size:20px;opacity:.5}
+.card-principal:active{transform:scale(.98)}
+.card-principal.destaque{border-color:#d9b66c77}
+.card-principal.stacoin-card{border-color:#d9b66c;background:linear-gradient(145deg,#49321e,#2a2119)}
+.icone-grande{font-size:31px;margin-bottom:10px}
+.card-principal h3{font-size:15px;margin-bottom:6px;color:#f2dfb7}
+.card-principal p{font-size:11px;color:var(--cinza);line-height:1.4}
+.badge{display:inline-block;width:fit-content;margin-top:10px;padding:5px 9px;border-radius:20px;background:#d9b66c25;color:#f4d28a;border:1px solid #d9b66c55;font-size:9px;font-weight:bold}
 
 /* MEU ESPAÇO */
-
-.espaco-principal{
-background:linear-gradient(145deg,#142f24,#0e241a);
-border:1px solid var(--borda);border-radius:20px;
-padding:18px;box-shadow:var(--sombra);
-}
+.espaco-principal{background:linear-gradient(145deg,#35251f,#241b17);border:1px solid #ffffff20;border-radius:20px;padding:18px;box-shadow:var(--sombra)}
 .espaco-cabecalho{display:flex;align-items:center;gap:12px;margin-bottom:15px}
-.espaco-icone{
-width:47px;height:47px;border-radius:15px;
-background:#d9b66c19;border:1px solid #d9b66c30;
-display:flex;align-items:center;justify-content:center;font-size:24px;
-}
+.espaco-icone{width:47px;height:47px;border-radius:15px;background:#b52c3228;border:1px solid #d9b66c55;display:flex;align-items:center;justify-content:center;font-size:24px}
 .espaco-texto{flex:1}
 .espaco-texto h2{font-size:18px;color:#f2dfb7;margin-bottom:4px}
 .espaco-texto p{color:var(--cinza);font-size:12px}
@@ -378,87 +230,65 @@ display:flex;align-items:center;justify-content:center;font-size:24px;
 .mini-grade-unica .mini-icone{margin:0;font-size:27px;flex-shrink:0}
 .mini-grade-unica .mini-botao strong{margin:0}
 .mini-grade-unica .mini-botao span{margin-left:auto;text-align:right;max-width:48%}
-.mini-botao{
-background:#0b2018;border:1px solid #ffffff15;border-radius:15px;
-padding:15px 10px;text-decoration:none;color:var(--texto);
-text-align:center;transition:.2s;
-}
-.mini-botao:active{background:#1b4932}
+.mini-botao{background:#211916;border:1px solid #ffffff1c;border-radius:15px;padding:15px 10px;text-decoration:none;color:var(--texto);text-align:center;transition:.2s}
+.mini-botao:active{background:#482a25}
 .mini-icone{font-size:23px;margin-bottom:7px}
 .mini-botao strong{display:block;font-size:13px;margin-bottom:4px;color:#e9d5a8}
 .mini-botao span{display:block;color:var(--cinza);font-size:10px;line-height:1.3}
 
 /* EMPRESA */
-
-.empresa-caixa{
-background:linear-gradient(145deg,#142f24,#0e241a);
-border:1px solid var(--borda);border-radius:19px;overflow:hidden;box-shadow:var(--sombra);
-}
-.empresa-topo{
-width:100%;border:none;background:transparent;padding:18px;
-display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;color:var(--texto);
-}
-.empresa-icone{
-width:46px;height:46px;border-radius:14px;background:#d9b66c19;
-border:1px solid #d9b66c30;display:flex;align-items:center;justify-content:center;font-size:23px;
-}
+.empresa-caixa{background:linear-gradient(145deg,#35251f,#241b17);border:1px solid #ffffff20;border-radius:19px;overflow:hidden;box-shadow:var(--sombra)}
+.empresa-topo{width:100%;border:none;background:transparent;padding:18px;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;color:var(--texto)}
+.empresa-icone{width:46px;height:46px;border-radius:14px;background:#b52c3228;border:1px solid #d9b66c55;display:flex;align-items:center;justify-content:center;font-size:23px}
 .empresa-texto{flex:1}
 .empresa-texto strong{display:block;font-size:17px;margin-bottom:4px;color:#f2dfb7}
 .empresa-texto span{color:var(--cinza);font-size:11px}
-.empresa-seta{color:var(--dourado);font-size:21px;transition:.25s}
+.empresa-seta{color:var(--ouro);font-size:21px;transition:.25s}
 .empresa-caixa.aberta .empresa-seta{transform:rotate(90deg)}
 .empresa-conteudo{display:none;padding:0 13px 15px}
 .empresa-caixa.aberta .empresa-conteudo{display:block}
 .empresa-grade{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.empresa-botao{
-background:#0b2018;border:1px solid #ffffff15;border-radius:15px;
-padding:15px 10px;text-decoration:none;color:var(--texto);text-align:center;
-}
+.empresa-botao{background:#211916;border:1px solid #ffffff1c;border-radius:15px;padding:15px 10px;text-decoration:none;color:var(--texto);text-align:center}
 .empresa-botao .icone{display:block;font-size:22px;margin-bottom:7px}
 .empresa-botao strong{display:block;font-size:13px;margin-bottom:4px;color:#e9d5a8}
 .empresa-botao span:last-child{display:block;font-size:10px;color:var(--cinza);line-height:1.3}
 
 /* RODAPÉ */
-
-.rodape{
-text-align:center;padding:25px 20px 38px;
-color:#8e9c90;font-size:11px;
-border-top:1px solid #ffffff12;
-background:#06140f;
-}
+.rodape{text-align:center;padding:25px 20px 38px;color:#b5a395;font-size:11px;border-top:1px solid #d9b66c55;background:linear-gradient(180deg,#211713,#100d0b)}
 .rodape strong{color:#e6c77e;letter-spacing:.5px}
-.rodape-decoracao{font-size:20px;margin-bottom:10px}
+.rodape-decoracao{font-size:24px;margin-bottom:10px;text-shadow:0 0 12px #e9bd65}
 
-/* CELULAR */
-
+/* ENFEITES LATERAIS */
+.luzes-laterais{position:fixed;top:0;bottom:0;width:8px;pointer-events:none;z-index:3;opacity:.8;background:repeating-linear-gradient(to bottom,#e83e3e 0 5px,transparent 5px 27px,#f2d36c 27px 32px,transparent 32px 54px)}
+.luzes-laterais.esq{left:0}.luzes-laterais.dir{right:0;filter:hue-rotate(70deg)}
 @media(max-width:600px){
-.cabecalho{padding:45px 15px 25px}
+.cabecalho{padding:48px 15px 28px}
 .logo{width:80px;height:80px}
 .cabecalho h1{font-size:22px;letter-spacing:1px}
-.stacoin-topo{top:31px;right:10px;padding:6px 8px}
+.stacoin-topo{top:34px;right:9px;padding:6px 8px}
 .stacoin-moeda,.stacoin-imagem{width:28px;height:28px}
+.enfeite-canto{font-size:23px;top:35px}
 .area-login{padding:13px 15px 0}
 .login-card{padding:12px;gap:8px}
 .login-icone{width:38px;height:38px;font-size:19px}
-.login-info strong{font-size:12px}
-.login-info span{font-size:10px}
+.login-info strong{font-size:12px}.login-info span{font-size:10px}
 .botao-google,.botao-sair{padding:10px 11px;font-size:11px}
 .conteudo{padding:19px 15px 30px}
 .boas-vindas{padding:21px 18px;border-radius:19px;margin-bottom:20px}
-.boas-vindas h2{font-size:18px}
-.boas-vindas p{font-size:12px}
+.boas-vindas h2{font-size:18px}.boas-vindas p{font-size:12px}
 .espaco-principal{padding:15px}
 .espaco-texto h2{font-size:16px}
 .mini-grade,.empresa-grade{gap:8px}
 .mini-botao,.empresa-botao{padding:13px 8px}
 .cards-principais{gap:10px}
 .card-principal{min-height:140px;padding:15px 12px}
-.card-principal h3{font-size:13px}
-.card-principal p{font-size:10px}
+.card-principal h3{font-size:13px}.card-principal p{font-size:10px}
 .cadastro-card{padding:21px 16px 17px}
 .card-presepio{padding:19px 16px}
 .card-presepio h2{font-size:21px}
 .presepio-estrela{right:15px;font-size:43px}
+.arvore-figura{font-size:48px}
+.luzes-laterais{width:4px;opacity:.45}
 }
 @media(max-width:360px){
 .cards-principais{grid-template-columns:1fr}
@@ -475,12 +305,14 @@ background:#06140f;
 </head>
 
 <body>
-
 <div id="neve" aria-hidden="true"></div>
+<div class="luzes-laterais esq" aria-hidden="true"></div>
+<div class="luzes-laterais dir" aria-hidden="true"></div>
 
 <header class="cabecalho">
-
   <div class="luzes-natal" aria-hidden="true">
+    <span class="luz"></span><span class="luz"></span><span class="luz"></span>
+    <span class="luz"></span><span class="luz"></span><span class="luz"></span>
     <span class="luz"></span><span class="luz"></span><span class="luz"></span>
     <span class="luz"></span><span class="luz"></span><span class="luz"></span>
     <span class="luz"></span><span class="luz"></span><span class="luz"></span>
@@ -489,10 +321,11 @@ background:#06140f;
     <span class="luz"></span><span class="luz"></span><span class="luz"></span>
   </div>
 
+  <div class="enfeite-canto esquerda">🎀</div>
+  <div class="enfeite-canto direita">🔔</div>
+
   <a href="loja.html" class="stacoin-topo" id="stacoinTopo">
-    <div class="stacoin-moeda">
-      <img src="stacoin.png" alt="STACOIN" class="stacoin-imagem">
-    </div>
+    <div class="stacoin-moeda"><img src="stacoin.png" alt="STACOIN" class="stacoin-imagem"></div>
     <div class="stacoin-info">
       <span class="stacoin-valor" id="stacoinValor">0</span>
       <span class="stacoin-label">STACOIN</span>
@@ -500,11 +333,10 @@ background:#06140f;
   </a>
 
   <img class="logo" src="IMG_6552.PNG" alt="Santa Luzia Tomates">
-
   <h1>SANTA LUZIA CENTRAL</h1>
   <p class="subtitulo">Tudo da Santa Luzia em um só lugar.</p>
-  <div class="selo">✓ CENTRAL OFICIAL</div>
-
+  <div class="selo">✦ CENTRAL OFICIAL • NATAL 2026 ✦</div>
+  <div class="decoracao-topo"><span>🎄</span><span>✨</span><span>🎁</span><span>✨</span><span>🎄</span></div>
 </header>
 
 <section class="area-login">
@@ -521,44 +353,24 @@ background:#06140f;
 
 <div class="cadastro-overlay" id="cadastroOverlay">
   <div class="cadastro-card">
-
     <div class="cadastro-form-area" id="cadastroFormArea">
       <div class="cadastro-topo">
         <img src="IMG_6552.PNG" alt="Santa Luzia" class="cadastro-logo">
         <h2>🆔 Crie seu Santa Luzia ID</h2>
         <p>Complete seu cadastro para receber sua identificação oficial dentro da Santa Luzia Central.</p>
       </div>
-
-      <div class="cadastro-email" id="cadastroEmail">
-        <strong>Conta Google:</strong> carregando...
-      </div>
-
+      <div class="cadastro-email" id="cadastroEmail"><strong>Conta Google:</strong> carregando...</div>
       <div class="cadastro-erro" id="cadastroErro"></div>
-
       <form class="cadastro-form" id="cadastroForm">
-        <div class="campo">
-          <label for="cadastroNome">NOME</label>
-          <input type="text" id="cadastroNome" maxlength="100" autocomplete="name" placeholder="Seu nome completo" required>
-        </div>
-        <div class="campo">
-          <label for="cadastroApelido">APELIDO</label>
-          <input type="text" id="cadastroApelido" maxlength="60" placeholder="Seu apelido na Santa Luzia" required>
-        </div>
-        <div class="campo">
-          <label for="cadastroCargo">CARGO</label>
-          <input type="text" id="cadastroCargo" maxlength="80" placeholder="Ex.: Motorista" required>
-        </div>
+        <div class="campo"><label for="cadastroNome">NOME</label><input type="text" id="cadastroNome" maxlength="100" autocomplete="name" placeholder="Seu nome completo" required></div>
+        <div class="campo"><label for="cadastroApelido">APELIDO</label><input type="text" id="cadastroApelido" maxlength="60" placeholder="Seu apelido na Santa Luzia" required></div>
+        <div class="campo"><label for="cadastroCargo">CARGO</label><input type="text" id="cadastroCargo" maxlength="80" placeholder="Ex.: Motorista" required></div>
         <div class="campo">
           <label for="cadastroCategoria">CNH / CATEGORIA</label>
           <select id="cadastroCategoria" required>
-            <option value="">Selecione</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="D/E">D/E</option>
-            <option value="AE">AE</option>
+            <option value="">Selecione</option><option value="A">A</option><option value="B">B</option>
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+            <option value="D/E">D/E</option><option value="AE">AE</option>
           </select>
         </div>
         <button type="submit" class="botao-cadastrar" id="botaoCadastrar">🪪 CRIAR MEU SANTA LUZIA ID</button>
@@ -569,27 +381,26 @@ background:#06140f;
       <div class="cadastro-sucesso-icone">🎉</div>
       <h3 id="cadastroSucessoTitulo">Cadastro concluído!</h3>
       <p id="cadastroSucessoTexto">Seu Santa Luzia ID foi criado com sucesso.</p>
-      <div class="cadastro-id-grande">
-        <small>SEU SANTA LUZIA ID</small>
-        <strong id="novoCodigo">SL-0000</strong>
-      </div>
+      <div class="cadastro-id-grande"><small>SEU SANTA LUZIA ID</small><strong id="novoCodigo">SL-0000</strong></div>
       <p>Guarde esse número. Ele será usado para sua identificação dentro da empresa.</p>
       <button type="button" class="botao-continuar" id="botaoContinuar">ENTRAR NA CENTRAL →</button>
     </div>
-
   </div>
 </div>
 
 <main class="conteudo">
-
   <section class="boas-vindas">
-    <h2>🍅 Bem-vindo à Santa Luzia</h2>
-    <p>Sua central oficial para acessar os serviços e acompanhar sua vida dentro da empresa.</p>
+    <h2>🎅 Ho ho ho! Bem-vindo à Santa Luzia!</h2>
+    <p>O Natal chegou à nossa Central! Que esta época seja cheia de união, alegria e bênçãos para toda a família Santa Luzia.</p>
   </section>
 
-  <div class="titulo-secao">
-    <h2>🌟 DESTAQUE ESPECIAL</h2><div class="linha"></div>
-  </div>
+  <section class="arvore-natal">
+    <div class="arvore-figura">🎄</div>
+    <h2>Um Natal iluminado na Santa Luzia</h2>
+    <p>Que a luz do nascimento de Jesus ilumine nossos caminhos. Feliz Natal a todos os nossos motoristas e famílias!</p>
+  </section>
+
+  <div class="titulo-secao"><h2>🌟 DESTAQUE ESPECIAL</h2><div class="linha"></div></div>
 
   <a href="presepio.html" class="card-presepio">
     <div class="presepio-conteudo">
@@ -601,136 +412,80 @@ background:#06140f;
     <div class="presepio-estrela">✦</div>
   </a>
 
-  <div class="titulo-secao">
-    <h2>👤 MINHA CONTA</h2><div class="linha"></div>
-  </div>
-
+  <div class="titulo-secao"><h2>👤 MINHA CONTA</h2><div class="linha"></div></div>
   <section class="espaco-principal">
     <div class="espaco-cabecalho">
       <div class="espaco-icone">🚛</div>
-      <div class="espaco-texto">
-        <h2>Área do Motorista</h2>
-        <p>Consulte sua habilitação interna na empresa.</p>
-      </div>
+      <div class="espaco-texto"><h2>Área do Motorista</h2><p>Consulte sua habilitação interna na empresa.</p></div>
     </div>
     <div class="mini-grade mini-grade-unica">
       <a href="cnh.html" class="mini-botao">
-        <div class="mini-icone">🚛</div>
-        <strong>Minha CNH</strong>
+        <div class="mini-icone">🚛</div><strong>Minha CNH</strong>
         <span>Habilitação, categoria e nível na Santa Luzia</span>
       </a>
     </div>
   </section>
 
-  <div class="titulo-secao">
-    <h2>⭐ SERVIÇOS PRINCIPAIS</h2><div class="linha"></div>
-  </div>
-
+  <div class="titulo-secao"><h2>⭐ SERVIÇOS PRINCIPAIS</h2><div class="linha"></div></div>
   <div class="cards-principais">
     <a href="salarios.html" class="card-principal destaque">
-      <div class="icone-grande">💰</div>
-      <h3>MEU SALÁRIO</h3>
+      <div class="icone-grande">💰</div><h3>MEU SALÁRIO</h3>
       <p>Acompanhe os pagamentos recebidos pela sua participação nas salas.</p>
       <span class="badge">CONSULTAR PAGAMENTOS →</span>
     </a>
-
     <a href="loja.html" class="card-principal stacoin-card destaque">
-      <div class="icone-grande">🛒</div>
-      <h3>LOJA SANTA LUZIA</h3>
+      <div class="icone-grande">🛒</div><h3>LOJA SANTA LUZIA</h3>
       <p>Skins, baús, cabines, acessórios e muito mais.</p>
       <span class="badge">ABRIR LOJA →</span>
     </a>
   </div>
 
-  <div class="titulo-secao">
-    <h2>🏢 INSTITUCIONAL</h2><div class="linha"></div>
-  </div>
-
+  <div class="titulo-secao"><h2>🏢 INSTITUCIONAL</h2><div class="linha"></div></div>
   <section class="empresa-caixa" id="empresaCaixa">
     <button type="button" class="empresa-topo" id="botaoEmpresa">
       <div class="empresa-icone">🏢</div>
-      <div class="empresa-texto">
-        <strong>Área da Empresa</strong>
-        <span>Notícias, eventos, jogos e informações.</span>
-      </div>
+      <div class="empresa-texto"><strong>Área da Empresa</strong><span>Notícias, eventos, jogos e informações.</span></div>
       <div class="empresa-seta">→</div>
     </button>
-
     <div class="empresa-conteudo">
       <div class="empresa-grade">
-
-        <a href="globaltruck.html" class="empresa-botao">
-          <span class="icone">🚛</span><strong>Global Truck</strong><span>Informações e conteúdos</span>
-        </a>
-
-        <a href="truckers.html" class="empresa-botao">
-          <span class="icone">🚚</span><strong>Truckers</strong><span>Informações e conteúdos</span>
-        </a>
-
-        <a href="comoentrar.html" class="empresa-botao">
-          <span class="icone">📖</span><strong>Como Entrar</strong><span>Veja como fazer parte</span>
-        </a>
-
-        <a href="noticias.html" class="empresa-botao">
-          <span class="icone">📰</span><strong>Notícias</strong><span>Novidades da Santa Luzia</span>
-        </a>
-
-        <a href="eventos.html" class="empresa-botao">
-          <span class="icone">🏆</span><strong>Eventos</strong><span>Competições e premiações</span>
-        </a>
-
-        <a href="notas.html" class="empresa-botao">
-          <span class="icone">🧾</span><strong>Notas</strong><span>Liberação e controle</span>
-        </a>
-
-        <a href="links.html" class="empresa-botao">
-          <span class="icone">🔗</span><strong>Links</strong><span>Redes e canais</span>
-        </a>
-
-        <a href="sobrenos.html" class="empresa-botao">
-          <span class="icone">🏢</span><strong>Sobre Nós</strong><span>Conheça a Santa Luzia</span>
-        </a>
-
+        <a href="globaltruck.html" class="empresa-botao"><span class="icone">🚛</span><strong>Global Truck</strong><span>Informações e conteúdos</span></a>
+        <a href="truckers.html" class="empresa-botao"><span class="icone">🚚</span><strong>Truckers</strong><span>Informações e conteúdos</span></a>
+        <a href="comoentrar.html" class="empresa-botao"><span class="icone">📖</span><strong>Como Entrar</strong><span>Veja como fazer parte</span></a>
+        <a href="noticias.html" class="empresa-botao"><span class="icone">📰</span><strong>Notícias</strong><span>Novidades da Santa Luzia</span></a>
+        <a href="eventos.html" class="empresa-botao"><span class="icone">🏆</span><strong>Eventos</strong><span>Competições e premiações</span></a>
+        <a href="notas.html" class="empresa-botao"><span class="icone">🧾</span><strong>Notas</strong><span>Liberação e controle</span></a>
+        <a href="links.html" class="empresa-botao"><span class="icone">🔗</span><strong>Links</strong><span>Redes e canais</span></a>
+        <a href="sobrenos.html" class="empresa-botao"><span class="icone">🏢</span><strong>Sobre Nós</strong><span>Conheça a Santa Luzia</span></a>
       </div>
     </div>
   </section>
 
-  <div class="titulo-secao">
-    <h2>🔐 ADMINISTRAÇÃO</h2><div class="linha"></div>
-  </div>
-
+  <div class="titulo-secao"><h2>🔐 ADMINISTRAÇÃO</h2><div class="linha"></div></div>
   <section class="espaco-principal">
     <div class="espaco-cabecalho">
       <div class="espaco-icone">👑</div>
-      <div class="espaco-texto">
-        <h2>Painel Administrativo</h2>
-        <p>Área reservada à administração da empresa.</p>
-      </div>
+      <div class="espaco-texto"><h2>Painel Administrativo</h2><p>Área reservada à administração da empresa.</p></div>
     </div>
     <a href="admn.html" class="mini-botao" style="display:block">
-      <div class="mini-icone">⚙️</div>
-      <strong>ACESSAR PAINEL ADM</strong>
-      <span>Gerenciamento da Santa Luzia</span>
+      <div class="mini-icone">⚙️</div><strong>ACESSAR PAINEL ADM</strong><span>Gerenciamento da Santa Luzia</span>
     </a>
   </section>
-
 </main>
 
 <footer class="rodape">
-  <div class="rodape-decoracao">✦ 🎄 ✦</div>
-  <strong>Santa Luzia Tomates</strong>
-  <br>
+  <div class="rodape-decoracao">🎄 ✨ 🎁 ✨ 🎄</div>
+  <strong>Santa Luzia Tomates</strong><br>
   Santa Luzia Central • 2026
+  <div style="margin-top:9px;color:#c7a66d">Que a luz de Jesus brilhe em cada família! ❤️</div>
 </footer>
 
 <script>
 /* EFEITO DE NEVE */
 (function(){
   const area=document.getElementById("neve");
-  if(!area) return;
-
+  if(!area)return;
   const quantidade=window.innerWidth<600?22:34;
-
   for(let i=0;i<quantidade;i++){
     const floco=document.createElement("span");
     floco.className="floco";
@@ -745,476 +500,305 @@ background:#06140f;
 </script>
 
 <script>
-const SUPABASE_URL =
-  "https://hqrtbtulzeqoylfpjmdk.supabase.co";
+const SUPABASE_URL = "https://hqrtbtulzeqoylfpjmdk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gDDVH5-0Rr88BzvpfwgYA_N2-Pfd_n";
 
-const SUPABASE_KEY =
-  "sb_publishable_gDDVH5-0Rr88BzvpfwgYA_N2-Pfd_n";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY,
-    {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: false,
-        flowType: "implicit"
-      }
-    }
-  );
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,flowType:"implicit"}}
+);
 
 /* ELEMENTOS */
+const botaoGoogle=document.getElementById("botaoGoogle");
+const loginTitulo=document.getElementById("loginTitulo");
+const loginTexto=document.getElementById("loginTexto");
+const loginIcone=document.getElementById("loginIcone");
+const loginStatus=document.getElementById("loginStatus");
+const stacoinTopo=document.getElementById("stacoinTopo");
+const stacoinValor=document.getElementById("stacoinValor");
+const cadastroOverlay=document.getElementById("cadastroOverlay");
+const cadastroFormArea=document.getElementById("cadastroFormArea");
+const cadastroSucesso=document.getElementById("cadastroSucesso");
+const cadastroForm=document.getElementById("cadastroForm");
+const cadastroEmail=document.getElementById("cadastroEmail");
+const cadastroErro=document.getElementById("cadastroErro");
+const botaoCadastrar=document.getElementById("botaoCadastrar");
+const novoCodigo=document.getElementById("novoCodigo");
+const botaoContinuar=document.getElementById("botaoContinuar");
 
-const botaoGoogle = document.getElementById("botaoGoogle");
-const loginTitulo = document.getElementById("loginTitulo");
-const loginTexto = document.getElementById("loginTexto");
-const loginIcone = document.getElementById("loginIcone");
-const loginStatus = document.getElementById("loginStatus");
-const stacoinTopo = document.getElementById("stacoinTopo");
-const stacoinValor = document.getElementById("stacoinValor");
-
-const cadastroOverlay = document.getElementById("cadastroOverlay");
-const cadastroFormArea = document.getElementById("cadastroFormArea");
-const cadastroSucesso = document.getElementById("cadastroSucesso");
-const cadastroForm = document.getElementById("cadastroForm");
-const cadastroEmail = document.getElementById("cadastroEmail");
-const cadastroErro = document.getElementById("cadastroErro");
-const botaoCadastrar = document.getElementById("botaoCadastrar");
-const novoCodigo = document.getElementById("novoCodigo");
-const botaoContinuar = document.getElementById("botaoContinuar");
-
-document.getElementById("botaoEmpresa").addEventListener("click", function() {
+document.getElementById("botaoEmpresa").addEventListener("click",function(){
   document.getElementById("empresaCaixa").classList.toggle("aberta");
 });
 
 /* ERROS */
-
-function mostrarErroCadastro(mensagem) {
-  cadastroErro.textContent = mensagem;
-  cadastroErro.style.display = "block";
+function mostrarErroCadastro(mensagem){
+  cadastroErro.textContent=mensagem;
+  cadastroErro.style.display="block";
 }
-
-function esconderErroCadastro() {
-  cadastroErro.textContent = "";
-  cadastroErro.style.display = "none";
+function esconderErroCadastro(){
+  cadastroErro.textContent="";
+  cadastroErro.style.display="none";
 }
 
 /* CADASTRO */
-
-function abrirCadastro(user) {
-  if (!user) return;
-
-  cadastroEmail.textContent =
-    "Conta Google: " + (user.email || "Conta conectada");
-
-  cadastroFormArea.style.display = "block";
-  cadastroSucesso.style.display = "none";
-
+function abrirCadastro(user){
+  if(!user)return;
+  cadastroEmail.textContent="Conta Google: "+(user.email||"Conta conectada");
+  cadastroFormArea.style.display="block";
+  cadastroSucesso.style.display="none";
   esconderErroCadastro();
   cadastroOverlay.classList.add("aberto");
-
-  const nomeGoogle =
-    user.user_metadata?.full_name ||
-    user.user_metadata?.name ||
-    "";
-
-  const campoNome = document.getElementById("cadastroNome");
-
-  if (nomeGoogle && !campoNome.value) {
-    campoNome.value = nomeGoogle;
-  }
+  const nomeGoogle=user.user_metadata?.full_name||user.user_metadata?.name||"";
+  const campoNome=document.getElementById("cadastroNome");
+  if(nomeGoogle&&!campoNome.value)campoNome.value=nomeGoogle;
 }
+function fecharCadastro(){cadastroOverlay.classList.remove("aberto")}
 
-function fecharCadastro() {
-  cadastroOverlay.classList.remove("aberto");
-}
-
-async function verificarCadastro(user) {
-  if (!user) return null;
-
-  try {
-    const resultado = await supabaseClient
-      .from("motoristas")
+async function verificarCadastro(user){
+  if(!user)return null;
+  try{
+    const resultado=await supabaseClient.from("motoristas")
       .select("id,codigo,nome,apelido,cargo,categoria,salario_ativo,status,user_id")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (resultado.error) {
-      console.error("Erro ao verificar cadastro:", resultado.error);
-      throw resultado.error;
-    }
-
-    return resultado.data || null;
-
-  } catch (erro) {
-    console.error("Falha na consulta do motorista:", erro);
-    throw erro;
-  }
+      .eq("user_id",user.id).maybeSingle();
+    if(resultado.error){console.error("Erro ao verificar cadastro:",resultado.error);throw resultado.error}
+    return resultado.data||null;
+  }catch(erro){console.error("Falha na consulta do motorista:",erro);throw erro}
 }
 
 /* CRIAR SANTA LUZIA ID */
-
-cadastroForm.addEventListener("submit", async function(event) {
+cadastroForm.addEventListener("submit",async function(event){
   event.preventDefault();
-
   esconderErroCadastro();
+  const nome=document.getElementById("cadastroNome").value.trim();
+  const apelido=document.getElementById("cadastroApelido").value.trim();
+  const cargo=document.getElementById("cadastroCargo").value.trim();
+  const categoria=document.getElementById("cadastroCategoria").value.trim();
 
-  const nome = document.getElementById("cadastroNome").value.trim();
-  const apelido = document.getElementById("cadastroApelido").value.trim();
-  const cargo = document.getElementById("cadastroCargo").value.trim();
-  const categoria = document.getElementById("cadastroCategoria").value.trim();
-
-  if (!nome || !apelido || !cargo || !categoria) {
-    mostrarErroCadastro("Preencha todos os campos para continuar.");
-    return;
+  if(!nome||!apelido||!cargo||!categoria){
+    mostrarErroCadastro("Preencha todos os campos para continuar.");return;
   }
+  botaoCadastrar.disabled=true;
+  botaoCadastrar.textContent="VERIFICANDO SEU ID...";
 
-  botaoCadastrar.disabled = true;
-  botaoCadastrar.textContent = "VERIFICANDO SEU ID...";
+  try{
+    const sessao=await supabaseClient.auth.getSession();
+    const user=sessao.data?.session?.user;
+    if(!user)throw new Error("Sua sessão expirou. Entre novamente com o Google.");
 
-  try {
-    const sessao = await supabaseClient.auth.getSession();
-    const user = sessao.data?.session?.user;
-
-    if (!user) {
-      throw new Error("Sua sessão expirou. Entre novamente com o Google.");
-    }
-
-    const cadastroExistente = await verificarCadastro(user);
-
-    if (cadastroExistente) {
-      mostrarCadastroConcluido(
-        cadastroExistente.codigo,
-        "Você já possui um Santa Luzia ID!",
-        "Este ID já está vinculado à sua conta Google."
-      );
+    const cadastroExistente=await verificarCadastro(user);
+    if(cadastroExistente){
+      mostrarCadastroConcluido(cadastroExistente.codigo,"Você já possui um Santa Luzia ID!","Este ID já está vinculado à sua conta Google.");
       return;
     }
 
-    botaoCadastrar.textContent = "CRIANDO SEU ID...";
-
-    const resultado = await supabaseClient.rpc("criar_meu_cadastro", {
-      p_nome: nome,
-      p_apelido: apelido,
-      p_cargo: cargo,
-      p_categoria: categoria
+    botaoCadastrar.textContent="CRIANDO SEU ID...";
+    const resultado=await supabaseClient.rpc("criar_meu_cadastro",{
+      p_nome:nome,p_apelido:apelido,p_cargo:cargo,p_categoria:categoria
     });
 
-    if (resultado.error) {
-      const cadastroDepoisDoErro = await verificarCadastro(user);
-
-      if (cadastroDepoisDoErro) {
-        mostrarCadastroConcluido(
-          cadastroDepoisDoErro.codigo,
-          "Você já possui um Santa Luzia ID!",
-          "Seu ID já estava vinculado a esta conta."
-        );
+    if(resultado.error){
+      const cadastroDepoisDoErro=await verificarCadastro(user);
+      if(cadastroDepoisDoErro){
+        mostrarCadastroConcluido(cadastroDepoisDoErro.codigo,"Você já possui um Santa Luzia ID!","Seu ID já estava vinculado a esta conta.");
         return;
       }
-
       throw resultado.error;
     }
 
-    const dados = resultado.data;
-
-    if (!dados || !dados.sucesso) {
-      throw new Error("O cadastro não foi concluído. Verifique a função do banco.");
-    }
+    const dados=resultado.data;
+    if(!dados||!dados.sucesso)throw new Error("O cadastro não foi concluído. Verifique a função do banco.");
 
     mostrarCadastroConcluido(
       dados.codigo,
-      dados.ja_existia ? "Você já possui um Santa Luzia ID!" : "Cadastro concluído!",
-      dados.ja_existia
-        ? "Este ID já estava vinculado à sua conta."
-        : "Seu Santa Luzia ID foi criado com sucesso."
+      dados.ja_existia?"Você já possui um Santa Luzia ID!":"Cadastro concluído!",
+      dados.ja_existia?"Este ID já estava vinculado à sua conta.":"Seu Santa Luzia ID foi criado com sucesso."
     );
-
-  } catch (erro) {
-    console.error("Erro no cadastro:", erro);
-    mostrarErroCadastro(erro.message || "Não foi possível criar seu ID.");
-
-  } finally {
-    botaoCadastrar.disabled = false;
-    botaoCadastrar.textContent = "🪪 CRIAR MEU SANTA LUZIA ID";
+  }catch(erro){
+    console.error("Erro no cadastro:",erro);
+    mostrarErroCadastro(erro.message||"Não foi possível criar seu ID.");
+  }finally{
+    botaoCadastrar.disabled=false;
+    botaoCadastrar.textContent="🪪 CRIAR MEU SANTA LUZIA ID";
   }
 });
 
-function mostrarCadastroConcluido(codigo, titulo, texto) {
-  novoCodigo.textContent = codigo || "SEM CÓDIGO";
-
-  document.getElementById("cadastroSucessoTitulo").textContent = titulo;
-  document.getElementById("cadastroSucessoTexto").textContent = texto;
-
-  cadastroFormArea.style.display = "none";
-  cadastroSucesso.style.display = "block";
-
-  loginStatus.textContent = "✓ Santa Luzia ID • " + (codigo || "ID");
-  loginStatus.className = "login-status login-ok";
+function mostrarCadastroConcluido(codigo,titulo,texto){
+  novoCodigo.textContent=codigo||"SEM CÓDIGO";
+  document.getElementById("cadastroSucessoTitulo").textContent=titulo;
+  document.getElementById("cadastroSucessoTexto").textContent=texto;
+  cadastroFormArea.style.display="none";
+  cadastroSucesso.style.display="block";
+  loginStatus.textContent="✓ Santa Luzia ID • "+(codigo||"ID");
+  loginStatus.className="login-status login-ok";
 }
 
 /* CONTINUAR */
-
-botaoContinuar.addEventListener("click", async function() {
+botaoContinuar.addEventListener("click",async function(){
   fecharCadastro();
-
-  const resultado = await supabaseClient.auth.getSession();
-  const user = resultado.data?.session?.user;
-
-  if (user) {
-    await mostrarUsuario(user);
-  }
+  const resultado=await supabaseClient.auth.getSession();
+  const user=resultado.data?.session?.user;
+  if(user)await mostrarUsuario(user);
 });
 
 /* STACOIN */
+async function carregarStacoin(user){
+  if(!user){stacoinTopo.style.display="none";return}
+  try{
+    const motoristaResultado=await supabaseClient.from("motoristas")
+      .select("id").eq("user_id",user.id).maybeSingle();
+    if(motoristaResultado.error)throw motoristaResultado.error;
+    if(!motoristaResultado.data){stacoinTopo.style.display="none";return}
 
-async function carregarStacoin(user) {
-  if (!user) {
-    stacoinTopo.style.display = "none";
-    return;
-  }
+    const carteiraResultado=await supabaseClient.from("stacoin_carteiras")
+      .select("saldo").eq("motorista_id",motoristaResultado.data.id).maybeSingle();
+    if(carteiraResultado.error)throw carteiraResultado.error;
 
-  try {
-    const motoristaResultado = await supabaseClient
-      .from("motoristas")
-      .select("id")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (motoristaResultado.error) throw motoristaResultado.error;
-
-    if (!motoristaResultado.data) {
-      stacoinTopo.style.display = "none";
-      return;
-    }
-
-    const carteiraResultado = await supabaseClient
-      .from("stacoin_carteiras")
-      .select("saldo")
-      .eq("motorista_id", motoristaResultado.data.id)
-      .maybeSingle();
-
-    if (carteiraResultado.error) throw carteiraResultado.error;
-
-    const saldo = carteiraResultado.data?.saldo || 0;
-
-    stacoinValor.textContent =
-      Number(saldo).toLocaleString("pt-BR");
-
-    stacoinTopo.style.display = "flex";
-
-  } catch (erro) {
-    console.error("Erro ao carregar STACOIN:", erro);
-    stacoinTopo.style.display = "none";
+    const saldo=carteiraResultado.data?.saldo||0;
+    stacoinValor.textContent=Number(saldo).toLocaleString("pt-BR");
+    stacoinTopo.style.display="flex";
+  }catch(erro){
+    console.error("Erro ao carregar STACOIN:",erro);
+    stacoinTopo.style.display="none";
   }
 }
 
 /* USUÁRIO */
-
-async function mostrarUsuario(user) {
-  if (!user) {
-    loginIcone.textContent = "👤";
-    loginTitulo.textContent = "Acesse sua conta";
-    loginTexto.textContent = "Entre com sua conta Google";
-
-    botaoGoogle.textContent = "Entrar com Google";
-    botaoGoogle.className = "botao-google";
-    botaoGoogle.disabled = false;
-    botaoGoogle.dataset.logado = "false";
-
-    loginStatus.textContent = "";
-    loginStatus.className = "login-status";
-    stacoinTopo.style.display = "none";
-
+async function mostrarUsuario(user){
+  if(!user){
+    loginIcone.textContent="👤";
+    loginTitulo.textContent="Acesse sua conta";
+    loginTexto.textContent="Entre com sua conta Google";
+    botaoGoogle.textContent="Entrar com Google";
+    botaoGoogle.className="botao-google";
+    botaoGoogle.disabled=false;
+    botaoGoogle.dataset.logado="false";
+    loginStatus.textContent="";
+    loginStatus.className="login-status";
+    stacoinTopo.style.display="none";
     return;
   }
 
-  const nome =
-    user.user_metadata?.full_name ||
-    user.user_metadata?.name ||
-    "Usuário";
+  const nome=user.user_metadata?.full_name||user.user_metadata?.name||"Usuário";
+  loginIcone.textContent="👤";
+  loginTitulo.textContent="Olá, "+nome;
+  loginTexto.textContent=user.email||"";
+  botaoGoogle.textContent="Sair";
+  botaoGoogle.className="botao-sair";
+  botaoGoogle.disabled=false;
+  botaoGoogle.dataset.logado="true";
+  loginStatus.textContent="Verificando seu Santa Luzia ID...";
+  loginStatus.className="login-status";
 
-  loginIcone.textContent = "👤";
-  loginTitulo.textContent = "Olá, " + nome;
-  loginTexto.textContent = user.email || "";
-
-  botaoGoogle.textContent = "Sair";
-  botaoGoogle.className = "botao-sair";
-  botaoGoogle.disabled = false;
-  botaoGoogle.dataset.logado = "true";
-
-  loginStatus.textContent = "Verificando seu Santa Luzia ID...";
-  loginStatus.className = "login-status";
-
-  try {
-    const motorista = await verificarCadastro(user);
-
-    if (!motorista) {
-      loginStatus.textContent =
-        "🆔 Complete seu cadastro para criar seu Santa Luzia ID.";
-
-      loginStatus.className = "login-status";
+  try{
+    const motorista=await verificarCadastro(user);
+    if(!motorista){
+      loginStatus.textContent="🆔 Complete seu cadastro para criar seu Santa Luzia ID.";
+      loginStatus.className="login-status";
       abrirCadastro(user);
       return;
     }
-
-    loginStatus.textContent = "✓ Conta conectada • " + motorista.codigo;
-    loginStatus.className = "login-status login-ok";
-
+    loginStatus.textContent="✓ Conta conectada • "+motorista.codigo;
+    loginStatus.className="login-status login-ok";
     await carregarStacoin(user);
-
-  } catch (erro) {
-    loginStatus.textContent =
-      "Não foi possível verificar seu cadastro. Tente novamente.";
-
-    loginStatus.className = "login-status login-erro";
+  }catch(erro){
+    loginStatus.textContent="Não foi possível verificar seu cadastro. Tente novamente.";
+    loginStatus.className="login-status login-erro";
   }
 }
 
 /* RETORNO GOOGLE */
+async function processarRetornoGoogle(){
+  const hash=window.location.hash.substring(1);
+  if(!hash)return false;
+  const parametros=new URLSearchParams(hash);
+  const accessToken=parametros.get("access_token");
+  const refreshToken=parametros.get("refresh_token");
+  if(!accessToken||!refreshToken)return false;
 
-async function processarRetornoGoogle() {
-  const hash = window.location.hash.substring(1);
-
-  if (!hash) return false;
-
-  const parametros = new URLSearchParams(hash);
-
-  const accessToken = parametros.get("access_token");
-  const refreshToken = parametros.get("refresh_token");
-
-  if (!accessToken || !refreshToken) return false;
-
-  loginStatus.textContent = "🔐 Finalizando login...";
-
-  try {
-    const resultado = await supabaseClient.auth.setSession({
-      access_token: accessToken,
-      refresh_token: refreshToken
+  loginStatus.textContent="🔐 Finalizando login...";
+  try{
+    const resultado=await supabaseClient.auth.setSession({
+      access_token:accessToken,refresh_token:refreshToken
     });
-
-    if (resultado.error) throw resultado.error;
-
-    if (resultado.data?.session?.user) {
+    if(resultado.error)throw resultado.error;
+    if(resultado.data?.session?.user){
       await mostrarUsuario(resultado.data.session.user);
-
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname + window.location.search
-      );
-
+      window.history.replaceState({},document.title,window.location.pathname+window.location.search);
       return true;
     }
-
     return false;
-
-  } catch (erro) {
-    console.error("Erro ao processar retorno Google:", erro);
-
-    loginStatus.textContent =
-      "❌ Erro ao finalizar login.";
-
-    loginStatus.className = "login-status login-erro";
-
+  }catch(erro){
+    console.error("Erro ao processar retorno Google:",erro);
+    loginStatus.textContent="❌ Erro ao finalizar login.";
+    loginStatus.className="login-status login-erro";
     return false;
   }
 }
 
 /* SESSÃO */
-
-async function verificarSessao() {
-  try {
-    const resultado = await supabaseClient.auth.getSession();
-
-    if (resultado.error) throw resultado.error;
-
-    if (resultado.data?.session?.user) {
+async function verificarSessao(){
+  try{
+    const resultado=await supabaseClient.auth.getSession();
+    if(resultado.error)throw resultado.error;
+    if(resultado.data?.session?.user){
       await mostrarUsuario(resultado.data.session.user);
       return true;
     }
-
     mostrarUsuario(null);
     return false;
-
-  } catch (erro) {
-    console.error("Erro ao verificar sessão:", erro);
+  }catch(erro){
+    console.error("Erro ao verificar sessão:",erro);
     mostrarUsuario(null);
     return false;
   }
 }
 
 /* LOGIN GOOGLE */
-
-async function entrarGoogle() {
-  botaoGoogle.disabled = true;
-  botaoGoogle.textContent = "Abrindo Google...";
-
-  loginStatus.textContent = "Abrindo login do Google...";
-
-  try {
-    const resultado = await supabaseClient.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo:
-          "https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"
-      }
+async function entrarGoogle(){
+  botaoGoogle.disabled=true;
+  botaoGoogle.textContent="Abrindo Google...";
+  loginStatus.textContent="Abrindo login do Google...";
+  try{
+    const resultado=await supabaseClient.auth.signInWithOAuth({
+      provider:"google",
+      options:{redirectTo:"https://santaluziatomates-dotcom.github.io/Santa-Luzia-Central/"}
     });
-
-    if (resultado.error) throw resultado.error;
-
-  } catch (erro) {
-    console.error("Erro no login:", erro);
-
-    loginStatus.textContent = "❌ " + erro.message;
-    loginStatus.className = "login-status login-erro";
-
-    botaoGoogle.disabled = false;
-    botaoGoogle.textContent = "Entrar com Google";
+    if(resultado.error)throw resultado.error;
+  }catch(erro){
+    console.error("Erro no login:",erro);
+    loginStatus.textContent="❌ "+erro.message;
+    loginStatus.className="login-status login-erro";
+    botaoGoogle.disabled=false;
+    botaoGoogle.textContent="Entrar com Google";
   }
 }
 
 /* BOTÃO LOGIN / SAIR */
-
-botaoGoogle.addEventListener("click", async function() {
-  if (botaoGoogle.dataset.logado === "true") {
-    botaoGoogle.disabled = true;
-
-    try {
-      const resultado = await supabaseClient.auth.signOut();
-
-      if (resultado.error) throw resultado.error;
-
+botaoGoogle.addEventListener("click",async function(){
+  if(botaoGoogle.dataset.logado==="true"){
+    botaoGoogle.disabled=true;
+    try{
+      const resultado=await supabaseClient.auth.signOut();
+      if(resultado.error)throw resultado.error;
       mostrarUsuario(null);
-
-    } catch (erro) {
-      console.error("Erro ao sair:", erro);
-
-      loginStatus.textContent = "Não foi possível sair da conta.";
-      loginStatus.className = "login-status login-erro";
-
-      botaoGoogle.disabled = false;
+    }catch(erro){
+      console.error("Erro ao sair:",erro);
+      loginStatus.textContent="Não foi possível sair da conta.";
+      loginStatus.className="login-status login-erro";
+      botaoGoogle.disabled=false;
     }
-
     return;
   }
-
   await entrarGoogle();
 });
 
 /* INICIALIZAÇÃO */
-
-(async function() {
-  const processou = await processarRetornoGoogle();
-
-  if (!processou) {
-    await verificarSessao();
-  }
-
-  botaoGoogle.disabled = false;
+(async function(){
+  const processou=await processarRetornoGoogle();
+  if(!processou)await verificarSessao();
+  botaoGoogle.disabled=false;
 })();
 </script>
-
 </body>
 </html>
