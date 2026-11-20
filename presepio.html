@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1b">
+<title>Presépio Santa Luzia 2026</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #080d1b;
+  color: white;
+  font-family: Georgia, serif;
+  overflow-x: hidden;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 75% 12%, #29314d 0%, transparent 32%),
+    linear-gradient(#080d1b 0%, #17213a 55%, #453a38 100%);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 10% 15%, white 90%, transparent),
+    radial-gradient(2px 2px at 25% 35%, white 90%, transparent),
+    radial-gradient(1px 1px at 40% 12%, white 90%, transparent),
+    radial-gradient(2px 2px at 65% 22%, white 90%, transparent),
+    radial-gradient(1px 1px at 80% 10%, white 90%, transparent),
+    radial-gradient(2px 2px at 90% 38%, white 90%, transparent),
+    radial-gradient(1px 1px at 55% 43%, white 90%, transparent),
+    radial-gradient(2px 2px at 15% 48%, white 90%, transparent);
+  background-size: 350px 250px;
+  animation: brilho 4s infinite alternate;
+}
+
+@keyframes brilho {
+  from { opacity: .45; }
+  to { opacity: 1; }
+}
+
+.moon {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  top: 8%;
+  left: 12%;
+  background: #f4e6bb;
+  box-shadow: 0 0 30px #f4e6bb88, 0 0 80px #f4e6bb44;
+}
+
+.star-of-bethlehem {
+  position: absolute;
+  top: 12%;
+  right: 17%;
+  width: 48px;
+  height: 48px;
+  background: #fff2c2;
+  clip-path: polygon(
+    50% 0%, 61% 37%, 100% 50%,
+    61% 63%, 50% 100%, 39% 63%,
+    0% 50%, 39% 37%
+  );
+  filter: drop-shadow(0 0 15px #ffe7a0);
+  animation: estrela 3s ease-in-out infinite alternate;
+}
+
+@keyframes estrela {
+  from { transform: scale(.85); opacity: .8; }
+  to { transform: scale(1.15); opacity: 1; }
+}
+
+.star-ray {
+  position: absolute;
+  top: 16%;
+  right: 18.7%;
+  width: 2px;
+  height: 52%;
+  background: linear-gradient(#ffe9a0, transparent);
+  opacity: .35;
+  transform: rotate(8deg);
+  transform-origin: top;
+}
+
+.mountains {
+  position: absolute;
+  bottom: 24%;
+  width: 100%;
+  height: 37%;
+  background: #242b38;
+  clip-path: polygon(
+    0 65%, 12% 35%, 25% 60%, 39% 20%,
+    52% 55%, 70% 24%, 85% 58%, 100% 30%,
+    100% 100%, 0 100%
+  );
+}
+
+.mountains-back {
+  bottom: 28%;
+  height: 35%;
+  background: #343746;
+  opacity: .65;
+  transform: scaleX(-1);
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 31%;
+  background: linear-gradient(#51433b, #211d20);
+  border-radius: 50% 50% 0 0 / 12% 12% 0 0;
+}
+
+.city {
+  position: absolute;
+  bottom: 24%;
+  width: 100%;
+  height: 32%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 5px;
+}
+
+.house {
+  position: relative;
+  width: 13%;
+  max-width: 85px;
+  height: 65%;
+  background: linear-gradient(90deg, #675044, #a17b5e, #654a3c);
+  border: 1px solid #bd9870;
+  border-bottom: 0;
+  box-shadow: inset 0 0 15px #241a17;
+}
+
+.house:nth-child(2n) {
+  height: 80%;
+}
+
+.house:nth-child(3n) {
+  height: 55%;
+}
+
+.roof {
+  position: absolute;
+  top: -16px;
+  left: -5px;
+  width: calc(100% + 10px);
+  height: 18px;
+  background: #49382f;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.window {
+  position: absolute;
+  width: 12px;
+  height: 18px;
+  background: #ffd58a;
+  box-shadow: 0 0 14px #ffbc58;
+  left: 50%;
+  top: 35%;
+  transform: translateX(-50%);
+  border-radius: 5px 5px 0 0;
+}
+
+.door {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 23px;
+  height: 38px;
+  background: #33231e;
+  border-radius: 10px 10px 0 0;
+}
+
+.path {
+  position: absolute;
+  bottom: 0;
+  left: 35%;
+  width: 30%;
+  height: 28%;
+  background: linear-gradient(90deg, #53433a, #8a6c52, #53433a);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
+  opacity: .8;
+}
+
+.lantern {
+  position: absolute;
+  bottom: 22%;
+  width: 9px;
+  height: 14px;
+  background: #ffc66e;
+  border-radius: 3px;
+  box-shadow: 0 0 18px 6px #ffbd5a88;
+}
+
+.lantern.one { left: 18%; }
+.lantern.two { right: 18%; }
+.lantern.three { left: 75%; bottom: 31%; }
+
+.intro {
+  position: absolute;
+  z-index: 5;
+  top: 5%;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  text-shadow: 0 2px 15px #000;
+}
+
+.intro small {
+  color: #e8c98b;
+  letter-spacing: 4px;
+  font-size: 10px;
+}
+
+.intro h1 {
+  margin-top: 12px;
+  font-size: clamp(28px, 7vw, 43px);
+  font-weight: normal;
+  color: #f4dfb4;
+}
+
+.intro p {
+  margin-top: 9px;
+  font-size: 14px;
+  color: #ded5c5;
+}
+
+.footer {
+  position: absolute;
+  z-index: 5;
+  bottom: 4%;
+  width: 100%;
+  text-align: center;
+}
+
+.footer p {
+  color: #e8d9bc;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+button {
+  border: 1px solid #d6b77d;
+  background: linear-gradient(135deg, #8b6840, #493b2b);
+  color: #fff3d5;
+  padding: 13px 28px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: Georgia, serif;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+@media (max-height: 650px) {
+  .intro { top: 2%; }
+  .intro h1 { font-size: 27px; }
+  .city { bottom: 20%; height: 35%; }
+  .mountains { bottom: 20%; }
+  .footer { bottom: 2%; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+
+  <div class="stars"></div>
+  <div class="moon"></div>
+  <div class="star-of-bethlehem"></div>
+  <div class="star-ray"></div>
+
+  <div class="intro">
+    <small>SANTA LUZIA APRESENTA</small>
+    <h1>Belém</h1>
+    <p>Uma noite que mudou a história da humanidade</p>
+  </div>
+
+  <div class="mountains mountains-back"></div>
+  <div class="mountains"></div>
+
+  <div class="city">
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+    <div class="house">
+      <div class="roof"></div>
+      <div class="window"></div>
+      <div class="door"></div>
+    </div>
+  </div>
+
+  <div class="ground"></div>
+  <div class="path"></div>
+
+  <div class="lantern one"></div>
+  <div class="lantern two"></div>
+  <div class="lantern three"></div>
+
+  <div class="footer">
+    <p>Prepare seu coração para conhecer essa história.</p>
+    <button onclick="alert('Em breve: a história do nascimento de Jesus!')">
+      Iniciar a história
+    </button>
+  </div>
+
+</div>
+
+</body>
+</html>
