@@ -167,15 +167,15 @@ main {
 .peca {
   position: relative;
   z-index: 1;
-  width: 84%;
-  height: 84%;
+  width: 88%;
+  height: 88%;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 3px solid rgba(255,255,255,.85);
   box-shadow: 0 3px 5px rgba(0,0,0,.35);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .peca.tomate {
@@ -187,9 +187,12 @@ main {
 }
 
 .peca img {
-  width: 76%;
-  height: 76%;
-  object-fit: contain;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .fallback {
@@ -198,11 +201,12 @@ main {
 
 .coroa {
   position: absolute;
-  right: -5px;
-  top: -9px;
-  font-size: clamp(12px,3vw,18px);
+  right: -3px;
+  top: -5px;
+  font-size: clamp(13px,4vw,20px);
   z-index: 4;
   filter: drop-shadow(0 1px 2px #000);
+  pointer-events: none;
 }
 
 .acoes {
@@ -243,7 +247,6 @@ footer {
   font-size: 11px;
   padding: 22px;
 }
-
 </style>
 </head>
 
@@ -263,7 +266,6 @@ footer {
 <main>
 
 <div class="card">
-
   <div class="times">
 
     <div class="time ativo" id="timeTomate">
@@ -311,11 +313,13 @@ footer {
   <p class="regras" style="margin-top:10px">
     • Cada time começa com 12 peças.<br>
     • Toque na peça e depois na casa desejada.<br>
-    • As peças andam na diagonal para frente.<br>
-    • Capture as peças adversárias pulando sobre elas.<br>
-    • Se houver captura disponível, ela é obrigatória.<br>
+    • Peças normais andam uma casa na diagonal para frente.<br>
+    • Peças normais podem capturar para frente e para trás.<br>
+    • A dama percorre várias casas na diagonal.<br>
+    • A dama pode capturar à distância.<br>
+    • Capturas são obrigatórias.<br>
+    • Capturas consecutivas devem ser realizadas.<br>
     • Ao chegar ao outro lado, a peça vira dama.<br>
-    • A dama pode andar e capturar para frente e para trás.<br>
     • Ganha quem deixar o adversário sem jogadas.
   </p>
 </div>
@@ -334,6 +338,7 @@ let pecas = [];
 let turno = "tomate";
 let selecionada = null;
 let destinos = [];
+
 let capturas = {
   tomate: 0,
   batata: 0
@@ -349,6 +354,7 @@ function inicializar() {
     () => Array(8).fill(null)
   );
 
+  // Batatas na parte superior
   for(let l=0; l<3; l++) {
     for(let c=0; c<8; c++) {
       if((l+c)%2===1) {
@@ -360,6 +366,7 @@ function inicializar() {
     }
   }
 
+  // Tomates na parte inferior
   for(let l=5; l<8; l++) {
     for(let c=0; c<8; c++) {
       if((l+c)%2===1) {
@@ -374,7 +381,12 @@ function inicializar() {
   turno = "tomate";
   selecionada = null;
   destinos = [];
-  capturas = {tomate:0,batata:0};
+
+  capturas = {
+    tomate:0,
+    batata:0
+  };
+
   fimDeJogo = false;
   continuandoCaptura = false;
 
@@ -385,39 +397,117 @@ function dentro(l,c) {
   return l>=0 && l<8 && c>=0 && c<8;
 }
 
+// MOVIMENTAÇÃO DAS PEÇAS
 function movimentos(l,c,soCapturas=false) {
 
   const p = pecas[l][c];
 
   if(!p) return [];
 
-  const direcoes = p.dama
-    ? [-1,1]
-    : (p.time==="tomate" ? [-1] : [1]);
-
   let resultado = [];
 
-  for(const dl of direcoes) {
+  // DAMA: percorre a diagonal inteira
+  if(p.dama) {
 
+    for(const dl of [-1,1]) {
+      for(const dc of [-1,1]) {
+
+        let nl = l + dl;
+        let nc = c + dc;
+        let inimigoEncontrado = null;
+
+        while(dentro(nl,nc)) {
+
+          const alvo = pecas[nl][nc];
+
+          if(alvo) {
+
+            if(alvo.time === p.time) {
+              break;
+            }
+
+            if(inimigoEncontrado) {
+              break;
+            }
+
+            inimigoEncontrado = {
+              l:nl,
+              c:nc
+            };
+
+          } else {
+
+            if(inimigoEncontrado) {
+
+              resultado.push({
+                l:nl,
+                c:nc,
+                captura:inimigoEncontrado
+              });
+
+            } else if(!soCapturas) {
+
+              resultado.push({
+                l:nl,
+                c:nc,
+                captura:null
+              });
+
+            }
+
+          }
+
+          nl += dl;
+          nc += dc;
+
+        }
+      }
+    }
+
+    return resultado;
+  }
+
+  // PEÇA NORMAL
+  const direcoes = p.time==="tomate" ? [-1] : [1];
+
+  // Movimento simples: somente para frente
+  if(!soCapturas) {
+
+    for(const dl of direcoes) {
+      for(const dc of [-1,1]) {
+
+        const nl = l+dl;
+        const nc = c+dc;
+
+        if(
+          dentro(nl,nc) &&
+          !pecas[nl][nc]
+        ) {
+          resultado.push({
+            l:nl,
+            c:nc,
+            captura:null
+          });
+        }
+
+      }
+    }
+
+  }
+
+  // Captura: para frente e para trás
+  for(const dl of [-1,1]) {
     for(const dc of [-1,1]) {
 
       const nl = l+dl;
       const nc = c+dc;
 
-      if(!dentro(nl,nc)) continue;
+      const tl = l+(2*dl);
+      const tc = c+(2*dc);
 
-      if(!pecas[nl][nc] && !soCapturas) {
-        resultado.push({
-          l:nl,
-          c:nc,
-          captura:null
-        });
+      if(!dentro(nl,nc) || !dentro(tl,tc)) {
+        continue;
       }
-
-      const tl = l+2*dl;
-      const tc = c+2*dc;
-
-      if(!dentro(tl,tc)) continue;
 
       const inimigo = pecas[nl][nc];
 
@@ -426,6 +516,7 @@ function movimentos(l,c,soCapturas=false) {
         inimigo.time!==p.time &&
         !pecas[tl][tc]
       ) {
+
         resultado.push({
           l:tl,
           c:tc,
@@ -434,6 +525,7 @@ function movimentos(l,c,soCapturas=false) {
             c:nc
           }
         });
+
       }
 
     }
@@ -442,6 +534,7 @@ function movimentos(l,c,soCapturas=false) {
   return resultado;
 }
 
+// PROCURA TODAS AS CAPTURAS DISPONÍVEIS
 function todasCapturas(time) {
 
   let lista = [];
@@ -454,16 +547,22 @@ function todasCapturas(time) {
         const ms = movimentos(l,c,true);
 
         if(ms.length) {
-          lista.push({l,c,ms});
+          lista.push({
+            l,
+            c,
+            ms
+          });
         }
 
       }
+
     }
   }
 
   return lista;
 }
 
+// SELECIONAR PEÇA
 function selecionar(l,c) {
 
   if(fimDeJogo) return;
@@ -474,7 +573,10 @@ function selecionar(l,c) {
 
   if(
     continuandoCaptura &&
-    (selecionada.l!==l || selecionada.c!==c)
+    (
+      selecionada.l!==l ||
+      selecionada.c!==c
+    )
   ) {
     return;
   }
@@ -505,6 +607,7 @@ function selecionar(l,c) {
   atualizar();
 }
 
+// CLIQUE NAS CASAS
 function clicarCasa(l,c) {
 
   if(fimDeJogo) return;
@@ -528,10 +631,12 @@ function clicarCasa(l,c) {
 
 }
 
+// MOVER E CAPTURAR
 function mover(destino) {
 
   const l = selecionada.l;
   const c = selecionada.c;
+
   const p = pecas[l][c];
 
   pecas[destino.l][destino.c] = p;
@@ -545,6 +650,7 @@ function mover(destino) {
 
   }
 
+  // PROMOÇÃO A DAMA
   if(
     (p.time==="tomate" && destino.l===0) ||
     (p.time==="batata" && destino.l===7)
@@ -557,6 +663,7 @@ function mover(destino) {
     c:destino.c
   };
 
+  // VERIFICA SE PODE CAPTURAR NOVAMENTE
   if(destino.captura) {
 
     const proximas = movimentos(
@@ -571,10 +678,9 @@ function mover(destino) {
       destinos = proximas;
 
       atualizar();
-
       status("Continue capturando com a mesma peça!");
-      return;
 
+      return;
     }
 
   }
@@ -589,6 +695,7 @@ function mover(destino) {
   atualizar();
 }
 
+// VERIFICA O VENCEDOR
 function verificarFim() {
 
   let quantidade = 0;
@@ -624,10 +731,7 @@ function verificarFim() {
 
 }
 
-function status(texto) {
-  document.getElementById("status").textContent = texto;
-}
-
+// DESMARCAR PEÇA
 function limparSelecao() {
 
   if(continuandoCaptura) return;
@@ -638,6 +742,7 @@ function limparSelecao() {
   atualizar();
 }
 
+// DESENHAR TABULEIRO
 function desenhar() {
 
   tabuleiro.innerHTML = "";
@@ -726,6 +831,7 @@ function desenhar() {
 
 }
 
+// ATUALIZAR INTERFACE
 function atualizar() {
 
   desenhar();
@@ -758,10 +864,12 @@ function atualizar() {
 
 }
 
+// NOVA PARTIDA
 function reiniciar() {
   inicializar();
 }
 
+// INICIAR JOGO
 inicializar();
 
 </script>
