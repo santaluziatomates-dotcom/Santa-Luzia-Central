@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Damas | Arena SL</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f4f1;
+  color: #17231c;
+}
+
+header {
+  background: #10291e;
+  color: white;
+  padding: 22px 18px;
+}
+
+.topo {
+  max-width: 600px;
+  margin: auto;
+}
+
+.voltar {
+  color: #c5d8cc;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+header h1 {
+  margin-top: 18px;
+  font-size: 28px;
+}
+
+header h1 span {
+  color: #e64b42;
+}
+
+header p {
+  color: #c4d2c9;
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+main {
+  max-width: 600px;
+  padding: 16px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e0e7e1;
+  border-radius: 17px;
+  padding: 16px;
+  margin-bottom: 15px;
+}
+
+.times {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.time {
+  border: 2px solid transparent;
+  background: #f3f5f3;
+  border-radius: 13px;
+  padding: 12px 7px;
+  text-align: center;
+}
+
+.time.ativo {
+  border-color: #28563d;
+  background: #e8f1e9;
+}
+
+.logo-time {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.time strong {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.time small {
+  display: block;
+  color: #718076;
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.pontuacao {
+  font-size: 23px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.status {
+  background: #173a29;
+  color: white;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.tabuleiro {
+  width: 100%;
+  max-width: 460px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  border: 5px solid #173a29;
+  border-radius: 5px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.casa {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.clara {
+  background: #e9dfc9;
+}
+
+.escura {
+  background: #477253;
+}
+
+.casa.selecionada {
+  box-shadow: inset 0 0 0 3px #f5d44f;
+}
+
+.casa.destino::after {
+  content: "";
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  border-radius: 50%;
+  background: #f5d44f;
+  opacity: .95;
+}
+
+.peca {
+  position: relative;
+  z-index: 1;
+  width: 84%;
+  height: 84%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255,255,255,.85);
+  box-shadow: 0 3px 5px rgba(0,0,0,.35);
+  overflow: visible;
+}
+
+.peca.tomate {
+  background: linear-gradient(145deg,#f05a4f,#a91e24);
+}
+
+.peca.batata {
+  background: linear-gradient(145deg,#f4cf69,#b77a21);
+}
+
+.peca img {
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+}
+
+.fallback {
+  font-size: clamp(15px,5vw,27px);
+}
+
+.coroa {
+  position: absolute;
+  right: -5px;
+  top: -9px;
+  font-size: clamp(12px,3vw,18px);
+  z-index: 4;
+  filter: drop-shadow(0 1px 2px #000);
+}
+
+.acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.botao {
+  padding: 13px 8px;
+  border: 0;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.principal {
+  background: #173a29;
+  color: white;
+}
+
+.secundario {
+  background: #e9eee9;
+  color: #173a29;
+}
+
+.regras {
+  color: #69766d;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+footer {
+  text-align: center;
+  color: #89938b;
+  font-size: 11px;
+  padding: 22px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topo">
+    <a href="arena.html" class="voltar">
+      ← Voltar à Arena SL
+    </a>
+
+    <h1>JOGO DE <span>DAMAS</span></h1>
+    <p>Santa Luzia Tomates contra Santa Luzia Batatas</p>
+  </div>
+</header>
+
+<main>
+
+<div class="card">
+
+  <div class="times">
+
+    <div class="time ativo" id="timeTomate">
+      <img class="logo-time" src="IMG_6552.PNG" alt="Santa Luzia Tomates">
+      <strong>SANTA LUZIA TOMATES</strong>
+      <small>Peças vermelhas</small>
+      <div class="pontuacao" id="capturasTomate">0</div>
+      <small>Capturas</small>
+    </div>
+
+    <div class="time" id="timeBatata">
+      <img class="logo-time" src="Background%20Eraser.png" alt="Santa Luzia Batatas">
+      <strong>SANTA LUZIA BATATAS</strong>
+      <small>Peças amarelas</small>
+      <div class="pontuacao" id="capturasBatata">0</div>
+      <small>Capturas</small>
+    </div>
+
+  </div>
+</div>
+
+<div class="status" id="status">
+  Vez dos TOMATES 🍅
+</div>
+
+<div class="card">
+
+  <div class="tabuleiro" id="tabuleiro"></div>
+
+  <div class="acoes">
+    <button class="botao principal" onclick="reiniciar()">
+      Nova partida
+    </button>
+
+    <button class="botao secundario" onclick="limparSelecao()">
+      Desmarcar peça
+    </button>
+  </div>
+
+</div>
+
+<div class="card">
+  <strong>Como jogar</strong>
+
+  <p class="regras" style="margin-top:10px">
+    • Cada time começa com 12 peças.<br>
+    • Toque na peça e depois na casa desejada.<br>
+    • As peças andam na diagonal para frente.<br>
+    • Capture as peças adversárias pulando sobre elas.<br>
+    • Se houver captura disponível, ela é obrigatória.<br>
+    • Ao chegar ao outro lado, a peça vira dama.<br>
+    • A dama pode andar e capturar para frente e para trás.<br>
+    • Ganha quem deixar o adversário sem jogadas.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  ARENA SL • SANTA LUZIA TOMATES E BATATAS
+</footer>
+
+<script>
+
+const tabuleiro = document.getElementById("tabuleiro");
+
+let pecas = [];
+let turno = "tomate";
+let selecionada = null;
+let destinos = [];
+let capturas = {
+  tomate: 0,
+  batata: 0
+};
+
+let fimDeJogo = false;
+let continuandoCaptura = false;
+
+function inicializar() {
+
+  pecas = Array.from(
+    {length:8},
+    () => Array(8).fill(null)
+  );
+
+  for(let l=0; l<3; l++) {
+    for(let c=0; c<8; c++) {
+      if((l+c)%2===1) {
+        pecas[l][c] = {
+          time:"batata",
+          dama:false
+        };
+      }
+    }
+  }
+
+  for(let l=5; l<8; l++) {
+    for(let c=0; c<8; c++) {
+      if((l+c)%2===1) {
+        pecas[l][c] = {
+          time:"tomate",
+          dama:false
+        };
+      }
+    }
+  }
+
+  turno = "tomate";
+  selecionada = null;
+  destinos = [];
+  capturas = {tomate:0,batata:0};
+  fimDeJogo = false;
+  continuandoCaptura = false;
+
+  atualizar();
+}
+
+function dentro(l,c) {
+  return l>=0 && l<8 && c>=0 && c<8;
+}
+
+function movimentos(l,c,soCapturas=false) {
+
+  const p = pecas[l][c];
+
+  if(!p) return [];
+
+  const direcoes = p.dama
+    ? [-1,1]
+    : (p.time==="tomate" ? [-1] : [1]);
+
+  let resultado = [];
+
+  for(const dl of direcoes) {
+
+    for(const dc of [-1,1]) {
+
+      const nl = l+dl;
+      const nc = c+dc;
+
+      if(!dentro(nl,nc)) continue;
+
+      if(!pecas[nl][nc] && !soCapturas) {
+        resultado.push({
+          l:nl,
+          c:nc,
+          captura:null
+        });
+      }
+
+      const tl = l+2*dl;
+      const tc = c+2*dc;
+
+      if(!dentro(tl,tc)) continue;
+
+      const inimigo = pecas[nl][nc];
+
+      if(
+        inimigo &&
+        inimigo.time!==p.time &&
+        !pecas[tl][tc]
+      ) {
+        resultado.push({
+          l:tl,
+          c:tc,
+          captura:{
+            l:nl,
+            c:nc
+          }
+        });
+      }
+
+    }
+  }
+
+  return resultado;
+}
+
+function todasCapturas(time) {
+
+  let lista = [];
+
+  for(let l=0;l<8;l++) {
+    for(let c=0;c<8;c++) {
+
+      if(pecas[l][c]?.time===time) {
+
+        const ms = movimentos(l,c,true);
+
+        if(ms.length) {
+          lista.push({l,c,ms});
+        }
+
+      }
+    }
+  }
+
+  return lista;
+}
+
+function selecionar(l,c) {
+
+  if(fimDeJogo) return;
+
+  const p = pecas[l][c];
+
+  if(!p || p.time!==turno) return;
+
+  if(
+    continuandoCaptura &&
+    (selecionada.l!==l || selecionada.c!==c)
+  ) {
+    return;
+  }
+
+  const obrigatorias = todasCapturas(turno);
+
+  if(obrigatorias.length && !continuandoCaptura) {
+
+    const permitida = obrigatorias.some(
+      x => x.l===l && x.c===c
+    );
+
+    if(!permitida) {
+      status("Escolha uma peça que possa capturar!");
+      return;
+    }
+
+  }
+
+  selecionada = {l,c};
+
+  destinos = movimentos(
+    l,
+    c,
+    obrigatorias.length>0 || continuandoCaptura
+  );
+
+  atualizar();
+}
+
+function clicarCasa(l,c) {
+
+  if(fimDeJogo) return;
+
+  if(selecionada) {
+
+    const destino = destinos.find(
+      d => d.l===l && d.c===c
+    );
+
+    if(destino) {
+      mover(destino);
+      return;
+    }
+
+  }
+
+  if(pecas[l][c]?.time===turno) {
+    selecionar(l,c);
+  }
+
+}
+
+function mover(destino) {
+
+  const l = selecionada.l;
+  const c = selecionada.c;
+  const p = pecas[l][c];
+
+  pecas[destino.l][destino.c] = p;
+  pecas[l][c] = null;
+
+  if(destino.captura) {
+
+    pecas[destino.captura.l][destino.captura.c] = null;
+
+    capturas[p.time]++;
+
+  }
+
+  if(
+    (p.time==="tomate" && destino.l===0) ||
+    (p.time==="batata" && destino.l===7)
+  ) {
+    p.dama = true;
+  }
+
+  selecionada = {
+    l:destino.l,
+    c:destino.c
+  };
+
+  if(destino.captura) {
+
+    const proximas = movimentos(
+      destino.l,
+      destino.c,
+      true
+    );
+
+    if(proximas.length) {
+
+      continuandoCaptura = true;
+      destinos = proximas;
+
+      atualizar();
+
+      status("Continue capturando com a mesma peça!");
+      return;
+
+    }
+
+  }
+
+  selecionada = null;
+  destinos = [];
+  continuandoCaptura = false;
+
+  turno = turno==="tomate" ? "batata" : "tomate";
+
+  verificarFim();
+  atualizar();
+}
+
+function verificarFim() {
+
+  let quantidade = 0;
+  let temJogada = false;
+
+  for(let l=0;l<8;l++) {
+    for(let c=0;c<8;c++) {
+
+      if(pecas[l][c]?.time===turno) {
+
+        quantidade++;
+
+        if(movimentos(l,c).length) {
+          temJogada = true;
+        }
+
+      }
+
+    }
+  }
+
+  if(quantidade===0 || !temJogada) {
+
+    fimDeJogo = true;
+
+    const vencedor = turno==="tomate"
+      ? "BATATAS 🥔"
+      : "TOMATES 🍅";
+
+    status("🏆 VITÓRIA DOS "+vencedor+"!");
+
+  }
+
+}
+
+function status(texto) {
+  document.getElementById("status").textContent = texto;
+}
+
+function limparSelecao() {
+
+  if(continuandoCaptura) return;
+
+  selecionada = null;
+  destinos = [];
+
+  atualizar();
+}
+
+function desenhar() {
+
+  tabuleiro.innerHTML = "";
+
+  for(let l=0;l<8;l++) {
+
+    for(let c=0;c<8;c++) {
+
+      const casa = document.createElement("div");
+
+      casa.className =
+        "casa "+((l+c)%2===0 ? "clara" : "escura");
+
+      if(
+        selecionada &&
+        selecionada.l===l &&
+        selecionada.c===c
+      ) {
+        casa.classList.add("selecionada");
+      }
+
+      if(destinos.some(d=>d.l===l && d.c===c)) {
+        casa.classList.add("destino");
+      }
+
+      const p = pecas[l][c];
+
+      if(p) {
+
+        const peca = document.createElement("div");
+
+        peca.className = "peca "+p.time;
+
+        const img = document.createElement("img");
+
+        img.src = p.time==="tomate"
+          ? "IMG_6552.PNG"
+          : "Background%20Eraser.png";
+
+        img.alt = p.time==="tomate"
+          ? "Santa Luzia Tomates"
+          : "Santa Luzia Batatas";
+
+        const fallback = document.createElement("span");
+
+        fallback.className = "fallback";
+
+        fallback.textContent =
+          p.time==="tomate" ? "🍅" : "🥔";
+
+        fallback.style.display = "none";
+
+        img.onerror = function() {
+          img.style.display = "none";
+          fallback.style.display = "block";
+        };
+
+        peca.appendChild(img);
+        peca.appendChild(fallback);
+
+        if(p.dama) {
+
+          const coroa = document.createElement("span");
+
+          coroa.className = "coroa";
+          coroa.textContent = "👑";
+
+          peca.appendChild(coroa);
+
+        }
+
+        casa.appendChild(peca);
+
+      }
+
+      casa.addEventListener(
+        "click",
+        () => clicarCasa(l,c)
+      );
+
+      tabuleiro.appendChild(casa);
+
+    }
+
+  }
+
+}
+
+function atualizar() {
+
+  desenhar();
+
+  document.getElementById("capturasTomate").textContent =
+    capturas.tomate;
+
+  document.getElementById("capturasBatata").textContent =
+    capturas.batata;
+
+  document.getElementById("timeTomate").classList.toggle(
+    "ativo",
+    turno==="tomate"
+  );
+
+  document.getElementById("timeBatata").classList.toggle(
+    "ativo",
+    turno==="batata"
+  );
+
+  if(!fimDeJogo && !continuandoCaptura) {
+
+    status(
+      turno==="tomate"
+        ? "Vez dos TOMATES 🍅"
+        : "Vez das BATATAS 🥔"
+    );
+
+  }
+
+}
+
+function reiniciar() {
+  inicializar();
+}
+
+inicializar();
+
+</script>
+
+</body>
+</html>
