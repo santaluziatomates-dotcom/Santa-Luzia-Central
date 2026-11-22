@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo da Velha | Arena SL</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f4f1;
+  color: #17231c;
+  min-height: 100vh;
+}
+
+header {
+  background: #10291e;
+  color: white;
+  padding: 24px 20px;
+}
+
+.topo {
+  max-width: 600px;
+  margin: auto;
+}
+
+.voltar {
+  color: #bcd2c3;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+header h1 {
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+header h1 span {
+  color: #e64b42;
+}
+
+header p {
+  font-size: 13px;
+  color: #c3d3c8;
+  margin-top: 8px;
+}
+
+main {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e0e7e1;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.identificacao {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #617067;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #dce4dd;
+  border-radius: 11px;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus {
+  border-color: #28563d;
+}
+
+.placar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.jogador-card {
+  border-radius: 14px;
+  padding: 15px;
+  background: #f1f5f1;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.jogador-card.ativo {
+  border-color: #28563d;
+  background: #e8f1e9;
+}
+
+.jogador-card .simbolo {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.jogador-card .nome {
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+}
+
+.jogador-card .score {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #28563d;
+}
+
+.status {
+  background: #173a29;
+  color: white;
+  border-radius: 13px;
+  text-align: center;
+  padding: 17px 12px;
+  margin-bottom: 18px;
+}
+
+.status p {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tabuleiro {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.casa {
+  aspect-ratio: 1 / 1;
+  background: #edf2ed;
+  border: 1px solid #dce5dd;
+  border-radius: 16px;
+  font-size: clamp(38px, 12vw, 65px);
+  font-weight: bold;
+  cursor: pointer;
+  color: #173a29;
+  transition: 0.15s;
+}
+
+.casa:hover {
+  background: #e1ebe2;
+}
+
+.casa.x {
+  color: #28563d;
+}
+
+.casa.o {
+  color: #e34b42;
+}
+
+.casa.vencedora {
+  background: #d5ead8;
+  border-color: #28563d;
+}
+
+.casa:disabled {
+  cursor: default;
+}
+
+.acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.botao {
+  padding: 14px;
+  border: none;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.principal {
+  background: #173a29;
+  color: white;
+}
+
+.secundario {
+  background: #edf2ed;
+  color: #173a29;
+}
+
+.botao:active {
+  transform: scale(.98);
+}
+
+.regras {
+  color: #6b776d;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  color: #89938b;
+  padding: 20px;
+  font-size: 11px;
+}
+
+@media(max-width:380px) {
+  main {
+    padding: 14px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topo">
+    <a class="voltar" href="arena.html">← Voltar à Arena SL</a>
+
+    <h1>JOGO DA <span>VELHA</span></h1>
+    <p>Arena Santa Luzia • Duelo entre motoristas</p>
+  </div>
+</header>
+
+<main>
+
+<div class="card">
+
+  <div class="identificacao">
+    <div>
+      <label for="nome1">JOGADOR X</label>
+      <input id="nome1" value="Jogador 1" maxlength="20">
+    </div>
+
+    <div>
+      <label for="nome2">JOGADOR O</label>
+      <input id="nome2" value="Jogador 2" maxlength="20">
+    </div>
+  </div>
+
+  <div class="placar">
+
+    <div class="jogador-card ativo" id="cardX">
+      <div class="simbolo">X</div>
+      <div class="nome" id="displayX">Jogador 1</div>
+      <div class="score" id="scoreX">0</div>
+    </div>
+
+    <div class="jogador-card" id="cardO">
+      <div class="simbolo" style="color:#e34b42">O</div>
+      <div class="nome" id="displayO">Jogador 2</div>
+      <div class="score" id="scoreO">0</div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="status">
+  <p id="mensagem">Vez do Jogador 1 (X)</p>
+</div>
+
+<div class="card">
+
+  <div class="tabuleiro" id="tabuleiro">
+
+    <button class="casa" data-i="0"></button>
+    <button class="casa" data-i="1"></button>
+    <button class="casa" data-i="2"></button>
+
+    <button class="casa" data-i="3"></button>
+    <button class="casa" data-i="4"></button>
+    <button class="casa" data-i="5"></button>
+
+    <button class="casa" data-i="6"></button>
+    <button class="casa" data-i="7"></button>
+    <button class="casa" data-i="8"></button>
+
+  </div>
+
+  <div class="acoes">
+
+    <button class="botao principal" id="reiniciar">
+      Nova partida
+    </button>
+
+    <button class="botao secundario" id="zerar">
+      Zerar placar
+    </button>
+
+  </div>
+
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:12px">Como jogar</h3>
+  <p class="regras">
+    • Dois jogadores no mesmo aparelho.<br>
+    • X começa a partida.<br>
+    • Alterne as jogadas entre X e O.<br>
+    • Ganha quem alinhar três símbolos.<br>
+    • Se preencher o tabuleiro sem vencedor,
+    a partida termina empatada.<br>
+    • O placar permanece durante esta sessão.
+  </p>
+</div>
+
+</main>
+
+<footer>
+  ARENA SL • SANTA LUZIA TOMATES
+</footer>
+
+<script>
+let tabuleiro = ["","","","","","","","",""];
+let vez = "X";
+let encerrado = false;
+
+let pontosX = 0;
+let pontosO = 0;
+
+const casas = document.querySelectorAll(".casa");
+const mensagem = document.getElementById("mensagem");
+
+const nomeX = document.getElementById("nome1");
+const nomeO = document.getElementById("nome2");
+
+const combinacoes = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,4,8],
+  [2,4,6]
+];
+
+function nomeJogador(simbolo) {
+  return simbolo === "X"
+    ? nomeX.value.trim() || "Jogador 1"
+    : nomeO.value.trim() || "Jogador 2";
+}
+
+function atualizarNomes() {
+  document.getElementById("displayX").textContent = nomeJogador("X");
+  document.getElementById("displayO").textContent = nomeJogador("O");
+
+  if (!encerrado) {
+    mensagem.textContent = "Vez do " + nomeJogador(vez) + " (" + vez + ")";
+  }
+}
+
+nomeX.addEventListener("input", atualizarNomes);
+nomeO.addEventListener("input", atualizarNomes);
+
+function atualizarTurno() {
+  document.getElementById("cardX").classList.toggle("ativo", vez === "X");
+  document.getElementById("cardO").classList.toggle("ativo", vez === "O");
+}
+
+function verificarVitoria() {
+  for (let combo of combinacoes) {
+    if (
+      tabuleiro[combo[0]] &&
+      tabuleiro[combo[0]] === tabuleiro[combo[1]] &&
+      tabuleiro[combo[1]] === tabuleiro[combo[2]]
+    ) {
+      return combo;
+    }
+  }
+  return null;
+}
+
+casas.forEach(casa => {
+  casa.addEventListener("click", () => {
+
+    const i = Number(casa.dataset.i);
+
+    if (tabuleiro[i] || encerrado) return;
+
+    tabuleiro[i] = vez;
+    casa.textContent = vez;
+    casa.classList.add(vez.toLowerCase());
+    casa.disabled = true;
+
+    const combo = verificarVitoria();
+
+    if (combo) {
+      encerrado = true;
+
+      combo.forEach(pos => {
+        casas[pos].classList.add("vencedora");
+      });
+
+      if (vez === "X") {
+        pontosX++;
+        document.getElementById("scoreX").textContent = pontosX;
+      } else {
+        pontosO++;
+        document.getElementById("scoreO").textContent = pontosO;
+      }
+
+      mensagem.textContent = "🏆 " + nomeJogador(vez) + " venceu!";
+      atualizarTurno();
+      return;
+    }
+
+    if (tabuleiro.every(c => c !== "")) {
+      encerrado = true;
+      mensagem.textContent = "🤝 Empate! Ninguém venceu.";
+      atualizarTurno();
+      return;
+    }
+
+    vez = vez === "X" ? "O" : "X";
+
+    mensagem.textContent = "Vez do " + nomeJogador(vez) + " (" + vez + ")";
+    atualizarTurno();
+
+  });
+});
+
+document.getElementById("reiniciar").addEventListener("click", novaPartida);
+
+function novaPartida() {
+  tabuleiro = ["","","","","","","","",""];
+  vez = "X";
+  encerrado = false;
+
+  casas.forEach(casa => {
+    casa.textContent = "";
+    casa.disabled = false;
+    casa.classList.remove("x","o","vencedora");
+  });
+
+  mensagem.textContent = "Vez do " + nomeJogador("X") + " (X)";
+  atualizarTurno();
+}
+
+document.getElementById("zerar").addEventListener("click", () => {
+  pontosX = 0;
+  pontosO = 0;
+
+  document.getElementById("scoreX").textContent = 0;
+  document.getElementById("scoreO").textContent = 0;
+
+  novaPartida();
+});
+
+atualizarNomes();
+atualizarTurno();
+</script>
+
+</body>
+</html>
