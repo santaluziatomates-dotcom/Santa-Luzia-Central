@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arena SL | Santa Luzia</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f5f3;
+  color: #17231c;
+}
+
+header {
+  background: #10291e;
+  color: white;
+  padding: 25px 20px 30px;
+}
+
+.topo {
+  max-width: 900px;
+  margin: auto;
+}
+
+.voltar {
+  color: #c5d8cc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.logo-area {
+  margin-top: 25px;
+}
+
+.logo-area small {
+  color: #a9c5b3;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.logo-area h1 {
+  font-size: 35px;
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+.logo-area h1 span {
+  color: #e64b42;
+}
+
+.logo-area p {
+  color: #c4d2c9;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.banner {
+  background: linear-gradient(135deg, #173a29, #28563d);
+  color: white;
+  border-radius: 18px;
+  padding: 24px;
+  margin-top: -5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.banner p {
+  color: #d1e0d6;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 450px;
+}
+
+.banner .tag {
+  display: inline-block;
+  color: #d9f1df;
+  border: 1px solid #63866d;
+  padding: 6px 10px;
+  border-radius: 30px;
+  font-size: 11px;
+  margin-bottom: 15px;
+}
+
+.secao {
+  margin-top: 28px;
+}
+
+.secao-titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+.secao-sub {
+  font-size: 12px;
+  color: #758178;
+  margin-top: -8px;
+  margin-bottom: 15px;
+}
+
+.jogos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.jogo {
+  background: white;
+  border: 1px solid #e3e8e3;
+  border-radius: 16px;
+  padding: 18px;
+  transition: 0.2s;
+}
+
+.jogo:hover {
+  transform: translateY(-2px);
+}
+
+.jogo-icon {
+  width: 48px;
+  height: 48px;
+  background: #eaf1eb;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.jogo h3 {
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+
+.jogo p {
+  font-size: 12px;
+  color: #768078;
+  line-height: 1.5;
+  min-height: 36px;
+}
+
+.botao {
+  width: 100%;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  background: #173a29;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: #28563d;
+}
+
+.botao-bloqueado {
+  background: #e8ece8;
+  color: #758078;
+  cursor: default;
+}
+
+.ranking {
+  background: white;
+  border: 1px solid #e3e8e3;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eef1ee;
+  gap: 12px;
+}
+
+.ranking-item:last-child {
+  border-bottom: none;
+}
+
+.posicao {
+  font-weight: bold;
+  width: 28px;
+  text-align: center;
+  color: #758078;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eaf1eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.jogador {
+  flex: 1;
+}
+
+.jogador strong {
+  font-size: 14px;
+}
+
+.jogador small {
+  display: block;
+  color: #788179;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.pontos {
+  font-size: 13px;
+  font-weight: bold;
+  color: #28563d;
+}
+
+.info {
+  background: white;
+  border: 1px solid #e3e8e3;
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.info p {
+  font-size: 13px;
+  color: #69756c;
+  line-height: 1.7;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 15px;
+  color: #818a83;
+  font-size: 11px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-conteudo {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  max-width: 380px;
+  width: 100%;
+}
+
+.modal-conteudo h3 {
+  margin-bottom: 12px;
+}
+
+.modal-conteudo p {
+  color: #68746c;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.fechar {
+  background: #173a29;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .jogos {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-area h1 {
+    font-size: 30px;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  header {
+    padding: 22px 18px 28px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topo">
+    <a href="index.html" class="voltar">← Voltar à Santa Luzia Central</a>
+
+    <div class="logo-area">
+      <small>SANTA LUZIA TOMATES</small>
+      <h1>ARENA <span>SL</span></h1>
+      <p>Central de jogos e desafios dos motoristas.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="banner">
+  <span class="tag">ARENA OFICIAL</span>
+  <h2>Que comecem os desafios.</h2>
+  <p>
+    Entre na Arena Santa Luzia, desafie seus colegas,
+    participe de partidas e conquiste seu espaço
+    entre os melhores jogadores.
+  </p>
+</section>
+
+<section class="secao">
+  <h2 class="secao-titulo">Jogos disponíveis</h2>
+  <p class="secao-sub">Escolha seu jogo e prepare-se para competir.</p>
+
+  <div class="jogos">
+
+    <div class="jogo">
+      <div class="jogo-icon">⭕</div>
+      <h3>Jogo da Velha</h3>
+      <p>Desafios rápidos entre dois motoristas.</p>
+      <button class="botao" onclick="abrirModal()">
+        Acessar jogo
+      </button>
+    </div>
+
+    <div class="jogo">
+      <div class="jogo-icon">♟️</div>
+      <h3>Xadrez</h3>
+      <p>Estratégia, concentração e competição.</p>
+      <button class="botao botao-bloqueado"
+        onclick="emBreve('Xadrez')">
+        Em breve
+      </button>
+    </div>
+
+    <div class="jogo">
+      <div class="jogo-icon">🔴</div>
+      <h3>Dama</h3>
+      <p>Enfrente outros jogadores e domine o tabuleiro.</p>
+      <button class="botao botao-bloqueado"
+        onclick="emBreve('Dama')">
+        Em breve
+      </button>
+    </div>
+
+    <div class="jogo">
+      <div class="jogo-icon">🃏</div>
+      <h3>Truco</h3>
+      <p>Prepare suas cartas e desafie seus adversários.</p>
+      <button class="botao botao-bloqueado"
+        onclick="emBreve('Truco')">
+        Em breve
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<section class="secao">
+  <h2 class="secao-titulo">Ranking da Arena</h2>
+  <p class="secao-sub">Destaques dos jogadores</p>
+
+  <div class="ranking">
+
+    <div class="ranking-item">
+      <div class="posicao">01</div>
+      <div class="avatar">🏆</div>
+      <div class="jogador">
+        <strong>Jogador 1</strong>
+        <small>Ranking demonstrativo</small>
+      </div>
+      <div class="pontos">0 pts</div>
+    </div>
+
+    <div class="ranking-item">
+      <div class="posicao">02</div>
+      <div class="avatar">🚛</div>
+      <div class="jogador">
+        <strong>Jogador 2</strong>
+        <small>Ranking demonstrativo</small>
+      </div>
+      <div class="pontos">0 pts</div>
+    </div>
+
+    <div class="ranking-item">
+      <div class="posicao">03</div>
+      <div class="avatar">🎮</div>
+      <div class="jogador">
+        <strong>Jogador 3</strong>
+        <small>Ranking demonstrativo</small>
+      </div>
+      <div class="pontos">0 pts</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="secao">
+  <h2 class="secao-titulo">Sobre a Arena</h2>
+
+  <div class="info">
+    <p>
+      A Arena SL é o espaço de entretenimento e competição
+      da Santa Luzia Tomates. Um ambiente criado para
+      aproximar nossos motoristas por meio de jogos,
+      desafios e torneios internos.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  SANTA LUZIA TOMATES • ARENA SL<br><br>
+  Entretenimento interno da empresa virtual.
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-conteudo">
+    <h3>🎮 Jogo da Velha</h3>
+    <p>
+      A Arena está sendo preparada! Nesta próxima etapa,
+      vamos construir o tabuleiro, criar salas e permitir
+      que dois motoristas joguem online.
+    </p>
+    <button class="fechar" onclick="fecharModal()">
+      Entendi
+    </button>
+  </div>
+</div>
+
+<script>
+function abrirModal() {
+  document.getElementById("modal").style.display = "flex";
+}
+
+function fecharModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+function emBreve(nome) {
+  alert(nome + " estará disponível em uma próxima atualização da Arena SL.");
+}
+
+document.getElementById("modal").addEventListener("click", function(e) {
+  if (e.target === this) {
+    fecharModal();
+  }
+});
+</script>
+
+</body>
+</html>
