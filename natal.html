@@ -4,72 +4,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#092b1d">
 <title>Natal Santa Luzia</title>
 
 <style>
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  background: #071b13;
-  color: white;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
+  color: white;
+  background: #071c15;
   overflow-x: hidden;
 }
 
-#recepcao {
+.cena {
   min-height: 100vh;
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  padding: 25px 15px;
-}
-
-#recepcao::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+  padding: 25px 15px 35px;
   background:
-    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),
+    linear-gradient(rgba(0,20,12,.42), rgba(0,15,10,.78)),
     url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/4af0c3b030bfd051e2900b79bd80f200f3547ada/6048CD27-02C1-45BB-ADF6-D211AD3CDEC1.png");
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 }
 
 .conteudo {
-  position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
-.marca {
-  font-size: 12px;
-  letter-spacing: 5px;
+.topo {
+  margin-bottom: 12px;
+}
+
+.topo .selo {
+  display: inline-block;
+  padding: 7px 16px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 30px;
+  background: rgba(5,45,27,.72);
+  color: #f6e6b4;
+  font-size: 11px;
+  letter-spacing: 3px;
   font-weight: bold;
 }
 
 h1 {
-  margin: 8px 0;
-  font-size: 29px;
-  text-shadow: 0 3px 10px black;
+  margin-top: 12px;
+  font-family: Georgia, serif;
+  font-size: clamp(29px, 8vw, 42px);
+  color: #fff4d5;
+  text-shadow: 0 3px 15px #000;
 }
 
 .subtitulo {
-  color: #f0d99e;
+  margin-top: 7px;
   font-size: 13px;
-  margin-bottom: 12px;
+  color: #f3e9d4;
+  letter-spacing: 1px;
 }
 
-/* MASCOTE SPRITE */
+/* ÁREA DA MASCOTE */
 
 .sprite-area {
-  width: min(100%, 320px);
-  height: 460px;
-  margin: auto;
+  width: min(240px, 65vw);
+  aspect-ratio: 1 / 2;
+  margin: 14px auto 5px;
   overflow: hidden;
   position: relative;
 }
@@ -77,161 +90,186 @@ h1 {
 .sprite {
   width: 100%;
   height: 100%;
-  background-image: url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/ee8f179c2959d847f4247a53774064b37c76ad5c/7ac32b0b-c79f-44b0-8a8b-4532de5c4481.jpeg");
-
-  /* 4 colunas e 2 linhas */
+  background-image: url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/d5a3254796ea7fb00aa567149e4b3818e3b059c3/Background%20Eraser.png");
   background-size: 400% 200%;
   background-repeat: no-repeat;
-
   background-position: 0% 0%;
-
-  mix-blend-mode: multiply;
-  transform-origin: center;
-  transition: background-position .12s ease;
+  transform-origin: center bottom;
 }
 
 .sprite-area.falando {
-  animation: movimento 1.4s ease-in-out infinite;
+  animation: respirar 2.5s ease-in-out infinite;
 }
 
-@keyframes movimento {
-  0%,100% {
+@keyframes respirar {
+  0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
   }
 }
 
-.caixa {
-  background: rgba(5,25,16,.91);
-  border: 1px solid #bda365;
-  border-radius: 20px;
-  padding: 22px 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+/* CARTÃO DE MENSAGEM */
+
+.cartao {
+  width: 100%;
+  padding: 22px 19px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 19px;
+  background: rgba(5,35,23,.88);
+  box-shadow: 0 10px 35px rgba(0,0,0,.38);
+  backdrop-filter: blur(8px);
 }
 
-.nome {
-  font-size: 12px;
-  letter-spacing: 3px;
-  color: #f3d899;
+.cartao h2 {
+  color: #f5dca2;
+  font-family: Georgia, serif;
+  font-size: 22px;
   margin-bottom: 12px;
 }
 
-#mensagem {
-  font-size: 16px;
+.cartao p {
+  color: #fff;
+  font-size: 14px;
   line-height: 1.7;
-  min-height: 90px;
 }
+
+.assinatura {
+  margin-top: 14px;
+  color: #f5dca2;
+  font-family: Georgia, serif;
+  font-size: 16px;
+}
+
+/* BOTÕES */
 
 .botoes {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 17px;
 }
 
 button {
-  padding: 14px 18px;
-  border-radius: 13px;
+  width: 100%;
   border: none;
-  font-weight: bold;
+  border-radius: 12px;
+  padding: 15px;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
+  transition: .2s;
 }
 
-.ouro {
-  background: linear-gradient(135deg,#f5df9d,#c6a75a);
-  color: #172519;
+button:active {
+  transform: scale(.97);
 }
 
-.verde {
-  background: linear-gradient(135deg,#187446,#0b4228);
+.botao-principal {
+  color: #153321;
+  background: linear-gradient(135deg, #f5e4b6, #d5b66d);
+}
+
+.botao-secundario {
   color: white;
-  border: 1px solid #56a879;
-}
-
-.vermelho {
-  background: #8e292b;
-  color: white;
-  border: 1px solid #ba5b5d;
-}
-
-.rodape {
-  margin-top: 20px;
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: #e6d5b1;
+  background: rgba(255,255,255,.13);
+  border: 1px solid rgba(255,255,255,.25);
 }
 
 /* ÁRVORE */
 
-#arvore {
+.arvore-tela {
   display: none;
-  min-height: 100vh;
-  background: radial-gradient(ellipse,#174c32,#071a11);
-  padding: 30px 15px;
-  text-align: center;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background:
+    linear-gradient(rgba(0,20,12,.72), rgba(0,15,10,.91)),
+    url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/4af0c3b030bfd051e2900b79bd80f200f3547ada/6048CD27-02C1-45BB-ADF6-D211AD3CDEC1.png");
+  background-size: cover;
+  background-position: center;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  padding: 25px;
+  text-align: center;
 }
 
-#arvore.aberta {
-  display: flex;
+.arvore-conteudo {
+  width: 100%;
+  max-width: 400px;
 }
 
-.arvore-titulo {
-  color: #f3d995;
+.arvore-conteudo h2 {
+  color: #f5dfad;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  margin-bottom: 15px;
 }
 
-.arvore-visual {
-  font-size: 100px;
-  animation: brilho 2s infinite alternate;
+.arvore {
+  font-size: clamp(110px, 35vw, 165px);
+  line-height: 1.2;
+  filter: drop-shadow(0 5px 20px rgba(0,0,0,.5));
+  animation: brilho 2s ease-in-out infinite alternate;
 }
 
 @keyframes brilho {
   from {
-    filter: drop-shadow(0 0 5px gold);
+    filter: drop-shadow(0 0 8px rgba(255,220,120,.3));
   }
   to {
-    filter: drop-shadow(0 0 25px gold);
+    filter: drop-shadow(0 0 25px rgba(255,220,120,.8));
   }
-}
-
-.arvore-texto {
-  max-width: 350px;
-  line-height: 1.7;
 }
 
 .presentes {
-  font-size: 45px;
+  font-size: 35px;
+  margin: 8px 0 18px;
 }
+
+.arvore-conteudo p {
+  line-height: 1.7;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* NEVE */
 
 .neve {
   position: fixed;
-  top: -15px;
+  top: -20px;
+  z-index: 1;
   color: white;
   pointer-events: none;
-  z-index: 10;
   animation: cair linear forwards;
+  text-shadow: 0 0 7px white;
 }
 
 @keyframes cair {
   to {
     transform: translateY(110vh) rotate(360deg);
+    opacity: .1;
   }
 }
 
-@media(max-height:700px) {
-  .sprite-area {
-    height: 350px;
-    width: 250px;
-  }
+.rodape {
+  margin-top: 19px;
+  color: rgba(255,255,255,.72);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
 
-  h1 {
-    font-size: 24px;
+@media (max-height: 760px) {
+  .cena {
+    padding-top: 15px;
+  }
+  .sprite-area {
+    width: min(190px, 48vw);
+    margin-top: 7px;
+  }
+  .cartao {
+    padding: 16px;
   }
 }
 </style>
@@ -239,239 +277,253 @@ button {
 
 <body>
 
-<section id="recepcao">
+<main class="cena">
+  <div class="conteudo">
 
-<div class="conteudo">
+    <header class="topo">
+      <div class="selo">SANTA LUZIA APRESENTA</div>
+      <h1>Natal Santa Luzia</h1>
+      <div class="subtitulo">Um momento especial para todos nós</div>
+    </header>
 
-<div class="marca">SANTA LUZIA</div>
+    <div class="sprite-area" id="spriteArea">
+      <div class="sprite" id="sprite"></div>
+    </div>
 
-<h1>🎄 Natal Santa Luzia 🎄</h1>
+    <section class="cartao">
+      <h2>Uma mensagem especial ❤️</h2>
 
-<div class="subtitulo">
-Uma celebração de amizade, união e esperança
-</div>
+      <p id="mensagem">
+        Oii! Que bom ter você aqui! Seja muito bem-vindo ao Natal da Santa Luzia!
 
-<div class="sprite-area" id="spriteArea">
-  <div class="sprite" id="sprite"></div>
-</div>
+        Neste ano, compartilhamos muitas viagens, momentos, amizades e sonhos.
+        Cada pessoa fez parte dessa história e ajudou a construir algo muito especial.
 
-<div class="caixa">
+        Que neste Natal nunca faltem esperança, alegria, união e novos caminhos.
+        Que a paz esteja presente em cada família e que o próximo ano traga
+        ainda mais conquistas para todos nós.
 
-<div class="nome">
-NOSSA MASCOTE
-</div>
+        A família Santa Luzia deseja a você e a todos que ama um Feliz Natal!
+      </p>
 
-<p id="mensagem">
-Oii! Que bom ter você aqui! ❤️
-</p>
+      <div class="assinatura">Com carinho, família Santa Luzia 🎄</div>
+    </section>
 
-<div class="botoes">
+    <div class="botoes">
+      <button class="botao-principal" onclick="ouvir()">
+        🔊 OUVIR MENSAGEM
+      </button>
 
-<button class="ouro" onclick="ouvir()">
-🔊 Ouvir mensagem
-</button>
+      <button class="botao-secundario" onclick="parar()">
+        ⏹ PARAR MENSAGEM
+      </button>
 
-<button class="vermelho" onclick="parar()">
-⏹ Parar
-</button>
+      <button class="botao-secundario" onclick="abrirArvore()">
+        🎄 VER NOSSA ÁRVORE DE NATAL
+      </button>
+    </div>
 
-<button class="verde" onclick="abrirArvore()">
-🎄 Conhecer nosso Natal
-</button>
+    <footer class="rodape">
+      SANTA LUZIA • NATAL 2026
+    </footer>
 
-</div>
+  </div>
+</main>
 
-</div>
+<!-- TELA DA ÁRVORE -->
 
-<div class="rodape">
-SANTA LUZIA TOMATES • NATAL 2026
-</div>
+<section class="arvore-tela" id="arvoreTela">
+  <div class="arvore-conteudo">
+    <h2>Nosso Natal 🎄</h2>
 
-</div>
-</section>
+    <div class="arvore">🎄</div>
 
-<section id="arvore">
+    <div class="presentes">🎁 🎁 🎁</div>
 
-<h1 class="arvore-titulo">
-🎄 Nosso cantinho de Natal 🎄
-</h1>
+    <p>
+      Que a magia do Natal ilumine nossos caminhos,
+      fortaleça nossas amizades e encha nossos corações
+      de esperança para um novo ano!
+    </p>
 
-<div class="arvore-visual">🎄</div>
-
-<div class="presentes">🎁 🎁 🎁</div>
-
-<p class="arvore-texto">
-Que a esperança se renove, que as amizades permaneçam
-e que nunca faltem motivos para sorrir.
-
-<br><br>
-
-<strong>Feliz Natal! ❤️💚</strong>
-</p>
-
-<button class="verde" onclick="voltar()">
-← Voltar
-</button>
-
+    <button class="botao-principal" onclick="voltar()">
+      VOLTAR À MENSAGEM
+    </button>
+  </div>
 </section>
 
 <script>
+/* ELEMENTOS */
 
 const sprite = document.getElementById("sprite");
 const spriteArea = document.getElementById("spriteArea");
 
+/* POSIÇÕES DA MASCOTE: 4 COLUNAS E 2 LINHAS */
+
 const poses = [
-  [0,0], // 1 - parada
-  [33.333,0], // 2 - acenando
-  [66.666,0], // 3 - falando
-  [100,0], // 4 - apresentação
-  [0,100], // 5 - apresentação
-  [33.333,100], // 6 - coração
-  [66.666,100], // 7 - braços abertos
-  [100,100] // 8 - despedida
+  [0, 0],
+  [33.333, 0],
+  [66.666, 0],
+  [100, 0],
+  [0, 100],
+  [33.333, 100],
+  [66.666, 100],
+  [100, 100]
 ];
 
 function mostrarPose(numero) {
-
   const p = poses[numero];
 
   sprite.style.backgroundPosition =
     p[0] + "% " + p[1] + "%";
 }
 
-let animacao;
+/* ANIMAÇÃO DE GESTOS */
+
+let animacao = null;
 let indice = 0;
 
 function iniciarAnimacao() {
-
   pararAnimacaoVisual();
 
   spriteArea.classList.add("falando");
 
-  animacao = setInterval(() => {
+  const sequencia = [
+    1, 0, 1, 0,
+    2, 3, 2, 3,
+    4, 5, 4, 6,
+    2, 3, 7
+  ];
 
-    const sequencia = [2,3,2,4,6,2,7,3];
+  indice = 0;
 
+  function proximoQuadro() {
     mostrarPose(sequencia[indice]);
 
     indice++;
 
-    if(indice >= sequencia.length) {
+    if (indice >= sequencia.length) {
       indice = 0;
     }
 
-  }, 700);
+    const pausa = indice % 4 === 0 ? 1500 : 1100;
+
+    animacao = setTimeout(proximoQuadro, pausa);
+  }
+
+  proximoQuadro();
 }
 
 function pararAnimacaoVisual() {
-
-  clearInterval(animacao);
-
+  clearTimeout(animacao);
   spriteArea.classList.remove("falando");
-
   mostrarPose(0);
 }
 
-const texto =
-"Oii! Que bom ter você aqui! Seja muito bem-vindo ao Natal da Santa Luzia! " +
-"Neste ano, compartilhamos muitas viagens, momentos, amizades e sonhos. " +
-"E agora, quero convidar você a fazer uma pequena pausa, aproveitar esse cantinho " +
-"que preparamos com carinho e celebrar mais um Natal com a nossa família. " +
-"Que nunca falte esperança, alegria, união e novos caminhos para percorrer. " +
-"A Santa Luzia deseja a você e à sua família um Natal cheio de paz, " +
-"amor e momentos inesquecíveis! " +
-"Agora preparei um cantinho especial de Natal para você conhecer.";
+/* MENSAGEM DE VOZ */
+
+const textoNatal = `
+Oii! Que bom ter você aqui!
+Seja muito bem-vindo ao Natal da Santa Luzia!
+
+Neste ano, compartilhamos muitas viagens,
+momentos, amizades e sonhos.
+
+Cada pessoa fez parte dessa história
+e ajudou a construir algo muito especial.
+
+Que neste Natal nunca faltem esperança,
+alegria, união e novos caminhos.
+
+Que a paz esteja presente em cada família
+e que o próximo ano traga ainda mais conquistas
+para todos nós.
+
+A família Santa Luzia deseja a você
+e a todos que ama um Feliz Natal!
+
+Com muito carinho,
+família Santa Luzia!
+`;
+
+let falaAtual = null;
 
 function ouvir() {
-
-  if(!("speechSynthesis" in window)) {
-    alert("Seu navegador não suporta narração.");
+  if (!("speechSynthesis" in window)) {
+    alert("Seu aparelho não permite reproduzir a voz automática.");
     return;
   }
 
   speechSynthesis.cancel();
 
-  iniciarAnimacaoVisual();
-
-  const fala = new SpeechSynthesisUtterance(texto);
+  const fala = new SpeechSynthesisUtterance(textoNatal);
 
   fala.lang = "pt-BR";
-  fala.rate = 0.90;
-  fala.pitch = 1.05;
+  fala.rate = 0.88;
+  fala.pitch = 1.08;
   fala.volume = 1;
 
-  fala.onend = () => {
+  fala.onstart = function() {
+    iniciarAnimacao();
+  };
+
+  fala.onend = function() {
     pararAnimacaoVisual();
   };
 
-  fala.onerror = () => {
+  fala.onerror = function() {
     pararAnimacaoVisual();
   };
 
+  falaAtual = fala;
   speechSynthesis.speak(fala);
-
-  document.getElementById("mensagem").innerText = texto;
-}
-
-function iniciarAnimacaoVisual() {
-  iniciarAnimacao();
 }
 
 function parar() {
-
-  speechSynthesis.cancel();
+  if ("speechSynthesis" in window) {
+    speechSynthesis.cancel();
+  }
 
   pararAnimacaoVisual();
-
-  document.getElementById("mensagem").innerText =
-  "Oii! Que bom ter você aqui! ❤️";
 }
 
-function abrirArvore() {
+/* ÁRVORE DE NATAL */
 
+function abrirArvore() {
   parar();
 
-  document.getElementById("recepcao").style.display = "none";
-
-  document.getElementById("arvore").classList.add("aberta");
-
-  window.scrollTo(0,0);
+  document.getElementById("arvoreTela").style.display = "flex";
 }
 
 function voltar() {
-
-  document.getElementById("arvore").classList.remove("aberta");
-
-  document.getElementById("recepcao").style.display = "flex";
-
-  mostrarPose(0);
-
-  window.scrollTo(0,0);
+  document.getElementById("arvoreTela").style.display = "none";
 }
 
-function criarNeve() {
+/* EFEITO DE NEVE */
 
+function criarNeve() {
   const floco = document.createElement("div");
 
   floco.className = "neve";
+  floco.textContent = Math.random() > 0.5 ? "❄" : "✻";
 
-  floco.innerHTML = Math.random() > .5 ? "❄" : "❅";
-
-  floco.style.left = Math.random()*100+"vw";
-
-  floco.style.fontSize = (8+Math.random()*16)+"px";
-
-  floco.style.animationDuration = (4+Math.random()*6)+"s";
+  floco.style.left = Math.random() * 100 + "vw";
+  floco.style.fontSize = (Math.random() * 12 + 8) + "px";
+  floco.style.opacity = Math.random() * 0.7 + 0.3;
+  floco.style.animationDuration = (Math.random() * 5 + 6) + "s";
 
   document.body.appendChild(floco);
 
-  setTimeout(() => floco.remove(),10000);
+  setTimeout(function() {
+    floco.remove();
+  }, 12000);
 }
 
-setInterval(criarNeve,300);
+setInterval(criarNeve, 350);
+
+/* POSE INICIAL */
 
 mostrarPose(0);
-
 </script>
 
 </body>
