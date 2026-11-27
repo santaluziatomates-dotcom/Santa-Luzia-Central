@@ -13,191 +13,148 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
   background: #071b13;
   color: white;
+  font-family: Arial, sans-serif;
   overflow-x: hidden;
 }
 
 #recepcao {
   min-height: 100vh;
-  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 22px 15px 40px;
-  overflow: hidden;
+  position: relative;
+  padding: 25px 15px;
 }
 
 #recepcao::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(
-      rgba(4,15,10,.38),
-      rgba(4,15,10,.62)
-    ),
+  background:
+    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.65)),
     url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/4af0c3b030bfd051e2900b79bd80f200f3547ada/6048CD27-02C1-45BB-ADF6-D211AD3CDEC1.png");
   background-size: cover;
   background-position: center;
-  z-index: 0;
 }
 
 .conteudo {
   position: relative;
-  z-index: 2;
   width: 100%;
   max-width: 500px;
   text-align: center;
 }
 
-.logo-texto {
-  color: #fff;
+.marca {
   font-size: 12px;
   letter-spacing: 5px;
   font-weight: bold;
-  opacity: .9;
-  margin-bottom: 8px;
 }
 
-.titulo {
+h1 {
+  margin: 8px 0;
   font-size: 29px;
-  margin: 0;
-  color: #fff;
-  text-shadow: 0 3px 15px #000;
+  text-shadow: 0 3px 10px black;
 }
 
 .subtitulo {
+  color: #f0d99e;
   font-size: 13px;
-  color: #f1d9a4;
-  letter-spacing: 1px;
-  margin-top: 8px;
+  margin-bottom: 12px;
 }
 
-.mascote-area {
+/* MASCOTE SPRITE */
+
+.sprite-area {
+  width: min(100%, 320px);
+  height: 460px;
+  margin: auto;
+  overflow: hidden;
   position: relative;
-  width: 270px;
-  max-width: 90vw;
-  margin: 8px auto 0;
 }
 
-.mascote {
-  display: block;
+.sprite {
   width: 100%;
-  height: auto;
-  max-height: 48vh;
-  object-fit: contain;
-  animation: flutuar 3.4s ease-in-out infinite;
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,.35));
+  height: 100%;
+  background-image: url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/ee8f179c2959d847f4247a53774064b37c76ad5c/7ac32b0b-c79f-44b0-8a8b-4532de5c4481.jpeg");
+
+  /* 4 colunas e 2 linhas */
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+
+  background-position: 0% 0%;
+
+  mix-blend-mode: multiply;
+  transform-origin: center;
+  transition: background-position .12s ease;
 }
 
-@keyframes flutuar {
+.sprite-area.falando {
+  animation: movimento 1.4s ease-in-out infinite;
+}
+
+@keyframes movimento {
   0%,100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 }
 
-.ondas {
-  display: none;
-  position: absolute;
-  top: 38%;
-  right: 2%;
-  width: 55px;
-  height: 55px;
-}
-
-.ondas.ativo {
-  display: block;
-}
-
-.ondas span {
-  position: absolute;
-  inset: 0;
-  border: 2px solid #f8df9a;
-  border-radius: 50%;
-  animation: onda 1.3s infinite;
-}
-
-.ondas span:nth-child(2) {
-  animation-delay: .45s;
-}
-
-@keyframes onda {
-  0% {
-    transform: scale(.3);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-.caixa-mensagem {
-  background: rgba(5,25,16,.88);
-  border: 1px solid rgba(231,199,120,.65);
+.caixa {
+  background: rgba(5,25,16,.91);
+  border: 1px solid #bda365;
   border-radius: 20px;
-  padding: 22px 19px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.35);
-  backdrop-filter: blur(5px);
+  padding: 22px 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
 }
 
-.nome-mascote {
-  color: #f4d88e;
+.nome {
   font-size: 12px;
   letter-spacing: 3px;
-  margin-bottom: 13px;
+  color: #f3d899;
+  margin-bottom: 12px;
 }
 
 #mensagem {
   font-size: 16px;
   line-height: 1.7;
-  min-height: 95px;
-  margin: 0;
+  min-height: 90px;
 }
 
 .botoes {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   justify-content: center;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 button {
-  border: none;
-  border-radius: 13px;
   padding: 14px 18px;
-  font-size: 14px;
+  border-radius: 13px;
+  border: none;
   font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
-  transition: transform .2s, opacity .2s;
 }
 
-button:active {
-  transform: scale(.96);
-}
-
-.btn-ouro {
-  color: #172519;
+.ouro {
   background: linear-gradient(135deg,#f5df9d,#c6a75a);
+  color: #172519;
 }
 
-.btn-verde {
-  color: white;
+.verde {
   background: linear-gradient(135deg,#187446,#0b4228);
+  color: white;
   border: 1px solid #56a879;
 }
 
-.btn-vermelho {
-  color: white;
+.vermelho {
   background: #8e292b;
+  color: white;
   border: 1px solid #ba5b5d;
 }
 
@@ -208,98 +165,73 @@ button:active {
   color: #e6d5b1;
 }
 
-/* ÁREA DA ÁRVORE */
+/* ÁRVORE */
 
 #arvore {
   display: none;
   min-height: 100vh;
-  position: relative;
-  overflow: hidden;
+  background: radial-gradient(ellipse,#174c32,#071a11);
   padding: 30px 15px;
-  background:
-    radial-gradient(ellipse at center, #174c32 0%, #071a11 70%);
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 #arvore.aberta {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .arvore-titulo {
-  font-size: 26px;
   color: #f3d995;
-  text-shadow: 0 0 15px #b58b37;
-}
-
-.arvore-texto {
-  max-width: 360px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #e5e5d5;
 }
 
 .arvore-visual {
-  position: relative;
   font-size: 100px;
-  line-height: 1.1;
-  animation: brilhar 3s infinite alternate;
-  filter: drop-shadow(0 0 18px rgba(255,216,125,.25));
+  animation: brilho 2s infinite alternate;
 }
 
-@keyframes brilhar {
+@keyframes brilho {
   from {
-    filter: drop-shadow(0 0 8px rgba(255,216,125,.15));
+    filter: drop-shadow(0 0 5px gold);
   }
   to {
-    filter: drop-shadow(0 0 28px rgba(255,216,125,.55));
+    filter: drop-shadow(0 0 25px gold);
   }
+}
+
+.arvore-texto {
+  max-width: 350px;
+  line-height: 1.7;
 }
 
 .presentes {
   font-size: 45px;
-  margin-top: 10px;
-  animation: flutuar 3s infinite;
-}
-
-.btn-voltar {
-  margin-top: 28px;
 }
 
 .neve {
   position: fixed;
   top: -15px;
   color: white;
-  z-index: 5;
   pointer-events: none;
+  z-index: 10;
   animation: cair linear forwards;
-  opacity: .8;
 }
 
 @keyframes cair {
   to {
     transform: translateY(110vh) rotate(360deg);
-    opacity: .2;
   }
 }
 
-@media(max-height: 700px) {
-  .titulo {
+@media(max-height:700px) {
+  .sprite-area {
+    height: 350px;
+    width: 250px;
+  }
+
+  h1 {
     font-size: 24px;
-  }
-
-  .mascote-area {
-    width: 200px;
-  }
-
-  #mensagem {
-    min-height: auto;
-  }
-
-  .caixa-mensagem {
-    padding: 15px;
   }
 }
 </style>
@@ -309,162 +241,190 @@ button:active {
 
 <section id="recepcao">
 
-  <div class="conteudo">
+<div class="conteudo">
 
-    <div class="logo-texto">SANTA LUZIA</div>
+<div class="marca">SANTA LUZIA</div>
 
-    <h1 class="titulo">Natal Santa Luzia</h1>
+<h1>🎄 Natal Santa Luzia 🎄</h1>
 
-    <div class="subtitulo">
-      Uma celebração de amizade, união e esperança
-    </div>
+<div class="subtitulo">
+Uma celebração de amizade, união e esperança
+</div>
 
-    <div class="mascote-area">
+<div class="sprite-area" id="spriteArea">
+  <div class="sprite" id="sprite"></div>
+</div>
 
-      <img
-        class="mascote"
-        src="https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/4af0c3b030bfd051e2900b79bd80f200f3547ada/B42F452C-45A6-4F35-B266-EA3C9E94D784.png"
-        alt="Mascote Santa Luzia"
-      >
+<div class="caixa">
 
-      <div class="ondas" id="ondas">
-        <span></span>
-        <span></span>
-      </div>
+<div class="nome">
+NOSSA MASCOTE
+</div>
 
-    </div>
+<p id="mensagem">
+Oii! Que bom ter você aqui! ❤️
+</p>
 
-    <div class="caixa-mensagem">
+<div class="botoes">
 
-      <div class="nome-mascote">
-        SUA RECEPÇÃO DE NATAL
-      </div>
+<button class="ouro" onclick="ouvir()">
+🔊 Ouvir mensagem
+</button>
 
-      <p id="mensagem">
-        Oii! Que bom ter você aqui! ❤️
-        Seja muito bem-vindo ao Natal da Santa Luzia.
-      </p>
+<button class="vermelho" onclick="parar()">
+⏹ Parar
+</button>
 
-      <div class="botoes">
+<button class="verde" onclick="abrirArvore()">
+🎄 Conhecer nosso Natal
+</button>
 
-        <button class="btn-ouro" onclick="ouvir()">
-          🔊 Ouvir mensagem
-        </button>
+</div>
 
-        <button class="btn-vermelho" onclick="parar()">
-          ⏹ Parar
-        </button>
+</div>
 
-        <button class="btn-verde" onclick="abrirArvore()">
-          🎄 Conhecer nosso Natal
-        </button>
+<div class="rodape">
+SANTA LUZIA TOMATES • NATAL 2026
+</div>
 
-      </div>
-
-    </div>
-
-    <div class="rodape">
-      SANTA LUZIA TOMATES • NATAL 2026
-    </div>
-
-  </div>
-
+</div>
 </section>
 
 <section id="arvore">
 
-  <h1 class="arvore-titulo">
-    🎄 Nosso cantinho de Natal 🎄
-  </h1>
+<h1 class="arvore-titulo">
+🎄 Nosso cantinho de Natal 🎄
+</h1>
 
-  <p class="arvore-texto">
-    Preparamos este cantinho com carinho para celebrar
-    mais um Natal junto da nossa família Santa Luzia.
-  </p>
+<div class="arvore-visual">🎄</div>
 
-  <div class="arvore-visual">
-    🎄
-  </div>
+<div class="presentes">🎁 🎁 🎁</div>
 
-  <div class="presentes">
-    🎁 🎁 🎁
-  </div>
+<p class="arvore-texto">
+Que a esperança se renove, que as amizades permaneçam
+e que nunca faltem motivos para sorrir.
 
-  <p class="arvore-texto">
-    Que a esperança se renove, que as amizades permaneçam
-    e que nunca faltem motivos para sorrir.
+<br><br>
 
-    <br><br>
+<strong>Feliz Natal! ❤️💚</strong>
+</p>
 
-    <strong>
-      Feliz Natal! ❤️💚
-    </strong>
-  </p>
-
-  <button class="btn-verde btn-voltar" onclick="voltar()">
-    ← Voltar à recepção
-  </button>
+<button class="verde" onclick="voltar()">
+← Voltar
+</button>
 
 </section>
 
 <script>
 
+const sprite = document.getElementById("sprite");
+const spriteArea = document.getElementById("spriteArea");
+
+const poses = [
+  [0,0], // 1 - parada
+  [33.333,0], // 2 - acenando
+  [66.666,0], // 3 - falando
+  [100,0], // 4 - apresentação
+  [0,100], // 5 - apresentação
+  [33.333,100], // 6 - coração
+  [66.666,100], // 7 - braços abertos
+  [100,100] // 8 - despedida
+];
+
+function mostrarPose(numero) {
+
+  const p = poses[numero];
+
+  sprite.style.backgroundPosition =
+    p[0] + "% " + p[1] + "%";
+}
+
+let animacao;
+let indice = 0;
+
+function iniciarAnimacao() {
+
+  pararAnimacaoVisual();
+
+  spriteArea.classList.add("falando");
+
+  animacao = setInterval(() => {
+
+    const sequencia = [2,3,2,4,6,2,7,3];
+
+    mostrarPose(sequencia[indice]);
+
+    indice++;
+
+    if(indice >= sequencia.length) {
+      indice = 0;
+    }
+
+  }, 700);
+}
+
+function pararAnimacaoVisual() {
+
+  clearInterval(animacao);
+
+  spriteArea.classList.remove("falando");
+
+  mostrarPose(0);
+}
+
 const texto =
-"Oii! Que bom ter você aqui! Seja muito bem-vindo ao Natal da Santa Luzia! ❤️💚 " +
+"Oii! Que bom ter você aqui! Seja muito bem-vindo ao Natal da Santa Luzia! " +
 "Neste ano, compartilhamos muitas viagens, momentos, amizades e sonhos. " +
 "E agora, quero convidar você a fazer uma pequena pausa, aproveitar esse cantinho " +
 "que preparamos com carinho e celebrar mais um Natal com a nossa família. " +
 "Que nunca falte esperança, alegria, união e novos caminhos para percorrer. " +
 "A Santa Luzia deseja a você e à sua família um Natal cheio de paz, " +
 "amor e momentos inesquecíveis! " +
-"Agora... preparei um cantinho especial de Natal para você conhecer. 🎄";
+"Agora preparei um cantinho especial de Natal para você conhecer.";
 
 function ouvir() {
 
-  if (!("speechSynthesis" in window)) {
-    alert("Seu navegador não oferece suporte à narração.");
+  if(!("speechSynthesis" in window)) {
+    alert("Seu navegador não suporta narração.");
     return;
   }
 
   speechSynthesis.cancel();
 
+  iniciarAnimacaoVisual();
+
   const fala = new SpeechSynthesisUtterance(texto);
 
   fala.lang = "pt-BR";
-  fala.rate = 0.92;
-  fala.pitch = 1.08;
+  fala.rate = 0.90;
+  fala.pitch = 1.05;
   fala.volume = 1;
 
-  const vozes = speechSynthesis.getVoices();
-
-  const voz = vozes.find(v =>
-    v.lang.toLowerCase() === "pt-br"
-  );
-
-  if (voz) {
-    fala.voice = voz;
-  }
-
-  document.getElementById("ondas").classList.add("ativo");
-
   fala.onend = () => {
-    document.getElementById("ondas").classList.remove("ativo");
+    pararAnimacaoVisual();
   };
 
   fala.onerror = () => {
-    document.getElementById("ondas").classList.remove("ativo");
+    pararAnimacaoVisual();
   };
 
   speechSynthesis.speak(fala);
+
+  document.getElementById("mensagem").innerText = texto;
+}
+
+function iniciarAnimacaoVisual() {
+  iniciarAnimacao();
 }
 
 function parar() {
 
-  if ("speechSynthesis" in window) {
-    speechSynthesis.cancel();
-  }
+  speechSynthesis.cancel();
 
-  document.getElementById("ondas").classList.remove("ativo");
+  pararAnimacaoVisual();
+
+  document.getElementById("mensagem").innerText =
+  "Oii! Que bom ter você aqui! ❤️";
 }
 
 function abrirArvore() {
@@ -484,6 +444,8 @@ function voltar() {
 
   document.getElementById("recepcao").style.display = "flex";
 
+  mostrarPose(0);
+
   window.scrollTo(0,0);
 }
 
@@ -495,20 +457,20 @@ function criarNeve() {
 
   floco.innerHTML = Math.random() > .5 ? "❄" : "❅";
 
-  floco.style.left = Math.random() * 100 + "vw";
+  floco.style.left = Math.random()*100+"vw";
 
-  floco.style.fontSize = (8 + Math.random() * 16) + "px";
+  floco.style.fontSize = (8+Math.random()*16)+"px";
 
-  floco.style.animationDuration = (4 + Math.random() * 6) + "s";
+  floco.style.animationDuration = (4+Math.random()*6)+"s";
 
   document.body.appendChild(floco);
 
-  setTimeout(() => {
-    floco.remove();
-  }, 10000);
+  setTimeout(() => floco.remove(),10000);
 }
 
-setInterval(criarNeve, 300);
+setInterval(criarNeve,300);
+
+mostrarPose(0);
 
 </script>
 
