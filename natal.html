@@ -15,76 +15,88 @@
 }
 
 body {
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
+  background: #071c14;
   color: white;
-  background: #071c15;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
-.cena {
+main {
   min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 25px 15px 35px;
   background:
-    linear-gradient(rgba(0,20,12,.42), rgba(0,15,10,.78)),
+    linear-gradient(rgba(0,15,9,.24), rgba(0,15,9,.65)),
     url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/4af0c3b030bfd051e2900b79bd80f200f3547ada/6048CD27-02C1-45BB-ADF6-D211AD3CDEC1.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  padding: 15px 12px 25px;
+  position: relative;
 }
 
-.conteudo {
-  width: 100%;
-  max-width: 480px;
+header {
   text-align: center;
+  position: relative;
+  z-index: 3;
+  padding: 10px 0;
+  text-shadow: 0 2px 8px #000;
+}
+
+.selo {
+  display: inline-block;
+  background: rgba(5,40,25,.8);
+  border: 1px solid rgba(255,255,255,.3);
+  color: #f3dba3;
+  border-radius: 30px;
+  padding: 7px 15px;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-family: Georgia, serif;
+  color: #fff0c9;
+  font-size: clamp(27px, 7vw, 38px);
+  margin-top: 9px;
+}
+
+header p {
+  font-size: 12px;
+  margin-top: 5px;
+  color: #fff2db;
+}
+
+/* CENÁRIO */
+
+.cenario {
+  width: 100%;
+  max-width: 550px;
+  height: min(53vh, 430px);
+  min-height: 310px;
+  margin: 5px auto 0;
   position: relative;
   z-index: 2;
 }
 
-.topo {
-  margin-bottom: 12px;
+/* MASCOTE */
+
+.mascote-area {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: min(45%, 225px);
+  height: 88%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  animation: flutuar 3s ease-in-out infinite;
 }
 
-.topo .selo {
-  display: inline-block;
-  padding: 7px 16px;
-  border: 1px solid rgba(255,255,255,.35);
-  border-radius: 30px;
-  background: rgba(5,45,27,.72);
-  color: #f6e6b4;
-  font-size: 11px;
-  letter-spacing: 3px;
-  font-weight: bold;
-}
-
-h1 {
-  margin-top: 12px;
-  font-family: Georgia, serif;
-  font-size: clamp(29px, 8vw, 42px);
-  color: #fff4d5;
-  text-shadow: 0 3px 15px #000;
-}
-
-.subtitulo {
-  margin-top: 7px;
-  font-size: 13px;
-  color: #f3e9d4;
-  letter-spacing: 1px;
-}
-
-/* ÁREA DA MASCOTE */
-
-.sprite-area {
-  width: min(240px, 65vw);
-  aspect-ratio: 1 / 2;
-  margin: 14px auto 5px;
-  overflow: hidden;
-  position: relative;
+@keyframes flutuar {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 .sprite {
@@ -94,156 +106,173 @@ h1 {
   background-size: 400% 200%;
   background-repeat: no-repeat;
   background-position: 0% 0%;
-  transform-origin: center bottom;
 }
 
-.sprite-area.falando {
-  animation: respirar 2.5s ease-in-out infinite;
-}
+/* ÁRVORE INTERATIVA */
 
-@keyframes respirar {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-/* CARTÃO DE MENSAGEM */
-
-.cartao {
-  width: 100%;
-  padding: 22px 19px;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 19px;
-  background: rgba(5,35,23,.88);
-  box-shadow: 0 10px 35px rgba(0,0,0,.38);
-  backdrop-filter: blur(8px);
-}
-
-.cartao h2 {
-  color: #f5dca2;
-  font-family: Georgia, serif;
-  font-size: 22px;
-  margin-bottom: 12px;
-}
-
-.cartao p {
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.assinatura {
-  margin-top: 14px;
-  color: #f5dca2;
-  font-family: Georgia, serif;
-  font-size: 16px;
-}
-
-/* BOTÕES */
-
-.botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 17px;
-}
-
-button {
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  padding: 15px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .2s;
-}
-
-button:active {
-  transform: scale(.97);
-}
-
-.botao-principal {
-  color: #153321;
-  background: linear-gradient(135deg, #f5e4b6, #d5b66d);
-}
-
-.botao-secundario {
-  color: white;
-  background: rgba(255,255,255,.13);
-  border: 1px solid rgba(255,255,255,.25);
-}
-
-/* ÁRVORE */
-
-.arvore-tela {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  background:
-    linear-gradient(rgba(0,20,12,.72), rgba(0,15,10,.91)),
-    url("https://raw.githubusercontent.com/santaluziatomates-dotcom/Santa-Luzia-Central/4af0c3b030bfd051e2900b79bd80f200f3547ada/6048CD27-02C1-45BB-ADF6-D211AD3CDEC1.png");
-  background-size: cover;
-  background-position: center;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
+.arvore-area {
+  position: absolute;
+  right: 3%;
+  bottom: 4%;
+  width: 42%;
+  max-width: 205px;
   text-align: center;
-}
-
-.arvore-conteudo {
-  width: 100%;
-  max-width: 400px;
-}
-
-.arvore-conteudo h2 {
-  color: #f5dfad;
-  font-family: Georgia, serif;
-  font-size: 30px;
-  margin-bottom: 15px;
+  cursor: pointer;
+  z-index: 2;
+  filter: drop-shadow(0 5px 8px rgba(0,0,0,.35));
 }
 
 .arvore {
-  font-size: clamp(110px, 35vw, 165px);
-  line-height: 1.2;
-  filter: drop-shadow(0 5px 20px rgba(0,0,0,.5));
+  font-size: clamp(85px, 24vw, 135px);
+  line-height: 1.1;
   animation: brilho 2s ease-in-out infinite alternate;
 }
 
 @keyframes brilho {
-  from {
-    filter: drop-shadow(0 0 8px rgba(255,220,120,.3));
-  }
-  to {
-    filter: drop-shadow(0 0 25px rgba(255,220,120,.8));
-  }
+  from { filter: brightness(.9); }
+  to { filter: brightness(1.3); }
 }
 
 .presentes {
-  font-size: 35px;
-  margin: 8px 0 18px;
+  font-size: 25px;
+  margin-top: -5px;
 }
 
-.arvore-conteudo p {
-  line-height: 1.7;
-  font-size: 14px;
-  margin-bottom: 20px;
+.arvore-legenda {
+  display: inline-block;
+  background: rgba(5,35,20,.8);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin-top: 5px;
+  font-size: 10px;
+  color: #ffe6ac;
+}
+
+/* CAIXA DE CONVERSA */
+
+.conversa {
+  width: 100%;
+  max-width: 480px;
+  margin: 10px auto 0;
+  background: rgba(5,32,21,.94);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.35);
+  position: relative;
+  z-index: 4;
+}
+
+.nome-personagem {
+  color: #f5dca2;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+#falaTexto {
+  font-size: 13px;
+  line-height: 1.65;
+  min-height: 65px;
+  color: #fff;
+}
+
+.indicacao {
+  color: #e6d5ae;
+  font-size: 10px;
+  margin-top: 10px;
+  opacity: .85;
+}
+
+/* HISTÓRIAS */
+
+.historias {
+  width: 100%;
+  max-width: 480px;
+  margin: 13px auto 0;
+  position: relative;
+  z-index: 4;
+}
+
+.historias h2 {
+  font-family: Georgia, serif;
+  color: #ffe7b3;
+  font-size: 17px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.lista-historias {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 11px;
+  padding: 12px 9px;
+  font-size: 11px;
+  transition: .2s;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.historia-btn {
+  background: rgba(5,40,25,.91);
+  color: #fff1d2;
+  border: 1px solid rgba(255,255,255,.22);
+}
+
+.historia-btn.ativa {
+  background: #d4b56e;
+  color: #173321;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.acao {
+  flex: 1;
+  background: #e2c486;
+  color: #193321;
+}
+
+.parar {
+  flex: 1;
+  background: rgba(255,255,255,.15);
+  color: white;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+.rodape {
+  text-align: center;
+  margin-top: 17px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #fff0d2;
+  position: relative;
+  z-index: 3;
 }
 
 /* NEVE */
 
-.neve {
+.floco {
   position: fixed;
   top: -20px;
-  z-index: 1;
+  z-index: 5;
   color: white;
   pointer-events: none;
+  text-shadow: 0 0 8px white;
   animation: cair linear forwards;
-  text-shadow: 0 0 7px white;
 }
 
 @keyframes cair {
@@ -253,23 +282,34 @@ button:active {
   }
 }
 
-.rodape {
-  margin-top: 19px;
-  color: rgba(255,255,255,.72);
-  font-size: 10px;
-  letter-spacing: 2px;
+/* EFEITO DA ÁRVORE */
+
+.arvore-area.ligada .arvore {
+  animation: festa .7s ease-in-out infinite alternate;
 }
 
-@media (max-height: 760px) {
-  .cena {
-    padding-top: 15px;
+@keyframes festa {
+  from { transform: scale(1); }
+  to { transform: scale(1.09); }
+}
+
+@media(max-width:380px) {
+  .cenario {
+    height: 330px;
   }
-  .sprite-area {
-    width: min(190px, 48vw);
-    margin-top: 7px;
+
+  .mascote-area {
+    left: 1%;
+    width: 46%;
   }
-  .cartao {
-    padding: 16px;
+
+  .arvore-area {
+    right: 0;
+    width: 44%;
+  }
+
+  .conversa {
+    padding: 14px;
   }
 }
 </style>
@@ -277,88 +317,104 @@ button:active {
 
 <body>
 
-<main class="cena">
-  <div class="conteudo">
+<main>
 
-    <header class="topo">
-      <div class="selo">SANTA LUZIA APRESENTA</div>
-      <h1>Natal Santa Luzia</h1>
-      <div class="subtitulo">Um momento especial para todos nós</div>
-    </header>
+<header>
+  <div class="selo">SANTA LUZIA APRESENTA</div>
+  <h1>Nosso Natal 🎄</h1>
+  <p>Uma visita especial à nossa casa de Natal</p>
+</header>
 
-    <div class="sprite-area" id="spriteArea">
-      <div class="sprite" id="sprite"></div>
-    </div>
+<section class="cenario">
 
-    <section class="cartao">
-      <h2>Uma mensagem especial ❤️</h2>
+  <!-- MASCOTE -->
+  <div class="mascote-area" id="mascoteArea" onclick="conversar()">
+    <div class="sprite" id="sprite"></div>
+  </div>
 
-      <p id="mensagem">
-        Oii! Que bom ter você aqui! Seja muito bem-vindo ao Natal da Santa Luzia!
+  <!-- ÁRVORE -->
+  <div class="arvore-area" id="arvoreArea" onclick="historiaArvore()">
+    <div class="arvore">🎄</div>
+    <div class="presentes">🎁 🎁 🎁</div>
+    <div class="arvore-legenda">TOQUE NA ÁRVORE</div>
+  </div>
 
-        Neste ano, compartilhamos muitas viagens, momentos, amizades e sonhos.
-        Cada pessoa fez parte dessa história e ajudou a construir algo muito especial.
+</section>
 
-        Que neste Natal nunca faltem esperança, alegria, união e novos caminhos.
-        Que a paz esteja presente em cada família e que o próximo ano traga
-        ainda mais conquistas para todos nós.
+<!-- CONVERSA -->
 
-        A família Santa Luzia deseja a você e a todos que ama um Feliz Natal!
-      </p>
+<section class="conversa">
+  <div class="nome-personagem">❤️ Nossa anfitriã</div>
 
-      <div class="assinatura">Com carinho, família Santa Luzia 🎄</div>
-    </section>
+  <p id="falaTexto">
+    Oii! Seja muito bem-vindo à nossa casa de Natal!
+    Eu estava esperando por você! Toque em mim ou escolha
+    uma das histórias para começarmos nossa viagem natalina.
+  </p>
 
-    <div class="botoes">
-      <button class="botao-principal" onclick="ouvir()">
-        🔊 OUVIR MENSAGEM
-      </button>
+  <div class="indicacao" id="indicacao">
+    Toque na mascote para conversar comigo.
+  </div>
+</section>
 
-      <button class="botao-secundario" onclick="parar()">
-        ⏹ PARAR MENSAGEM
-      </button>
+<!-- HISTÓRIAS -->
 
-      <button class="botao-secundario" onclick="abrirArvore()">
-        🎄 VER NOSSA ÁRVORE DE NATAL
-      </button>
-    </div>
+<section class="historias">
+  <h2>✨ Vamos descobrir histórias de Natal?</h2>
 
-    <footer class="rodape">
-      SANTA LUZIA • NATAL 2026
-    </footer>
+  <div class="lista-historias">
+
+    <button class="historia-btn" onclick="contarHistoria(0)">
+      ✨ O nascimento de Jesus
+    </button>
+
+    <button class="historia-btn" onclick="contarHistoria(1)">
+      🎅 A história do Papai Noel
+    </button>
+
+    <button class="historia-btn" onclick="contarHistoria(2)">
+      ⭐ A estrela de Belém
+    </button>
+
+    <button class="historia-btn" onclick="contarHistoria(3)">
+      ❤️ O verdadeiro espírito do Natal
+    </button>
+
+    <button class="historia-btn" onclick="contarHistoria(4)">
+      🎄 Uma mensagem da Santa Luzia
+    </button>
+
+    <button class="historia-btn" onclick="historiaArvore()">
+      🎁 O segredo da árvore
+    </button>
 
   </div>
-</main>
 
-<!-- TELA DA ÁRVORE -->
+  <div class="acoes">
+    <button class="acao" onclick="ouvirAtual()">
+      🔊 OUVIR NOVAMENTE
+    </button>
 
-<section class="arvore-tela" id="arvoreTela">
-  <div class="arvore-conteudo">
-    <h2>Nosso Natal 🎄</h2>
-
-    <div class="arvore">🎄</div>
-
-    <div class="presentes">🎁 🎁 🎁</div>
-
-    <p>
-      Que a magia do Natal ilumine nossos caminhos,
-      fortaleça nossas amizades e encha nossos corações
-      de esperança para um novo ano!
-    </p>
-
-    <button class="botao-principal" onclick="voltar()">
-      VOLTAR À MENSAGEM
+    <button class="parar" onclick="pararFala()">
+      ⏹ PARAR
     </button>
   </div>
 </section>
 
+<footer class="rodape">
+  SANTA LUZIA • NATAL 2026
+</footer>
+
+</main>
+
 <script>
-/* ELEMENTOS */
+
+/* POSIÇÕES DA MASCOTE */
 
 const sprite = document.getElementById("sprite");
-const spriteArea = document.getElementById("spriteArea");
-
-/* POSIÇÕES DA MASCOTE: 4 COLUNAS E 2 LINHAS */
+const falaTexto = document.getElementById("falaTexto");
+const indicacao = document.getElementById("indicacao");
+const mascoteArea = document.getElementById("mascoteArea");
 
 const poses = [
   [0, 0],
@@ -378,15 +434,12 @@ function mostrarPose(numero) {
     p[0] + "% " + p[1] + "%";
 }
 
-/* ANIMAÇÃO DE GESTOS */
-
 let animacao = null;
+let falaAtual = "";
 let indice = 0;
 
-function iniciarAnimacao() {
-  pararAnimacaoVisual();
-
-  spriteArea.classList.add("falando");
+function iniciarGestos() {
+  pararGestos();
 
   const sequencia = [
     1, 0, 1, 0,
@@ -397,7 +450,7 @@ function iniciarAnimacao() {
 
   indice = 0;
 
-  function proximoQuadro() {
+  function proximo() {
     mostrarPose(sequencia[indice]);
 
     indice++;
@@ -406,57 +459,104 @@ function iniciarAnimacao() {
       indice = 0;
     }
 
-    const pausa = indice % 4 === 0 ? 1500 : 1100;
-
-    animacao = setTimeout(proximoQuadro, pausa);
+    animacao = setTimeout(proximo, 1100);
   }
 
-  proximoQuadro();
+  proximo();
 }
 
-function pararAnimacaoVisual() {
+function pararGestos() {
   clearTimeout(animacao);
-  spriteArea.classList.remove("falando");
   mostrarPose(0);
 }
 
-/* MENSAGEM DE VOZ */
+/* CONTEÚDO DAS HISTÓRIAS */
 
-const textoNatal = `
-Oii! Que bom ter você aqui!
-Seja muito bem-vindo ao Natal da Santa Luzia!
+const historias = [
 
-Neste ano, compartilhamos muitas viagens,
-momentos, amizades e sonhos.
+`Você sabia que o Natal celebra uma das histórias mais especiais da humanidade?
 
-Cada pessoa fez parte dessa história
-e ajudou a construir algo muito especial.
+Há mais de dois mil anos, em Belém, nasceu Jesus Cristo. Segundo a narrativa bíblica, Maria e José encontraram um lugar simples para receber o menino Jesus.
 
-Que neste Natal nunca faltem esperança,
-alegria, união e novos caminhos.
+Não foi em um palácio, nem cercado de riquezas. Ele nasceu em humildade, trazendo uma mensagem de amor, esperança, paz e salvação.
 
-Que a paz esteja presente em cada família
-e que o próximo ano traga ainda mais conquistas
-para todos nós.
+É por isso que, para milhões de pessoas, o Natal vai muito além de presentes e decorações.
 
-A família Santa Luzia deseja a você
-e a todos que ama um Feliz Natal!
+É um momento para lembrar o nascimento de Jesus e tudo aquilo que sua mensagem representa.
 
-Com muito carinho,
-família Santa Luzia!
-`;
+Que essa luz nunca deixe de brilhar em nossos corações!`,
 
-let falaAtual = null;
+`Você já conhece a história por trás do Papai Noel?
 
-function ouvir() {
+Uma das inspirações para essa figura foi São Nicolau, um bispo que viveu há muitos séculos e ficou conhecido pelas histórias de generosidade e ajuda aos necessitados.
+
+Com o passar do tempo, sua história se misturou a diferentes tradições de Natal.
+
+Assim nasceu a figura que conhecemos hoje: o bom velhinho de roupa vermelha, barba branca, trenó e sacola de presentes.
+
+Mas existe uma coisa muito bonita nessa tradição: a alegria de presentear, compartilhar e fazer alguém sorrir.
+
+Porque o melhor presente também pode ser um gesto de carinho!`,
+
+`Olhe para o céu e imagine uma estrela brilhando de uma maneira especial...
+
+Na narrativa bíblica, uma estrela guiou os sábios do Oriente até o lugar onde Jesus havia nascido.
+
+Eles seguiram aquela luz, viajaram e chegaram até o menino Jesus, levando presentes.
+
+A estrela de Belém se tornou um dos símbolos mais conhecidos do Natal.
+
+E sabe de uma coisa? Talvez cada um de nós também possa ser uma pequena luz na vida de alguém.
+
+Com uma palavra boa, uma ajuda ou um abraço, podemos iluminar o caminho de outra pessoa!`,
+
+`O Natal tem luzes, árvores, músicas, comidas gostosas e presentes...
+
+Mas será que tudo isso é o que realmente faz o Natal ser especial?
+
+Pense comigo: uma família reunida, uma amizade verdadeira, alguém que estava distante voltando para casa, uma pessoa recebendo carinho...
+
+São momentos que não cabem em uma caixa de presente.
+
+O verdadeiro espírito do Natal está no amor, na generosidade, no perdão e na união.
+
+Que a gente nunca se esqueça de valorizar quem caminha ao nosso lado!`,
+
+`Agora eu quero deixar uma mensagem muito especial para todos que fazem parte da família Santa Luzia.
+
+Neste ano, compartilhamos viagens, desafios, amizades, conquistas e muitos sonhos.
+
+Cada pessoa que passou pela nossa história deixou um pedacinho de si.
+
+E mesmo que estejamos em lugares diferentes, existe algo que nos une: a vontade de construir algo especial juntos.
+
+Neste Natal, que o nascimento de Jesus renove a esperança em nossos corações.
+
+Que não faltem saúde, paz, amor e união em cada família.
+
+E que o próximo ano traga novos caminhos, novas conquistas e muitos motivos para sorrir.
+
+A família Santa Luzia deseja a você um Natal abençoado!
+
+Com muito carinho! ❤️`
+];
+
+/* SISTEMA DE FALA */
+
+function falar(texto) {
+  pararFala();
+
+  falaAtual = texto;
+  falaTexto.textContent = texto;
+  indicacao.textContent = "Nossa mascote está contando uma história...";
+
   if (!("speechSynthesis" in window)) {
-    alert("Seu aparelho não permite reproduzir a voz automática.");
+    indicacao.textContent =
+      "A leitura em voz alta não está disponível neste aparelho.";
     return;
   }
 
-  speechSynthesis.cancel();
-
-  const fala = new SpeechSynthesisUtterance(textoNatal);
+  const fala = new SpeechSynthesisUtterance(texto);
 
   fala.lang = "pt-BR";
   fala.rate = 0.88;
@@ -464,66 +564,115 @@ function ouvir() {
   fala.volume = 1;
 
   fala.onstart = function() {
-    iniciarAnimacao();
+    iniciarGestos();
   };
 
   fala.onend = function() {
-    pararAnimacaoVisual();
+    pararGestos();
+    indicacao.textContent = "Fim da mensagem. Escolha outra história!";
   };
 
   fala.onerror = function() {
-    pararAnimacaoVisual();
+    pararGestos();
+    indicacao.textContent = "Toque em ouvir novamente para tentar outra vez.";
   };
 
-  falaAtual = fala;
   speechSynthesis.speak(fala);
 }
 
-function parar() {
+function pararFala() {
   if ("speechSynthesis" in window) {
     speechSynthesis.cancel();
   }
 
-  pararAnimacaoVisual();
+  pararGestos();
+  indicacao.textContent = "Mensagem pausada.";
 }
 
-/* ÁRVORE DE NATAL */
-
-function abrirArvore() {
-  parar();
-
-  document.getElementById("arvoreTela").style.display = "flex";
+function ouvirAtual() {
+  if (falaAtual) {
+    falar(falaAtual);
+  } else {
+    conversar();
+  }
 }
 
-function voltar() {
-  document.getElementById("arvoreTela").style.display = "none";
+/* ESCOLHER HISTÓRIA */
+
+function contarHistoria(numero) {
+  const botoes = document.querySelectorAll(".historia-btn");
+
+  botoes.forEach(b => b.classList.remove("ativa"));
+
+  if (botoes[numero]) {
+    botoes[numero].classList.add("ativa");
+  }
+
+  falar(historias[numero]);
 }
 
-/* EFEITO DE NEVE */
+/* MASCOTE CONVERSANDO */
 
-function criarNeve() {
+let saudacao = 0;
+
+const saudacoes = [
+  "Oii! Que alegria receber você aqui! Essa casa está cheia de magia natalina! Vamos conhecer nossas histórias?",
+  "Sabe o que eu mais gosto no Natal? Ver as pessoas reunidas, sorrindo e espalhando carinho!",
+  "Tenho uma história muito bonita para contar! Você sabia que o Natal celebra o nascimento de Jesus?",
+  "Que bom que você veio me visitar! Não esqueça de tocar na nossa árvore para descobrir uma surpresa!"
+];
+
+function conversar() {
+  const texto = saudacoes[saudacao];
+
+  saudacao++;
+
+  if (saudacao >= saudacoes.length) {
+    saudacao = 0;
+  }
+
+  falar(texto);
+}
+
+/* ÁRVORE */
+
+function historiaArvore() {
+  const area = document.getElementById("arvoreArea");
+
+  area.classList.add("ligada");
+
+  falar(
+    "Olha só que árvore linda! Ela representa a alegria e a decoração do Natal. Cada luz lembra uma pequena esperança, cada enfeite guarda uma lembrança e cada presente nos recorda a importância de compartilhar. Que nunca faltem motivos para iluminar a vida de quem amamos! Feliz Natal!"
+  );
+
+  setTimeout(function() {
+    area.classList.remove("ligada");
+  }, 15000);
+}
+
+/* NEVE */
+
+function criarFloco() {
   const floco = document.createElement("div");
 
-  floco.className = "neve";
-  floco.textContent = Math.random() > 0.5 ? "❄" : "✻";
-
+  floco.className = "floco";
+  floco.textContent = Math.random() > .5 ? "❄" : "✻";
   floco.style.left = Math.random() * 100 + "vw";
-  floco.style.fontSize = (Math.random() * 12 + 8) + "px";
-  floco.style.opacity = Math.random() * 0.7 + 0.3;
+  floco.style.fontSize = (Math.random() * 10 + 9) + "px";
+  floco.style.opacity = Math.random() * .7 + .3;
   floco.style.animationDuration = (Math.random() * 5 + 6) + "s";
 
   document.body.appendChild(floco);
 
-  setTimeout(function() {
-    floco.remove();
-  }, 12000);
+  setTimeout(() => floco.remove(), 12000);
 }
 
-setInterval(criarNeve, 350);
+setInterval(criarFloco, 400);
 
-/* POSE INICIAL */
+/* INÍCIO */
 
 mostrarPose(0);
+
 </script>
 
 </body>
